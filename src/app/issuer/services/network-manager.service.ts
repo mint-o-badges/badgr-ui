@@ -44,6 +44,10 @@ export class NetworkManager {
 		return this.networkApiService.deleteNetwork(networkSlug).then(() => this.networksList.remove(networkToDelete));
 	}
 
+	networkUserIssuers(networkSlug: IssuerSlug) {
+		return this.networkApiService.getUserIssuersForNetwork(networkSlug);
+	}
+
 	networkBySlug(networkSlug: IssuerSlug): Promise<Network> {
 		return firstValueFrom(this.networksList.loaded$.pipe(map((l) => l.entities))).then(
 			(networks) =>

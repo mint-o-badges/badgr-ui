@@ -1,3 +1,5 @@
+import { Issuer } from './issuer.model';
+
 export interface ApiQRCode {
 	title: string;
 	createdBy: string;
@@ -8,4 +10,10 @@ export interface ApiQRCode {
 	issuer_id?: string;
 	request_count?: number;
 	notifications?: boolean;
+}
+
+export interface NetworkQrCodeGroup {
+	issuer: Issuer;
+	qrcodes: ApiQRCode[];
+	staff: boolean;
 }

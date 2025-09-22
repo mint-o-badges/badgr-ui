@@ -382,7 +382,8 @@
 		"networkBadges": "Network badges",
 		"yourIssuersAreInNetworks": "Your institutions are part of the following networks:",
 		"awardedNetworkBadges": "These badges were issued by {{issuer}} via the respective network:",
-		"badgesApprovedForNetworks": " {{ issuer }} has approved these badges for use in the respective network:"
+		"badgesApprovedForNetworks": " {{ issuer }} has approved these badges for use in the respective network:",
+		"badgeAwards": "Badge Awards"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",

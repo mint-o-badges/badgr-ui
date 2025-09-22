@@ -185,12 +185,14 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			this.issuer = issuer;
 
 			this.badgeClassLoaded = this.badgeClassManager
-				.badgeByIssuerSlugAndSlug(issuer.slug, this.badgeSlug)
+				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
 				.then((badgeClass) => {
 					this.badgeClass = badgeClass;
 
+					const category = badgeClass.extension['extensions:CategoryExtension'].Category;
+
 					this.badgeClassManager
-						.createBadgeImage(issuer.slug, badgeClass.slug, 'participation', true)
+						.createBadgeImage(issuer.slug, badgeClass.slug, category, true)
 						.then((img) => {
 							this.previewB64Img = img.image_url;
 						});

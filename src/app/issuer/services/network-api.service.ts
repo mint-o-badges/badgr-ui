@@ -76,8 +76,8 @@ export class NetworkApiService extends BaseHttpApiService {
 		return this.post(`/v1/issuer/networks/${networkSlug}/staff`, updateOp).then((r) => r.body);
 	}
 
-	getIssuersForNetwork(networkSlug: string) {
-		return this.get<ApiIssuer[]>(`/v1/issuer/networks/${networkSlug}/issuer`).then((r) => r.body);
+	getUserIssuersForNetwork(networkSlug: string) {
+		return this.get<ApiIssuer[]>(`/v1/issuer/networks/${networkSlug}/issuers`).then((r) => r.body);
 	}
 
 	removeIssuerFromNetwork(networkSlug: string, issuerSlug: string) {

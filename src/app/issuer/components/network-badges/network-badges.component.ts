@@ -1,4 +1,16 @@
-import { Component, ElementRef, inject, input, Input, output, signal, TemplateRef, ViewChild } from '@angular/core';
+import {
+	Component,
+	computed,
+	effect,
+	ElementRef,
+	inject,
+	input,
+	Input,
+	output,
+	signal,
+	TemplateRef,
+	ViewChild,
+} from '@angular/core';
 import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
@@ -24,6 +36,7 @@ import { QrCodeApiService } from '~/issuer/services/qrcode-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 
 @Component({
 	selector: 'network-badges',
@@ -45,6 +58,7 @@ export class NetworkBadgesComponent {
 		private badgeClassService: BadgeClassManager,
 		private badgeClassApiService: BadgeClassApiService,
 		private userProfileManager: UserProfileManager,
+		private entityManager: CommonEntityManager,
 		private issuerManager: IssuerManager,
 		private networkManager: NetworkManager,
 		private messageService: MessageService,
@@ -52,20 +66,32 @@ export class NetworkBadgesComponent {
 		private translate: TranslateService,
 		private router: Router,
 	) {
-		this.userProfileManager.userProfilePromise.then((profile) => {
-			profile.emails.loadedPromise.then(() => {
-				this.issuerManager.myIssuers$.subscribe((issuers) => {
-					this.userIssuers = issuers.filter((issuer) => issuer.canCreateBadge);
-				});
-			});
+		effect(async () => {
+			const slug = this.network()?.slug;
+			if (!slug) {
+				this.userIssuers.set([]);
+				return;
+			}
+
+			try {
+				this.isLoadingIssuers.set(true);
+				const apiIssuers = await this.networkManager.networkUserIssuers(slug);
+				const issuers = apiIssuers.map((apiIssuer) => new Issuer(this.entityManager, apiIssuer));
+				this.userIssuers.set(issuers);
+			} catch (error) {
+				console.error('Error loading network issuers:', error);
+				this.userIssuers.set([]);
+			} finally {
+				this.isLoadingIssuers.set(false);
+			}
 		});
 	}
 
 	network = input.required<Network>();
+	userIssuers = signal<Issuer[]>([]);
+	isLoadingIssuers = signal(false);
 	badgesLoaded: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
-
-	userIssuers: Issuer[] = [];
 
 	badges: BadgeClass[] = [];
 

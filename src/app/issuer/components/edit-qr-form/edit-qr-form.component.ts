@@ -226,12 +226,13 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 				});
 		} else {
 			const formState = this.qrForm.value;
+			const issuer = this.isNetworkBadge && this.partnerIssuerSlug ? this.partnerIssuerSlug : this.issuerSlug;
 			this.qrCodePromise = this.qrCodeApiService
-				.createQrCode(this.issuerSlug, this.badgeSlug, {
+				.createQrCode(issuer, this.badgeSlug, {
 					title: formState.title,
 					createdBy: formState.createdBy,
 					badgeclass_id: formState.badgeclass_id,
-					issuer_id: formState.issuer_id,
+					issuer_id: this.isNetworkBadge ? this.partnerIssuerSlug : formState.issuer_id,
 					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 					notifications: formState.notifications,

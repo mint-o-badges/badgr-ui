@@ -46,11 +46,15 @@
 </ng-template>
 <ng-template #issuerSelection>
 	<div class="tw-mb-6 tw-px-4">
-		@for (issuer of userIssuers; track issuer) {
-			<label class="radio tw-mb-6">
-				<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
-				<span class="radio-x-text">{{ issuer.name }}</span>
-			</label>
+		@if (isLoadingIssuers()) {
+			<div>{{ 'General.loading' | translate }}</div>
+		} @else {
+			@for (issuer of userIssuers(); track issuer) {
+				<label class="radio tw-mb-6">
+					<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+					<span class="radio-x-text">{{ issuer.name }}</span>
+				</label>
+			}
 		}
 	</div>
 	<div class="tw-flex tw-gap-2 tw-px-4">

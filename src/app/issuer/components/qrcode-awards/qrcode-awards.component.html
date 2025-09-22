@@ -42,21 +42,16 @@
 										<span class="tw-font-bold">
 											{{ award.title }}
 										</span>
-										<span class="tw-ml-2">
-											({{
-												award.request_count == 1
-													? ('QrCode.openRequestsOne' | translate)
-													: ('QrCode.openRequests'
-														| translate: { count: award.request_count })
-											}})
-										</span>
+										@if (award.request_count > 0) {
+											<span class="tw-ml-2 tw-font-normal"> ({{ award.request_count }}) </span>
+										}
 									</div>
 								</div>
-								@if (award.request_count > 0) {
+								@if (award.request_count > 0 && interactive) {
 									<ng-icon hlm name="lucideChevronDown" hlmAccIcon class="tw-w-8 tw-h-8" />
 								}
 							</button>
-							@if (award.request_count > 0 && issuer?.slug && badgeClass?.slug) {
+							@if (award.request_count > 0 && issuer?.slug && badgeClass?.slug && interactive) {
 								<brn-accordion-content hlm class="tw-text-white">
 									<qrcodes-datatable
 										[qrCodeId]="award.slug"
@@ -69,24 +64,28 @@
 							}
 						</div>
 					</div>
-					<div class="tw-flex tw-items-start" (click)="$event.stopPropagation()">
-						<oeb-dropdown
-							[trigger]="svgTrigger"
-							[ngClass]="
-								award.request_count > 0 ? 'tw-bg-[var(--color-mint)]' : 'tw-bg-[var(--color-darkgray)]'
-							"
-							class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-rounded-[7px]"
-							[menuItems]="qrCodeMenus[i]"
-						></oeb-dropdown>
-						<ng-template #svgTrigger>
-							<svg
-								class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64.15px] md:tw-h-[64.15px]"
-								[attr.fill]="getSvgFillColor(award.request_count)"
-								icon="icon_more"
-							></svg>
-							<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
-						</ng-template>
-					</div>
+					@if (qrCodeMenus.length) {
+						<div class="tw-flex tw-items-start" (click)="$event.stopPropagation()">
+							<oeb-dropdown
+								[trigger]="svgTrigger"
+								[ngClass]="
+									award.request_count > 0
+										? 'tw-bg-[var(--color-mint)]'
+										: 'tw-bg-[var(--color-darkgray)]'
+								"
+								class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-rounded-[7px]"
+								[menuItems]="qrCodeMenus[i]"
+							></oeb-dropdown>
+							<ng-template #svgTrigger>
+								<svg
+									class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64.15px] md:tw-h-[64.15px]"
+									[attr.fill]="getSvgFillColor(award.request_count)"
+									icon="icon_more"
+								></svg>
+								<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
+							</ng-template>
+						</div>
+					}
 				</div>
 			}
 		</div>

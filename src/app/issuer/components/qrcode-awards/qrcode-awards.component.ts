@@ -65,6 +65,7 @@ export class QrCodeAwardsComponent {
 	@Input() issuer: Issuer | Network;
 	@Input() badgeClass: BadgeClass;
 	@Input() defaultUnfolded: boolean | undefined = false;
+	@Input() interactive = true;
 	@Output() qrBadgeAward = new EventEmitter<number>();
 
 	requestedBadges: any[] = [];
@@ -78,7 +79,7 @@ export class QrCodeAwardsComponent {
 	}
 
 	private setupQrCodeMenus() {
-		if (!this.issuer || !this.awards || !this.badgeClass) {
+		if (!this.issuer || !this.awards || !this.badgeClass || !this.interactive) {
 			return;
 		}
 
