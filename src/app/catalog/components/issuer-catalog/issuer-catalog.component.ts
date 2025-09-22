@@ -32,7 +32,6 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 import { OebHeaderText } from '~/components/oeb-header-text.component';
 
-
 @Component({
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
