@@ -48,11 +48,11 @@
 			<ul>
 				@for (issuer of selectedIssuers; track issuer) {
 					<li
-						class="tw-flex tw-justify-between tw-border-purple tw-border tw-border-solid tw-rounded-[10px] tw-p-2 tw-mb-2"
+						class="tw-flex tw-justify-between tw-border-purple tw-border tw-border-solid tw-rounded-[10px] tw-p-5 tw-mb-3"
 					>
 						<div class="tw-flex tw-gap-2">
 							<img [src]="issuer.image" width="24" height="24" />
-							<span>{{ issuer.name }}</span>
+							<span class="tw-text-oebblack tw-font-bold">{{ issuer.name }}</span>
 						</div>
 						<span (click)="removeSelectedissuer(issuer)" class="tw-text-link tw-cursor-pointer">{{
 							'General.remove' | translate
@@ -64,19 +64,21 @@
 		<section class="tw-mb-4">
 			@if (selectedIssuers.length) {
 				<p
-					class="tw-italic tw-text-purple tw-text-lg tw-mb-2"
+					class="tw-italic tw-text-purple tw-text-lg tw-leading-[130%] tw-mb-2"
 					(click)="collapseRoles()"
 					[innerHTML]="'Network.rolesAndRights' | translate"
 				></p>
 			}
 			@if (rightsAndRolesExpanded) {
-				<h2 class="tw-font-bold tw-text-[22px] tw-text-oebblack">{{ 'General.rolesAndRights' | translate }}</h2>
+				<h2 class="tw-font-bold tw-text-[22px] tw-text-oebblack tw-leading-[130%]">
+					{{ 'General.rolesAndRights' | translate }}
+				</h2>
 				<dl>
 					@for (role of issuerStaffRoleOptions; track role; let last = $last) {
-						<dt class="tw-text-lg tw-font-semibold tw-text-oebblack">
+						<dt class="tw-text-lg tw-font-semibold tw-text-oebblack tw-mt-2 tw-leading-[130%]">
 							{{ role.label | translate }}
 						</dt>
-						<dd class="tw-text-lg tw-text-oebblack">
+						<dd class="tw-text-lg tw-text-oebblack tw-leading-[130%]">
 							{{ role.description | translate }}
 						</dd>
 					}
