@@ -36,7 +36,7 @@
 										></oeb-button>
 									}
 								}
-								@if (config.shareButton) {
+								@if (config.shareButton && badge) {
 									<oeb-button
 										hlmBtn
 										class="lg:tw-whitespace-nowrap"
@@ -108,182 +108,189 @@
 									</div>
 								</div>
 							</div>
-							@if (config.copy_permissions) {
-								<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1">
-									<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
-									<dd
-										[innerHTML]="
-											config.copy_permissions.includes('others')
-												? ('Issuer.allInstitutions' | translate)
-												: ('Issuer.ownInstitution' | translate)
-										"
-									></dd>
-								</div>
-							}
-							<dl clss="tw-min-w-[150px]">
-								@if (hasCriteria || config.competencies.length) {
-									<div class="tw-bg-white tw-mb-4 tw-rounded-[10px] tw-p-2">
-										<oeb-collapsible
-											[trigger]="collapseCriteriaTrigger"
-											closeIcon="lucideChevronDown"
-											[iconSize]="'24px'"
-											[iconStyle]="'tw-text-oebblack tw-mr-2'"
-											[defaultOpen]="hasCriteria"
-											[id]=""
-										>
-											<ng-template #collapseCriteriaTrigger>
-												<dt
-													class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2"
-												>
-													<ng-icon
-														hlm
-														name="lucideAward"
-														class="tw-w-6 tw-h-6 tw-text-purple"
+							<div>
+								@if (config.copy_permissions) {
+									<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1">
+										<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
+										<dd
+											[innerHTML]="
+												config.copy_permissions.includes('others')
+													? ('Issuer.allInstitutions' | translate)
+													: ('Issuer.ownInstitution' | translate)
+											"
+										></dd>
+									</div>
+								}
+								<dl clss="tw-min-w-[150px]">
+									@if (hasCriteria || config.competencies.length) {
+										<div class="tw-bg-white tw-mb-4 tw-rounded-[10px] tw-p-2">
+											<oeb-collapsible
+												[trigger]="collapseCriteriaTrigger"
+												closeIcon="lucideChevronDown"
+												[iconSize]="'24px'"
+												[iconStyle]="'tw-text-oebblack tw-mr-2'"
+												[defaultOpen]="hasCriteria"
+												[id]=""
+											>
+												<ng-template #collapseCriteriaTrigger>
+													<dt
+														class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2"
 													>
-													</ng-icon>
-													<span
-														class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
-														[innerHTML]="'Badge.awardCriteria' | translate"
-													></span>
-												</dt>
-											</ng-template>
-											@if (hasCriteria) {
-												<dd>
+														<ng-icon
+															hlm
+															name="lucideAward"
+															class="tw-w-6 tw-h-6 tw-text-purple"
+														>
+														</ng-icon>
+														<span
+															class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
+															[innerHTML]="'Badge.awardCriteria' | translate"
+														></span>
+													</dt>
+												</ng-template>
+												@if (hasCriteria) {
+													<dd>
+														<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
+															@for (
+																criteria of config.awardCriteria;
+																track criteria.name
+															) {
+																<li class="tw-mb-1">
+																	<span class="tw-text-oebblack">{{
+																		criteria.name
+																	}}</span>
+																	@if (criteria.description) {
+																		<p
+																			class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1"
+																		>
+																			{{ criteria.description }}
+																		</p>
+																	}
+																</li>
+															}
+														</ul>
+													</dd>
+												} @else {
 													<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
-														@for (criteria of config.awardCriteria; track criteria.name) {
+														@for (competency of config.competencies; track competency) {
 															<li class="tw-mb-1">
 																<span class="tw-text-oebblack">{{
-																	criteria.name
+																	competency.name
 																}}</span>
-																@if (criteria.description) {
-																	<p
-																		class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1"
-																	>
-																		{{ criteria.description }}
-																	</p>
-																}
 															</li>
 														}
 													</ul>
-												</dd>
-											} @else {
-												<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
-													@for (competency of config.competencies; track competency) {
-														<li class="tw-mb-1">
-															<span class="tw-text-oebblack">{{ competency.name }}</span>
-														</li>
-													}
-												</ul>
-											}
-										</oeb-collapsible>
-									</div>
-								}
-								@if (config.version) {
-									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col tw-items-center">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'Badge.standard' | translate }}
-										</dt>
-										<dd
-											class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex tw-items-center tw-gap-1 tw-font-medium"
-										>
-											{{ config.version }}
-											<info-icon>
-												@if (config.version == '3.0') {
-													<span [innerHTML]="'Badge.standard-info-30' | translate"></span>
-												} @else {
-													<span [innerHTML]="'Badge.standard-info-20' | translate"></span>
 												}
-											</info-icon>
-										</dd>
-									</div>
-								}
-								@if (config.category) {
-									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'General.category' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-text-oebblack tw-font-medium md:tw-ml-2">
-											{{ config.category }}
-										</dd>
-									</div>
-								}
-								@if (config.duration) {
-									<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-darkgray">
-											{{ 'RecBadgeDetail.duration' | translate }}
-										</dt>
-										<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
-											{{ +config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
-										</dd>
-									</div>
-								}
-								@if (config.createdAt) {
-									<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-darkgray">{{ 'Badge.createdOn' | translate }}</dt>
-										<dd class="tw-font-medium md:tw-ml-2 tw-text-oebblack">
-											<time [date]="config.createdAt" format="dd.MM.y"></time>
-										</dd>
-									</div>
-								}
-								@if (config.issuedOn) {
-									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'RecBadgeDetail.issuedOn' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
-											<time [date]="config.issuedOn" format="dd.MM.y"></time>
-										</dd>
-									</div>
-								}
-								@if (config.issuedTo) {
-									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'RecBadgeDetail.awardedTo' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-break-words tw-font-medium">
-											&nbsp;{{ config.issuedTo }}
-										</dd>
-									</div>
-								}
-								@if (config.license) {
-									<div class="tw-mt-2 tw-pt-2 tw-flex tw-flex-row">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'General.license' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-text-oebblack tw-ml-2 tw-flex">
-											<div
-												class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
+											</oeb-collapsible>
+										</div>
+									}
+									@if (config.version) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col tw-items-center">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'Badge.standard' | translate }}
+											</dt>
+											<dd
+												class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex tw-items-center tw-gap-1 tw-font-medium"
 											>
-												<span class="tw-text-[11px]">CC</span>
-											</div>
-											<div
-												class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
-											>
-												<span class="tw-text-[11px]">0</span>
-											</div>
-											<a
-												class="tw-ml-2 tw-underline tw-text-[#1400FF]"
-												target="_blank"
-												href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.de"
-											>
-												CC0 1.0</a
-											>
-										</dd>
-									</div>
-								}
-								@if (config.tags.length > 0) {
-									<div class="tw-flex tw-items-start tw-flex-col tw-mt-4">
-										<dt class="tw-text-darkgray md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
-										<dd class="tw-text-darkgray">
-											@for (tag of config.tags; track tag; let last = $last) {
-												<div class="tag tw-border-darkgray tw-mx-2 tw-ml-0 tw-max-w-24">
-													{{ tag }}
+												{{ config.version }}
+												<info-icon>
+													@if (config.version == '3.0') {
+														<span [innerHTML]="'Badge.standard-info-30' | translate"></span>
+													} @else {
+														<span [innerHTML]="'Badge.standard-info-20' | translate"></span>
+													}
+												</info-icon>
+											</dd>
+										</div>
+									}
+									@if (config.category) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'General.category' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-text-oebblack tw-font-medium md:tw-ml-2">
+												{{ config.category }}
+											</dd>
+										</div>
+									}
+									@if (config.duration) {
+										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-darkgray">
+												{{ 'RecBadgeDetail.duration' | translate }}
+											</dt>
+											<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
+												{{ +config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
+											</dd>
+										</div>
+									}
+									@if (config.createdAt) {
+										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-darkgray">{{ 'Badge.createdOn' | translate }}</dt>
+											<dd class="tw-font-medium md:tw-ml-2 tw-text-oebblack">
+												<time [date]="config.createdAt" format="dd.MM.y"></time>
+											</dd>
+										</div>
+									}
+									@if (config.issuedOn) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'RecBadgeDetail.issuedOn' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+												<time [date]="config.issuedOn" format="dd.MM.y"></time>
+											</dd>
+										</div>
+									}
+									@if (config.issuedTo) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'RecBadgeDetail.awardedTo' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-break-words tw-font-medium">
+												&nbsp;{{ config.issuedTo }}
+											</dd>
+										</div>
+									}
+									@if (config.license) {
+										<div class="tw-mt-2 tw-pt-2 tw-flex tw-flex-row">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'General.license' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-text-oebblack tw-ml-2 tw-flex">
+												<div
+													class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
+												>
+													<span class="tw-text-[11px]">CC</span>
 												</div>
-											}
-										</dd>
-									</div>
-								}
-							</dl>
+												<div
+													class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
+												>
+													<span class="tw-text-[11px]">0</span>
+												</div>
+												<a
+													class="tw-ml-2 tw-underline tw-text-[#1400FF]"
+													target="_blank"
+													href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.de"
+												>
+													CC0 1.0</a
+												>
+											</dd>
+										</div>
+									}
+									@if (config.tags.length > 0) {
+										<div class="tw-flex tw-items-start tw-flex-col tw-mt-4">
+											<dt class="tw-text-darkgray md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
+											<dd class="tw-text-darkgray">
+												@for (tag of config.tags; track tag; let last = $last) {
+													<div class="tag tw-border-darkgray tw-mx-2 tw-ml-0 tw-max-w-24">
+														{{ tag }}
+													</div>
+												}
+											</dd>
+										</div>
+									}
+								</dl>
+							</div>
 						</div>
 					</div>
 					<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">

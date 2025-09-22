@@ -10,7 +10,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { saveAsImage } from '../../util/qrcode-util';
 
 @Component({
-	selector: 'share-dialog-template',
+	selector: 'share-collection-dialog',
 	imports: [OebButtonComponent, TranslateModule, QRCodeComponent],
 	providers: [provideIcons({ lucideCopy })],
 	template: `
@@ -53,7 +53,7 @@ import { saveAsImage } from '../../util/qrcode-util';
 		<qrcode [className]="'tw-hidden'" #qrcode [qrdata]="qrData"></qrcode>
 	`,
 })
-export class ShareDialogTemplateComponent {
+export class ShareCollectionDialogComponent {
 	constructor(private zone: NgZone) {}
 	private readonly COPY_NOTIF_TIMEOUT_MS: number = 3000;
 

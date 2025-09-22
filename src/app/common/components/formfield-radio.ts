@@ -10,7 +10,6 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonDialogsService } from '../services/common-dialogs.service';
 
 @Component({
 	selector: 'bg-formfield-radio',
@@ -132,7 +131,7 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 
 	private randomName = 'field' + Math.random();
 
-	constructor(private dialogService: CommonDialogsService) {}
+	constructor() {}
 
 	ngOnInit() {}
 
@@ -171,20 +170,6 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 		} else {
 			this.control.enable();
 		}
-	}
-
-	unlock() {
-		this.dialogService.confirmDialog
-			.openResolveRejectDialog({
-				dialogTitle: 'Are you sure?',
-				dialogBody: this.unlockConfirmText,
-				resolveButtonLabel: 'Continue',
-				rejectButtonLabel: 'Cancel',
-			})
-			.then(
-				() => (this.unlocked = true),
-				() => void 0,
-			);
 	}
 
 	cacheControlState() {

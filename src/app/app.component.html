@@ -324,14 +324,8 @@
 
 <!-- TODO: Assess dialog patterns - use inert polyfill -->
 <confirm-dialog #confirmDialog></confirm-dialog>
-<!-- <new-terms-dialog #newTermsDialog></new-terms-dialog> -->
-<share-social-dialog #shareSocialDialog></share-social-dialog>
 <export-pdf-dialog #exportPdfDialog></export-pdf-dialog>
 <nounproject-dialog #nounprojectDialog></nounproject-dialog>
-<copy-badge-dialog #copyBadgeDialog></copy-badge-dialog>
-<fork-badge-dialog #forkBadgeDialog></fork-badge-dialog>
-<markdown-hints-dialog #markdownHintsDialog></markdown-hints-dialog>
-<select-issuer-dialog #selectIssuerDialog></select-issuer-dialog>
 
 <!-- Footer -->
 <footer class="tw-relative tw-w-full tw-bg-oebgrey tw-mt-8">
@@ -358,7 +352,7 @@
 			</div>
 		</div>
 
-		<div class="tw-flex tw-flex-col tw-align-stretch tw-min-w-[24rem]">
+		<div class="tw-flex tw-flex-col tw-align-stretch tw-min-w-full sm:tw-min-w-[24rem]">
 			<oeb-button
 				[routerLink]="['/public/about/newsletter']"
 				[text]="'Newsletter.signup' | translate"

@@ -208,7 +208,6 @@ export class BgBadgecard {
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: FormControl;
 	@Input() showCheckbox = false;
-	@Output() shareClicked = new EventEmitter<MouseEvent>();
 	@Input() completed: Boolean = false;
 	@Output() checkboxChange = new EventEmitter<boolean>();
 	@Output() closeEmit = new EventEmitter<any>();

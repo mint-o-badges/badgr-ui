@@ -42,6 +42,7 @@
 						: ('Issuer.myInstitutionsCreateLearningPath' | translate)
 				"
 				[class]="isFullIssuer(issuer) && issuer.canCreateBadge ? '' : 'disabled'"
+				[umamiEvent]="'create-badge'"
 			>
 			</oeb-button>
 			<div *ngIf="public" class="tw-flex tw-flex-col tw-gap-2">
@@ -127,6 +128,7 @@
 					? ('Issuer.createBadge' | translate)
 					: ('Issuer.myInstitutionsCreateLearningPath' | translate)
 			"
+			[umamiEvent]="'create-badge'"
 		>
 		</oeb-button>
 		<oeb-button
