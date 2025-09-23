@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, input, Input, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, input, Input, output, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -29,6 +29,8 @@ export class AddInstitutionComponent implements AfterViewInit {
 	) {}
 
 	network = input.required<any>();
+
+	institutionsInvited = output();
 
 	@ViewChild('inviteSuccessContent')
 	inviteSuccessContent: TemplateRef<void>;
@@ -123,6 +125,7 @@ export class AddInstitutionComponent implements AfterViewInit {
 		this.networkApiService.inviteInstitutions(this.network().slug, issuers).then((res) => {
 			if (res) {
 				this.openSuccessDialog();
+				this.institutionsInvited.emit();
 			}
 		});
 	}

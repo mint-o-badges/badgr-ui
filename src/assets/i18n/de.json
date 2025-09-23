@@ -381,7 +381,7 @@
 		"issuerBadges": "Institutions-Badges",
 		"networkBadges": "Netzwerk-Badges",
 		"yourIssuersAreInNetworks": "Institutionen von dir sind Teil folgender Netzwerke:",
-		"awardedNetworkBadges": "Diese Badges hat {{issuer}} über das jeweilige Netzwerk vergeben:",
+		"awardedNetworkBadges": "Diese Badges hat {{issuer}} <span class='tw-underline'>über das jeweilige Netzwerk vergeben</span>:",
 		"noAwardedNetworkBadges": "{{issuer}} hat noch keine Badges <span class='tw-underline'>über ein Netzwerk vergeben</span>.",
 		"badgesApprovedForNetworks": " Diese Badges hat {{ issuer }} für die Nutzung im jeweiligen Netzwerk freigegeben:",
 		"noBadgesApprovedForNetworks": "{{ issuer }} hat noch keine Badges für die Nutzung im Netzwerk <span class='tw-underline'>freigegeben</span>.",

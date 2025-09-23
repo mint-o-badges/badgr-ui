@@ -61,6 +61,15 @@ interface groupedInstances {
 			</oeb-tabs>
 			<ng-template #qrAwards>
 				@if (issuer && issuer.is_network) {
+					@if (!networkQrCodeApiAwards.length) {
+						<qrcode-awards
+							(qrBadgeAward)="onQrBadgeAward($event)"
+							[awards]="[]"
+							[badgeClass]="badgeClass"
+							[issuer]=""
+							[routerLinkText]="config?.issueQrRouterLink"
+						></qrcode-awards>
+					}
 					@for (qrGroup of networkQrCodeApiAwards; track qrGroup.issuer.slug) {
 						<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
 							<img class="tw-w-11" [src]="qrGroup.issuer.image" alt="Issuer Logo" />
@@ -528,17 +537,19 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		try {
 			const qrCodesByIssuer = await this.qrCodeApiService.getQrCodesForNetworkBadge(networkSlug, badgeSlug);
 
-			this.networkQrCodeApiAwards = Object.keys(qrCodesByIssuer).map((issuerSlug) => {
-				const issuerData = qrCodesByIssuer[issuerSlug];
+			if (qrCodesByIssuer) {
+				this.networkQrCodeApiAwards = Object.keys(qrCodesByIssuer).map((issuerSlug) => {
+					const issuerData = qrCodesByIssuer[issuerSlug];
 
-				const issuerEntity = new Issuer(this.commonManager, issuerData.issuer);
+					const issuerEntity = new Issuer(this.commonManager, issuerData.issuer);
 
-				return {
-					issuer: issuerEntity,
-					qrcodes: issuerData.qrcodes,
-					staff: issuerData.staff,
-				};
-			});
+					return {
+						issuer: issuerEntity,
+						qrcodes: issuerData.qrcodes,
+						staff: issuerData.staff,
+					};
+				});
+			}
 		} catch (error) {
 			console.error('Error loading network QR codes:', error);
 		}

@@ -83,4 +83,8 @@ export class NetworkApiService extends BaseHttpApiService {
 	removeIssuerFromNetwork(networkSlug: string, issuerSlug: string) {
 		return this.delete(`/v1/issuer/networks/${networkSlug}/issuer/${issuerSlug}`);
 	}
+
+	getIssuerNetworkBadges(issuerSlug: string) {
+		return this.get<any[]>(`/v1/issuer/issuers/${issuerSlug}/network/badges`).then((r) => r.body);
+	}
 }

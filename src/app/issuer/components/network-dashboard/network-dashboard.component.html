@@ -69,7 +69,7 @@
 </ng-template>
 
 <ng-template #addInstitutionsTemplate>
-	<add-institution [network]="network()"> </add-institution>
+	<add-institution [network]="network()" (institutionsInvited)="onInstitutionsInvited()"> </add-institution>
 </ng-template>
 
 <ng-template #badgesTemplate>

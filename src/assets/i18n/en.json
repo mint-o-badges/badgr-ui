@@ -381,7 +381,7 @@
 		"issuerBadges": "Institutional badges",
 		"networkBadges": "Network badges",
 		"yourIssuersAreInNetworks": "Your institutions are part of the following networks:",
-		"awardedNetworkBadges": "These badges were issued by {{issuer}} via the respective network:",
+		"awardedNetworkBadges": "These badges were issued by {{issuer}} <span class='tw-underline'>via the respective network</span>:",
 		"noAwardedNetworkBadges": "{{issuer}} has not yet <span class='tw-underline'>awarded badges via a network</span>.",
 		"badgesApprovedForNetworks": " {{ issuer }} has approved these badges for use in the respective network:",
 		"noBadgesApprovedForNetworks": "{{ issuer }} has not yet <span class='tw-underline'>approved</span> badges for a network.",

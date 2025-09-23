@@ -33,6 +33,15 @@ import { BgLearningPathCard } from '../bg-learningpathcard';
 import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { NgTemplateOutlet } from '@angular/common';
+import { NetworkApiService } from '~/issuer/services/network-api.service';
+import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
+
+interface NetworkBadgeGroup {
+	issuerName: string;
+	badges: BadgeResult[];
+	networkIssuer?: any;
+}
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -58,6 +67,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 		BgLearningPathCard,
 		TranslatePipe,
 		TranslateModule,
+		NgTemplateOutlet,
 	],
 })
 export class OebIssuerDetailComponent implements OnInit {
@@ -72,6 +82,7 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	learningPathsPromise: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
+	networkRequestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	userIsMember = false;
 
 	constructor(
@@ -81,10 +92,12 @@ export class OebIssuerDetailComponent implements OnInit {
 		protected title: Title,
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
+		protected entityManager: CommonEntityManager,
 		private configService: AppConfigService,
 		private learningPathApiService: LearningPathApiService,
 		private qrCodeApiService: QrCodeApiService,
 		private sessionService: SessionService,
+		private networkApiService: NetworkApiService,
 	) {
 		if (this.sessionService.isLoggedIn) {
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
@@ -133,8 +146,8 @@ export class OebIssuerDetailComponent implements OnInit {
 	badgeTemplateTabs: any = undefined;
 	activeTabBadgeTemplate = 'issuer-badges';
 
-	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
-	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
+	@ViewChild('badgesTemplate', { static: false }) badgesTemplate: ElementRef;
+	@ViewChild('learningPathTemplate', { static: false }) learningPathTemplate: ElementRef;
 
 	@ViewChild('issuerBadgesTemplate', { static: true }) issuerBadgesTemplate: ElementRef;
 	@ViewChild('networkBadgesTemplate', { static: true }) networkBadgesTemplate: ElementRef;
@@ -157,17 +170,18 @@ export class OebIssuerDetailComponent implements OnInit {
 			{
 				key: 'issuer-badges',
 				title: 'Issuer.issuerBadges',
-				component: this.issuerBadgesTemplate,
+				// component: this.issuerBadgesTemplate,
 			},
 			{
 				key: 'network-badges',
 				title: 'Issuer.networkBadges',
-				component: this.networkBadgesTemplate,
+				// component: this.networkBadgesTemplate,
 			},
 		];
 	}
 
 	badgeResults: BadgeResult[] = [];
+	networkBadgeInstanceResults: NetworkBadgeGroup[] = [];
 	maxDisplayedResults = 100;
 
 	private _searchQuery = '';
@@ -227,8 +241,76 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
 
+	private async updateNetworkResults() {
+		try {
+			this.networkBadgeInstanceResults.length = 0;
+
+			const networkBadgeGroups: any = await this.networkApiService.getIssuerNetworkBadges(this.issuer.slug);
+			if (!networkBadgeGroups || networkBadgeGroups.length === 0) {
+				return;
+			}
+
+			const allBadgeClasses: BadgeClass[] = [];
+			for (const group of networkBadgeGroups) {
+				for (const networkBadgeClass of group.badge_classes) {
+					const badgeClass = new BadgeClass(this.entityManager, networkBadgeClass);
+					allBadgeClasses.push(badgeClass);
+				}
+			}
+
+			let requestMap = new Map<string, ApiQRCode[]>();
+			if (this.sessionService.isLoggedIn && allBadgeClasses.length > 0) {
+				this.networkRequestsLoaded = Promise.all(
+					allBadgeClasses.map((badge) =>
+						this.qrCodeApiService
+							.getQrCodesForIssuerByBadgeClass(badge.issuerSlug, badge.slug)
+							.then((p) => ({ key: badge.slug, value: p }))
+							.catch(() => ({ key: badge.slug, value: [] })),
+					),
+				).then((d) =>
+					d.reduce((map, obj) => {
+						map.set(obj.key, obj.value);
+						return map;
+					}, new Map<string, ApiQRCode[]>()),
+				);
+
+				requestMap = await this.networkRequestsLoaded;
+			}
+
+			for (const group of networkBadgeGroups) {
+				const groupBadges: BadgeResult[] = [];
+
+				for (const networkBadgeClass of group.badge_classes) {
+					const badgeClass = new BadgeClass(this.entityManager, networkBadgeClass);
+
+					const requestCount = requestMap.get(badgeClass.slug)?.length ?? 0;
+
+					const badgeResult = new BadgeResult(badgeClass, group.network_issuer.name, requestCount);
+
+					groupBadges.push(badgeResult);
+				}
+
+				groupBadges.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
+
+				this.networkBadgeInstanceResults.push({
+					issuerName: group.network_issuer.name,
+					badges: groupBadges,
+					networkIssuer: group.network_issuer,
+				});
+			}
+
+			this.networkBadgeInstanceResults.sort((a, b) => {
+				const aTime = a.badges[0]?.badge.createdAt.getTime() ?? 0;
+				const bTime = b.badges[0]?.badge.createdAt.getTime() ?? 0;
+				return bTime - aTime;
+			});
+		} catch (error) {
+			console.error('Error loading network badge groups:', error);
+		}
+	}
+
 	async ngOnInit() {
-		await this.updateResults();
+		await Promise.all([this.updateResults(), this.updateNetworkResults()]);
 		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
 	}
 

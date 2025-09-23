@@ -183,6 +183,10 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		});
 	}
 
+	onInstitutionsInvited() {
+		this.dialogRef.close();
+	}
+
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
