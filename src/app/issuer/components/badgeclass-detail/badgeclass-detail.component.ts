@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -52,137 +52,7 @@ interface groupedInstances {
 }
 @Component({
 	selector: 'badgeclass-detail',
-	template: `
-		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-			<oeb-tabs [variant]="'black'" (onTabChanged)="onTabChange($event)" [activeTab]="activeTab" [tabs]="tabs">
-			</oeb-tabs>
-			<ng-template #qrAwards>
-				@if (issuer && issuer.is_network) {
-					@if (!networkQrCodeApiAwards.length) {
-						<qrcode-awards
-							(qrBadgeAward)="onQrBadgeAward($event)"
-							[awards]="[]"
-							[badgeClass]="badgeClass"
-							[issuer]=""
-							[routerLinkText]="config?.issueQrRouterLink"
-						></qrcode-awards>
-					}
-					@for (qrGroup of networkQrCodeApiAwards; track qrGroup.issuer.slug) {
-						<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
-							<img class="tw-w-11" [src]="qrGroup.issuer.image" alt="Issuer Logo" />
-							<span class="tw-text-oebblack tw-text-lg tw-font-semibold tw-uppercase">{{
-								qrGroup.issuer.name
-							}}</span>
-						</div>
-						<qrcode-awards
-							(qrBadgeAward)="onQrBadgeAward($event)"
-							[awards]="qrGroup.qrcodes"
-							[badgeClass]="badgeClass"
-							[issuer]="qrGroup.issuer"
-							[routerLinkText]="config?.issueQrRouterLink"
-							[interactive]="qrGroup.staff"
-						></qrcode-awards>
-					}
-				} @else {
-					<qrcode-awards
-						(qrBadgeAward)="onQrBadgeAward($event)"
-						[awards]="qrCodeAwards"
-						[badgeClass]="badgeClass"
-						[issuer]="issuer"
-						[routerLinkText]="config?.issueQrRouterLink"
-						[defaultUnfolded]="focusRequests"
-					></qrcode-awards>
-				}
-			</ng-template>
-			<ng-template #batchAwards>
-				@if (issuer) {
-					@if (issuer.is_network) {
-						@if (groupedPartnerInstances) {
-							@for (partner of groupedPartnerInstances; track partner) {
-								@if (!partner.has_access && partner.instance_count > 0) {
-									<div class="tw-mb-4">
-										<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
-											<img class="tw-w-11" [src]="partner.issuer.image" alt="Partner Logo" />
-											<span class="tw-text-oebblack tw-font-bold tw-text-lg tw-uppercase">{{
-												partner.issuer.name
-											}}</span>
-										</div>
-									</div>
-									<div class="tw-bg-purple tw-rounded-[10px] tw-w-full tw-px-4 tw-py-5">
-										<span class="tw-text-white tw-font-semibold tw-text-lg">{{
-											partner.instance_count + ' ' + ('Issuer.badgeAwards' | translate)
-										}}</span>
-									</div>
-								} @else if (partner.instances.length) {
-									<div>
-										<div class="tw-mt-8 tw-flex tw-gap-2 tw-items-center">
-											<img class="tw-w-11" [src]="partner.issuer.image" alt="Partner Logo" />
-											<span class="tw-text-oebblack tw-font-bold tw-text-lg tw-uppercase">{{
-												partner.issuer.name
-											}}</span>
-										</div>
-										<issuer-detail-datatable
-											[issuer]="issuer"
-											[recipientCount]="partner.instance_count"
-											[recipients]="partner.instances"
-											(actionElement)="revokeInstance($event)"
-											(downloadCertificate)="
-												downloadCertificate($event['instance'], $event['badgeIndex'])
-											"
-											[downloadStates]="downloadStates"
-											[awardInProgress]="isTaskProcessing || isTaskPending"
-										></issuer-detail-datatable>
-									</div>
-								}
-							}
-						}
-					} @else {
-						<issuer-detail-datatable
-							[issuer]="issuer"
-							[recipientCount]="recipientCount"
-							[recipients]="instanceResults"
-							(actionElement)="revokeInstance($event)"
-							(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
-							[downloadStates]="downloadStates"
-							[awardInProgress]="isTaskProcessing || isTaskPending"
-						></issuer-detail-datatable>
-					}
-				}
-			</ng-template>
-			<ng-template #headerTemplate>
-				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
-			</ng-template>
-			<ng-template #issuerSelection>
-				<div class="tw-mb-8">
-					@if (config.copy_permissions.includes('others')) {
-						@for (issuer of userIssuers; track issuer) {
-							<label class="radio tw-mb-2">
-								<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
-								<span class="radio-x-text">{{ issuer.name }}</span>
-							</label>
-						}
-					} @else {
-						<span class="tw-text-oebblack tw-text-center tw-my-2">
-							{{ 'Badge.copyPermissionInfo' | translate }}
-						</span>
-						<label class="radio tw-my-2">
-							<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
-							<span class="radio-x-text">{{ config.issuerName }}</span>
-						</label>
-					}
-				</div>
-				<oeb-button
-					width="full_width"
-					type="button"
-					[disabled]="!selectedIssuer"
-					(click)="routeToBadgeCreation(selectedIssuer)"
-					size="sm"
-					[text]="'General.next' | translate"
-				>
-				</oeb-button>
-			</ng-template>
-		</bg-badgedetail>
-	`,
+	templateUrl: './badgeclass-detail.component.html',
 	imports: [
 		BgBadgeDetail,
 		QrCodeAwardsComponent,
@@ -203,6 +73,12 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	@ViewChild('headerTemplate')
 	headerTemplate: TemplateRef<void>;
+
+	@ViewChild('networkIssuerSelection')
+	networkIssuerSelection: TemplateRef<void>;
+
+	@ViewChild('networkIssuerSelectionHeader')
+	networkIssuerSelectionHeader: TemplateRef<void>;
 
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
@@ -279,6 +155,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	userIssuers: Issuer[] = [];
 	dialogRef: BrnDialogRef<unknown> = null;
 	selectedIssuer: Issuer = null;
+	selectedNetworkIssuer: Issuer = null;
+
+	isLoadingIssuers = signal(false);
+	networkUserIssuers = signal<Issuer[]>([]);
 
 	config: PageConfig;
 
@@ -370,6 +250,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				if (this.issuer.is_network) {
 					this.loadNetworkQrCodes(this.issuerSlug, this.badgeSlug);
 					this.loadPartnerInstances();
+					this.loadNetworkUserIssuers();
 				} else {
 					this.qrCodeApiService
 						.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug)
@@ -422,9 +303,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		}
 	}
 
-	closeDialog() {
+	closeDialog(result = '') {
 		if (this.dialogRef) {
-			this.dialogRef.close();
+			if ((result = 'continue')) {
+				this.dialogRef.close('continue');
+			} else {
+				this.dialogRef.close();
+			}
 		}
 	}
 
@@ -458,53 +343,66 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			});
 	}
 
+	async loadNetworkUserIssuers() {
+		try {
+			this.isLoadingIssuers.set(true);
+			const apiIssuers = await this.networkManager.networkUserIssuers(this.issuerSlug);
+			const issuers = apiIssuers.map((apiIssuer) => new Issuer(this.commonManager, apiIssuer));
+			this.networkUserIssuers.set(issuers);
+		} catch (error) {
+			console.error('Error loading network issuers:', error);
+			this.networkUserIssuers.set([]);
+		} finally {
+			this.isLoadingIssuers.set(false);
+		}
+	}
+
 	loadConfig(badgeClass: BadgeClass) {
 		this.config = {
 			crumbs: this.crumbs,
-			badgeTitle: this.badgeClass.name,
-			awardCriteria: this.badgeClass.criteria,
+			badgeTitle: badgeClass.name,
+			awardCriteria: badgeClass.criteria,
 			headerButton: {
 				title: 'Badge.award',
-				action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
-				// routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
+				action: () => this.routeToBadgeAward(badgeClass, this.issuer),
 			},
 			issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 			qrCodeButton: {
 				title: 'Badge.awardQRCode',
 				show: true,
-				action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer),
+				action: () => this.routeToQRCodeAward(badgeClass, this.issuer),
 			},
-			badgeDescription: this.badgeClass.description,
+			badgeDescription: badgeClass.description,
 			issuerSlug: this.issuerSlug,
 			slug: this.badgeSlug,
-			createdAt: this.badgeClass.createdAt,
-			updatedAt: this.badgeClass.updatedAt,
-			duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
+			createdAt: badgeClass.createdAt,
+			updatedAt: badgeClass.updatedAt,
+			duration: badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
 			category: this.translate.instant(
-				`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
+				`Badge.categories.${badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
 			),
-			tags: this.badgeClass.tags,
-			issuerName: this.badgeClass.issuerName,
+			tags: badgeClass.tags,
+			issuerName: badgeClass.issuerName,
 			issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
 			issuerImage: this.issuer.image,
 			networkBadge: this.issuer.is_network,
 			badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 			badgeFailedImageUrl: this.badgeFailedImageUrl,
-			badgeImage: this.badgeClass.image,
-			competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
-			license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
+			badgeImage: badgeClass.image,
+			competencies: badgeClass.extension['extensions:CompetencyExtension'],
+			license: badgeClass.extension['extensions:LicenseExtension'] ? true : false,
 			learningPaths: this.learningPaths,
-			copy_permissions: this.badgeClass.copyPermissions,
+			copy_permissions: badgeClass.copyPermissions,
 			menuitems: [
 				{
 					title: 'General.edit',
 					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
 					disabled:
-						this.badgeClass.recipientCount > 0 || !this.issuer.canEditBadge || this.qrCodeAwards.length > 0,
+						badgeClass.recipientCount > 0 || !this.issuer.canEditBadge || this.qrCodeAwards.length > 0,
 					icon: 'lucidePencil',
 				},
 				{
-					title: this.badgeClass.copyPermissions.includes('others') ? 'General.copy' : 'Badge.copyThisIssuer',
+					title: badgeClass.copyPermissions.includes('others') ? 'General.copy' : 'Badge.copyThisIssuer',
 					action: this.copyBadge.bind(this),
 					icon: 'lucideCopy',
 					disabled: !this.issuer.canCreateBadge,
@@ -523,7 +421,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				},
 			],
 		};
-		if (this.badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
+		if (badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
 			this.config.headerButton = null;
 			this.config.qrCodeButton.show = false;
 		}
@@ -789,7 +687,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	routeToBadgeAward(badge: BadgeClass, issuer) {
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
-			if (badge.recipientCount === 0 && qrCodes.length === 0) {
+			if (badge.recipientCount === 0 && qrCodes.length === 0 && !this.issuer.is_network) {
 				const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
 					context: {
 						variant: 'info',
@@ -804,6 +702,24 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					if (result === 'continue')
 						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 				});
+			} else if (this.issuer.is_network) {
+				const dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						headerTemplate: this.networkIssuerSelectionHeader,
+						content: this.networkIssuerSelection,
+					},
+				});
+				this.dialogRef = dialogRef;
+				this.dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue')
+						this.router.navigate([
+							'/issuer/issuers/',
+							this.selectedNetworkIssuer.slug,
+							'badges',
+							badge.slug,
+							'issue',
+						]);
+				});
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 			}
@@ -812,7 +728,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	routeToQRCodeAward(badge, issuer) {
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
-			if (badge.recipientCount === 0 && qrCodes.length === 0) {
+			if (badge.recipientCount === 0 && qrCodes.length === 0 && !this.issuer.is_network) {
 				const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
 					context: {
 						variant: 'info',
@@ -826,6 +742,24 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				dialogRef.closed$.subscribe((result) => {
 					if (result === 'continue')
 						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+				});
+			} else if (this.issuer.is_network) {
+				const dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						headerTemplate: this.networkIssuerSelectionHeader,
+						content: this.networkIssuerSelection,
+					},
+				});
+				this.dialogRef = dialogRef;
+				this.dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue')
+						this.router.navigate([
+							'/issuer/issuers/',
+							this.selectedNetworkIssuer.slug,
+							'badges',
+							badge.slug,
+							'qr',
+						]);
 				});
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
