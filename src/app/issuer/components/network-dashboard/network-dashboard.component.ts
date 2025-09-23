@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, output, signal, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SessionService } from '../../../common/services/session.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -63,6 +63,8 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 	network = signal<any | null>(null);
 	partnerIssuers = signal<Issuer[]>([]);
+
+	refetchCounter = 0;
 
 	pendingInvites: ApiNetworkInvitation[];
 
@@ -184,7 +186,10 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	onInstitutionsInvited() {
-		this.dialogRef.close();
+		this.refetchCounter++;
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
 	}
 
 	public openSuccessDialog() {
@@ -194,6 +199,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 				variant: 'success',
 			},
 		});
+		this.dialogRef = dialogRef;
 	}
 
 	closeDialog() {}

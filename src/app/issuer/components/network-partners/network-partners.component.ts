@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, effect, inject, input, Input, output, signal, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -30,6 +30,8 @@ export class NetworkPartnersComponent {
 
 	removePartnerRequest = output<Issuer>();
 
+	refetchTrigger = input<number>(0);
+
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
 
@@ -47,9 +49,19 @@ export class NetworkPartnersComponent {
 		private networkApiService: NetworkApiService,
 		private publicApiService: PublicApiService,
 		private messageService: MessageService,
-	) {}
+	) {
+		effect(() => {
+			if (this.refetchTrigger() > 0) {
+				this.fetchNetworkInvites();
+			}
+		});
+	}
 
 	ngOnInit() {
+		this.fetchNetworkInvites();
+	}
+
+	fetchNetworkInvites() {
 		this.networkApiService.getNetworkInvites(this.network().slug).then((invites) => {
 			this.approvedInvites.set(invites.filter((i) => i.acceptedOn));
 			this.pendingInvites.set(invites.filter((i) => i.status.toLowerCase() == 'pending'));
