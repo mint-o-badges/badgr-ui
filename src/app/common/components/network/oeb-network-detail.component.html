@@ -1,63 +1,94 @@
-<div class="tw-flex tw-justify-between tw-gap-6">
-	<div class="tw-flex oeb-section-sm md:tw-max-w-[70%] tw-items-center">
-		<div class="tw-relative">
-			<img
-				[loaded-src]="network?.image"
-				[loading-src]="networkPlaceholderSrc"
-				[error-src]="networkPlaceholderSrc"
-				alt="{{ network.name }} avatar"
-				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
-			/>
-		</div>
-		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%] oeb-break-words">
-			<h1 hlmH1 class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
-				{{ network.name }}
-			</h1>
-			@if (public && network.url) {
-				<p hlmP size="sm">
-					<a hlmA target="_blank" [href]="network.url">{{ network.url }}</a>
-				</p>
-			}
-		</div>
-	</div>
-	<div class="tw-w-auto tw-hidden md:tw-grid !tw-content-center">
-		@if (public) {
-			<div class="tw-flex tw-flex-col tw-gap-2">
-				<oeb-button
-					width="full_width"
-					class="tw-whitespace-nowrap"
-					(click)="routeToUrl(network.url)"
-					text="Website"
-				>
-				</oeb-button>
-				<oeb-button class="tw-whitespace-nowrap" [text]="'Issuer.memberView' | translate" variant="secondary">
-				</oeb-button>
-			</div>
-		}
-		<section
-			class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-4 tw-flex tw-flex-col tw-justify-center tw-items-center"
-		>
-			<div>
-				<h2 class="tw-w-full tw-text-oebblack tw-text-lg tw-font-bold">
-					{{ 'Network.partner' | translate }}
-				</h2>
-				<ul class="tw-w-full tw-list-none tw-mt-2">
-					@for (issuer of issuers; track issuer) {
-						<li
-							class="tw-flex tw-gap-2 tw-items-center tw-mt-2"
-							[routerLink]="['/public/issuers', issuer.slug]"
-						>
-							<img class="tw-w-[33px]" [src]="issuer.image" />
-							<span class="tw-text-oebblack">
-								{{ issuer.name }}
-							</span>
-						</li>
+<main class="page-padding">
+	<nav class="oeb-breadcrumbs">
+		<bg-breadcrumbs [linkentries]="linkentries"></bg-breadcrumbs>
+	</nav>
+
+	<header>
+		<h2 class="tw-text-purple tw-mt-20 tw-uppercase tw-text-[22px] tw-font-bold tw-leading-[120%]">
+			{{ 'General.network' | translate }}
+		</h2>
+
+		<section class="tw-flex tw-justify-between tw-gap-6 oeb" aria-labelledby="network-info">
+			<div class="tw-flex md:tw-max-w-[70%] tw-items-center">
+				<figure class="tw-relative">
+					<img
+						[loaded-src]="network?.image"
+						[loading-src]="networkPlaceholderSrc"
+						[error-src]="networkPlaceholderSrc"
+						alt="{{ network.name }} logo"
+						class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
+					/>
+				</figure>
+
+				<hgroup class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%] oeb-break-words">
+					<h1
+						id="network-info"
+						hlmH1
+						class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]"
+					>
+						{{ network.name }}
+					</h1>
+					@if (public && network.url) {
+						<p hlmP size="sm">
+							<a hlmA target="_blank" [href]="network.url" rel="noopener noreferrer">
+								{{ network.url }}
+							</a>
+						</p>
 					}
-				</ul>
+				</hgroup>
 			</div>
+
+			<aside class="tw-w-auto tw-hidden md:tw-grid !tw-content-center" aria-label="Network actions and partners">
+				@if (public) {
+					<nav aria-label="Network actions" class="tw-flex tw-flex-col tw-gap-2">
+						<oeb-button
+							width="full_width"
+							class="tw-whitespace-nowrap"
+							(click)="routeToUrl(network.url)"
+							text="Website"
+						>
+						</oeb-button>
+						<oeb-button
+							class="tw-whitespace-nowrap"
+							[text]="'Issuer.memberView' | translate"
+							variant="secondary"
+						>
+						</oeb-button>
+					</nav>
+				}
+
+				<section
+					class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-4 tw-flex tw-flex-col tw-justify-center tw-items-center"
+					aria-labelledby="partners-heading"
+				>
+					<h2 id="partners-heading" class="tw-w-full tw-text-oebblack tw-text-lg tw-font-bold">
+						{{ 'Network.partner' | translate }}
+					</h2>
+					<ul class="tw-w-full tw-list-none tw-mt-2" role="list">
+						@for (issuer of issuers; track issuer) {
+							<li class="tw-flex tw-gap-2 tw-items-center tw-mt-2">
+								<a
+									[routerLink]="['/public/issuers', issuer.slug]"
+									class="tw-flex tw-gap-2 tw-items-center tw-no-underline hover:tw-underline"
+									[attr.aria-label]="'Visit ' + issuer.name + ' profile'"
+								>
+									<img class="tw-w-[33px]" [src]="issuer.image" [alt]="issuer.name + ' logo'" />
+									<span class="tw-text-oebblack">
+										{{ issuer.name }}
+									</span>
+								</a>
+							</li>
+						}
+					</ul>
+				</section>
+			</aside>
 		</section>
-	</div>
-</div>
-<div>
-	<p class="tw-text-oebblack oeb-break-words tw-py-4">{{ network.description }}</p>
-</div>
+	</header>
+
+	<section aria-labelledby="description-heading">
+		<h2 id="description-heading" class="tw-sr-only">Network Description</h2>
+		<p class="tw-text-oebblack tw-text-lg oeb-break-words tw-py-4 tw-max-w-[80%]">
+			{{ network.description }}
+		</p>
+	</section>
+</main>
