@@ -10,6 +10,7 @@ export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 export type Tab = {
 	key: string;
 	icon?: string;
+	img?: any;
 	title: string;
 	count?: number;
 	component: any;
@@ -21,12 +22,14 @@ export type Tab = {
 	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab()" (tabActivated)="onTabChange($event)">
 		<hlm-tabs-list class="tw-w-full tw-max-w-[600px] tw-flex tw-justify-between" aria-label="tabs">
 			@for (tab of tabs(); track tab) {
-				<button class="tw-grow" [hlmTabsTrigger]="tab.key" [_variant]="variant()">
+				<button class="tw-grow tw-px-6 tw-py-2" [hlmTabsTrigger]="tab.key" [_variant]="variant()">
 					<div class="tw-flex tw-items-center tw-justify-center">
 						@if (tab.icon) {
 							<ng-icon size="38px" [name]="tab.icon" class="tw-mr-2"></ng-icon>
+						} @else if (tab.img) {
+							<img class="tw-w-10 tw-mr-2" [src]="tab.img" alt="Tab Image" />
 						}
-						<span>{{ tab.title | translate }}</span>
+						<span class="tw-text-lg tw-leading-[130%]">{{ tab.title | translate }}</span>
 						@if (tab.count) {
 							@if (countStyle() === 'parentheses') {
 								<span class="tw-ml-1 md:tw-text-lg tw-font-semibold"> ({{ tab.count }}) </span>
@@ -60,5 +63,9 @@ export class OebTabsComponent {
 
 	onTabChange(tab: string) {
 		this.onTabChanged.emit(tab);
+	}
+
+	ngOnInit() {
+		console.log(this.tabs());
 	}
 }

@@ -165,19 +165,6 @@ export class OebIssuerDetailComponent implements OnInit {
 				component: this.learningPathTemplate,
 			},
 		];
-
-		// this.badgeTemplateTabs = [
-		// 	{
-		// 		key: 'issuer-badges',
-		// 		title: 'Issuer.issuerBadges',
-		// 		count: this.badgeResults.length,
-		// 	},
-		// 	{
-		// 		key: 'network-badges',
-		// 		title: 'Issuer.badgesInNetworks',
-		// 		count: this.networkBadgeInstanceResults.length,
-		// 	},
-		// ];
 	}
 
 	badgeResults: BadgeResult[] = [];
@@ -312,6 +299,20 @@ export class OebIssuerDetailComponent implements OnInit {
 	async ngOnInit() {
 		await Promise.all([this.updateResults(), this.updateNetworkResults()]);
 		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
+		this.badgeTemplateTabs = [
+			{
+				key: 'issuer-badges',
+				title: 'Issuer.issuerBadges',
+				count: this.badgeResults.length,
+				img: this.issuer.image,
+			},
+			{
+				key: 'network-badges',
+				title: 'Issuer.badgesInNetworks',
+				count: this.networkBadgeInstanceResults.length,
+				icon: 'lucideShipWheel',
+			},
+		];
 	}
 
 	delete(event) {
