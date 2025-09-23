@@ -31,6 +31,7 @@ export interface ApiBaseIssuer {
 	json: ApiIssuerJsonld;
 	country?: string;
 	state?: string;
+	linkedinId: string;
 }
 
 export interface ApiIssuer extends ApiBaseIssuer {
@@ -43,7 +44,6 @@ export interface ApiIssuer extends ApiBaseIssuer {
 	ownerAcceptedTos: boolean;
 
 	source_url?: string;
-	linkedinId: string;
 	category?: string;
 	street?: string;
 	streetnumber?: string;
@@ -81,6 +81,7 @@ export interface ApiIssuerForCreation {
 	lon?: number;
 
 	is_network?: false;
+	linkedinId: string;
 }
 
 export interface ApiNetworkForCreation {

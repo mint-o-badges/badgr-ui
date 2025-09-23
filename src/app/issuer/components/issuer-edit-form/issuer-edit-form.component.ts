@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, input, ElementRef, viewChild, TemplateRef } from '@angular/core';
-import { typedFormGroup } from '../../../common/util/typed-forms';
+import { TypedFormGroup, typedFormGroup } from '../../../common/util/typed-forms';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 import { UrlValidator } from '../../../common/validators/url.validator';
@@ -118,8 +118,6 @@ export class IssuerEditFormComponent implements OnInit {
 			this.issuerForm.addControl('agreedTerms', '', Validators.requiredTrue);
 		}
 
-		this.buildForm();
-
 		const authCode = this.queryParams.queryStringValue('authCode', true);
 		if (loginService.isLoggedIn && !authCode) this.refreshProfile();
 
@@ -148,6 +146,8 @@ export class IssuerEditFormComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.buildForm();
+
 		this.translate.get('Issuer.enterDescription').subscribe((translatedText: string) => {
 			this.enterDescription = translatedText;
 		});
@@ -175,7 +175,6 @@ export class IssuerEditFormComponent implements OnInit {
 	}
 
 	private buildForm() {
-		console.log('network form', this.networkForm());
 		this.issuerForm = typedFormGroup()
 			.addControl('issuer_name', '', [
 				Validators.required,
@@ -190,7 +189,8 @@ export class IssuerEditFormComponent implements OnInit {
 			.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 			.addControl('issuer_image', '', Validators.required)
 			.addControl('country', 'Germany', Validators.required)
-			.addControl('state', '');
+			.addControl('state', '')
+			.addControl('issuer_linkedin_id', '');
 
 		if (!this.networkForm()) {
 			this.issuerForm
@@ -201,6 +201,10 @@ export class IssuerEditFormComponent implements OnInit {
 				.addControl('issuer_zip', '', Validators.required)
 				.addControl('issuer_city', '', Validators.required)
 				.addControl('verify_intended_use', false, Validators.requiredTrue);
+		}
+
+		if (this.configService.theme.dataProcessorTermsLink) {
+			this.issuerForm.addControl('agreedTerms', '', Validators.requiredTrue);
 		}
 	}
 
@@ -214,6 +218,7 @@ export class IssuerEditFormComponent implements OnInit {
 			issuer_url: issuer.websiteUrl,
 			country: issuer.country,
 			state: issuer.state,
+			issuer_linkedin_id: issuer.linkedinId,
 		};
 
 		const issuerSpecificValues = !this.networkForm()
@@ -261,7 +266,7 @@ export class IssuerEditFormComponent implements OnInit {
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			// try scrolling to the first invalid form field
 			const firstInvalidControl: HTMLElement =
-				this.imageError.length > 0
+				this.imageError && this.imageError.length > 0
 					? this.imageField().nativeElement
 					: (document.querySelector('.ng-invalid') as HTMLElement);
 			if (firstInvalidControl) {
@@ -294,6 +299,7 @@ export class IssuerEditFormComponent implements OnInit {
 			country: formState.country,
 			state: formState.state,
 			intendedUseVerified: formState.verify_intended_use,
+			linkedinId: formState.issuer_linkedin_id,
 		};
 
 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
@@ -322,6 +328,7 @@ export class IssuerEditFormComponent implements OnInit {
 			country: formState.country,
 			state: formState.state,
 			image: formState.issuer_image,
+			linkedinId: formState.issuer_linkedin_id,
 		};
 
 		this.addIssuerFinished = this.networkManager
