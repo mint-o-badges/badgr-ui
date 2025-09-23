@@ -22,7 +22,7 @@ import { NgIf, NgFor } from '@angular/common';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { SvgIconComponent } from '../svg-icon.component';
-import { OebTabsComponent } from '../../../components/oeb-tabs.component';
+import { OebTabsComponent, Tab } from '../../../components/oeb-tabs.component';
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
 import { DatatableComponent } from '../../../components/datatable-badges.component';
 import { FormsModule } from '@angular/forms';
@@ -140,7 +140,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		},
 	];
 
-	tabs: any = undefined;
+	tabs: Tab[] = undefined;
 	activeTab = 'badges';
 
 	badgeTemplateTabs: any = undefined;
@@ -166,18 +166,18 @@ export class OebIssuerDetailComponent implements OnInit {
 			},
 		];
 
-		this.badgeTemplateTabs = [
-			{
-				key: 'issuer-badges',
-				title: 'Issuer.issuerBadges',
-				// component: this.issuerBadgesTemplate,
-			},
-			{
-				key: 'network-badges',
-				title: 'Issuer.networkBadges',
-				// component: this.networkBadgesTemplate,
-			},
-		];
+		// this.badgeTemplateTabs = [
+		// 	{
+		// 		key: 'issuer-badges',
+		// 		title: 'Issuer.issuerBadges',
+		// 		count: this.badgeResults.length,
+		// 	},
+		// 	{
+		// 		key: 'network-badges',
+		// 		title: 'Issuer.badgesInNetworks',
+		// 		count: this.networkBadgeInstanceResults.length,
+		// 	},
+		// ];
 	}
 
 	badgeResults: BadgeResult[] = [];

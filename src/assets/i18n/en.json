@@ -390,6 +390,7 @@
 		"emailIsIdentifier": "The email serves as an identifier for the badge. The badge will be sent here.",
 		"receivesBadgeByEmail": "The recipient will receive the badge by email.",
 		"issuerBadges": "Institutional badges",
+		"badgesInNetworks": "Badges in networks",
 		"networkBadges": "Network badges",
 		"yourIssuersAreInNetworks": "Your institutions are part of the following networks:",
 		"awardedNetworkBadges": "These badges were issued by {{issuer}} <span class='tw-underline'>via the respective network</span>:",

@@ -393,6 +393,7 @@
 		"receivesBadgeByEmail": "Der/die Empfänger:in erhält den Badge per E-Mail.",
 		"issuerBadges": "Institutions-Badges",
 		"networkBadges": "Netzwerk-Badges",
+		"badgesInNetworks": "Badges in Netzwerken",
 		"yourIssuersAreInNetworks": "Institutionen von dir sind Teil folgender Netzwerke:",
 		"awardedNetworkBadges": "Diese Badges hat {{issuer}} <span class='tw-underline'>über das jeweilige Netzwerk vergeben</span>:",
 		"noAwardedNetworkBadges": "{{issuer}} hat noch keine Badges <span class='tw-underline'>über ein Netzwerk vergeben</span>.",
