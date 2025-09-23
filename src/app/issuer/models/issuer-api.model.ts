@@ -43,6 +43,7 @@ export interface ApiIssuer extends ApiBaseIssuer {
 	ownerAcceptedTos: boolean;
 
 	source_url?: string;
+	linkedinId: string;
 	category?: string;
 	street?: string;
 	streetnumber?: string;
@@ -131,6 +132,7 @@ export interface ApiIssuerForEditing {
 	state?: string;
 
 	intendedUseVerified: boolean;
+	linkedinId: string;
 
 	lat?: number;
 	lon?: number;

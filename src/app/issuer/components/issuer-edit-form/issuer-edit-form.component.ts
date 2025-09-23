@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, input, ElementRef, viewChild } from '@angular/core';
+import { Component, OnInit, Input, input, ElementRef, viewChild, TemplateRef } from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
@@ -22,11 +22,13 @@ import { OebInputComponent } from '../../../components/input.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmP } from '@spartan-ng/helm/typography';
+import { HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { countries } from 'countries-list';
 import * as states from '../../../../assets/data/german-states.json';
 import type { TCountries, ICountry, ICountryData } from 'countries-list';
-import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { HlmDialogService } from '@spartan-ng/helm/dialog';
+import { DialogComponent } from '~/components/dialog.component';
 
 @Component({
 	selector: 'issuer-edit-form',
@@ -43,6 +45,7 @@ import { NetworkManager } from '~/issuer/services/network-manager.service';
 		RouterLink,
 		TranslatePipe,
 		HlmP,
+		HlmH3,
 	],
 })
 export class IssuerEditFormComponent implements OnInit {
@@ -91,6 +94,9 @@ export class IssuerEditFormComponent implements OnInit {
 
 	imageField = viewChild.required<ElementRef<HTMLElement>>('imageField');
 
+	linkedInIdHeaderTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogHeader');
+	linkedInIdBodyTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogBody');
+
 	constructor(
 		loginService: SessionService,
 		protected router: Router,
@@ -104,6 +110,7 @@ export class IssuerEditFormComponent implements OnInit {
 		protected translate: TranslateService,
 		protected issuerManager: IssuerManager,
 		protected networkManager: NetworkManager,
+		protected dialogService: HlmDialogService,
 	) {
 		title.setTitle(`Create Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -217,6 +224,9 @@ export class IssuerEditFormComponent implements OnInit {
 					issuer_street: issuer.street,
 					issuer_streetnumber: issuer.streetnumber,
 					issuer_zip: issuer.zip,
+					country: issuer.country,
+					state: issuer.state,
+					issuer_linkedin_id: issuer.linkedinId,
 					verify_intended_use: issuer.intendedUseVerified,
 				}
 			: {};
@@ -398,6 +408,15 @@ export class IssuerEditFormComponent implements OnInit {
 	// 			.then(() => (this.addIssuerFinished = null));
 	// 	}
 	// }
+
+	public openLinkedInInfoDialog() {
+		this.dialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.linkedInIdHeaderTemplate(),
+				content: this.linkedInIdBodyTemplate(),
+			},
+		});
+	}
 
 	get dataProcessorUrl() {
 		return this.configService.theme.dataProcessorTermsLink;

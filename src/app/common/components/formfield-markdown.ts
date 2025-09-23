@@ -10,9 +10,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 
-import { CommonDialogsService } from '../services/common-dialogs.service';
 import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../app-config.service';
 import { LMarkdownEditorModule } from 'ngx-markdown-editor';
@@ -40,8 +39,6 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 	markdown_content = '';
 
 	constructor(
-		private dialogService: CommonDialogsService,
-		private domSanitizer: DomSanitizer,
 		private http: HttpClient,
 		private configService: AppConfigService,
 	) {
@@ -219,24 +216,6 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 		}
 	}
 
-	openMarkdownHintsDialog() {
-		this.dialogService.markdownHintsDialog.openDialog();
-	}
-
-	unlock() {
-		this.dialogService.confirmDialog
-			.openResolveRejectDialog({
-				dialogTitle: 'Are you sure?',
-				dialogBody: this.unlockConfirmText,
-				resolveButtonLabel: 'Continue',
-				rejectButtonLabel: 'Cancel',
-			})
-			.then(
-				() => (this.unlocked = true),
-				() => void 0,
-			);
-	}
-
 	focus() {
 		this.inputElement.focus();
 	}
@@ -254,8 +233,6 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 		this.cachedDirtyState = this.control.dirty;
 		this.cachedErrorState = this.controlErrorState;
 	}
-
-	private postProcessInput() {}
 
 	private handleKeyPress(event: KeyboardEvent) {
 		// This handles revalidating when hitting enter from within an input element. Ideally, we'd catch _all_ form submission

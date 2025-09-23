@@ -2,20 +2,12 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, ViewCh
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
-import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-import { Issuer } from '../../../issuer/models/issuer.model';
-import { Title } from '@angular/platform-browser';
-import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
-
-import { Map, NavigationControl, Popup } from 'maplibre-gl';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
-import { applySorting } from '../../util/sorting';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { CountUpModule } from 'ngx-countup';
@@ -28,9 +20,6 @@ import { IssuerCardComponent } from '../../../components/issuer-card/issuer-card
 import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { OebNetworkCard } from '~/common/components/oeb-networkcard.component';
 import { RouterLink } from '@angular/router';
-import { HlmIcon } from '@spartan-ng/helm/icon';
-import { HlmInput } from '@spartan-ng/helm/input';
-import { HlmH1 } from '@spartan-ng/helm/typography';
 import { CatalogService } from '~/catalog/catalog.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import {
@@ -44,6 +33,7 @@ import {
 	Subscription,
 	tap,
 } from 'rxjs';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
 
 @Component({
 	selector: 'app-network-catalog',
@@ -51,22 +41,12 @@ import {
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		HlmH1,
 		BgAwaitPromises,
 		CountUpModule,
 		FormsModule,
-		HlmInput,
-		NgIcon,
-		HlmIcon,
-		OebGlobalSortSelectComponent,
-		OebSelectComponent,
-		NgClass,
-		OebButtonComponent,
-		IssuerCardComponent,
-		PaginationAdvancedComponent,
-		TranslatePipe,
 		OebNetworkCard,
 		RouterLink,
+		OebHeaderText,
 	],
 })
 export class NetworkCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {

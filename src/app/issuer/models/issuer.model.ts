@@ -110,6 +110,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return this.apiModel.source_url;
 	}
 
+	get linkedinId(): string {
+		return this.apiModel.linkedinId;
+	}
+
 	get networks(): ApiNetwork[] {
 		return this.apiModel.networks;
 	}

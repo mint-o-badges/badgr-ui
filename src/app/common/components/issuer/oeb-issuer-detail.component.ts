@@ -7,7 +7,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { MenuItem } from '../badge-detail/badge-detail.component.types';
 import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
@@ -42,6 +41,7 @@ interface NetworkBadgeGroup {
 	badges: BadgeResult[];
 	networkIssuer?: any;
 }
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 
 @Component({
 	selector: 'oeb-issuer-detail',

@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -8,7 +7,6 @@ import { MessageService } from '../../../common/services/message.service';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
-import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
@@ -49,14 +47,12 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		sessionService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
-		protected fb: FormBuilder,
 		protected title: Title,
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
 		protected networkManager: NetworkManager,
 		protected badgeClassService: BadgeClassManager,
 		private configService: AppConfigService,
-		protected dialogService: CommonDialogsService,
 		public translate: TranslateService,
 	) {
 		super(router, route, sessionService);
