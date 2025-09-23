@@ -356,7 +356,7 @@
 		"staffOwnerRights": "Access to all functions including adding/removing editors and employees, editing institution details and creating, assigning and deleting badges including micro degrees.",
 		"staffEditorRights": "Rights to create, assign and delete badges, including micro-degrees.",
 		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
-		"imageFormat": "(Format 1:1 / square, file formats: PNG or SVG)",
+		"imageFormat": "(Format 1:1 / square)",
 		"nameOfIssuer": "Name of Institution",
 		"websiteUrl": "Website-URL",
 		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
