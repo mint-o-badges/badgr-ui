@@ -33,7 +33,7 @@ import { NetworkManager } from '../../services/network-manager.service';
 import { Network } from '../../models/network.model';
 import { NetworkListComponent } from '../network-list/network-list.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
-import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { HlmH1, HlmH3, HlmP } from '@spartan-ng/helm/typography';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UserPreferenceService } from '~/common/services/user-preference.service';
 
@@ -43,6 +43,7 @@ import { UserPreferenceService } from '~/common/services/user-preference.service
 	imports: [
 		FormMessageComponent,
 		HlmH1,
+		HlmH3,
 		HlmP,
 		OebButtonComponent,
 		RouterLink,

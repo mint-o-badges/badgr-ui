@@ -385,7 +385,7 @@
 		"addLinkedInId": "LinkedIn-ID ergänzen",
 		"findLinkedInId": "So findest du die LinkedIn-ID:",
 		"findLinkedInIdText": "Gehe zur Seite deiner Institution auf LinkedIn.  Die ID ist die Zahlenfolge in der entsprechenden URL.  Die URL lautet zum Beispiel: www.linkedin.com/company/12345678/admin. → ID = 12345678.",
-		"findLinkedInIdNote": "Du kannst die Linkedin-ID jederzeit auf der Seite deiner Institution durch „Bearbeiten” der Institutions-Details ergänzen."
+		"findLinkedInIdNote": "Du kannst die LinkedIn-ID jederzeit auf der Seite deiner Institution durch „Bearbeiten” der Institutions-Details ergänzen."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",

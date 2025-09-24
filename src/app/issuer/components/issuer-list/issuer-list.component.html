@@ -419,7 +419,7 @@
 </ng-template>
 
 <ng-template #linkedInIdDialogHeader>
-	<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-4">
+	<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-6">
 		{{ 'Issuer.addLinkedInId' | translate }}
 	</h3>
 </ng-template>
@@ -430,13 +430,13 @@
 	<p hlmP [size]="'sm'" class="oeb tw-font-semibold">
 		{{ 'Issuer.findLinkedInId' | translate }}
 	</p>
-	<p hlmP [size]="'sm'" class="oeb tw-italic tw-text-purple tw-pb-6">
+	<p hlmP [size]="'sm'" class="oeb tw-italic tw-text-purple tw-pb-8">
 		{{ 'Issuer.findLinkedInIdText' | translate }}
 	</p>
-	<div class="tw-flex tw-flex-row tw-pb-6 tw-gap-4">
+	<div class="tw-flex tw-flex-row tw-pb-8 tw-gap-4">
 		<oeb-button
 			[size]="'sm'"
-			[variant]="'blackborder'"
+			[variant]="'secondary'"
 			[text]="'General.notNow' | translate"
 			(click)="closeDialog()"
 			[routerLink]="forwardTo"
