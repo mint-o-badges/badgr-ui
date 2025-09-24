@@ -402,8 +402,9 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	linkedInIdHeaderTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogHeader');
 	linkedInIdBodyTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogBody');
 
-	public async openLinkedInHintDialog(slug: string) {
-		const issuerSlug = slug;
+	public async openLinkedInHintDialog(issuer: Issuer) {
+		if (!issuer.currentUserStaffMember.isOwner) return;
+		const issuerSlug = issuer.slug;
 		const prefKey = 'linkedInIDPromptForInstitution';
 		const pref = await this.userPreferences.getPreference(prefKey, '[]');
 		if (pref === undefined || pref === null)
