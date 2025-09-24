@@ -5,7 +5,7 @@ import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
 import { SessionService } from '~/common/services/session.service';
 import { BadgeClassV3, IBadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
-import { NetworkV3 } from '~/issuer/models/networkv3.model';
+import { INetworkV3, NetworkV3 } from '~/issuer/models/networkv3.model';
 
 const ENDPOINT = 'v3/issuer';
 
@@ -134,7 +134,7 @@ export class CatalogService extends BaseHttpApiService {
 				params = params.append('ordering', `${ascOrDesc}${nameOrDate}`);
 			}
 
-			const response = await this.get<PaginatedNetwork & { results: any[] }>(
+			const response = await this.get<PaginatedNetwork & { results: INetworkV3[] }>(
 				`${this.baseUrl}/${ENDPOINT}/networks/`,
 				params,
 			);
@@ -164,5 +164,5 @@ export interface PaginatedNetwork {
 	count: number;
 	next: string | null;
 	previous: string | null;
-	results: any[];
+	results: INetworkV3[];
 }
