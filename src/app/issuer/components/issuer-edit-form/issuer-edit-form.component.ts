@@ -1,6 +1,13 @@
 import { Component, OnInit, Input, viewChild, ElementRef, TemplateRef } from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormBuilder,
+	Validators,
+	FormsModule,
+	ReactiveFormsModule,
+	ValidatorFn,
+	AbstractControl,
+} from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
@@ -65,7 +72,7 @@ export class IssuerEditFormComponent implements OnInit {
                 EmailValidator.validEmail*/
 		])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
-		.addControl('issuer_linkedin_id', '')
+		.addControl('issuer_linkedin_id', '', this.positiveIntegerString())
 		.addControl('issuer_category', '', [Validators.required])
 		.addControl('issuer_image', '', Validators.required)
 		.addControl('issuer_street', '', Validators.required)
@@ -303,5 +310,16 @@ export class IssuerEditFormComponent implements OnInit {
 	urlBlurred(ev) {
 		const control = this.issuerForm.rawControlMap['issuer_url'];
 		UrlValidator.addMissingHttpToControl(control);
+	}
+
+	positiveIntegerString() {
+		return (control: AbstractControl) => {
+			const val = parseFloat(control.value);
+			if (!val) return;
+
+			if (!Number.isInteger(val) || val < 0) {
+				return { negativeDuration: this.translate.instant('CreateBadge.valuePositive') };
+			}
+		};
 	}
 }
