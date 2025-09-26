@@ -39,6 +39,7 @@ import { Network } from '../../../issuer/models/network.model';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -78,6 +79,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	learningPathsPromise: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	userIsMember = false;
+	env = environment;
 
 	constructor(
 		private router: Router,

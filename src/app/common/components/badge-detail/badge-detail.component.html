@@ -110,7 +110,7 @@
 							</div>
 							<div>
 								@if (config.copy_permissions) {
-									<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1">
+									<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1 tw-mt-2">
 										<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
 										<dd
 											[innerHTML]="
@@ -121,7 +121,7 @@
 										></dd>
 									</div>
 								}
-								<dl clss="tw-min-w-[150px]">
+								<dl class="tw-min-w-[150px] tw-mt-2 tw-pt-2">
 									@if (hasCriteria || config.competencies.length) {
 										<div class="tw-bg-white tw-mb-4 tw-rounded-[10px] tw-p-2">
 											<oeb-collapsible

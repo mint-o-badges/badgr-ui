@@ -383,7 +383,7 @@
 		"linkedInUseNoteText": "Learners can add badges they have earned to their LinkedIn profile. In order for the certificate to appear there with your institution's logo image, we need to store your institution's LinkedIn ID.",
 		"addLinkedInId": "Add LinkedIn ID",
 		"findLinkedInId": "How to find your LinkedIn ID:",
-		"findLinkedInIdText": "Go to your institution's page on LinkedIn. The ID is the sequence of numbers in the corresponding URL. For example, the URL is: www.linkedin.com/company/12345678/admin. → ID = 12345678.",
+		"findLinkedInIdText": "Go to your institution's page on LinkedIn. The ID is the sequence of numbers in the corresponding URL. For example, the URL is: www.linkedin.com/company/<span class='tw-font-bold'>12345678</span>/admin. → <span class='tw-font-bold'>ID = 12345678</span>.",
 		"findLinkedInIdNote": "You can add the LinkedIn ID at any time on your institution's page by editing the institution details."
 	},
 	"Network": {
