@@ -110,7 +110,9 @@
 							</div>
 							<div>
 								@if (config.copy_permissions) {
-									<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1">
+									<div
+										class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1 tw-pt-4 tw-pb-4"
+									>
 										<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
 										<dd
 											[innerHTML]="
@@ -121,9 +123,12 @@
 										></dd>
 									</div>
 								}
-								<dl clss="tw-min-w-[150px]">
+								<dl class="tw-min-w-[150px]">
 									@if (hasCriteria || config.competencies.length) {
-										<div class="tw-bg-white tw-mb-4 tw-rounded-[10px] tw-p-2">
+										<div
+											class="tw-bg-white tw-mb-6 tw-rounded-[10px] tw-p-2"
+											[class.tw-mt-6]="!config.copy_permissions"
+										>
 											<oeb-collapsible
 												[trigger]="collapseCriteriaTrigger"
 												closeIcon="lucideChevronDown"
@@ -278,7 +283,7 @@
 										</div>
 									}
 									@if (config.tags.length > 0) {
-										<div class="tw-flex tw-items-start tw-flex-col tw-mt-4">
+										<div class="tw-flex tw-items-start tw-flex-col tw-mt-6">
 											<dt class="tw-text-darkgray md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
 											<dd class="tw-text-darkgray">
 												@for (tag of config.tags; track tag; let last = $last) {
