@@ -175,17 +175,20 @@
 </ng-template>
 
 <ng-template #issuersTemplate>
-	<p hlmP class="tw-py-3">
+	<p class="tw-pb-4 tw-mt-10 tw-text-oebblack tw-text-lg tw-leading-[130%]">
 		<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
 		<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
 	</p>
 
-	<p hlmP class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
+	<p
+		class="tw-pb-3 tw-text-oebblack tw-text-lg tw-leading-[130%]"
+		[innerHTML]="'Issuer.myLearningPathText' | translate"
+	></p>
 	@if (issuers?.length === 0) {
 		<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
 			<span
 				[innerHTML]="'Issuer.createFirstInstitution' | translate"
-				class="tw-text-2xl tw-italic tw-text-oebblack"
+				class="tw-text-lg tw-italic tw-text-oebblack"
 			>
 			</span>
 			<oeb-button
@@ -287,7 +290,7 @@
 	<!-- Staff Requests section -->
 
 	<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-6">
-		<p class="tw-text-xl tw-italic tw-text-oebblack">
+		<p class="tw-text-lg tw-italic tw-text-oebblack">
 			{{ 'Issuer.partOfInstitution' | translate }}
 		</p>
 		@if (staffRequests.length > 0) {
