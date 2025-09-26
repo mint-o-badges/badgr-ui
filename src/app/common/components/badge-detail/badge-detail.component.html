@@ -111,7 +111,8 @@
 							<div>
 								@if (config.copy_permissions) {
 									<div
-										class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1 tw-pt-4 tw-pb-4"
+										class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1 tw-pt-4"
+										[class.tw-pb-4]="hasCriteria || config.competencies.length"
 									>
 										<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
 										<dd
