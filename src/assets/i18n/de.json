@@ -384,7 +384,7 @@
 		"linkedInUseNoteText": "Lernende können erhaltene Badges in ihr LinkedIn-Profil einbinden. Damit das Zertifikat dort mit dem \t\t\tLogo-Bild deiner Institution erscheint, müssen wir die LinkedIn-ID deiner Institution hinterlegen.",
 		"addLinkedInId": "LinkedIn-ID ergänzen",
 		"findLinkedInId": "So findest du die LinkedIn-ID:",
-		"findLinkedInIdText": "Gehe zur Seite deiner Institution auf LinkedIn.  Die ID ist die Zahlenfolge in der entsprechenden URL.  Die URL lautet zum Beispiel: www.linkedin.com/company/12345678/admin. → ID = 12345678.",
+		"findLinkedInIdText": "Gehe zur Seite deiner Institution auf LinkedIn.  Die ID ist die Zahlenfolge in der entsprechenden URL. Die URL lautet zum Beispiel: www.linkedin.com/company/<span class='tw-font-bold'>12345678</span>/admin. → <span class='tw-font-bold'>ID = 12345678</span>.",
 		"findLinkedInIdNote": "Du kannst die LinkedIn-ID jederzeit auf der Seite deiner Institution durch „Bearbeiten” der Institutions-Details ergänzen."
 	},
 	"Network": {
