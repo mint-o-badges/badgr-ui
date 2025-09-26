@@ -30,9 +30,6 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmP, HlmH3 } from '@spartan-ng/helm/typography';
-import { countries } from 'countries-list';
-import * as states from '../../../../assets/data/german-states.json';
-import type { TCountries, ICountry, ICountryData } from 'countries-list';
 import { HlmDialogService } from '@spartan-ng/helm/dialog';
 import { DialogComponent } from '~/components/dialog.component';
 
@@ -82,18 +79,12 @@ export class IssuerEditFormComponent implements OnInit {
 		.addControl('issuer_streetnumber', '', Validators.required)
 		.addControl('issuer_zip', '', Validators.required)
 		.addControl('issuer_city', '', Validators.required)
-		.addControl('country', 'Germany', Validators.required)
-		.addControl('state', '')
 		.addControl('verify_intended_use', false, Validators.requiredTrue);
 
 	emails: UserProfileEmail[];
-	primaryEmail: UserProfileEmail;
 	emailsOptions: FormFieldSelectOption[];
 	addIssuerFinished: Promise<unknown>;
 	editIssuerFinished: Promise<unknown>;
-
-	_countriesOptions: FormFieldSelectOption[];
-	_germanStateOptions: FormFieldSelectOption[];
 
 	emailsLoaded: Promise<unknown>;
 
@@ -152,7 +143,6 @@ export class IssuerEditFormComponent implements OnInit {
 			.then((profile) => profile.emails.loadedPromise)
 			.then((emails) => {
 				this.emails = emails.entities.filter((e) => e.verified);
-				this.primaryEmail = emails.entities.find((e) => e.primary);
 				this.emailsOptions = this.emails.map((e) => {
 					return {
 						label: e.email,
@@ -160,16 +150,6 @@ export class IssuerEditFormComponent implements OnInit {
 					};
 				});
 			});
-
-		this._countriesOptions = Object.values(countries).map((r) => ({
-			label: r.native,
-			value: r.name,
-		}));
-
-		this._germanStateOptions = Object.values(states).map((r) => ({
-			label: r.de,
-			value: r.iso,
-		}));
 	}
 
 	ngOnInit() {
@@ -212,8 +192,6 @@ export class IssuerEditFormComponent implements OnInit {
 			issuer_streetnumber: issuer.streetnumber,
 			issuer_zip: issuer.zip,
 			issuer_url: issuer.websiteUrl,
-			country: issuer.country,
-			state: issuer.state,
 			issuer_linkedin_id: issuer.linkedinId,
 			verify_intended_use: issuer.intendedUseVerified,
 		});
@@ -268,8 +246,6 @@ export class IssuerEditFormComponent implements OnInit {
 				streetnumber: formState.issuer_streetnumber,
 				zip: formState.issuer_zip,
 				city: formState.issuer_city,
-				country: formState.country,
-				state: formState.state,
 				intendedUseVerified: formState.verify_intended_use,
 			};
 			this.editIssuerFinished = this.issuerManager
@@ -296,8 +272,6 @@ export class IssuerEditFormComponent implements OnInit {
 				streetnumber: formState.issuer_streetnumber,
 				zip: formState.issuer_zip,
 				city: formState.issuer_city,
-				country: formState.country,
-				state: formState.state,
 				intendedUseVerified: formState.verify_intended_use,
 			};
 
