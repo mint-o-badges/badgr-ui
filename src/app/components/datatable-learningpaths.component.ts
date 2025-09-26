@@ -140,7 +140,7 @@ export class LearningPathDatatableComponent {
 	readonly tableSorting = signal<SortingState>([
 		{
 			id: 'Badge.createdOn',
-			desc: false,
+			desc: true,
 		},
 	]);
 
