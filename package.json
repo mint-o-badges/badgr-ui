@@ -19,7 +19,7 @@
 		"test": "ng test",
 		"test-intellij": "ng test 2>&1 | perl -e '$|++; while (<>) { s/((ERROR|WARNING) in\\s*)(.*)/$1\\n$3/g; print $_; }'",
 		"test-headless": "ng test --source-map=false --watch=false --browsers=ChromeHeadless",
-		"lint": "tslint src/**/*.ts",
+		"lint": "ng lint web-components-cli && ng lint badgr-ui-cli",
 		"postversion": "git push && git push --tags",
 		"gts-check": "gts check",
 		"gts-clean": "gts clean",
@@ -111,10 +111,11 @@
 		"@types/uglify-js": "3.17.4",
 		"@types/validator": "13.15.0",
 		"@types/webpack": "^5.28.5",
-		"codelyzer": "^6.0.0",
 		"commitizen": "^4.3.0",
 		"cz-conventional-changelog": "^3.3.0",
-		"eslint": "^8.57.0",
+		"eslint": "^8.57.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.4",
 		"file-loader": "^6.2.0",
 		"font-awesome": "^4.7.0",
 		"fontmin": "^2.0.2",
@@ -140,6 +141,7 @@
 		"parse5": "^7.1.2",
 		"postcss": "^8.4.31",
 		"postcss-preset-env": "^10.2.3",
+		"prettier": "^3.6.2",
 		"remap-istanbul": "0.13.0",
 		"rimraf": "^6.0.1",
 		"sass": "^1.49.9",
@@ -165,5 +167,39 @@
 			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
 			"prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
 		}
+	},
+	"eslintConfig": {
+		"root": true,
+		"ignorePatterns": [
+			"projects/**/*"
+		],
+		"overrides": [
+			{
+				"files": [
+					"*.ts"
+				],
+				"parserOptions": {
+					"project": [
+						"tsconfig.json"
+					],
+					"createDefaultProgram": true
+				},
+				"extends": [
+					"plugin:@angular-eslint/recommended",
+					"plugin:@angular-eslint/template/process-inline-templates",
+					"plugin:prettier/recommended"
+				],
+				"rules": {}
+			},
+			{
+				"files": [
+					"*.html"
+				],
+				"extends": [
+					"plugin:@angular-eslint/template/recommended"
+				],
+				"rules": {}
+			}
+		]
 	}
 }

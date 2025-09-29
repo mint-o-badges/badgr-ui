@@ -1,5 +1,3 @@
-// tslint:disable
-
 // From https://stackoverflow.com/questions/10834796/validate-that-a-string-is-a-positive-integer
 export function isPositiveInteger(n) {
 	return n >>> 0 === parseFloat(n);
@@ -126,4 +124,3 @@ export function deepAssign(dest: any, source: any, seenSources: Set<any> = new S
 
 	return dest;
 }
-// tslint:enable
