@@ -35,6 +35,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { NgTemplateOutlet } from '@angular/common';
 import { NetworkApiService } from '~/issuer/services/network-api.service';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
+import { IssuerApiService } from '~/issuer/services/issuer-api.service';
 
 interface NetworkBadgeGroup {
 	issuerName: string;
@@ -42,6 +43,7 @@ interface NetworkBadgeGroup {
 	networkIssuer?: any;
 }
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
+import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -98,6 +100,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		private qrCodeApiService: QrCodeApiService,
 		private sessionService: SessionService,
 		private networkApiService: NetworkApiService,
+		private issuerApiService: IssuerApiService,
 	) {
 		if (this.sessionService.isLoggedIn) {
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
@@ -139,6 +142,8 @@ export class OebIssuerDetailComponent implements OnInit {
 			icon: 'lucideUsers',
 		},
 	];
+
+	sharedNetworkBadgeResults: BadgeResult[] = [];
 
 	tabs: Tab[] = undefined;
 	activeTab = 'badges';
@@ -296,8 +301,60 @@ export class OebIssuerDetailComponent implements OnInit {
 		}
 	}
 
+	private async updateSharedNetworkResults() {
+		this.sharedNetworkBadgeResults.length = 0;
+
+		if (this.sessionService.isLoggedIn) {
+			const sharedBadges = await this.issuerApiService.listSharedNetworkBadges(this.issuer.slug);
+
+			this.requestsLoaded = Promise.all(
+				sharedBadges.map((share) =>
+					this.qrCodeApiService
+						.getQrCodesForIssuerByBadgeClass(
+							share.shared_by_issuer?.slug || this.issuer.slug,
+							share.badgeclass.slug,
+						)
+						.then((p) => ({ key: share.badgeclass.slug, value: p })),
+				),
+			).then((d) =>
+				d.reduce((map, obj) => {
+					map.set(obj.key, obj.value);
+					return map;
+				}, new Map<string, ApiQRCode[]>()),
+			);
+
+			const requestMap = await this.requestsLoaded;
+
+			const addSharedBadgeToResults = async (share: ApiBadgeClassNetworkShare) => {
+				if (this.sharedNetworkBadgeResults.length > this.maxDisplayedResults) {
+					return false;
+				}
+
+				const badge = new BadgeClass(this.entityManager, share.badgeclass);
+				const issuerName = share.shared_by_issuer?.name || this.issuer.name;
+				const requestCount = this.getRequestCount(badge, requestMap);
+
+				this.sharedNetworkBadgeResults.push(new BadgeResult(badge, issuerName, requestCount));
+
+				return true;
+			};
+
+			sharedBadges
+				.filter((share) =>
+					MatchingAlgorithm.badgeMatcher(this._searchQuery)(share.badgeclass as unknown as BadgeClass),
+				)
+				.forEach(addSharedBadgeToResults);
+
+			this.sharedNetworkBadgeResults.sort((a, b) => {
+				const dateA = sharedBadges.find((s) => s.badgeclass.slug === a.badge.slug)?.shared_at;
+				const dateB = sharedBadges.find((s) => s.badgeclass.slug === b.badge.slug)?.shared_at;
+				return new Date(dateB || 0).getTime() - new Date(dateA || 0).getTime();
+			});
+		}
+	}
+
 	async ngOnInit() {
-		await Promise.all([this.updateResults(), this.updateNetworkResults()]);
+		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
 		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
 		this.badgeTemplateTabs = [
 			{

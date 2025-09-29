@@ -26,14 +26,14 @@ import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
-import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 import { QrCodeAwardsComponent } from '../qrcode-awards/qrcode-awards.component';
 import { IssuerDetailDatatableComponent } from '../../../components/datatable-issuer-detail.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH2 } from '@spartan-ng/helm/typography';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
@@ -43,6 +43,8 @@ import { OebTabsComponent } from '~/components/oeb-tabs.component';
 import { ApiBadgeInstance } from '~/issuer/models/badgeinstance-api.model';
 import { ApiQRCode, NetworkQrCodeGroup } from '~/issuer/models/qrcode-api.model';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
+import { PublicApiService } from '~/public/services/public-api.service';
+import { SelectNetworkComponent } from '../select-network/select-network.component';
 
 interface groupedInstances {
 	has_access: boolean;
@@ -62,6 +64,7 @@ interface groupedInstances {
 		OebButtonComponent,
 		TranslatePipe,
 		OebTabsComponent,
+		SelectNetworkComponent,
 	],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -79,6 +82,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	@ViewChild('networkIssuerSelectionHeader')
 	networkIssuerSelectionHeader: TemplateRef<void>;
+
+	@ViewChild('networkSelectionHeader')
+	networkSelectionHeader: TemplateRef<void>;
+
+	@ViewChild('networkSelection')
+	networkSelection: TemplateRef<void>;
+
+	@ViewChild('networkSearchInputModel') networkSearchInputModel: NgModel;
 
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
@@ -157,6 +168,15 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	selectedIssuer: Issuer = null;
 	selectedNetworkIssuer: Issuer = null;
 
+	networkSearchQuery = '';
+
+	networkShowResults = false;
+	networksLoading = false;
+	networkSearchLoaded = false;
+	networkSearchResults = [];
+
+	issuerNetworks: Network[] = null;
+
 	isLoadingIssuers = signal(false);
 	networkUserIssuers = signal<Issuer[]>([]);
 
@@ -194,6 +214,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected networkManager: NetworkManager,
 		protected badgeInstanceManager: BadgeInstanceManager,
 		protected qrCodeApiService: QrCodeApiService,
+		protected publicApiService: PublicApiService,
 		sessionService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
@@ -233,7 +254,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 		try {
 			this.issuerLoaded = issuerManager.issuerBySlug(this.issuerSlug).then(
-				(issuer) => (this.issuer = issuer),
+				(issuer) => {
+					(this.issuer = issuer),
+						(this.issuerNetworks = this.issuer.networks.map((n) => {
+							return new Network(this.commonManager, n);
+						}));
+					console.log('issuerNetworks', this.issuerNetworks);
+				},
 				(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 			);
 		} catch {
@@ -283,6 +310,16 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				component: this.batchAwards,
 			},
 		];
+	}
+
+	shareOnNetwork() {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.networkSelectionHeader,
+				content: this.networkSelection,
+			},
+		});
+		this.dialogRef = dialogRef;
 	}
 
 	copyBadge() {
@@ -395,11 +432,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			copy_permissions: badgeClass.copyPermissions,
 			menuitems: [
 				{
-					title: 'General.edit',
-					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
+					title: 'Badge.shareOnNetwork',
+					action: this.shareOnNetwork.bind(this),
+					icon: 'lucideShare2',
 					disabled:
-						badgeClass.recipientCount > 0 || !this.issuer.canEditBadge || this.qrCodeAwards.length > 0,
-					icon: 'lucidePencil',
+						this.issuer instanceof Issuer
+							? !(this.issuer.networks && this.issuer.networks.length > 0)
+							: true,
 				},
 				{
 					title: badgeClass.copyPermissions.includes('others') ? 'General.copy' : 'Badge.copyThisIssuer',
@@ -412,6 +451,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'copypermissions'],
 					icon: 'lucideCopyX',
 					disabled: !this.issuer.canEditBadge,
+				},
+				{
+					title: 'General.edit',
+					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
+					disabled:
+						badgeClass.recipientCount > 0 || !this.issuer.canEditBadge || this.qrCodeAwards.length > 0,
+					icon: 'lucidePencil',
 				},
 				{
 					title: 'General.delete',
@@ -487,9 +533,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
-		setTimeout(() => {
-			this.loadNetworkQrCodes(this.issuer.slug, this.badgeClass.slug);
-		}, 2000);
 		this.checkForActiveTask();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
 	}

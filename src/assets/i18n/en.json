@@ -353,6 +353,7 @@
 		"revokeSuccess": "Revoked Badge from {{ recipient}}",
 		"revokeError": "Revoking Badge from {{ recipient }} failed",
 		"searchIssuer": "search Institution",
+		"searchNetwork": "Netzwerk suchen",
 		"staffOwnerRights": "Access to all functions including adding/removing editors and employees, editing institution details and creating, assigning and deleting badges including micro degrees.",
 		"staffEditorRights": "Rights to create, assign and delete badges, including micro-degrees.",
 		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
@@ -423,6 +424,7 @@
 		"waitForInvitationAcceptance": "Once they have confirmed the invitation, they will be visible on the partner page.",
 		"confirmInvitation": "Confirm invitation",
 		"networksHeadline": "All networks at a glance",
+		"noNetworks": "no networks",
 		"partners": "Network members",
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
 		"partnerIssuers": "Partners",
@@ -446,7 +448,9 @@
 		"networkBadges": "Network badges",
 		"noPartnerBadgesYet": "So far, no partner institution has released a badge for the network.",
 		"createdByNetwork": "Created by NETWORK",
-		"noBadgesYet": "The network <span class='tw-font-semibold'>{{network}}</span> has not created any badges yet."
+		"noBadgesYet": "The network <span class='tw-font-semibold'>{{network}}</span> has not created any badges yet.",
+		"sharedBy": "Shared by",
+		"sharedOn": "Shared on"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -535,7 +539,12 @@
 		"copyPermissionInfo": "The copy status of this badge only allows copying inside this institution.",
 		"awardingInProgress": "Badge awarding in progress",
 		"willBeAwardedSoon": "We will have awarded the badges soon!",
-		"catalogAllLoaded": "All badges matching your search criteria loaded."
+		"catalogAllLoaded": "All badges matching your search criteria loaded.",
+		"shareOnNetwork": "share on network",
+		"allNetworkMembersGetBadge": "All members of the selected network can award the badge via their institution.",
+		"networkAssertionsGetTracked": "All badge awards are included in the network's data evaluation.",
+		"cantRemoveFromNetwork": "The badge CANNOT be removed from the network.",
+		"shareBadgeOnNetwork": "share badge on network"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",

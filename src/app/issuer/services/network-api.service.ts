@@ -13,6 +13,7 @@ import {
 	IssuerSlug,
 } from '../models/issuer-api.model';
 import { ApiNetworkInvitation } from '../models/network-invite-api.model';
+import { ApiBadgeClassNetworkShare } from '../models/badgeclass-api.model';
 
 @Injectable({ providedIn: 'root' })
 export class NetworkApiService extends BaseHttpApiService {
@@ -86,5 +87,16 @@ export class NetworkApiService extends BaseHttpApiService {
 
 	getIssuerNetworkBadges(issuerSlug: string) {
 		return this.get<any[]>(`/v1/issuer/issuers/${issuerSlug}/network/badges`).then((r) => r.body);
+	}
+
+	/**
+	 * Get all badges shared with a specific network
+	 * @param networkId The network entity ID
+	 * @returns Promise with array of badge shares for the network
+	 */
+	getNetworkSharedBadges(networkId: string): Promise<ApiBadgeClassNetworkShare[]> {
+		return this.get<ApiBadgeClassNetworkShare[]>(`/v1/issuer/networks/${networkId}/shared-badges`).then(
+			(r) => r.body,
+		);
 	}
 }

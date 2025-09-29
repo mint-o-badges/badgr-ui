@@ -168,3 +168,26 @@
 		</oeb-button>
 	</div>
 </ng-template>
+
+<ng-template #networkSelectionHeader>
+	<div>
+		<h2
+			class="tw-text-purple tw-text-[22px] tw-uppercase tw-mb-6 tw-leading-[120%] tw-font-bold"
+			[innerHTML]="'Badge.shareOnWhichNetwork' | translate"
+		></h2>
+		<ul class="tw-list-disc tw-text-purple tw-text-lg -tw-italic tw-list-outside tw-px-4 tw-mb-6">
+			<li>
+				<span>{{ 'Badge.allNetworkMembersGetBadge' | translate }}</span>
+			</li>
+			<li>
+				<span>{{ 'Badge.networkAssertionsGetTracked' | translate }}</span>
+			</li>
+			<li>
+				<span>{{ 'Badge.cantRemoveFromNetwork' | translate }}</span>
+			</li>
+		</ul>
+	</div>
+</ng-template>
+<ng-template #networkSelection>
+	<select-network [badge]="badgeClass" [issuer]="issuer" (close)="closeDialog()"></select-network>
+</ng-template>

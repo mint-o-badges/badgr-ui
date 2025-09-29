@@ -91,4 +91,56 @@
 			{{ network.description }}
 		</p>
 	</section>
+
+	<ng-container>
+		<div class="tw-my-12">
+			<oeb-tabs
+				[variant]="'bluebackground'"
+				(onTabChanged)="onTabChange($event)"
+				[activeTab]="activeTab"
+				[tabs]="tabs"
+				countStyle="parentheses"
+			></oeb-tabs>
+		</div>
+	</ng-container>
 </main>
+
+<ng-template #networkTemplate>
+	<div class="tw-gap-6 tw-grid tw-grid-cols-badges tw-mt-6">
+		@for (badge of networkBadges; track badge.slug) {
+			<bg-badgecard
+				[badgeTitle]="badge.name"
+				[badgeImage]="badge.image"
+				[badgeDescription]="badge.description"
+				[badgeSlug]="badge.slug"
+				[issuerTitle]="badge.issuerName"
+				[badgeIssueDate]="badge.createdAt"
+				[public]="true"
+				[publicUrl]="badge.url"
+				[issuerSlug]="badge.issuerSlug"
+				[competencies]="badge.extension['extensions:CompetencyExtension']"
+				[tags]="badge.tags"
+			></bg-badgecard>
+		}
+	</div>
+</ng-template>
+
+<ng-template #partnerTemplate>
+	<div class="tw-gap-6 tw-grid tw-grid-cols-badges tw-mt-6">
+		@for (badge of partnerBadges; track badge.id) {
+			<bg-badgecard
+				[badgeTitle]="badge.badgeclass.name"
+				[badgeImage]="badge.badgeclass.image"
+				[badgeDescription]="badge.badgeclass.description"
+				[badgeSlug]="badge.badgeclass.slug"
+				[issuerTitle]="badge.shared_by_issuer.name"
+				[badgeIssueDate]="transformDate(badge.shared_at)"
+				[public]="true"
+				[publicUrl]="badge.badgeclass.json.id"
+				[issuerSlug]="badge.shared_by_issuer.slug"
+				[competencies]="badge.badgeclass.extensions['extensions:CompetencyExtension']"
+				[tags]="badge.badgeclass.tags"
+			></bg-badgecard>
+		}
+	</div>
+</ng-template>

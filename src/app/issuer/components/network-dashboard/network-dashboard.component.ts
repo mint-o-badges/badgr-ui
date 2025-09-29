@@ -130,6 +130,14 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		});
 	}
 
+	ngOnInit(): void {
+		this.route.queryParams.subscribe((params) => {
+			if (params['tab']) {
+				this.activeTab = params['tab'];
+			}
+		});
+	}
+
 	ngAfterContentInit() {
 		this.tabs = [
 			{

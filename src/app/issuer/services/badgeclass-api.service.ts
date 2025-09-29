@@ -84,4 +84,12 @@ export class BadgeClassApiService extends BaseHttpApiService {
 	getBadgeById(id: BadgeClassSlug) {
 		return this.get<ApiBadgeClass>('/v1/issuer/all-badges/find?identifier=' + id).then((r) => r.body);
 	}
+
+	getSharedBadgesInNetwork(networkId: string): Promise<ApiBadgeClass[]> {
+		return this.get<ApiBadgeClass[]>(`/v1/issuer/issuers/${networkId}/shared-badges/`).then((r) => r.body);
+	}
+
+	shareOnNetwork(networkSlug: string, badgeSlug: string) {
+		return this.post(`/v1/issuer/networks/${networkSlug}/badges/${badgeSlug}/share`, {}).then((r) => r.body);
+	}
 }

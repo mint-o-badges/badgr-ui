@@ -14,7 +14,7 @@ import {
 import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
-import { OebTabsComponent } from '~/components/oeb-tabs.component';
+import { OebTabsComponent, Tab } from '~/components/oeb-tabs.component';
 import { Route, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { BadgeClassManager } from '~/issuer/services/badgeclass-manager.service';
@@ -37,6 +37,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
+import { NetworkSharedBadgesDatatableComponent } from '~/components/datatable-network-shared-badges.component';
+import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
+import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
+import { ActivatedRoute } from '@angular/router';
+import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 
 @Component({
 	selector: 'network-badges',
@@ -50,6 +55,8 @@ import { CommonEntityManager } from '~/entity-manager/services/common-entity-man
 		FormsModule,
 		TranslateDirective,
 		TranslateModule,
+		NetworkSharedBadgesDatatableComponent,
+		BgAwaitPromises,
 	],
 })
 export class NetworkBadgesComponent {
@@ -65,6 +72,7 @@ export class NetworkBadgesComponent {
 		private qrCodeApiService: QrCodeApiService,
 		private translate: TranslateService,
 		private router: Router,
+		private route: ActivatedRoute,
 	) {
 		effect(async () => {
 			const slug = this.network()?.slug;
@@ -91,6 +99,7 @@ export class NetworkBadgesComponent {
 	userIssuers = signal<Issuer[]>([]);
 	isLoadingIssuers = signal(false);
 	badgesLoaded: Promise<unknown>;
+	sharedBadgesLoaded: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 
 	badges: BadgeClass[] = [];
@@ -100,9 +109,11 @@ export class NetworkBadgesComponent {
 	selectedIssuer: Issuer = null;
 	dialogRef: BrnDialogRef<unknown> = null;
 
-	tabs: any = undefined;
+	tabs: Tab[] = undefined;
 
 	activeTab = 'network';
+
+	sharedBadges: ApiBadgeClassNetworkShare[] = [];
 
 	@ViewChild('networkTemplate', { static: true }) networkTemplate: ElementRef;
 	@ViewChild('partnerTemplate', { static: true }) partnerTemplate: ElementRef;
@@ -134,6 +145,11 @@ export class NetworkBadgesComponent {
 	}
 
 	async ngOnInit() {
+		this.route.queryParams.subscribe((params) => {
+			if (params['innerTab']) {
+				this.activeTab = params['innerTab'];
+			}
+		});
 		try {
 			await this.loadBadgesAndRequests();
 			this.initializeTabs();
@@ -143,6 +159,8 @@ export class NetworkBadgesComponent {
 				error,
 			);
 		}
+
+		this.sharedBadgesLoaded = this.loadSharedBadges();
 	}
 
 	private async loadBadgesAndRequests() {
@@ -158,6 +176,15 @@ export class NetworkBadgesComponent {
 			badge,
 			requestCount: this.getRequestCount(badge, requestMap),
 		}));
+	}
+
+	private loadSharedBadges() {
+		return new Promise((res, rej) => {
+			this.networkApiService.getNetworkSharedBadges(this.network().slug).then((b) => {
+				this.sharedBadges = b;
+				res(b);
+			});
+		});
 	}
 
 	private sortBadgesByCreatedAt(badges: any[]) {
@@ -233,14 +260,16 @@ export class NetworkBadgesComponent {
 		});
 	}
 
-	routeToBadgeDetail(badge, issuer, focusRequests: boolean = false) {
+	routeToBadgeDetail(badge, issuerSlug, focusRequests: boolean = false) {
+		console.log('redirecting', issuerSlug);
+
 		const extras = focusRequests
 			? {
 					queryParams: { focusRequests: 'true' },
 				}
 			: {};
 
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug], extras);
+		this.router.navigate(['/issuer/issuers/', issuerSlug, 'badges', badge.slug], extras);
 	}
 
 	routeToBadgeCreation(issuer: Issuer) {

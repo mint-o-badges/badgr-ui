@@ -5,6 +5,7 @@ import { SessionService } from '../../common/services/session.service';
 import { ApiIssuer, ApiIssuerForCreation, ApiIssuerStaffOperation, IssuerSlug } from '../models/issuer-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
+import { ApiBadgeClass, ApiBadgeClassNetworkShare } from '../models/badgeclass-api.model';
 
 @Injectable({ providedIn: 'root' })
 export class IssuerApiService extends BaseHttpApiService {
@@ -43,5 +44,11 @@ export class IssuerApiService extends BaseHttpApiService {
 
 	updateStaff(issuerSlug: IssuerSlug, updateOp: ApiIssuerStaffOperation) {
 		return this.post(`/v1/issuer/issuers/${issuerSlug}/staff`, updateOp).then((r) => r.body);
+	}
+
+	listSharedNetworkBadges(issuerSlug: string) {
+		return this.get<ApiBadgeClassNetworkShare[]>(`/v1/issuer/issuers/${issuerSlug}/networks/shared-badges`).then(
+			(r) => r.body,
+		);
 	}
 }

@@ -83,4 +83,10 @@
 			{{ 'Network.noPartnerBadgesYet' | translate }}
 		</span>
 	</div>
+	<div *bgAwaitPromises="sharedBadgesLoaded">
+		<network-shared-badges-datatable
+			[badges]="sharedBadges"
+			(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.issuerSlug, $event.focusRequests)"
+		></network-shared-badges-datatable>
+	</div>
 </ng-template>

@@ -81,3 +81,19 @@ export interface BadgeImageResponse {
 	image_url: string;
 	message: string;
 }
+
+export interface ApiBadgeClassNetworkShare {
+	id: string;
+	badgeclass: ApiBadgeClass;
+	network: {
+		slug: string;
+		name: string;
+	};
+	shared_at: string;
+	shared_by_user: string;
+	shared_by_issuer?: {
+		slug: string;
+		name: string;
+	};
+	is_active: boolean;
+}
