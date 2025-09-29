@@ -848,7 +848,9 @@
 		"addToProfile": "Zum Profil hinzufügen",
 		"removeBadge": "Badge entfernen",
 		"confirmRemove": "Entfernen bestätigen",
-		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?"
+		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?",
+		"pdfDownload": "PDF-Zertifikat herunterladen",
+		"downloadMicroDegree": "Micro Degree herunterladen"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
@@ -1053,7 +1055,7 @@
 		"dragDropInfo": "Mittels <span class='tw-font-bold'>Drag & Drop</span> kannst du deine ausgewählten Badges hier in die Reihenfolge bringen, in der sie innerhalb des Lernpfads angezeigt werden sollen.",
 		"lpParticipationBadge": "Micro Degree",
 		"lpParticipationBadgeInfo": "Lernende können den Micro Degree-Badge bei dir anfordern, sobald sie alle im Micro Degree enthaltenen Badges erworben haben. <span class='tw-font-bold'>Du erhältst die Anfragen per E-Mail </span>.",
-		"lpDerivedData": "Folgende Daten haben wir für den Micro Degree übernommen:",
+		"lpDerivedData": "Folgende Daten haben wir übernommen:",
 		"addTag": "Tag hinzufügen",
 		"createdSuccessfully": "Dein Micro Degree wurde erfolgreich erstellt.",
 		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert",
@@ -1082,7 +1084,9 @@
 		"chooseMin2Badges": "Wähle mindestens 2 Badges aus",
 		"studentsMustEarn": "Lernende müssen <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Abschluss-Badge Micro Degree zu erhalten.",
 		"condition": "Du musst <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Micro Degree zu erhalten.",
-		"learningPathWithMicroDegree": "Lernpfad mit Abschluss-Badge Micro Degree"
+		"learningPathWithMicroDegree": "Lernpfad mit Abschluss-Badge Micro Degree",
+		"confirmDelete": "Möchtest du diesen Lernpfad wirklich löschen?",
+		"deleteMd": "Lernpfad löschen"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung des Lernangebots. Diese Kurz-Beschreibung wird im Abschluss-Badge Micro Degree gespeichert."

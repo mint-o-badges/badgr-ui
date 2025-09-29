@@ -845,7 +845,9 @@
 		"addToProfile": "Add to profile",
 		"removeBadge": "Remove Badge",
 		"confirmRemove": "Confirm Remove",
-		"sureToRemove": "Are you sure you want to remove {{badgeName}} from your badges?"
+		"sureToRemove": "Are you sure you want to remove {{badgeName}} from your badges?",
+		"downloadMicroDegree": "Download Micro Degree",
+		"pdfDownload": "Download PDF-Certificate"
 	},
 	"BadgeCollection": {
 		"addCollection": "Add collection",
@@ -1051,7 +1053,7 @@
 		"dragDropInfo": "You can use <span class='tw-font-bold'>drag & drop</span> to arrange your selected badges here in the order they should appear within the learning path.",
 		"lpParticipationBadge": "Micro Degree",
 		"lpParticipationBadgeInfo": "Learners can request the Micro Degree badge from you as soon as they have acquired all the badges included in the Micro Degree. <span class='tw-font-bold'>You will receive the requests by email</span>.",
-		"lpDerivedData": "We have adopted the following data for the Micro Degree:",
+		"lpDerivedData": "We have adopted the following data:",
 		"addTag": "Add tag",
 		"createdSuccessfully": "Your Micro Degree has been created successfully.",
 		"savedSuccessfully": "Your changes have been saved successfully",
@@ -1080,7 +1082,9 @@
 		"chooseMin2Badges": "Choose at least 2 badges",
 		"studentsMustEarn": "Students <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges </span> to receive the Micro Degree badge.",
 		"condition": "You <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges</span> to receive the Micro Degree.",
-		"learningPathWithMicroDegree": "Learning path with Micro Degree Badge"
+		"learningPathWithMicroDegree": "Learning path with Micro Degree Badge",
+		"confirmDelete": "Are you sure you want to delete this learning path?",
+		"deleteMd": "Delete learning path"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summary description of the learning program. This short description will be saved in the Micro Degree completion badge."
