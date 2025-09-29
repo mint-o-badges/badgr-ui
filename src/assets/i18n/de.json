@@ -945,7 +945,8 @@
 		"weIncreasedPasswordRequirements": "Wir haben unsere Anforderungen an Passwörter erhöht.",
 		"pleaseRenewPassword": "Deshalb bitten wir dich, dein Passwort zu erneuern.",
 		"pleaseRenewPasswordInfo": "Dauert nur kurz und sorgt für mehr Schutz.",
-		"dontPanic": "Keine Panik – alles ist in Ordnung!"
+		"dontPanic": "Keine Panik – alles ist in Ordnung!",
+		"repeatNewpassword": "Passwort wiederholen"
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
