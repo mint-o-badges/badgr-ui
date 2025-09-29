@@ -160,8 +160,8 @@ export class DatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'Badge',
-			desc: false,
+			id: 'Badge.createdOn',
+			desc: true,
 		},
 	]);
 
@@ -175,8 +175,8 @@ export class DatatableComponent {
 		{
 			id: 'Badge.createdOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.badge.createdAt, 'dd.MM.yyyy', 'de-DE'),
-			cell: (info) => info.getValue(),
+			accessorFn: (row) => row.badge.createdAt,
+			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'Badge.multiRecipients',

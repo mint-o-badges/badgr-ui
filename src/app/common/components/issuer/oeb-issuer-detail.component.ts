@@ -7,7 +7,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { MenuItem } from '../badge-detail/badge-detail.component.types';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
@@ -39,6 +38,8 @@ import {
 import { Network } from '../../../issuer/models/network.model';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -78,6 +79,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	learningPathsPromise: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	userIsMember = false;
+	env = environment;
 
 	constructor(
 		private router: Router,

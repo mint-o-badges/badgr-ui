@@ -421,11 +421,10 @@
 																	>
 																</h2>
 																<oeb-checkbox
-																	class="tw-border-[var(--color-purple)]"
 																	name="{{ 'checkboxAiSkill_' + i }}"
 																	id="{{ 'checkboxAiSkill_' + i }}"
 																	[control]="aiCompetency.rawControlMap.selected"
-																	class="tw--mt-[0.25rem] tw-mb-[0.25rem]"
+																	class="tw-border-[var(--color-purple)] tw--mt-[0.25rem] tw-mb-[0.25rem]"
 																	[noMargin]="true"
 																></oeb-checkbox>
 															</div>
@@ -1127,6 +1126,7 @@
 									[fieldType]="'number'"
 									[max]="1000"
 									[maxchar]="4"
+									[min]="1"
 									[errorMessage]="{
 										max: maxValue1000
 									}"
@@ -1172,10 +1172,17 @@
 				[class.disabled]="!!savePromise"
 				[disabled-when-requesting]="true"
 				text="{{ 'General.cancel' | translate }}"
-			></oeb-button>
+				[umamiEvent]="!existingBadgeClass ? 'cancel-create-badge' : undefined"
+			/>
 
 			@if (!lastStep()) {
-				<oeb-button class="tw-float-right" type="button" [text]="next" (click)="nextStep()"> </oeb-button>
+				<oeb-button
+					class="tw-float-right"
+					type="button"
+					[text]="next"
+					(click)="nextStep()"
+					[umamiEvent]="!existingBadgeClass ? `create-${category}-badge-${this.stepper?.selectedIndex + 1}` : undefined"
+				/>
 			}
 
 			@if (lastStep()) {
@@ -1196,6 +1203,7 @@
 							: 'General.save'
 						) | translate
 					}}"
+					[umamiEvent]="!existingBadgeClass ? `create-${category}-badge-done-${this.stepper?.selectedIndex + 1}` : undefined"
 				>
 				</oeb-button>
 			}

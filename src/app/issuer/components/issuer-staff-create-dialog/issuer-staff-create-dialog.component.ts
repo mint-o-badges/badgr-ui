@@ -1,15 +1,11 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { IssuerStaffRoleSlug } from '../../models/issuer-api.model';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { MessageService } from '../../../common/services/message.service';
-import { IssuerManager } from '../../services/issuer-manager.service';
 import { Issuer, issuerStaffRoles } from '../../models/issuer.model';
-import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { AppConfigService } from '../../../common/app-config.service';
-import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { MemoizedProperty } from '../../../common/util/memoized-property-decorator';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
@@ -37,12 +33,7 @@ export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	constructor(
 		componentElem: ElementRef,
 		renderer: Renderer2,
-		protected formBuilder: FormBuilder,
 		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected profileManager: UserProfileManager,
-		protected configService: AppConfigService,
-		protected dialogService: CommonDialogsService,
 		private translate: TranslateService,
 	) {
 		super(componentElem, renderer);

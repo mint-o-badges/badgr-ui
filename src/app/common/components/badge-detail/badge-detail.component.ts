@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import type { PageConfig } from './badge-detail.component.types';
-import { CommonDialogsService } from '../../services/common-dialogs.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
@@ -26,6 +25,11 @@ import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-ba
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { HlmDialogService } from '@spartan-ng/helm/dialog';
+import {
+	ShareBadgeDialogComponent,
+	ShareBadgeDialogContext,
+} from '~/common/dialogs/oeb-dialogs/share-badge-dialog.component';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -60,7 +64,7 @@ export class BgBadgeDetail {
 	@Input() badge?: RecipientBadgeInstance | BadgeInstance | ApiImportedBadgeInstance;
 
 	constructor(
-		private dialogService: CommonDialogsService,
+		private dialogService: HlmDialogService,
 		private translate: TranslateService,
 		private recipientManager: RecipientBadgeManager,
 	) {
@@ -114,18 +118,9 @@ export class BgBadgeDetail {
 	}
 
 	shareBadge() {
-		const baseUrl = window.location.origin;
-		this.dialogService.shareSocialDialog.openDialog({
-			title: this.translate.instant('RecBadgeDetail.shareBadge'),
-			shareObjectType: 'BadgeInstance',
-			shareUrl: `${baseUrl}/public/assertions/${this.config.badgeInstanceSlug}`,
-			shareTitle: this.config.badgeTitle,
-			imageUrl: this.config.issuerImage,
-			shareIdUrl: `${baseUrl}/public/assertions/${this.config.badgeInstanceSlug}`,
-			shareSummary: this.config.badgeDescription,
-			shareEndpoint: 'certification',
-			embedOptions: [],
-			badge: this.badge as any,
-		});
+		if (this.badge && this.badge instanceof RecipientBadgeInstance)
+			this.dialogService.open(ShareBadgeDialogComponent, {
+				context: { badge: this.badge } satisfies ShareBadgeDialogContext,
+			});
 	}
 }

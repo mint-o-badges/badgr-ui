@@ -116,7 +116,9 @@
 		"state": "Bundesland",
 		"overview": "Übersicht",
 		"rolesAndRights": "Rollen und Rechte",
-		"website": "Webseite"
+		"website": "Webseite",
+		"organization": "Organisation",
+		"notNow": "Jetzt nicht"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -225,7 +227,7 @@
 		"enterValidEmail": "Bitte gib eine gültige E-Mail Adresse an",
 		"enterDescription": "Bitte gib eine Beschreibung an",
 		"enterCategory": "Bitte gib eine Kategorie an",
-		"enterStreet": "Bitte gib eine addMember_staffStrasse an",
+		"enterStreet": "Bitte gib eine Strasse an",
 		"enterHouseNo": "Bitte gib eine Hausnummer an",
 		"enterPostalCode": "Bitte gib eine Postleitzahl an",
 		"enterCity": "Bitte gib eine Stadt an",
@@ -264,7 +266,7 @@
 		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns gerne an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
+		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns gerne an <a class='tw-text-link tw-underline oeb-break-words' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Micro Degree anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Vorschau Badge",
@@ -372,7 +374,18 @@
 		"creatingBadge": "Erstelle Badge",
 		"memberView": "Mitglieds-Ansicht",
 		"partOfNetwork": "Teil vom Netzwerk",
-		"contract26": "Mit einem Klick auf „Institution erstellen“ wird die <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>hier abrufbare</a> Vereinbarung gemäß Artikel 26 Abs. 1 DSGVO über die gemeinsame datenschutzrechtliche Verantwortung der Institution mit den Verbundpartnerinnen wirksam."
+		"contract26": "Mit einem Klick auf „Institution erstellen“ wird die <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>hier abrufbare</a> Vereinbarung gemäß Artikel 26 Abs. 1 DSGVO über die gemeinsame datenschutzrechtliche Verantwortung der Institution mit den Verbundpartnerinnen wirksam.",
+		"linkedInId": "<span class=\"tw-italic tw-font-normal\">Optional: </span> LinkedIn-ID",
+		"linkedInIdUse1": "Für die ",
+		"linkedInIdUseLink": "Badge-Darstellung",
+		"linkedInIdUse2": " auf LinkedIn",
+		"linkedInIdHint": "Die LinkedIn-ID ist die Zahlenfolge in der URL deiner Institutions-Seite, etwa: www.linkedin.com/company/<b>12345678</b>/admin -> ID <b>12345678</b>",
+		"linkedInUseNoteHeader": "LinkedIn-ID deiner Institution",
+		"linkedInUseNoteText": "Lernende können erhaltene Badges in ihr LinkedIn-Profil einbinden. Damit das Zertifikat dort mit dem \t\t\tLogo-Bild deiner Institution erscheint, müssen wir die LinkedIn-ID deiner Institution hinterlegen.",
+		"addLinkedInId": "LinkedIn-ID ergänzen",
+		"findLinkedInId": "So findest du die LinkedIn-ID:",
+		"findLinkedInIdText": "Gehe zur Seite deiner Institution auf LinkedIn.  Die ID ist die Zahlenfolge in der entsprechenden URL. Die URL lautet zum Beispiel: www.linkedin.com/company/<span class='tw-font-bold'>12345678</span>/admin. → <span class='tw-font-bold'>ID = 12345678</span>.",
+		"findLinkedInIdNote": "Du kannst die LinkedIn-ID jederzeit auf der Seite deiner Institution durch „Bearbeiten” der Institutions-Details ergänzen."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
@@ -686,7 +699,7 @@
 		"changePassword": "Passwort ändern",
 		"newPassword": "Neues Passwort",
 		"areYouNew": "Du bist neu hier?",
-		"yourEmail": "Deine E-Mail Adresse",
+		"yourEmail": "Deine E-Mail-Adresse",
 		"yourPassword": "Dein Passwort"
 	},
 	"Legend": {
@@ -798,7 +811,11 @@
 		"skillVisualisationHelp": "Bewege den Mauszeiger über die Kreise, um die zugehörigen Kompetenzen zu sehen.",
 		"skillVisualisationSingleIntro": "Deine Kompetenzen im Bereich ",
 		"FutureSkillsAccrodingToNextSkills": "Future Skills nach dem NextSkills-Framework",
-		"ESCOAreas": "ESCO-Bereiche"
+		"ESCOAreas": "ESCO-Bereiche",
+		"shareViaLink": "Per Link:",
+		"addToLinkedInProfile": "Badge zu LinkedIn-Profil hinzufügen",
+		"shareViaLinkedIn": "Auf LinkedIn:",
+		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden."
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
@@ -1014,7 +1031,11 @@
 		"toBadgeDetail": "Zur Badge Detail-Seite",
 		"downloadPoster": "Download QR-Code-Plakat",
 		"badgeDetailPage": "Badge Detail Seite",
-		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben"
+		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben",
+		"invalidDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
+		"invalidDate": "Bitte gib ein Datum in der Form YYYY/mm/dd an",
+		"missingStartDate": "Bitte gib ein Start-Datum für die Gültigkeit an",
+		"expired": "Die Gültigkeit dieses Qr Codes ist abgelaufen."
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",

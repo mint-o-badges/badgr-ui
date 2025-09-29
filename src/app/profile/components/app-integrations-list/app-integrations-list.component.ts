@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-import { AppConfigService } from '../../../common/app-config.service';
 import { AddCredentialsDialog } from '../app-integration-add-credentials-dialog/add-credentials-dialog.component';
 import { AppIntegrationDetailsDialog } from '../app-integration-details-dialog/app-integration-details-dialog.component';
 import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
@@ -20,7 +19,6 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 		loginService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
-		public configService: AppConfigService,
 		private dialogService: CommonDialogsService,
 		private applicationCredentialsService: ApplicationCredentialsService,
 		private translate: TranslateService,
