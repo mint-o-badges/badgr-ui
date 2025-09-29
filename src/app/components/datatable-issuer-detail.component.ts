@@ -24,6 +24,7 @@ import {
 	RowSelectionState,
 } from '@tanstack/angular-table';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -47,9 +48,9 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x tw-w-full tw-flex tw-justify-between">
 					<h3
-						class="md:tw-text-xl md:tw-text-nowrap tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack"
+						class="md:tw-text-nowrap tw-text-lg tw-font-semibold tw-font-[rubik] tw-text-purple tw-uppercase"
 					>
-						{{ recipientCount() }} Badge
+						{{ recipientCount() }} Badge -
 						{{
 							recipientCount() == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate)
 						}}
@@ -243,17 +244,20 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 					(click)="downloadCertificate.emit({ instance: context.row.original, badgeIndex: context.row.index })"
 					text="{{ 'Issuer.pdfCertificate' | translate }}"
 					[disabled]="downloadStates()[context.row.index]" />
-				<oeb-button
-					variant="secondary"
-					size="xs"
-					width="full_width"
-					(click)="actionElement.emit(context.row.original)"
-					[text]="'General.revoke' | translate | titlecase" />
+					@if(issuer().canEditBadge){
+						<oeb-button
+							variant="secondary"
+							size="xs"
+							width="full_width"
+							(click)="actionElement.emit(context.row.original)"
+							[text]="'General.revoke' | translate | titlecase" />
+					}
 			</div>
 		</ng-template>
 	`,
 })
 export class IssuerDetailDatatableComponent {
+	issuer = input<Issuer>();
 	recipientCount = input<number>(0);
 	downloadStates = input<boolean[]>([]);
 	awardInProgress = input<boolean>(false);
@@ -268,8 +272,8 @@ export class IssuerDetailDatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'General.name',
-			desc: false,
+			id: 'RecBadgeDetail.issuedOn',
+			desc: true,
 		},
 	]);
 
@@ -293,8 +297,8 @@ export class IssuerDetailDatatableComponent {
 		{
 			id: 'RecBadgeDetail.issuedOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.issuedOn, 'dd.MM.yyyy', 'de-DE'),
-			cell: (info) => info.getValue(),
+			accessorFn: (row) => row.issuedOn,
+			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'actions',

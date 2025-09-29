@@ -471,11 +471,13 @@
 						>
 						</span>
 					</p>
-					<oeb-checkbox
-						[control]="learningPathForm.rawControlMap.activated"
-						class="tw-mt-2"
-						[text]="'LearningPath.activateMdForUse' | translate"
-					></oeb-checkbox>
+					<div class="tw-mt-3">
+						<oeb-checkbox
+							[control]="learningPathForm.rawControlMap.activated"
+							class="tw-font-semibold"
+							[text]="'LearningPath.activateMdForUse' | translate"
+						/>
+					</div>
 				</section>
 
 				<div class="tw-mt-8">
@@ -505,6 +507,7 @@
 				[class.disabled]="!!savePromise"
 				[disabled-when-requesting]="true"
 				text="{{ 'General.cancel' | translate }}"
+				[umamiEvent]="!existingLpBadge ? 'cancel-create-badge' : undefined"
 			></oeb-button>
 
 			@if (!firstStep()) {
@@ -521,7 +524,12 @@
 			}
 
 			@if (!lastStep()) {
-				<oeb-button type="button" [text]="next" (click)="nextStep()"> </oeb-button>
+				<oeb-button
+					type="button"
+					[text]="next"
+					(click)="nextStep()"
+					[umamiEvent]="!existingLpBadge ? `create-micro-degree-${this.stepper?.selectedIndex + 1}` : undefined"
+				/>
 			}
 
 			@if (lastStep()) {
@@ -535,6 +543,7 @@
 						(initialisedLearningpath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
 							| translate
 					}}"
+					[umamiEvent]="!existingLpBadge ? `create-micro-degree-done-${this.stepper?.selectedIndex + 1}` : undefined"
 				>
 				</oeb-button>
 			}

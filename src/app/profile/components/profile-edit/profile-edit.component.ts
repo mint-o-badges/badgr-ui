@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { SessionService } from '../../../common/services/session.service';
 import { Title } from '@angular/platform-browser';
 
-import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfile } from '../../../common/model/user-profile.model';
@@ -44,12 +43,10 @@ export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent imp
 		router: Router,
 		route: ActivatedRoute,
 		sessionService: SessionService,
-		protected formBuilder: FormBuilder,
 		protected title: Title,
 		protected messageService: MessageService,
 		protected profileManager: UserProfileManager,
 		protected configService: AppConfigService,
-		protected dialogService: CommonDialogsService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Profile - Edit - ${this.configService.theme['serviceName'] || 'Badgr'}`);

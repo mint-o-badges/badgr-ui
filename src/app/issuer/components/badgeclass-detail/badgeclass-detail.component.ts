@@ -13,9 +13,6 @@ import { BadgeClassInstances, BadgeInstance } from '../../models/badgeinstance.m
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { preloadImageURL } from '../../../common/util/file-util';
-import { EventsService } from '../../../common/services/events.service';
-import { badgeShareDialogOptions } from '../../../recipient/components/recipient-earned-badge-detail/recipient-earned-badge-detail.component';
-import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
@@ -59,6 +56,7 @@ import { OebTabsComponent } from '~/components/oeb-tabs.component';
 			</ng-template>
 			<ng-template #batchAwards>
 				<issuer-detail-datatable
+					[issuer]="issuer"
 					[recipientCount]="recipientCount"
 					[recipients]="instanceResults"
 					(actionElement)="revokeInstance($event)"
@@ -230,7 +228,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		router: Router,
 		route: ActivatedRoute,
 		protected dialogService: CommonDialogsService,
-		private eventService: EventsService,
 		protected configService: AppConfigService,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
@@ -290,12 +287,12 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.tabs = [
 			{
 				key: 'qrcodes',
-				title: 'Qrcodes',
+				title: 'QrCode.qrAwards',
 				component: this.qrAwards,
 			},
 			{
 				key: 'recipients',
-				title: 'Recipients',
+				title: 'Badge.multiRecipients',
 				component: this.batchAwards,
 			},
 		];
@@ -684,24 +681,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 			}
-		});
-	}
-
-	shareInstance(instance: BadgeInstance) {
-		this.dialogService.shareSocialDialog.openDialog(this.badgeShareDialogOptionsFor(instance));
-	}
-
-	badgeShareDialogOptionsFor(badge: BadgeInstance): ShareSocialDialogOptions {
-		return badgeShareDialogOptions({
-			shareUrl: badge.instanceUrl,
-			imageUrl: badge.imagePreview,
-			badgeClassName: this.badgeClass.name,
-			badgeClassDescription: this.badgeClass.description,
-			issueDate: badge.issuedOn,
-			recipientName: badge.getExtension('extensions:recipientProfile', { name: undefined }).name,
-			recipientIdentifier: badge.recipientIdentifier,
-			recipientType: badge.recipientType,
-			badge,
 		});
 	}
 

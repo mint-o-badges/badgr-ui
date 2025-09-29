@@ -139,8 +139,8 @@ export class LearningPathDatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'General.learningPath',
-			desc: false,
+			id: 'Badge.createdOn',
+			desc: true,
 		},
 	]);
 
@@ -155,8 +155,8 @@ export class LearningPathDatatableComponent {
 		{
 			id: 'Badge.createdOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.created_at, 'dd.MM.yyyy', 'de-DE'),
-			cell: (info) => info.getValue(),
+			accessorFn: (row) => row.created_at,
+			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'Issuer.learningPathParticipants',

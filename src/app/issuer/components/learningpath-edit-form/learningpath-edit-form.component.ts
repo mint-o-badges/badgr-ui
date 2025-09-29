@@ -364,7 +364,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			useIssuerImageInBadge: true,
 			activated: lp.activated,
 			badges: lp.badges,
-			required_badges_count: lp.required_badges_count,
+			required_badges_count: lp.required_badges_count.toString(), // oeb-select expects string
 			license: [
 				{
 					id: 'CC-0',
@@ -471,7 +471,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		.addControl('useIssuerImageInBadge', true)
 		.addControl('activated', false)
 		.addArray('badges', typedFormGroup().addControl('badge', null, Validators.required))
-		.addControl('required_badges_count', 2, Validators.required)
+		.addControl('required_badges_count', null)
 		.addArray(
 			'license',
 			typedFormGroup()
@@ -523,6 +523,14 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			label: 'General.all',
 			value: badges.length.toString(),
 		});
+
+		const currentValue = this.learningPathForm.controls.required_badges_count.value;
+		const currentValueExists = options.some((opt) => opt.value === currentValue);
+
+		// If current value is no longer in the options, reset to "all"
+		if (currentValue && !currentValueExists) {
+			this.learningPathForm.controls.required_badges_count.setValue(badges.length.toString());
+		}
 
 		return options;
 	}
@@ -853,9 +861,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			const formState = this.learningPathForm.value;
 
 			this.existingLpBadge.imageFrame = imageFrame;
-			this.existingLpBadge.image = !imageFrame ? this.learningPathForm.controls.badge_image.value : null;
-			(this.existingLpBadge.name = this.learningPathForm.controls.name.value),
-				(this.existingLpBadge.description = this.learningPathForm.controls.description.value),
+			this.existingLpBadge.image = !imageFrame ? formState.badge_image : null;
+			(this.existingLpBadge.name = formState.name),
+				(this.existingLpBadge.description = formState.description),
 				(this.existingLpBadge.tags = Array.from(this.lpTags)),
 				(this.existingLpBadge.criteria_text = criteriaText),
 				(this.existingLpBadge.criteria_url = ''),
@@ -898,7 +906,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			this.initialisedLearningpath.activated = formState.activated;
 			this.initialisedLearningpath.issuer_id = this.issuer.slug;
 			this.initialisedLearningpath.tags = Array.from(this.lpTags);
-			this.initialisedLearningpath.required_badges_count = Number(formState.required_badges_count);
+			this.initialisedLearningpath.required_badges_count =
+				formState.required_badges_count ?? this.selectedBadges.length;
 			this.initialisedLearningpath.badges = this.draggableList.map((item, index) => {
 				return {
 					badge: item,
@@ -972,10 +981,12 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 					const issuer = await this.issuerApiService.getIssuer(this.issuerSlug);
 
+					const formState = this.learningPathForm.value;
+
 					this.savePromise = this.learningPathManager.createLearningPath(this.issuerSlug, {
 						issuer_id: issuer.slug,
-						name: this.learningPathForm.controls.name.value,
-						description: this.learningPathForm.controls.description.value,
+						name: formState.name,
+						description: formState.description,
 						tags: Array.from(this.lpTags),
 						badges: this.draggableList.map((item, index) => {
 							return {
@@ -983,9 +994,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 								order: index,
 							};
 						}),
-						required_badges_count: Number(this.learningPathForm.controls.required_badges_count.value),
+						required_badges_count: formState.required_badges_count ?? this.selectedBadges.length,
 						participationBadge_id: participationBadge.slug,
-						activated: this.learningPathForm.controls.activated.value,
+						activated: formState.activated,
 					});
 
 					this.save.emit(this.savePromise);

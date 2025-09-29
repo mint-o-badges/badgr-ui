@@ -12,7 +12,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-checkbox',
-	imports: [HlmP, HlmCheckbox, NgClass, OebInputErrorComponent, ReactiveFormsModule],
+	imports: [HlmP, HlmCheckbox, OebInputErrorComponent, ReactiveFormsModule, NgClass],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -21,7 +21,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		},
 	],
 	template: `<label
-		[ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'"
+		[ngClass]="multiLineText ? 'tw-items-start' : 'tw-items-center'"
 		class="tw-flex tw-mt-[0.25rem]"
 		hlmP
 	>
@@ -32,9 +32,10 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			[formControl]="control"
 			[class.tw-mr-2]="!noMargin"
 			[disabled]="disabled"
+			class="tw-mt-[1px]"
 		/>
 		<div class="tw-flex tw-flex-col">
-			<span class="tw-pl-[3px]" [innerHTML]="text"></span>
+			<span class="tw-pl-[8px]" [innerHTML]="text"></span>
 			@if (isErrorState) {
 				<oeb-input-error class="tw-text-red tw-pl-[3px]" [error]="errorMessageForDisplay"></oeb-input-error>
 			}
@@ -58,8 +59,8 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() label: string;
 	@Input() errorGroup: FormGroup;
 	@Input() errorGroupMessage: CustomValidatorMessages;
-	@Input() alignStart = false;
 	@Input() noMargin = false;
+	@Input() multiLineText = false;
 
 	@Output() ngModelChange = new EventEmitter<boolean>();
 

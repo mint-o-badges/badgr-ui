@@ -115,7 +115,9 @@
 		"state": "State",
 		"overview": "Overview",
 		"rolesAndRights": "Roles and rights",
-		"website": "Website"
+		"website": "Website",
+		"organization": "Organization",
+		"notNow": "Not Now"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -360,7 +362,18 @@
 		"creatingBadge": "Creating Badge",
 		"memberView": "Member view",
 		"partOfNetwork": "Part of the network",
-		"contract26": "By clicking on “Create institution,” the agreement <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>available here</a> pursuant to Article 26(1) GDPR on the joint data protection responsibility of the institution with its partners becomes effective."
+		"contract26": "By clicking on “Create institution,” the agreement <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/EN-Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>available here</a> pursuant to Article 26(1) GDPR on the joint data protection responsibility of the institution with its partners becomes effective.",
+		"linkedInId": "<span class=\"tw-italic tw-font-normal\">Optional: </span> LinkedIn-ID",
+		"linkedInIdUse1": "For ",
+		"linkedInIdUseLink": "badge display",
+		"linkedInIdUse2": " on LinkedIn",
+		"linkedInIdHint": "The LinkedIn ID is the sequence of numbers in the URL of your institution's page, for example: www.linkedin.com/company/<b>12345678</b>/admin -> ID <b>12345678</b>",
+		"linkedInUseNoteHeader": "LinkedIn ID of your institution",
+		"linkedInUseNoteText": "Learners can add badges they have earned to their LinkedIn profile. In order for the certificate to appear there with your institution's logo image, we need to store your institution's LinkedIn ID.",
+		"addLinkedInId": "Add LinkedIn ID",
+		"findLinkedInId": "How to find your LinkedIn ID:",
+		"findLinkedInIdText": "Go to your institution's page on LinkedIn. The ID is the sequence of numbers in the corresponding URL. For example, the URL is: www.linkedin.com/company/<span class='tw-font-bold'>12345678</span>/admin. → <span class='tw-font-bold'>ID = 12345678</span>.",
+		"findLinkedInIdNote": "You can add the LinkedIn ID at any time on your institution's page by editing the institution details."
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -424,7 +437,7 @@
 		"multiBadges": "badges",
 		"noRecipients": "No recipient",
 		"oneRecipient": "1 recipient",
-		"multiRecipients": "recipients",
+		"multiRecipients": "Recipients",
 		"participation": "Participation",
 		"competency": "Competency",
 		"title": "Badge title",
@@ -783,7 +796,11 @@
 		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills.",
 		"skillVisualisationSingleIntro": "Your skills in the area of ",
 		"FutureSkillsAccrodingToNextSkills": "Future Skills according to the NextSkills-Framework",
-		"ESCOAreas": "ESCO areas"
+		"ESCOAreas": "ESCO areas",
+		"shareViaLink": "Via Link:",
+		"addToLinkedInProfile": "Add badge to LinkedIn profile",
+		"shareViaLinkedIn": "On LinkedIn:",
+		"shareWithoutLinkedInId": "Info: The institution that awarded you the badge has not provided us with a LinkedIn ID. Therefore, the corresponding logo image cannot be displayed on LinkedIn."
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
@@ -975,7 +992,7 @@
 	},
 	"QrCode": {
 		"qrAward": "QR code awarding",
-		"qrAwards": "QR Code awarding",
+		"qrAwards": "QR Code awardings",
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code award has been successfully saved on the badge detail page.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR code.</span><br> Check your download folder.",
 		"deleteQrAward": "Delete QR code award",
@@ -1002,7 +1019,11 @@
 		"toBadgeDetail": "To Badge detail page",
 		"downloadPoster": "Download QR-Code-Poster",
 		"badgeDetailPage": "badge detail page",
-		"badgesAwardedSuccessfully": "badges awarded successfully"
+		"badgesAwardedSuccessfully": "badges awarded successfully",
+		"invalidDateRange": "The expiration date must be after the start date",
+		"invalidDate": "Please enter a date in the format YYYY/mm/dd",
+		"missingStartDate": "Please enter a start date for validity",
+		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
 		"learningpathsPlural": "learning paths",

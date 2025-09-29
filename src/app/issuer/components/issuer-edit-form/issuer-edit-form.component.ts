@@ -1,6 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, viewChild, ElementRef, TemplateRef } from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormBuilder,
+	Validators,
+	FormsModule,
+	ReactiveFormsModule,
+	ValidatorFn,
+	AbstractControl,
+} from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
@@ -22,7 +29,9 @@ import { OebInputComponent } from '../../../components/input.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmP } from '@spartan-ng/helm/typography';
+import { HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { HlmDialogService } from '@spartan-ng/helm/dialog';
+import { DialogComponent } from '~/components/dialog.component';
 
 @Component({
 	selector: 'issuer-edit-form',
@@ -39,6 +48,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		RouterLink,
 		TranslatePipe,
 		HlmP,
+		HlmH3,
 	],
 })
 export class IssuerEditFormComponent implements OnInit {
@@ -62,6 +72,7 @@ export class IssuerEditFormComponent implements OnInit {
                 EmailValidator.validEmail*/
 		])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
+		.addControl('issuer_linkedin_id', '', this.positiveIntegerString())
 		.addControl('issuer_category', '', [Validators.required])
 		.addControl('issuer_image', '', Validators.required)
 		.addControl('issuer_street', '', Validators.required)
@@ -99,6 +110,12 @@ export class IssuerEditFormComponent implements OnInit {
 			this.initFormFromExisting(issuer);
 		}
 	}
+
+	imageField = viewChild.required<ElementRef<HTMLElement>>('imageField');
+
+	linkedInIdHeaderTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogHeader');
+	linkedInIdBodyTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogBody');
+
 	constructor(
 		loginService: SessionService,
 		protected router: Router,
@@ -111,6 +128,7 @@ export class IssuerEditFormComponent implements OnInit {
 		protected messageService: MessageService,
 		protected translate: TranslateService,
 		protected issuerManager: IssuerManager,
+		protected dialogService: HlmDialogService,
 	) {
 		title.setTitle(`Create Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -174,6 +192,7 @@ export class IssuerEditFormComponent implements OnInit {
 			issuer_streetnumber: issuer.streetnumber,
 			issuer_zip: issuer.zip,
 			issuer_url: issuer.websiteUrl,
+			issuer_linkedin_id: issuer.linkedinId,
 			verify_intended_use: issuer.intendedUseVerified,
 		});
 	}
@@ -183,8 +202,9 @@ export class IssuerEditFormComponent implements OnInit {
 		const imageControl = this.issuerForm.rawControlMap.issuer_image;
 		if (imageControl) {
 			imageControl.setErrors({ imageError: error });
+			imageControl.markAsDirty();
+			imageControl.updateValueAndValidity();
 		}
-		this.issuerForm.markTreeDirtyAndValidate();
 	}
 
 	refreshProfile = () => {
@@ -199,6 +219,15 @@ export class IssuerEditFormComponent implements OnInit {
 		}
 
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
+			// try scrolling to the first invalid form field
+			const firstInvalidControl: HTMLElement =
+				this.imageError.length > 0
+					? this.imageField().nativeElement
+					: (document.querySelector('.ng-invalid') as HTMLElement);
+			if (firstInvalidControl) {
+				firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' }); // smooth scroll and center
+			}
+
 			return;
 		}
 
@@ -211,6 +240,7 @@ export class IssuerEditFormComponent implements OnInit {
 				image: formState.issuer_image,
 				email: formState.issuer_email,
 				url: formState.issuer_url,
+				linkedinId: formState.issuer_linkedin_id,
 				category: formState.issuer_category,
 				street: formState.issuer_street,
 				streetnumber: formState.issuer_streetnumber,
@@ -236,6 +266,7 @@ export class IssuerEditFormComponent implements OnInit {
 				description: formState.issuer_description,
 				email: formState.issuer_email,
 				url: formState.issuer_url,
+				linkedinId: formState.issuer_linkedin_id,
 				category: formState.issuer_category,
 				street: formState.issuer_street,
 				streetnumber: formState.issuer_streetnumber,
@@ -263,6 +294,15 @@ export class IssuerEditFormComponent implements OnInit {
 		}
 	}
 
+	public openLinkedInInfoDialog() {
+		this.dialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.linkedInIdHeaderTemplate(),
+				content: this.linkedInIdBodyTemplate(),
+			},
+		});
+	}
+
 	get dataProcessorUrl() {
 		return this.configService.theme.dataProcessorTermsLink;
 	}
@@ -270,5 +310,16 @@ export class IssuerEditFormComponent implements OnInit {
 	urlBlurred(ev) {
 		const control = this.issuerForm.rawControlMap['issuer_url'];
 		UrlValidator.addMissingHttpToControl(control);
+	}
+
+	positiveIntegerString() {
+		return (control: AbstractControl) => {
+			const val = parseFloat(control.value);
+			if (!val) return;
+
+			if (!Number.isInteger(val) || val < 0) {
+				return { negativeDuration: this.translate.instant('CreateBadge.valuePositive') };
+			}
+		};
 	}
 }

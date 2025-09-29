@@ -15,7 +15,6 @@ import { MessageService } from './common/services/message.service';
 import { SessionService } from './common/services/session.service';
 import { CommonDialogsService } from './common/services/common-dialogs.service';
 import { AppConfigService } from './common/app-config.service';
-import { ShareSocialDialog } from './common/dialogs/share-social-dialog/share-social-dialog.component';
 import { ConfirmDialog } from './common/dialogs/confirm-dialog.component';
 import { NounprojectDialog } from './common/dialogs/nounproject-dialog/nounproject-dialog.component';
 import '../thirdparty/scopedQuerySelectorShim';
@@ -27,13 +26,9 @@ import { UserProfileManager } from './common/services/user-profile-manager.servi
 import { NewTermsDialog } from './common/dialogs/new-terms-dialog.component';
 import { QueryParametersService } from './common/services/query-parameters.service';
 import { Title } from '@angular/platform-browser';
-import { MarkdownHintsDialog } from './common/dialogs/markdown-hints-dialog.component';
 import { Issuer } from './issuer/models/issuer.model';
 import { IssuerManager } from './issuer/services/issuer-manager.service';
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
-import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
-import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
-import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { LanguageService } from './common/services/language.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
@@ -78,13 +73,8 @@ import { environment } from 'src/environments/environment';
 		MenuItemDirective,
 		RouterOutlet,
 		ConfirmDialog,
-		ShareSocialDialog,
 		ExportPdfDialog,
 		NounprojectDialog,
-		CopyBadgeDialog,
-		ForkBadgeDialog,
-		MarkdownHintsDialog,
-		SelectIssuerDialog,
 		TranslatePipe,
 		CmsMenuItemsPipe,
 	],
@@ -159,23 +149,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 	@ViewChild('newTermsDialog')
 	private newTermsDialog: NewTermsDialog;
 
-	@ViewChild('shareSocialDialog')
-	private shareSocialDialog: ShareSocialDialog;
-
-	@ViewChild('markdownHintsDialog')
-	private markdownHintsDialog: MarkdownHintsDialog;
-
 	@ViewChild('exportPdfDialog')
 	private exportPdfDialog: ExportPdfDialog;
-
-	@ViewChild('copyBadgeDialog')
-	private copyBadgeDialog: CopyBadgeDialog;
-
-	@ViewChild('forkBadgeDialog')
-	private forkBadgeDialog: ForkBadgeDialog;
-
-	@ViewChild('selectIssuerDialog')
-	private selectIssuerDialog: SelectIssuerDialog;
 
 	@ViewChild('issuerLink')
 	private issuerLink: unknown;
@@ -352,14 +327,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 	ngAfterViewInit() {
 		this.commonDialogsService.init(
 			this.confirmDialog,
-			this.shareSocialDialog,
 			this.newTermsDialog,
-			this.markdownHintsDialog,
 			this.exportPdfDialog,
 			this.nounprojectDialog,
-			this.copyBadgeDialog,
-			this.forkBadgeDialog,
-			this.selectIssuerDialog,
 		);
 	}
 

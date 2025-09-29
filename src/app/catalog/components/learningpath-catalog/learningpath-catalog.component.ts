@@ -25,7 +25,7 @@ import { BgLearningPathCard } from '../../../common/components/bg-learningpathca
 import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
-import { HlmH1 } from '@spartan-ng/helm/typography';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
@@ -35,7 +35,6 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	imports: [
 		FormMessageComponent,
 		BgAwaitPromises,
-		HlmH1,
 		CountUpModule,
 		FormsModule,
 		HlmInput,
@@ -45,6 +44,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		BgLearningPathCard,
 		PaginationAdvancedComponent,
 		TranslatePipe,
+		OebHeaderText,
 	],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
@@ -64,7 +64,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	selectedTag: string = null;
 	loggedIn = false;
 	userBadges: string[] = [];
-	plural = {};
 	sortControl = new FormControl();
 
 	microDegreesPerPage = 20;
@@ -119,16 +118,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		}
 	}
 
-	get learningPathPluralWord(): string {
-		return this.learningPaths.length === 1
-			? this.plural['learningPath']['1']
-			: this.plural['learningPath']['other'];
-	}
-
-	get issuersPluralWord(): string {
-		return this.issuers.length === 1 ? this.plural['issuer']['1'] : this.plural['issuer']['other'];
-	}
-
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
@@ -158,13 +147,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			});
 		}
 
-		this.prepareTexts();
-
-		// Translate: to update predefined text when language is changed
-		this.translate.onLangChange.subscribe((event) => {
-			this.prepareTexts();
-		});
-
 		this.sortControl.valueChanges.subscribe((value) => {
 			this.sortOption = value;
 			this.updatePaginatedResults();
@@ -180,26 +162,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	private learningPathTagMatcher(tag: string) {
 		return (badge) => (tag ? badge.tags.includes(tag) : true);
-	}
-
-	prepareTexts() {
-		this.plural = {
-			issuer: {
-				'=0': this.translate.instant('Issuer.noInstitutions'),
-				'=1': '1 Institution',
-				other: ' ' + this.translate.instant('General.institutions'),
-			},
-			issuerText: {
-				'=0': this.translate.instant('Issuer.institutionsIssued'),
-				'=1': '1 ' + this.translate.instant('Issuer.institutionIssued'),
-				other: ' ' + this.translate.instant('Issuer.institutionsIssued'),
-			},
-			learningPath: {
-				'=0': this.translate.instant('General.noLearningPaths'),
-				'=1': '1 ' + this.translate.instant('General.learningPath'),
-				other: ' ' + this.translate.instant('General.learningPaths'),
-			},
-		};
 	}
 
 	changeOrder(order) {
@@ -354,15 +316,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 				},
 			);
 		});
-	}
-}
-
-class MatchingAlgorithm {
-	static learningPathMatcher(inputPattern: string): (lp) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (lp) => StringMatchingUtil.stringMatches(lp.name, patternStr, patternExp);
 	}
 }
 
