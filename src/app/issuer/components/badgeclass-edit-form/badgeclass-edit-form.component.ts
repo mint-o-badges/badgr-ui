@@ -447,7 +447,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
 		participation: this.translate.instant('Badge.participation'),
-		// learningpath: this.translate.instant('Badge.learningpath'),
 	};
 
 	competencyCategoryOptions = {
