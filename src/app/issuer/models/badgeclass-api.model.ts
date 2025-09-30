@@ -74,6 +74,13 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 
 	issuerVerified: boolean;
 	issuerOwnerAcceptedTos: boolean;
+	isNetworkBadge: boolean;
+	sharedOnNetwork: {
+		slug: string;
+		name: string;
+		image: string | null;
+		description: string | null;
+	} | null;
 }
 
 export interface BadgeImageResponse {
@@ -88,12 +95,14 @@ export interface ApiBadgeClassNetworkShare {
 	network: {
 		slug: string;
 		name: string;
+		image: string;
 	};
 	shared_at: string;
 	shared_by_user: string;
 	shared_by_issuer?: {
 		slug: string;
 		name: string;
+		image: string;
 	};
 	is_active: boolean;
 }

@@ -14,9 +14,9 @@
 	@if (badgeResults.length) {
 		<badges-datatable
 			[badges]="badgeResults"
-			(directBadgeAward)="routeToBadgeAward($event, network())"
-			(qrCodeAward)="routeToQRCodeAward($event, network())"
-			(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, network(), $event.focusRequests)"
+			(directBadgeAward)="routeToBadgeAward($event)"
+			(qrCodeAward)="routeToQRCodeAward($event)"
+			(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, network().slug, $event.focusRequests)"
 		></badges-datatable>
 	} @else {
 		<span
@@ -87,6 +87,8 @@
 		<network-shared-badges-datatable
 			[badges]="sharedBadges"
 			(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.issuerSlug, $event.focusRequests)"
+			(directBadgeAward)="routeToBadgeAward($event)"
+			(qrCodeAward)="routeToQRCodeAward($event)"
 		></network-shared-badges-datatable>
 	</div>
 </ng-template>

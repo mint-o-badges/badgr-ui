@@ -294,33 +294,48 @@
 	</ng-template>
 
 	<ng-template #networkBadgesTemplate>
-		@if (!sharedNetworkBadgeResults.length) {
+		@if (!networkGroupsArray.length) {
 			<div
-				class="tw-mt-12 tw-bg-oebgrey tw-rounded-[5px] tw-px-2 tw-py-4 tw-flex tw-gap-1 tw-text-oebblack tw-text-lg tw-leading-[130%]"
+				class="tw-mt-8 tw-bg-oebgrey tw-rounded-[5px] tw-px-2 tw-py-4 tw-flex tw-gap-1 tw-text-oebblack tw-text-lg tw-leading-[130%]"
 			>
 				<span class="tw-font-bold">1. {{ 'Issuer.partnerBadges' | translate }}:</span>
 				<span [innerHTML]="'Issuer.noBadgesApprovedForNetworks' | translate: { issuer: issuer.name }"></span>
 			</div>
 		} @else {
-			<div class="tw-mt-12 tw-bg-[#F8F6FC]">
-				<div class="tw-px-2 tw-py-4 tw-flex tw-gap-1 tw-text-purple tw-text-lg tw-leading-[130%]">
+			<div class="tw-mt-8 tw-bg-oebgrey tw-rounded-[5px] tw-px-2 tw-py-4">
+				<div class="tw-flex tw-gap-1 tw-text-purple tw-text-lg tw-leading-[130%]">
 					<span class="tw-font-bold">1. {{ 'Issuer.networkBadges' | translate }}:</span>
 					<span [innerHTML]="'Issuer.badgesApprovedForNetworks' | translate: { issuer: issuer.name }"></span>
 				</div>
-				@for (badge of sharedNetworkBadgeResults; track badge.badge.slug) {
-					<div
-						class="tw-px-2 tw-py-2 tw-gap-2 tw-flex tw-items-center tw-font-semibold tw-text-lg tw-leading-[130%] tw-uppercase tw-text-oebblack"
-					>
-						<img class="tw-w-12" [src]="badge.badge.image" alt="Badge Image" />
-						<span>{{ badge.badge.name }}</span>
-					</div>
 
-					<badges-datatable
-						[badges]="sharedNetworkBadgeResults"
-						(directBadgeAward)="routeToBadgeAward($event, issuer)"
-						(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-						(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.focusRequests)"
-					></badges-datatable>
+				@for (networkGroup of networkGroupsArray; track networkGroup.network.slug) {
+					<div class="tw-mt-6">
+						<div class="tw-px-2 tw-py-3 tw-flex tw-items-center tw-gap-3 tw-border-b-2 tw-border-purple">
+							<img
+								class="tw-w-12 tw-h-12 tw-object-cover tw-rounded"
+								[src]="networkGroup.network.image"
+								[alt]="networkGroup.network.name"
+							/>
+							<div>
+								<h3 class="tw-font-bold tw-text-xl tw-text-oebblack">
+									{{ networkGroup.network.name }}
+								</h3>
+							</div>
+						</div>
+
+						<badges-datatable
+							[badges]="networkGroup.badges"
+							(directBadgeAward)="routeToBadgeAward($event, issuer)"
+							(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+							(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.focusRequests)"
+						></badges-datatable>
+					</div>
+				}
+
+				@if (networkGroupsArray.length === 0) {
+					<div class="tw-px-2 tw-py-8 tw-text-center tw-text-gray-500">
+						{{ 'Issuer.noSharedNetworkBadges' | translate }}
+					</div>
 				}
 			</div>
 		}

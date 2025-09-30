@@ -90,35 +90,56 @@
 								</div>
 								<!-- Issuer Information -->
 								<div
-									class="tw-mt-4 tw-mx-auto tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-pr-2 tw-py-4 tw-bg-white tw-rounded-lg"
+									class="tw-mt-4 tw-mb-6 tw-mx-auto tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-pr-2 tw-py-4 tw-bg-white tw-rounded-lg"
 								>
 									<div>
 										<img
 											class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image tw-aspect-square"
-											[loaded-src]="config.issuerImage"
+											[loaded-src]="
+												config.networkBadge
+													? config.issuerImage
+													: config.sharedOnNetwork
+														? config.sharedOnNetwork.image
+														: config.issuerImage
+											"
 											[loading-src]="config.issuerImagePlacholderUrl"
 											[error-src]="config.issuerImagePlacholderUrl"
 										/>
 									</div>
-									@if (config.networkBadge) {
-										<div class="tw-leading-[120%] tw-ml-2">
-											<dt class="tw-text-[#757575]">
-												{{ 'Network.createdByNetwork' | translate }}:
-											</dt>
-											<dd class="oeb-break-words tw-text-oebblack tw-font-bold">
-												{{ config.issuerName }}
-											</dd>
-										</div>
-									} @else {
-										<div class="tw-text-oebblack tw-ml-2">
-											<dt class="tw-text-darkgrey">
-												{{ 'RecBadgeDetail.issuedBy' | translate }}:
-											</dt>
-											<dd class="oeb-break-words tw-font-bold">
-												{{ config.issuerName }}
-											</dd>
-										</div>
-									}
+
+									<div class="tw-leading-[120%] tw-ml-2">
+										<dt
+											class="{{
+												config.networkBadge
+													? 'tw-text-[#757575]'
+													: config.sharedOnNetwork
+														? 'tw-text-[#757575]'
+														: 'tw-text-darkgrey'
+											}}"
+										>
+											{{
+												config.networkBadge
+													? ('Network.createdByNetwork' | translate)
+													: config.sharedOnNetwork
+														? ('Network.partOfNetwork' | translate)
+														: ('RecBadgeDetail.issuedBy' | translate)
+											}}:
+										</dt>
+										<dd
+											class="oeb-break-words tw-font-bold"
+											[ngClass]="{
+												'tw-text-oebblack': config.networkBadge || config.sharedOnNetwork
+											}"
+										>
+											{{
+												config.networkBadge
+													? config.issuerName
+													: config.sharedOnNetwork
+														? config.sharedOnNetwork.name
+														: config.issuerName
+											}}
+										</dd>
+									</div>
 								</div>
 							</div>
 							@if (config.copy_permissions && !config.copy_permissions.includes('none')) {

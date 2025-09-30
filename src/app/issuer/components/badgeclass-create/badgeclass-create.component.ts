@@ -75,46 +75,44 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 			throw new Error('No valid context parameter found');
 		}
 
-		const breadcrumbPromises: Promise<unknown>[] = [];
-
-		try {
-			this.issuer = await this.issuerManager.issuerBySlug(this.contextSlug);
+		const state = this.router.getCurrentNavigation()?.extras.state;
+		if (state?.issuer) {
+			this.issuer = state.issuer;
 			this.issuerLoaded = Promise.resolve(this.issuer);
-		} catch (e) {
-			try {
-				this.issuer = await this.networkManager.networkBySlug(this.contextSlug);
-				this.issuerLoaded = Promise.resolve(this.issuer);
-			} catch (err) {
-				this.issuerLoaded = Promise.reject(err);
-			}
+		} else {
+			this.issuerLoaded = this.issuerManager
+				.issuerBySlug(this.contextSlug)
+				.then((issuer) => {
+					this.issuer = issuer;
+					return issuer;
+				})
+				.catch(() => {
+					return this.networkManager.networkBySlug(this.contextSlug).then((network) => {
+						this.issuer = network;
+						return network;
+					});
+				})
+				.then((issuer) => {
+					this.breadcrumbLinkEntries = [
+						{ title: 'Issuers', routerLink: ['/issuer'] },
+						{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
+						{
+							title: this.copiedBadgeClass
+								? this.translate.instant('Badge.copyBadge')
+								: this.translate.instant('Issuer.createBadge'),
+						},
+					];
+					return issuer;
+				});
 		}
-
-		breadcrumbPromises.push(this.issuerLoaded);
 
 		// Check if there is a badge ID in the state and fetch it if necessary
-		const state = this.router.getCurrentNavigation()?.extras.state;
 		if (state && state.copybadgeid) {
-			breadcrumbPromises.push(
-				this.badgeClassService.issuerBadgeById(state.copybadgeid).then((badge) => {
-					this.category = badge.extension['extensions:CategoryExtension'].Category;
-					this.copiedBadgeClass = badge;
-				}),
-			);
+			this.badgeClassService.issuerBadgeById(state.copybadgeid).then((badge) => {
+				this.category = badge.extension['extensions:CategoryExtension'].Category;
+				this.copiedBadgeClass = badge;
+			});
 		}
-
-		// Wait for all breadcrumb-related promises to resolve
-		await Promise.all(breadcrumbPromises);
-
-		// Set breadcrumb link entries after everything is loaded
-		this.breadcrumbLinkEntries = [
-			{ title: 'Issuers', routerLink: ['/issuer'] },
-			{ title: this.issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-			{
-				title: this.copiedBadgeClass
-					? this.translate.instant('Badge.copyBadge')
-					: this.translate.instant('Issuer.createBadge'),
-			},
-		];
 	}
 
 	badgeClassCreated(promise: Promise<BadgeClass>) {

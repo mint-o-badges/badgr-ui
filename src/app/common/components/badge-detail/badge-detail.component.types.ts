@@ -77,6 +77,7 @@ export interface PageConfig {
 	issuerImagePlacholderUrl: string;
 	issuerImage: string;
 	networkBadge?: boolean;
+	sharedOnNetwork?: { slug: string; name: string; image: string | null; description: string | null } | null;
 	badgeLoadingImageUrl: string;
 	badgeFailedImageUrl: string;
 	badgeImage: string;

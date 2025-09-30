@@ -20,6 +20,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 import { NetworkApiService } from '../issuer/services/network-api.service';
 import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
+import { OebButtonComponent } from './oeb-button.component';
 
 @Component({
 	selector: 'network-shared-badges-datatable',
@@ -33,6 +34,7 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 		FlexRenderDirective,
 		NgIcon,
 		HlmIconModule,
+		OebButtonComponent,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
@@ -122,15 +124,52 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 		<ng-template #translateHeaderIDCellTemplate let-context>
 			{{ context.header.id | translate  }}
 		</ng-template>
+
+		<ng-template #badgeActionsCellTemplate let-context>
+			<div class="tw-flex tw-flex-col tw-gap-1 md:tw-gap-2 tw-leading-relaxed">
+					<oeb-button
+						size="xs"
+						width="full_width"
+						(click)="directBadgeAward.emit(context.row.original.badgeclass)"
+						[text]="'Badge.award' | translate"
+					/>
+					<oeb-button
+						variant="secondary"
+						size="xs"
+						width="full_width"
+						(click)="qrCodeAward.emit(context.row.original.badgeclass)"
+						[text]="'QrCode.qrAward' | translate"
+					/>
+					@if (context.row.original.requestCount > 0) {
+						<oeb-button
+							variant="green"
+							size="xs"
+							width="full_width"
+							(click)="
+								redirectToBadgeDetail.emit({ badge: context.row.original.badge, issuerSlug: context.row.original.shared_by_issuer.slug, focusRequests: true })
+							"
+							[text]="
+								context.row.original.requestCount == 1
+									? context.row.original.requestCount + ' ' + ('Badge.openRequestsOne' | translate)
+									: context.row.original.requestCount + ' ' + ('Badge.openRequests' | translate)
+							"
+						/>
+					}
+			</div>
+		</ng-template>
 	`,
 })
 export class NetworkSharedBadgesDatatableComponent {
 	badges = input.required<ApiBadgeClassNetworkShare[]>();
+	directBadgeAward = output<BadgeClass>();
+	qrCodeAward = output<BadgeClass>();
 
 	badgeCellTemplate = viewChild.required<TemplateRef<any>>('badgeCellTemplate');
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	issuerActionsTemplate = viewChild.required<TemplateRef<any>>('issuerActionsCellTemplate');
+
+	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
 	readonly tableSorting = signal<SortingState>([
 		{
@@ -164,6 +203,11 @@ export class NetworkSharedBadgesDatatableComponent {
 			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => 0,
 			cell: (info) => info.getValue(),
+		},
+		{
+			id: 'actions',
+			cell: (info) => this.badgeActionsTemplate(),
+			enableSorting: false,
 		},
 	];
 

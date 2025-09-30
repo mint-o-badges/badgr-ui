@@ -448,6 +448,7 @@
 		"networkBadges": "Network badges",
 		"noPartnerBadgesYet": "So far, no partner institution has released a badge for the network.",
 		"createdByNetwork": "Created by NETWORK",
+		"partOfNetwork": "Part of the NETWORK",
 		"noBadgesYet": "The network <span class='tw-font-semibold'>{{network}}</span> has not created any badges yet.",
 		"sharedBy": "Shared by",
 		"sharedOn": "Shared on"

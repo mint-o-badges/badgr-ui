@@ -229,7 +229,8 @@ export class NetworkBadgesComponent {
 		}
 	}
 
-	routeToBadgeAward(badge: BadgeClass, issuer) {
+	routeToBadgeAward(badge: BadgeClass) {
+		console.log('badge award', badge);
 		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.headerTemplate,
@@ -242,7 +243,7 @@ export class NetworkBadgesComponent {
 		});
 	}
 
-	routeToQRCodeAward(badge, issuer) {
+	routeToQRCodeAward(badge) {
 		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.headerTemplate,
@@ -251,7 +252,7 @@ export class NetworkBadgesComponent {
 		});
 		this.dialogRef.closed$.subscribe((result) => {
 			if (result === 'continue')
-				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'], {
+				this.router.navigate(['/issuer/issuers/', this.selectedIssuer.slug, 'badges', badge.slug, 'qr'], {
 					queryParams: {
 						partnerIssuer: this.selectedIssuer.slug,
 						isNetworkBadge: true,
@@ -261,8 +262,6 @@ export class NetworkBadgesComponent {
 	}
 
 	routeToBadgeDetail(badge, issuerSlug, focusRequests: boolean = false) {
-		console.log('redirecting', issuerSlug);
-
 		const extras = focusRequests
 			? {
 					queryParams: { focusRequests: 'true' },

@@ -1,4 +1,14 @@
-import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, inject } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	Output,
+	EventEmitter,
+	ElementRef,
+	ViewChild,
+	inject,
+	TemplateRef,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -143,7 +153,8 @@ export class OebIssuerDetailComponent implements OnInit {
 		},
 	];
 
-	sharedNetworkBadgeResults: BadgeResult[] = [];
+	networkGroups: Map<string, { network: any; badges: BadgeResult[]; sharedAt: string }> = new Map();
+	networkGroupsArray: { network: any; badges: BadgeResult[]; sharedAt: string }[] = [];
 
 	tabs: Tab[] = undefined;
 	activeTab = 'badges';
@@ -151,11 +162,10 @@ export class OebIssuerDetailComponent implements OnInit {
 	badgeTemplateTabs: any = undefined;
 	activeTabBadgeTemplate = 'issuer-badges';
 
-	@ViewChild('badgesTemplate', { static: false }) badgesTemplate: ElementRef;
-	@ViewChild('learningPathTemplate', { static: false }) learningPathTemplate: ElementRef;
-
-	@ViewChild('issuerBadgesTemplate', { static: true }) issuerBadgesTemplate: ElementRef;
-	@ViewChild('networkBadgesTemplate', { static: true }) networkBadgesTemplate: ElementRef;
+	@ViewChild('badgesTemplate', { static: false }) badgesTemplate: TemplateRef<any>;
+	@ViewChild('learningPathTemplate', { static: false }) learningPathTemplate: TemplateRef<any>;
+	@ViewChild('issuerBadgesTemplate', { static: false }) issuerBadgesTemplate: TemplateRef<any>;
+	@ViewChild('networkBadgesTemplate', { static: false }) networkBadgesTemplate: TemplateRef<any>;
 
 	ngAfterViewInit() {
 		this.tabs = [
@@ -230,7 +240,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		};
 
 		this.badges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
+		// this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
 
 	private async updateNetworkResults() {
@@ -296,19 +306,27 @@ export class OebIssuerDetailComponent implements OnInit {
 				const bTime = b.badges[0]?.badge.createdAt.getTime() ?? 0;
 				return bTime - aTime;
 			});
+			console.log('network instance results', this.networkBadgeInstanceResults);
 		} catch (error) {
 			console.error('Error loading network badge groups:', error);
 		}
 	}
 
 	private async updateSharedNetworkResults() {
-		this.sharedNetworkBadgeResults.length = 0;
+		this.networkGroups = new Map<string, { network: any; badges: BadgeResult[]; sharedAt: string }>();
 
 		if (this.sessionService.isLoggedIn) {
 			const sharedBadges = await this.issuerApiService.listSharedNetworkBadges(this.issuer.slug);
 
+			const uniqueBadgeClasses = new Map<string, ApiBadgeClassNetworkShare>();
+			sharedBadges.forEach((share) => {
+				if (!uniqueBadgeClasses.has(share.badgeclass.slug)) {
+					uniqueBadgeClasses.set(share.badgeclass.slug, share);
+				}
+			});
+
 			this.requestsLoaded = Promise.all(
-				sharedBadges.map((share) =>
+				Array.from(uniqueBadgeClasses.values()).map((share) =>
 					this.qrCodeApiService
 						.getQrCodesForIssuerByBadgeClass(
 							share.shared_by_issuer?.slug || this.issuer.slug,
@@ -325,30 +343,50 @@ export class OebIssuerDetailComponent implements OnInit {
 
 			const requestMap = await this.requestsLoaded;
 
-			const addSharedBadgeToResults = async (share: ApiBadgeClassNetworkShare) => {
-				if (this.sharedNetworkBadgeResults.length > this.maxDisplayedResults) {
-					return false;
-				}
+			const filteredShares = sharedBadges.filter((share) =>
+				MatchingAlgorithm.badgeMatcher(this._searchQuery)(share.badgeclass as unknown as BadgeClass),
+			);
 
+			for (const share of filteredShares) {
 				const badge = new BadgeClass(this.entityManager, share.badgeclass);
 				const issuerName = share.shared_by_issuer?.name || this.issuer.name;
 				const requestCount = this.getRequestCount(badge, requestMap);
+				const badgeResult = new BadgeResult(badge, issuerName, requestCount);
 
-				this.sharedNetworkBadgeResults.push(new BadgeResult(badge, issuerName, requestCount));
+				const networkId = share.network.slug;
 
-				return true;
-			};
+				if (!this.networkGroups.has(networkId)) {
+					this.networkGroups.set(networkId, {
+						network: share.network,
+						badges: [],
+						sharedAt: share.shared_at,
+					});
+				} else {
+					const currentGroup = this.networkGroups.get(networkId)!;
+					if (new Date(share.shared_at) > new Date(currentGroup.sharedAt)) {
+						currentGroup.sharedAt = share.shared_at;
+					}
+				}
 
-			sharedBadges
-				.filter((share) =>
-					MatchingAlgorithm.badgeMatcher(this._searchQuery)(share.badgeclass as unknown as BadgeClass),
-				)
-				.forEach(addSharedBadgeToResults);
+				this.networkGroups.get(networkId)!.badges.push(badgeResult);
+			}
 
-			this.sharedNetworkBadgeResults.sort((a, b) => {
-				const dateA = sharedBadges.find((s) => s.badgeclass.slug === a.badge.slug)?.shared_at;
-				const dateB = sharedBadges.find((s) => s.badgeclass.slug === b.badge.slug)?.shared_at;
-				return new Date(dateB || 0).getTime() - new Date(dateA || 0).getTime();
+			// Sort badges within each network by shared_at date
+			this.networkGroups.forEach((group) => {
+				group.badges.sort((a, b) => {
+					const dateA = filteredShares.find(
+						(s) => s.badgeclass.slug === a.badge.slug && s.network.slug === group.network.slug,
+					)?.shared_at;
+					const dateB = filteredShares.find(
+						(s) => s.badgeclass.slug === b.badge.slug && s.network.slug === group.network.slug,
+					)?.shared_at;
+					return new Date(dateB || 0).getTime() - new Date(dateA || 0).getTime();
+				});
+			});
+
+			// Convert to array and sort networks by most recent share
+			this.networkGroupsArray = Array.from(this.networkGroups.values()).sort((a, b) => {
+				return new Date(b.sharedAt || 0).getTime() - new Date(a.sharedAt || 0).getTime();
 			});
 		}
 	}

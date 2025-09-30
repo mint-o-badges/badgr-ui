@@ -422,7 +422,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			issuerName: badgeClass.issuerName,
 			issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
 			issuerImage: this.issuer.image,
-			networkBadge: this.issuer.is_network,
+			networkBadge: badgeClass.isNetworkBadge,
+			sharedOnNetwork: badgeClass.sharedOnNetwork,
 			badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 			badgeFailedImageUrl: this.badgeFailedImageUrl,
 			badgeImage: badgeClass.image,
@@ -436,21 +437,21 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					action: this.shareOnNetwork.bind(this),
 					icon: 'lucideShare2',
 					disabled:
-						this.issuer instanceof Issuer
+						(this.issuer instanceof Issuer
 							? !(this.issuer.networks && this.issuer.networks.length > 0)
-							: true,
+							: true) || badgeClass.copyPermissions.includes('none'),
 				},
 				{
 					title: badgeClass.copyPermissions.includes('others') ? 'General.copy' : 'Badge.copyThisIssuer',
 					action: this.copyBadge.bind(this),
 					icon: 'lucideCopy',
-					disabled: !this.issuer.canCreateBadge,
+					disabled: !this.issuer.canCreateBadge || badgeClass.copyPermissions.includes('none'),
 				},
 				{
 					title: 'Badge.editCopyStatus',
 					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'copypermissions'],
 					icon: 'lucideCopyX',
-					disabled: !this.issuer.canEditBadge,
+					disabled: !this.issuer.canEditBadge || badgeClass.copyPermissions.includes('none'),
 				},
 				{
 					title: 'General.edit',
