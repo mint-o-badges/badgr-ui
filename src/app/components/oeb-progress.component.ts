@@ -15,7 +15,7 @@ import { NgTemplateOutlet } from '@angular/common';
 		</brn-progress>
 	`,
 })
-export class OebProgressComponent {
+export class OebProgressComponent implements OnInit {
 	@Input() value: number;
 	@Input() class: string = '';
 	@Input() template?: TemplateRef<any>;

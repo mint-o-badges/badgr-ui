@@ -60,7 +60,7 @@
 
 						<div
 							class="tw-flex tw-gap-4 tw-items-center"
-							[ngClass]="{ 'tw-w-full tw-justify-end': badgesDisplay == 'map' }"
+							[ngClass]="{ 'tw-w-full tw-justify-end': badgesDisplay === 'map' }"
 						>
 							@if (badgesDisplay !== 'map') {
 								<oeb-button size="icon" (click)="openMap()" icon="lucideMapPin"> </oeb-button>
@@ -72,7 +72,7 @@
 					</div>
 				</div>
 
-				@if (badgesDisplay == 'grid') {
+				@if (badgesDisplay === 'grid') {
 					<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
 						@for (issuer of issuerResults; track issuer) {
 							<oeb-issuer-card
@@ -87,7 +87,7 @@
 
 				@if (
 					(issuerResults.length >= 30 || (currentPage == totalPages && currentPage != 1)) &&
-					badgesDisplay != 'map'
+					badgesDisplay !== 'map'
 				) {
 					<div class="tw-mt-8">
 						<oeb-numbered-pagination
@@ -99,7 +99,7 @@
 				}
 			</section>
 		</ng-template>
-		<div id="mapWrapper" class="tw-h-[45vh]" [hidden]="badgesDisplay != 'map'">
+		<div id="mapWrapper" class="tw-h-[45vh]" [hidden]="badgesDisplay !== 'map'">
 			<div id="map" #map></div>
 			<div id="map-legend">
 				<ul>

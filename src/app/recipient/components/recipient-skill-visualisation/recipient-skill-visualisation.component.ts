@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, input, OnChanges, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
 import { ApiRootSkill, ApiSkill } from '../../../common/model/ai-skills.model';
 import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -120,7 +120,7 @@ const skillIconMap = {
 		HourPipe,
 	],
 })
-export class RecipientSkillVisualisationComponent implements OnChanges {
+export class RecipientSkillVisualisationComponent implements OnChanges, OnDestroy {
 	@ViewChild('d3canvas') d3canvas: ElementRef<HTMLElement>;
 
 	skills = input<ApiRootSkill[]>([]);

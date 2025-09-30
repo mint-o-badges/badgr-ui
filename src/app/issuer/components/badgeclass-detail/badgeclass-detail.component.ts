@@ -22,7 +22,7 @@ import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
-import { inject } from '@angular/core';
+import { inject, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
@@ -110,7 +110,10 @@ import { OebTabsComponent } from '~/components/oeb-tabs.component';
 		OebTabsComponent,
 	],
 })
-export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassDetailComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, AfterViewChecked, AfterViewInit, OnDestroy
+{
 	@ViewChild('qrAwards') qrAwards!: ElementRef;
 	@ViewChild('batchAwards') batchAwards!: ElementRef;
 

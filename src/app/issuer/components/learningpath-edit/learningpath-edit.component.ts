@@ -91,10 +91,10 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 				this.issuerSlug,
 				this.learningPath.participationBadgeId,
 			);
-			resolve(this.learningPath),
+			(resolve(this.learningPath),
 				(error) => {
 					this.messageService.reportAndThrowError('Failed to load learningPath', error);
-				};
+				});
 		});
 	}
 

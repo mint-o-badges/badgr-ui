@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output, OnInit } from '@angular/core';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
 import { FormControl, FormsModule } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
@@ -191,7 +191,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		HourPipe,
 	],
 })
-export class BgBadgecard {
+export class BgBadgecard implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	@Input() badgeSlug: string;
@@ -208,7 +208,7 @@ export class BgBadgecard {
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: FormControl;
 	@Input() showCheckbox = false;
-	@Input() completed: Boolean = false;
+	@Input() completed: boolean = false;
 	@Output() checkboxChange = new EventEmitter<boolean>();
 	@Output() closeEmit = new EventEmitter<any>();
 	@Input() checked: boolean = false;

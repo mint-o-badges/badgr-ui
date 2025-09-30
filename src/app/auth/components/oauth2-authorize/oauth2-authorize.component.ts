@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
@@ -22,7 +22,7 @@ import { PatternLibraryIconName } from '../../../common/components/svg-icon.comp
 	templateUrl: './oauth2-authorize.component.html',
 	imports: [BgAwaitPromises, FormMessageComponent, SvgIconComponent, FormsModule],
 })
-export class OAuth2AuthorizeComponent extends BaseRoutableComponent {
+export class OAuth2AuthorizeComponent extends BaseRoutableComponent implements OnInit {
 	readonly authLinkLogoSrc = this.theme.logoImg.small;
 
 	_loadingPromise: Promise<unknown> | null = null;

@@ -10,6 +10,8 @@ import {
 	ViewChild,
 	isDevMode,
 	SimpleChanges,
+	AfterViewChecked,
+	OnChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -102,7 +104,10 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		TranslatePipe,
 	],
 })
-export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
+export class BadgeClassEditFormComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, AfterViewInit, AfterViewChecked, OnChanges
+{
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	baseUrl: string;
@@ -682,7 +687,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			}
 			// restore values from sessionStorage
 			const saveableSessionValues = ['badge_name', 'badge_description', 'badge_hours', 'badge_minutes'];
-			const filterSessionValues = (values: Object) => {
+			const filterSessionValues = (values: object) => {
 				const filteredValues = {};
 				for (const [k, v] of Object.entries(values)) {
 					if (saveableSessionValues.includes(k)) {
@@ -1382,7 +1387,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.existingBadgeClass.imageFrame = imageFrame;
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);
-				(this.existingBadgeClass.criteria = formState.criteria),
+				((this.existingBadgeClass.criteria = formState.criteria),
 					(this.existingBadgeClass.criteria_text = ''),
 					(this.existingBadgeClass.extension = {
 						...this.existingBadgeClass.extension,
@@ -1414,7 +1419,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 							formState,
 							competencyExtensionContextUrl,
 						),
-					});
+					}));
 				if (this.currentImage) {
 					this.existingBadgeClass.extension = {
 						...this.existingBadgeClass.extension,

@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, TemplateRef, ViewChild, AfterContentInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NetworkManager } from '../../../issuer/services/network-manager.service';
 import { SessionService } from '../../../common/services/session.service';
@@ -47,7 +47,7 @@ import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.
 		BgBreadcrumbsComponent,
 	],
 })
-export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
 	networkLoaded = signal<Promise<unknown> | null>(null);
 	networkSlug: string;
 	crumbs: LinkEntry[];

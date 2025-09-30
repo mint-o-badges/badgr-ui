@@ -189,7 +189,7 @@
 													[(ngModel)]="groupBy"
 													#selectInput
 													class="border tw-font-normal"
-													[ngClass]="{ 'tw-font-bold!': groupBy != '---' }"
+													[ngClass]="{ 'tw-font-bold!': groupBy !== '---' }"
 													[ngModelOptions]="{ standalone: true }"
 													id="badge-catalog-select"
 												>
@@ -205,7 +205,7 @@
 									</label>
 								</div>
 							</div>
-							@if (groupBy == '---') {
+							@if (groupBy === '---') {
 								<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
 									@for (badge of badgeResults; track badge; let i = $index) {
 										<bg-badgecard
@@ -227,7 +227,7 @@
 									}
 								</div>
 							}
-							@if (groupBy == 'Kategorie' || groupBy == 'Category') {
+							@if (groupBy === 'Kategorie' || groupBy === 'Category') {
 								@for (categoryGroup of badgeResultsByCategory; track categoryGroup) {
 									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 										{{ categoryOptions[categoryGroup.category] }}
@@ -258,7 +258,7 @@
 									</div>
 								}
 							}
-							@if (groupBy == 'Issuer' || groupBy == 'Institution') {
+							@if (groupBy === 'Issuer' || groupBy === 'Institution') {
 								@for (issuerGroup of badgeResultsByIssuer; track issuerGroup) {
 									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 										{{ issuerGroup.issuerName }}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -11,7 +11,7 @@ import { OAuthBannerComponent } from '../../../common/components/oauth-banner.co
 	templateUrl: './reset-password-sent.component.html',
 	imports: [FormMessageComponent, OAuthBannerComponent],
 })
-export class ResetPasswordSent extends BaseRoutableComponent {
+export class ResetPasswordSent extends BaseRoutableComponent implements OnInit {
 	constructor(
 		private sessionService: SessionService,
 		router: Router,

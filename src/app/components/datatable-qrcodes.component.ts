@@ -1,5 +1,5 @@
 import { NgIcon } from '@ng-icons/core';
-import { Component, signal, inject, TemplateRef, viewChild, computed, input, output } from '@angular/core';
+import { Component, signal, inject, TemplateRef, viewChild, computed, input, output, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HlmIcon } from './spartan/ui-icon-helm/src';
 import { HlmMenuModule } from './spartan/ui-menu-helm/src';
@@ -108,7 +108,10 @@ export type RequestedBadge = {
 												</div>
 
 												@if (headerCell.column.getIsSorted()) {
-													@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+													@let order =
+														headerCell.column.getNextSortingOrder() === 'asc'
+															? 'desc'
+															: 'asc';
 													@if (order === 'asc') {
 														<ng-icon hlm size="base" name="lucideChevronUp" />
 													} @else {
@@ -158,8 +161,11 @@ export type RequestedBadge = {
 				/>
 			</ng-template>
 			<ng-template #deleteButton let-context>
-				<button (click)="this.openDeleteDialog(context.row.original)" class="tw-h-10 tw-w-10 hover:tw-opacity-60 tw-inline-flex tw-items-center tw-justify-center">
-					<ng-icon hlm size="base"  name="lucideTrash2" />
+				<button
+					(click)="this.openDeleteDialog(context.row.original)"
+					class="tw-h-10 tw-w-10 hover:tw-opacity-60 tw-inline-flex tw-items-center tw-justify-center"
+				>
+					<ng-icon hlm size="base" name="lucideTrash2" />
 				</button>
 			</ng-template>
 		}
@@ -175,7 +181,7 @@ export type RequestedBadge = {
 		</oeb-button>
 	`,
 })
-export class QrCodeDatatableComponent {
+export class QrCodeDatatableComponent implements OnInit {
 	qrCodeId = input.required<string>();
 	badgeSlug = input.required<string>();
 	issuerSlug = input.required<string>();

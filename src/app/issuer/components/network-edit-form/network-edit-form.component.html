@@ -55,7 +55,7 @@
 			label="{{ 'General.state' | translate }}"
 			placeholder="{{ 'General.select' | translate }}"
 			[options]="_germanStateOptions"
-			[disabled]="networkForm.rawControlMap.country.value != 'Germany'"
+			[disabled]="networkForm.rawControlMap.country.value !== 'Germany'"
 			#networkState
 		>
 		</oeb-select>

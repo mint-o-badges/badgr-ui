@@ -8,6 +8,7 @@ import {
 	Output,
 	SimpleChanges,
 	ViewChild,
+	OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -38,7 +39,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 	`,
 	imports: [FormsModule, ReactiveFormsModule],
 })
-export class FormFieldRadio implements OnChanges, AfterViewInit {
+export class FormFieldRadio implements OnChanges, AfterViewInit, OnInit {
 	set unlocked(unlocked: boolean) {
 		this._unlocked = unlocked;
 		this.updateDisabled();

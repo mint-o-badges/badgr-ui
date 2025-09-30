@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, input, Input, output, signal, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -20,7 +20,7 @@ import { MessageService } from '../../../common/services/message.service';
 	templateUrl: './network-partners.component.html',
 	imports: [TranslatePipe, OebButtonComponent, NetworkPartnersDatatableComponent, NetworkInvitesDatatableComponent],
 })
-export class NetworkPartnersComponent {
+export class NetworkPartnersComponent implements OnInit {
 	issuers = input.required<Issuer[]>();
 	network = input.required<Network>();
 	addInstitutionsTemplate = input.required<TemplateRef<void>>();

@@ -1,4 +1,15 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject, signal, viewChild } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	OnInit,
+	TemplateRef,
+	ViewChild,
+	inject,
+	signal,
+	viewChild,
+	AfterContentInit,
+	AfterViewInit,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -59,7 +70,10 @@ import { UserPreferenceService } from '~/common/services/user-preference.service
 		NetworkListComponent,
 	],
 })
-export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class IssuerListComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, AfterContentInit, AfterViewInit
+{
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
 	readonly noIssuersPlaceholderSrc =
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';

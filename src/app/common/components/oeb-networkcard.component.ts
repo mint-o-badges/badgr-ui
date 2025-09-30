@@ -30,7 +30,7 @@ import { NetworkV3 } from '~/issuer/models/networkv3.model';
 										: {
 												role:
 													'Network.role.' + $any(network).currentUserStaffMember.roleSlug
-													| translate
+													| translate,
 										  }
 							}}
 						</span>

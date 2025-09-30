@@ -9,6 +9,8 @@ import {
 	Output,
 	SimpleChanges,
 	ViewChild,
+	OnChanges,
+	AfterViewInit,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
@@ -90,7 +92,10 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		BgImageStatusPlaceholderDirective,
 	],
 })
-export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class LearningPathEditFormComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, OnChanges, AfterViewInit
+{
 	@ViewChild(StepperComponent) stepper: StepperComponent;
 
 	@ViewChild('badgeStudio')
@@ -883,7 +888,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 			this.existingLpBadge.imageFrame = imageFrame;
 			this.existingLpBadge.image = !imageFrame ? formState.badge_image : null;
-			(this.existingLpBadge.name = formState.name),
+			((this.existingLpBadge.name = formState.name),
 				(this.existingLpBadge.description = formState.description),
 				(this.existingLpBadge.tags = Array.from(this.lpTags)),
 				(this.existingLpBadge.criteria_text = criteriaText),
@@ -907,7 +912,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						legalCode: this.learningPathForm.value.license[0].legalCode,
 					},
 					'extensions:CompetencyExtension': [],
-				});
+				}));
 
 			if (this.currentImage) {
 				this.existingLpBadge.extension = {

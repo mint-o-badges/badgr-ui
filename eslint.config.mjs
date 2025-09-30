@@ -36,6 +36,7 @@ export default [
 
 			// Your custom override
 			'@angular-eslint/prefer-inject': 'off',
+			'@angular-eslint/no-input-rename': 'warn',
 		},
 	},
 	{

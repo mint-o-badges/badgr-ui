@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-collection.model';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -66,7 +66,7 @@ import { HlmSwitch } from '@spartan-ng/helm/switch';
 	`,
 	imports: [RouterLink, HlmSwitch, FormsModule, OebButtonComponent, TranslatePipe],
 })
-export class BgCollectionCard {
+export class BgCollectionCard implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	@Input() collection: RecipientBadgeCollection = null;

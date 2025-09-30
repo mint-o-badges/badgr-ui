@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
@@ -7,7 +7,7 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 	selector: 'logout',
 	template: '',
 })
-export class LogoutComponent extends BaseRoutableComponent {
+export class LogoutComponent extends BaseRoutableComponent implements OnInit {
 	constructor(
 		router: Router,
 		route: ActivatedRoute,

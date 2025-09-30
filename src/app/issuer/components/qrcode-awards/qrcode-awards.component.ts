@@ -1,5 +1,5 @@
 import { NgIcon } from '@ng-icons/core';
-import { Component, EventEmitter, Input, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, inject, OnChanges } from '@angular/core';
 import { BrnAccordionContent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
 import { TranslateModule } from '@ngx-translate/core';
@@ -43,7 +43,7 @@ import { HlmH3 } from '@spartan-ng/helm/typography';
 		SvgIconComponent,
 	],
 })
-export class QrCodeAwardsComponent {
+export class QrCodeAwardsComponent implements OnChanges {
 	constructor(
 		private badgeRequestApiService: BadgeRequestApiService,
 		private qrCodeApiService: QrCodeApiService,

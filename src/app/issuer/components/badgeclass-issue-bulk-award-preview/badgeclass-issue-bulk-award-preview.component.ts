@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -21,7 +21,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
 	imports: [HlmH1, HlmP, FormsModule, OebButtonComponent, TranslatePipe],
 })
-export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
+export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent implements OnChanges {
 	@Input() importPreviewData: BulkIssueImportPreviewData;
 
 	@Output() updateStateEmitter = new EventEmitter<ViewState>();
@@ -177,7 +177,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		return this.getCellFromRowByDestName('name', row);
 	}
 
-	getCellFromRowByDestName(destName: string, row: Object) {
+	getCellFromRowByDestName(destName: string, row: object) {
 		return row[this.destNameToColumnHeaderMap[destName]];
 	}
 

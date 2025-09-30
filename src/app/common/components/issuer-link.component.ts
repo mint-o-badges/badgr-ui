@@ -25,7 +25,7 @@ export class BgIssuerLinkComponent implements OnChanges {
 		'../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 
-	@Input('bgIssuerLink')
+	@Input()
 	bgIssuerLink: Issuer;
 
 	constructor(private elemRef: ElementRef) {}
