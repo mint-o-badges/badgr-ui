@@ -7,6 +7,9 @@ import typescriptParser from '@typescript-eslint/parser';
 
 export default [
 	{
+		ignores: ['**/node_modules/**', '**/src/thirdparty/**'],
+	},
+	{
 		files: ['**/*.ts'],
 		languageOptions: {
 			parser: typescriptParser,
@@ -46,9 +49,5 @@ export default [
 		rules: {
 			...angularEslintPluginTemplate.configs['recommended'].rules,
 		},
-	},
-	{
-		files: ['**/*.ts', '**/*.html'],
-		ignores: ['**/node_modules/**'],
 	},
 ];
