@@ -22,8 +22,6 @@ export class ResetPasswordSent extends BaseRoutableComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		if (this.sessionService.isLoggedIn) {
 			this.router.navigate(['/auth/userProfile']);
 		}

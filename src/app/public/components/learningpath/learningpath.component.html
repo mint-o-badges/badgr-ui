@@ -33,7 +33,7 @@
 											| translate
 												: {
 														count_required: learningPath.required_badges_count,
-														count_total: learningPath.badges.length
+														count_total: learningPath.badges.length,
 												  }
 									"
 								></p>
@@ -152,7 +152,7 @@
 						</div>
 					</ng-template>
 
-					@if (learningPath.progress != null) {
+					@if (learningPath.progress !== null) {
 						<div
 							class="tw-rounded-[10px] tw-bg-white tw-border-[#CFCECE] tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden"
 						>

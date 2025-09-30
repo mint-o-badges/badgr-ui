@@ -72,8 +72,6 @@ export class ResetPasswordComponent extends BaseRoutableComponent implements OnI
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		// To resolve the issue of translation bug when opening a page direclty via link. In this case sent via email.
 		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
 			this.enterNewPassword = this.translate.instant('Login.enterNewPassword');

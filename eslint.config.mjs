@@ -7,7 +7,7 @@ import typescriptParser from '@typescript-eslint/parser';
 
 export default [
 	{
-		ignores: ['**/node_modules/**', '**/src/thirdparty/**'],
+		ignores: ['**/node_modules/**', '**/src/thirdparty/**', '**/*.spec.ts'],
 	},
 	{
 		files: ['**/*.ts'],
@@ -35,8 +35,11 @@ export default [
 			'prettier/prettier': 'error',
 
 			// Your custom override
-			'@angular-eslint/prefer-inject': 'off',
+			'@angular-eslint/prefer-inject': 'warn',
 			'@angular-eslint/no-input-rename': 'warn',
+			'@angular-eslint/no-output-on-prefix': 'warn',
+			'@typescript-eslint/no-unused-vars': 'warn',
+			'@typescript-eslint/no-explicit-any': 'warn',
 		},
 	},
 	{

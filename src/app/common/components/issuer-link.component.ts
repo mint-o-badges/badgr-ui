@@ -30,7 +30,7 @@ export class BgIssuerLinkComponent implements OnChanges {
 
 	constructor(private elemRef: ElementRef) {}
 
-	ngOnChanges(changes: {}) {
+	ngOnChanges() {
 		if (!this.bgIssuerLink || !this.bgIssuerLink.websiteUrl) {
 			this.elem.removeAttribute('href');
 		} else {

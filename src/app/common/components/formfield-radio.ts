@@ -8,7 +8,6 @@ import {
 	Output,
 	SimpleChanges,
 	ViewChild,
-	OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -39,7 +38,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 	`,
 	imports: [FormsModule, ReactiveFormsModule],
 })
-export class FormFieldRadio implements OnChanges, AfterViewInit, OnInit {
+export class FormFieldRadio implements OnChanges, AfterViewInit {
 	set unlocked(unlocked: boolean) {
 		this._unlocked = unlocked;
 		this.updateDisabled();
@@ -131,10 +130,6 @@ export class FormFieldRadio implements OnChanges, AfterViewInit, OnInit {
 	private cachedDirtyState = null;
 
 	private randomName = 'field' + Math.random();
-
-	constructor() {}
-
-	ngOnInit() {}
 
 	ngAfterViewInit() {
 		if (this.autofocus) {

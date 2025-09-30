@@ -132,8 +132,6 @@ export class SessionService {
 		const headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
 		// Update global loading state
 		this.messageService.incrementPendingRequestCount();
-		const that = this;
-
 		return new Promise((resolve, reject) => {
 			this.http
 				.post<Response>(endpoint, payload, {
@@ -145,13 +143,13 @@ export class SessionService {
 				.subscribe({
 					next: (r) => {
 						if (r.status < 200 || r.status >= 300) {
-							that.messageService.reportFatalError('Logout Failed: ' + r.status);
+							this.messageService.reportFatalError('Logout Failed: ' + r.status);
 							reject('Logout failed: ' + r.status);
 						}
 
 						localStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
 						sessionStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
-						if (nextObservable) that.loggedInSubject.next(false);
+						if (nextObservable) this.loggedInSubject.next(false);
 						resolve();
 					},
 					error: (err) => {
@@ -159,8 +157,8 @@ export class SessionService {
 						// So we should also update the local storage etc. accordingly
 						localStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
 						sessionStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
-						if (nextObservable) that.loggedInSubject.next(false);
-						that.messageService.reportFatalError('Logout Failed: ' + err);
+						if (nextObservable) this.loggedInSubject.next(false);
+						this.messageService.reportFatalError('Logout Failed: ' + err);
 						reject('Logout failed: ' + err);
 					},
 				});

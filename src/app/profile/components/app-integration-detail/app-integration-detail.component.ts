@@ -40,6 +40,7 @@ export abstract class AppIntegrationDetailComponent<T extends AppIntegration<Api
 		});
 	}
 
+	// eslint-disable-next-line @angular-eslint/contextual-lifecycle
 	ngOnInit() {
 		super.ngOnInit();
 	}

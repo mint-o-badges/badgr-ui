@@ -60,7 +60,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		this.columnHeadersCount = this.importPreviewData.columnHeaders.length;
 
 		if (!this.importPreviewData.rowLongerThenHeader) {
-			this.isEmailColumnHeaderMapped() ? this.enableActionButton() : this.disableActionButton();
+			if (this.isEmailColumnHeaderMapped()) this.enableActionButton();
+			else this.disableActionButton();
 		}
 	}
 
@@ -116,7 +117,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 				}
 			});
 
-			emptyCellsAreOptional ? this.importPreviewData.validRows.push(row) : invalidRow.push(row);
+			if (emptyCellsAreOptional) this.importPreviewData.validRows.push(row);
+			else invalidRow.push(row);
 		});
 
 		this.importPreviewData.invalidRows = invalidRow;
@@ -166,7 +168,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 			}
 		});
 
-		this.isEmailColumnHeaderMapped() ? this.enableActionButton() : this.disableActionButton();
+		if (this.isEmailColumnHeaderMapped()) this.enableActionButton();
+		else this.disableActionButton();
 	}
 
 	getEmailFromRow(row) {

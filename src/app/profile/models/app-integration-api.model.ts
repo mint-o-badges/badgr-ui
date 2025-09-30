@@ -4,7 +4,7 @@ export type AppIntegrationType = 'canvas-lti1';
 
 export type ApiAppIntegrationUid = string;
 
-export interface ApiAppIntegrationRef extends ApiEntityRef {}
+export type ApiAppIntegrationRef = ApiEntityRef;
 
 export interface ApiAppIntegration {
 	integrationType: AppIntegrationType;

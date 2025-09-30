@@ -75,8 +75,6 @@ export class NewPasswordComponent extends BaseRoutableComponent implements OnIni
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		// To resolve the issue of translation bug when opening a page direclty via link. In this case sent via email.
 		this.translate.onLangChange
 			.pipe(

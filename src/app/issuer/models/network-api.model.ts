@@ -50,7 +50,7 @@ export interface ApiNetworkStaff {
 	};
 }
 
-export interface NetworkStaffRef extends ApiEntityRef {}
+export type NetworkStaffRef = ApiEntityRef;
 
 export interface ApiNetworkStaffOperation {
 	action: 'add' | 'modify' | 'remove';

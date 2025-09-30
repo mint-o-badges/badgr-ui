@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 export function MemoizedProperty() {
 	return (target: {}, propertyKey: string, descriptor: PropertyDescriptor) => {
 		if (descriptor.get) {

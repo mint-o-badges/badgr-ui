@@ -185,7 +185,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 
 	async loadIssuers() {
-		let that = this;
 		return new Promise(async (resolve, reject) => {
 			this.issuerManager.getAllIssuers().subscribe(
 				(issuers) => {
@@ -210,8 +209,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		this.loggedIn = this.sessionService.isLoggedIn;
 
 		this.prepareTexts();
@@ -261,21 +258,19 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		});
 
 		this.mapObject.addControl(new NavigationControl());
-		let that = this;
-		this.mapObject.on('load', function () {
+		this.mapObject.on('load', () => {
 			// Add an image to use as a custom marker
-			that.mapObject.loadImage(
+			this.mapObject.loadImage(
 				'https://maplibre.org/maplibre-gl-js-docs/assets/osgeo-logo.png',
 				function (error, image) {
 					if (error) throw error;
-					that.mapObject.addImage('custom-marker', image);
+					this.mapObject.addImage('custom-marker', image);
 				},
 			);
 		});
 	}
 
 	private updateResults() {
-		let that = this;
 		// Clear Results
 		this.issuerResults = [];
 		this.issuerResultsByCategory = [];
@@ -289,7 +284,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 
 	private updatePaginatedResults() {
-		let that = this;
 		// Clear Results
 		this.issuerResults = [];
 		this.issuerResultsByCategory = [];
@@ -307,7 +301,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		const start = (this.currentPage - 1) * this.issuersPerPage;
 		const end = start + this.issuersPerPage;
 
-		that.issuerResults = this.filteredIssuers.slice(start, end);
+		this.issuerResults = this.filteredIssuers.slice(start, end);
 		// this.issuerResults = this.issuers
 		// 	.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
 		// 	.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
@@ -488,9 +482,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	openMap() {
 		this.badgesDisplay = 'map';
 		this.updateResults();
-		let that = this;
-		setTimeout(function () {
-			that.mapObject.resize();
+		setTimeout(() => {
+			this.mapObject.resize();
 		}, 10);
 	}
 

@@ -73,7 +73,7 @@ export class OebCollapsibleComponent implements AfterViewInit, OnChanges {
 
 	constructor() {
 		effect(() => {
-			this.collapsible && this.toggled.emit(this.collapsible.expanded());
+			if (this.collapsible) this.toggled.emit(this.collapsible.expanded());
 		});
 	}
 

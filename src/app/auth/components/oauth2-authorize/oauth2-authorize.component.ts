@@ -85,8 +85,6 @@ export class OAuth2AuthorizeComponent extends BaseRoutableComponent implements O
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		const clientIdParam = this.queryParams.queryStringValue('client_id');
 
 		if (clientIdParam) {

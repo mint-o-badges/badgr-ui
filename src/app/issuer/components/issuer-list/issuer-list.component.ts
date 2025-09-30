@@ -328,8 +328,9 @@ export class IssuerListComponent
 			(error) => {
 				this.closeDialog();
 				const err = BadgrApiFailure.from(error);
-				BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
-					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
+				BadgrApiFailure.messageIfThrottableError(
+					err.overallMessage || `${this.translate.instant('Issuer.addMember_failed')}: ${err.firstMessage}`,
+				);
 				if (err.fieldMessages.error) {
 					this.messageService.reportAndThrowError(err.fieldMessages.error);
 				} else {

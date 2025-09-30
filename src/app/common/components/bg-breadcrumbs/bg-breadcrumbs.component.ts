@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 import { SvgIconComponent } from '../svg-icon.component';
@@ -8,12 +8,8 @@ import { SvgIconComponent } from '../svg-icon.component';
 	templateUrl: './bg-breadcrumbs.component.html',
 	imports: [RouterLink, SvgIconComponent],
 })
-export class BgBreadcrumbsComponent implements OnInit {
+export class BgBreadcrumbsComponent {
 	@Input() linkentries: LinkEntry[];
-
-	constructor() {}
-
-	ngOnInit() {}
 }
 
 export interface LinkEntry {

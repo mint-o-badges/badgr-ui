@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostBinding, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
 import { FormControl, FormsModule } from '@angular/forms';
 import { NgIcon } from '@ng-icons/core';
@@ -191,7 +191,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		HourPipe,
 	],
 })
-export class BgBadgecard implements OnInit {
+export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	@Input() badgeSlug: string;
@@ -227,13 +227,6 @@ export class BgBadgecard implements OnInit {
 	@HostBinding('class') get hostClasses(): string {
 		return this.checked || this.completed ? 'tw-bg-[var(--color-lightgreen)]' : 'tw-bg-white';
 	}
-	// @HostBinding('class') get completedClass(): string {
-	// 	return this.completed
-	// 	  ? 'tw-bg-[var(--color-green)]'
-	// 	  : 'tw-bg-white';
-	//   }
-
-	ngOnInit() {}
 
 	showCompetencies = false;
 	toggleCompetencies() {

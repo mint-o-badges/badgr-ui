@@ -136,7 +136,7 @@ export class LearningPathEditFormComponent
 	save = new EventEmitter<Promise<LearningPath>>();
 
 	@Output()
-	cancel = new EventEmitter<void>();
+	cancelEdit = new EventEmitter<void>();
 
 	@Input()
 	submittingText: string;
@@ -602,7 +602,7 @@ export class LearningPathEditFormComponent
 	}
 
 	cancelClicked() {
-		this.cancel.emit();
+		this.cancelEdit.emit();
 	}
 
 	async loadBadges() {
@@ -709,14 +709,13 @@ export class LearningPathEditFormComponent
 	}
 
 	private updateResults() {
-		let that = this;
 		// Clear Results
 		this.badgeResults = [];
 		this.badgeResultsByIssuer = [];
 		const badgeResultsByIssuerLocal = {};
 		this.badgeResultsByCategory = [];
 		const badgeResultsByCategoryLocal = {};
-		var addBadgeToResultsByIssuer = function (item) {
+		const addBadgeToResultsByIssuer = (item) => {
 			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
 			if (!issuerResults) {
 				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
@@ -724,12 +723,12 @@ export class LearningPathEditFormComponent
 					'',
 				);
 				// append result to the issuerResults array bound to the view template.
-				that.badgeResultsByIssuer.push(issuerResults);
+				this.badgeResultsByIssuer.push(issuerResults);
 			}
 			issuerResults.addBadge(item);
 			return true;
 		};
-		var addBadgeToResultsByCategory = function (item) {
+		const addBadgeToResultsByCategory = (item) => {
 			let itemCategory =
 				item.extension && item.extension['extensions:CategoryExtension']
 					? item.extension['extensions:CategoryExtension'].Category
@@ -741,7 +740,7 @@ export class LearningPathEditFormComponent
 					'',
 				);
 				// append result to the categoryResults array bound to the view template.
-				that.badgeResultsByCategory.push(categoryResults);
+				this.badgeResultsByCategory.push(categoryResults);
 			}
 			categoryResults.addBadge(item);
 			return true;
@@ -751,7 +750,7 @@ export class LearningPathEditFormComponent
 			.filter(this.badgeTagMatcher(this.selectedTag))
 			.filter((i) => !i.apiModel.source_url)
 			.forEach((item) => {
-				that.badgeResults.push(item);
+				this.badgeResults.push(item);
 				addBadgeToResultsByIssuer(item);
 				addBadgeToResultsByCategory(item);
 			});
@@ -785,7 +784,6 @@ export class LearningPathEditFormComponent
 		this.existingTags = [];
 		this.existingTagsLoading = true;
 		// outerThis is needed because inside the observable, `this` is something else
-		let outerThis = this;
 		let observable = this.learningPathManager.allLearningPaths$;
 
 		observable.subscribe({
@@ -793,11 +791,11 @@ export class LearningPathEditFormComponent
 				let tags: string[] = entities.flatMap((entity) => entity.tags);
 				let unique = [...new Set(tags)];
 				unique.sort();
-				outerThis.existingTags = unique.map((tag, index) => ({
+				this.existingTags = unique.map((tag, index) => ({
 					id: index,
 					name: tag,
 				}));
-				outerThis.tagOptions = outerThis.existingTags.map(
+				this.tagOptions = this.existingTags.map(
 					(tag) =>
 						({
 							value: tag.name,
@@ -806,7 +804,7 @@ export class LearningPathEditFormComponent
 				);
 				// The tags are loaded in one badge, so it's save to assume
 				// that after the first `next` call, the loading is done
-				outerThis.existingTagsLoading = false;
+				this.existingTagsLoading = false;
 			},
 			error(err) {
 				console.error("Couldn't fetch labels: " + err);
@@ -888,31 +886,31 @@ export class LearningPathEditFormComponent
 
 			this.existingLpBadge.imageFrame = imageFrame;
 			this.existingLpBadge.image = !imageFrame ? formState.badge_image : null;
-			((this.existingLpBadge.name = formState.name),
-				(this.existingLpBadge.description = formState.description),
-				(this.existingLpBadge.tags = Array.from(this.lpTags)),
-				(this.existingLpBadge.criteria_text = criteriaText),
-				(this.existingLpBadge.criteria_url = ''),
-				(this.existingLpBadge.extension = {
-					'extensions:StudyLoadExtension': {
-						'@context': studyLoadExtensionContextUrl,
-						type: ['Extension', 'extensions:StudyLoadExtension'],
-						StudyLoad: this.studyLoad,
-					},
-					'extensions:CategoryExtension': {
-						'@context': categoryExtensionContextUrl,
-						type: ['Extension', 'extensions:CategoryExtension'],
-						Category: 'learningpath',
-					},
-					'extensions:LicenseExtension': {
-						'@context': licenseExtensionContextUrl,
-						type: ['Extension', 'extensions:LicenseExtension'],
-						id: this.learningPathForm.value.license[0].id,
-						name: this.learningPathForm.value.license[0].name,
-						legalCode: this.learningPathForm.value.license[0].legalCode,
-					},
-					'extensions:CompetencyExtension': [],
-				}));
+			this.existingLpBadge.name = formState.name;
+			this.existingLpBadge.description = formState.description;
+			this.existingLpBadge.tags = Array.from(this.lpTags);
+			this.existingLpBadge.criteria_text = criteriaText;
+			this.existingLpBadge.criteria_url = '';
+			this.existingLpBadge.extension = {
+				'extensions:StudyLoadExtension': {
+					'@context': studyLoadExtensionContextUrl,
+					type: ['Extension', 'extensions:StudyLoadExtension'],
+					StudyLoad: this.studyLoad,
+				},
+				'extensions:CategoryExtension': {
+					'@context': categoryExtensionContextUrl,
+					type: ['Extension', 'extensions:CategoryExtension'],
+					Category: 'learningpath',
+				},
+				'extensions:LicenseExtension': {
+					'@context': licenseExtensionContextUrl,
+					type: ['Extension', 'extensions:LicenseExtension'],
+					id: this.learningPathForm.value.license[0].id,
+					name: this.learningPathForm.value.license[0].name,
+					legalCode: this.learningPathForm.value.license[0].legalCode,
+				},
+				'extensions:CompetencyExtension': [],
+			};
 
 			if (this.currentImage) {
 				this.existingLpBadge.extension = {

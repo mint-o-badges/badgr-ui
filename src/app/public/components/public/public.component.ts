@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
@@ -21,7 +21,7 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 	`,
 	imports: [FormMessageComponent],
 })
-export class PublicComponent extends BaseRoutableComponent implements OnInit {
+export class PublicComponent extends BaseRoutableComponent {
 	constructor(
 		private title: Title,
 		router: Router,
@@ -30,10 +30,6 @@ export class PublicComponent extends BaseRoutableComponent implements OnInit {
 	) {
 		super(router, route);
 		title.setTitle(`Public - ${this.configService.theme['serviceName'] || 'Badgr'}`);
-	}
-
-	ngOnInit() {
-		super.ngOnInit();
 	}
 }
 

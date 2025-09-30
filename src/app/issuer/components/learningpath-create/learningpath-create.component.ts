@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { FormBuilder } from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
@@ -26,7 +26,7 @@ import { HlmH1, HlmH3 } from '@spartan-ng/helm/typography';
 	templateUrl: './learningpath-create.component.html',
 	imports: [BgBreadcrumbsComponent, FormMessageComponent, HlmH1, HlmH3, LearningPathEditFormComponent, TranslatePipe],
 })
-export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent {
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	issuerSlug: string;
 	issuer: Issuer;
@@ -61,8 +61,6 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 			];
 		});
 	}
-
-	ngOnInit() {}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog() {
