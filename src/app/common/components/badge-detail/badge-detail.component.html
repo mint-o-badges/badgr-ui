@@ -200,7 +200,7 @@
 											>
 												{{ config.version }}
 												<info-icon>
-													@if (config.version == '3.0') {
+													@if (config.version === '3.0') {
 														<span [innerHTML]="'Badge.standard-info-30' | translate"></span>
 													} @else {
 														<span [innerHTML]="'Badge.standard-info-20' | translate"></span>

@@ -110,7 +110,10 @@
 									<!-- ------------------ UNGROUPED ------------------  -->
 									@if (!groupByIssuer) {
 										<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
-											@for (badgeResult of badgeResults; track trackById($index, badgeResult)) {
+											@for (
+												badgeResult of badgeResults;
+												track trackById($index, badgeResult.badge)
+											) {
 												<bg-badgecard
 													[badgeTitle]="badgeResult.badge.badgeClass.name"
 													[badgeImage]="badgeResult.badge.image"
@@ -400,7 +403,7 @@
 				<ng-template #collectionTemplate>
 					<ng-template [bgAwaitPromises]="[collectionsLoaded]">
 						<!-- No collections, empty state! -->
-						@if (collections.length == 0) {
+						@if (collections.length === 0) {
 							<section class="tw-mt-8">
 								<div class="tw-flex tw-justify-between">
 									<div>

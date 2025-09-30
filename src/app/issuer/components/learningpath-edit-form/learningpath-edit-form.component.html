@@ -233,7 +233,7 @@
 										{{ categoryOptions[categoryGroup.category] }}
 										<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
 											>{{ categoryGroup.badges.length }}
-											{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+											{{ categoryGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
 										>
 									</h3>
 									<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6">
@@ -264,7 +264,7 @@
 										{{ issuerGroup.issuerName }}
 										<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
 											>{{ issuerGroup.badges.length }}
-											{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+											{{ issuerGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
 										>
 									</h3>
 									<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
@@ -289,7 +289,7 @@
 									</div>
 								}
 							}
-							@if (selectedBadges.length == 1) {
+							@if (selectedBadges.length === 1) {
 								<p class="tw-mt-6">
 									{{ 'LearningPath.selectedBadgesOne' | translate }}
 								</p>
@@ -557,7 +557,9 @@
 					type="button"
 					[text]="next"
 					(click)="nextStep()"
-					[umamiEvent]="!existingLpBadge ? `create-micro-degree-${this.stepper?.selectedIndex + 1}` : undefined"
+					[umamiEvent]="
+						!existingLpBadge ? `create-micro-degree-${this.stepper?.selectedIndex + 1}` : undefined
+					"
 				/>
 			}
 
@@ -572,7 +574,9 @@
 						(initialisedLearningpath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
 							| translate
 					}}"
-					[umamiEvent]="!existingLpBadge ? `create-micro-degree-done-${this.stepper?.selectedIndex + 1}` : undefined"
+					[umamiEvent]="
+						!existingLpBadge ? `create-micro-degree-done-${this.stepper?.selectedIndex + 1}` : undefined
+					"
 				>
 				</oeb-button>
 			}

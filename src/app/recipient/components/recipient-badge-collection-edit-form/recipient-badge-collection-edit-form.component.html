@@ -21,7 +21,7 @@
 					[control]="badgeCollectionForm.rawControlMap.collectionDescription"
 					label="{{ 'BadgeCollection.description' | translate }}"
 					[errorMessage]="{
-						maxlength: descriptionMax300
+						maxlength: descriptionMax300,
 					}"
 					[max]="300"
 					size="lg"
@@ -113,7 +113,7 @@
 									{{ issuerGroup.issuer?.name }}
 									<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
 										>{{ issuerGroup.badges.length }}
-										{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+										{{ issuerGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
 									>
 								</h3>
 								<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">

@@ -56,7 +56,7 @@ export class NetworkPartnersComponent implements OnInit {
 		});
 	}
 
-	dialogRefPartner: BrnDialogRef<any> = null;
+	dialogRefPartner: BrnDialogRef = null;
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 

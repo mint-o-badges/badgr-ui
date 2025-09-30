@@ -87,8 +87,7 @@ export class ShadowDomComponent implements OnChanges {
 
 			// manual handling of umami data attributes because umami-tracker does not handle shadow dom contents
 			if (a.dataset.umamiEvent) {
-				// @ts-ignore
-				if (window.umami) window.umami.track(a.dataset.umamiEvent);
+				if (window['umami']) window['umami'].track(a.dataset.umamiEvent);
 			}
 
 			if (a.href) {

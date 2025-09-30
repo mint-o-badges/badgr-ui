@@ -86,7 +86,7 @@
 				}
 
 				@if (
-					(issuerResults.length >= 30 || (currentPage == totalPages && currentPage != 1)) &&
+					(issuerResults.length >= 30 || (currentPage === totalPages && currentPage !== 1)) &&
 					badgesDisplay !== 'map'
 				) {
 					<div class="tw-mt-8">
