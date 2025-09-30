@@ -251,7 +251,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 					.then((issuer) => {
 						this.issuer.set({ ...issuer } as Issuer);
 					});
-				this.error = null;
+				this.error.set(null);
 				this.messageService.reportMinorSuccess(
 					`Added ${this.selectedStaffRequestEmail} as ${formData.staffRole}`,
 				);
@@ -282,7 +282,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			.addStaffMember(formData.staffRole, formData.staffEmail)
 			.then(
 				(issuer) => {
-					this.error = null;
+					this.error.set(null);
 					this.messageService.reportMinorSuccess(`Added ${formData.staffEmail} as ${formData.staffRole}`);
 					this.closeDialog();
 					this.issuer.set({ ...issuer } as Issuer);
