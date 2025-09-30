@@ -1,39 +1,54 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-	allConfig: js.configs.all,
-});
+import eslintPluginPrettier from 'eslint-plugin-prettier';
+import angularEslintPlugin from '@angular-eslint/eslint-plugin';
+import angularEslintPluginTemplate from '@angular-eslint/eslint-plugin-template';
+import angularEslintTemplateParser from '@angular-eslint/template-parser';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
 
 export default [
-	...compat.extends(
-		'plugin:@angular-eslint/recommended',
-		'plugin:@angular-eslint/template/process-inline-templates',
-		'plugin:prettier/recommended',
-	),
 	{
 		files: ['**/*.ts'],
 		languageOptions: {
-			ecmaVersion: 5,
-			sourceType: 'script',
+			parser: typescriptParser,
 			parserOptions: {
-				project: ['tsconfig.json'],
-				createDefaultProgram: true,
+				project: ['./tsconfig.json'],
+				sourceType: 'module',
+				ecmaVersion: 'latest',
 			},
 		},
+		plugins: {
+			'@angular-eslint': angularEslintPlugin,
+			'@typescript-eslint': typescriptEslint,
+			prettier: eslintPluginPrettier,
+		},
 		rules: {
+			// Angular ESLint rules
+			...angularEslintPlugin.configs['recommended'].rules,
+
+			// TypeScript ESLint rules
+			...typescriptEslint.configs.recommended.rules,
+
+			// Prettier integration
+			'prettier/prettier': 'error',
+
+			// Your custom override
 			'@angular-eslint/prefer-inject': 'off',
 		},
 	},
-	...compat.extends('plugin:@angular-eslint/template/recommended'),
 	{
 		files: ['**/*.html'],
-		rules: {},
+		languageOptions: {
+			parser: angularEslintTemplateParser,
+		},
+		plugins: {
+			'@angular-eslint/template': angularEslintPluginTemplate,
+		},
+		rules: {
+			...angularEslintPluginTemplate.configs['recommended'].rules,
+		},
+	},
+	{
+		files: ['**/*.ts', '**/*.html'],
+		ignores: ['**/node_modules/**'],
 	},
 ];
