@@ -57,7 +57,7 @@
 						</div>
 
 						<!-- No badges, empty state! -->
-						@if (allBadges.length == 0) {
+						@if (allBadges.length === 0) {
 							<section class="emptysection l-emptysection">
 								<h2 class="emptysection-x-headline">{{ 'RecBadge.noBadgesYet' | translate }}</h2>
 								<p class="emptysection-x-copy">{{ 'RecBadge.collectShareBadges' | translate }}</p>
@@ -106,7 +106,7 @@
 									></oeb-checkbox>
 								</div>
 								<!-- Grid View -->
-								@if (badgesDisplay == 'grid') {
+								@if (badgesDisplay === 'grid') {
 									<!-- ------------------ UNGROUPED ------------------  -->
 									@if (!groupByIssuer) {
 										<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
@@ -141,7 +141,7 @@
 													<span
 														class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
 														>{{ issuerGroup.badges.length }}
-														{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+														{{ issuerGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
 													>
 												</h3>
 												<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
@@ -156,7 +156,7 @@
 															[badgeSlug]="badge.slug"
 															[competencies]="
 																badge.getExtension('extensions:CompetencyExtension', [
-																	{}
+																	{},
 																])
 															"
 														></bg-badgecard>
@@ -290,7 +290,7 @@
 				<ng-template #learningPathTemplate>
 					<ng-template [bgAwaitPromises]="[learningpathLoaded]">
 						<!-- No badges, empty state! -->
-						@if (allLearningPaths.length == 0) {
+						@if (allLearningPaths.length === 0) {
 							<section class="emptysection l-emptysection">
 								<h2 class="emptysection-x-headline">{{ 'RecBadge.noLearningPathYet' | translate }}</h2>
 								<p class="emptysection-x-copy">{{ 'RecBadge.collectShareLearningPath' | translate }}</p>
