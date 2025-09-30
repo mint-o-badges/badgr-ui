@@ -205,10 +205,8 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	private async updateResults() {
-		// Clear Results
 		this.badgeResults.length = 0;
 
-		// The promise only exists for the bgAwaitPromises to work in the template
 		if (this.sessionService.isLoggedIn) {
 			this.requestsLoaded = Promise.all(
 				this.badges.map((b) =>
@@ -226,11 +224,14 @@ export class OebIssuerDetailComponent implements OnInit {
 		const requestMap = await this.requestsLoaded;
 
 		const addBadgeToResults = async (badge: BadgeClass) => {
-			// Restrict Length
 			if (this.badgeResults.length > this.maxDisplayedResults) {
 				return false;
 			}
 			if (badge.extension && badge.extension['extensions:CategoryExtension'].Category === 'learningpath') {
+				return false;
+			}
+
+			if (badge.isNetworkBadge || badge.sharedOnNetwork) {
 				return false;
 			}
 
@@ -240,7 +241,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		};
 
 		this.badges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-		// this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
+		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
 
 	private async updateNetworkResults() {
