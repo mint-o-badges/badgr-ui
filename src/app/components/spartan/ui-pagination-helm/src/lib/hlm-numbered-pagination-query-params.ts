@@ -24,8 +24,8 @@ import { HlmPaginationPrevious } from './hlm-pagination-previous';
 @Component({
 	selector: 'hlm-numbered-pagination-query-params',
 	template: `
-		<div class="flex items-center justify-between gap-2 px-4 py-2">
-			<div class="flex items-center gap-1 text-nowrap text-sm text-gray-600">
+		<div class="tw-flex tw-items-center tw-justify-between tw-gap-2 tw-px-4 tw-py-2">
+			<div class="tw-flex tw-items-center tw-gap-1 tw-text-nowrap tw-text-sm tw-text-gray-600">
 				<b>{{ totalItems() }}</b>
 				total items |
 				<b>{{ _pages().length }}</b>
@@ -75,8 +75,8 @@ import { HlmPaginationPrevious } from './hlm-pagination-previous';
 			</nav>
 
 			<!-- Show Page Size selector -->
-			<brn-select [(ngModel)]="itemsPerPage" class="ml-auto" placeholder="Page size">
-				<hlm-select-trigger class="w-fit">
+			<!-- <brn-select [(ngModel)]="itemsPerPage" class="tw-ml-auto" placeholder="Page size">
+				<hlm-select-trigger class="tw-w-fit">
 					<hlm-select-value />
 				</hlm-select-trigger>
 				<hlm-select-content>
@@ -84,7 +84,7 @@ import { HlmPaginationPrevious } from './hlm-pagination-previous';
 						<hlm-option [value]="pageSize">{{ pageSize }} / page</hlm-option>
 					}
 				</hlm-select-content>
-			</brn-select>
+			</brn-select> -->
 		</div>
 	`,
 	imports: [

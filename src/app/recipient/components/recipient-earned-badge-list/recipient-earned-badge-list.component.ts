@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild, AfterContentInit, inject, Tem
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { groupIntoArray, groupIntoObject } from '../../../common/util/array-reducers';
 import { MessageService } from '../../../common/services/message.service';
@@ -12,7 +11,6 @@ import { AddBadgeDialogComponent } from '../add-badge-dialog/add-badge-dialog.co
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { ApiRecipientBadgeIssuer } from '../../models/recipient-badge-api.model';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
-import { badgeShareDialogOptionsFor } from '../recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
@@ -32,13 +30,13 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
-import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
+import { ShareCollectionDialogComponent } from '../../../common/dialogs/oeb-dialogs/share-collection-dialog.component';
 import { ApiRootSkill } from '../../../common/model/ai-skills.model';
 import { BreakpointService } from '../../../common/services/breakpoint.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
+import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { OebSortSelectComponent } from '../../../components/oeb-sort-select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
@@ -50,6 +48,7 @@ import { RecipientSkillVisualisationComponent } from '../recipient-skill-visuali
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -284,7 +283,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	openShareDialog(collection: RecipientBadgeCollection) {
-		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
+		const dialogRef = this._hlmDialogService.open(ShareCollectionDialogComponent, {
 			context: {
 				collection: collection,
 				caption: this.translate.instant('BadgeCollection.shareCollection'),
@@ -409,12 +408,6 @@ export class RecipientEarnedBadgeListComponent
 			},
 			() => {},
 		);
-	}
-
-	shareBadge(badge: RecipientBadgeInstance) {
-		badge.markAccepted();
-
-		this.dialogService.shareSocialDialog.openDialog(badgeShareDialogOptionsFor(badge));
 	}
 
 	deleteBadge(badge: RecipientBadgeInstance) {
@@ -664,27 +657,5 @@ class MatchingLearningPathIssuer {
 				this.learningpaths.push(learningpath);
 			}
 		}
-	}
-}
-
-class MatchingAlgorithm {
-	static issuerMatcher(inputPattern: string): (issuer: ApiRecipientBadgeIssuer) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (issuer) => StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp);
-	}
-
-	static badgeMatcher(inputPattern: string): (badge: RecipientBadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (badge) => StringMatchingUtil.stringMatches(badge.badgeClass.name, patternStr, patternExp);
-	}
-	static learningPathMatcher(inputPattern: string): (learningPath: any) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (learningPath) => StringMatchingUtil.stringMatches(learningPath.name, patternStr, patternExp);
 	}
 }

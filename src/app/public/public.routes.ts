@@ -16,6 +16,7 @@ import { RequestBadgeComponent } from '../issuer/components/request-badge/reques
 import { PdfDownloadComponent } from './components/pdf-download/pdf-download.component';
 import { PublicLearningPathComponent } from './components/learningpath/learningpath.component';
 import { PublicNotFoundBadgeCollectionComponent } from './components/not-found-badge-collection/not-found-badge-collection.component';
+import { PublicNetworkComponent } from './components/network/network.component';
 
 export const routes: Routes = [
 	{
@@ -98,6 +99,13 @@ export const routes: Routes = [
 	{
 		path: 'issuers/:issuerId',
 		component: PublicIssuerComponent,
+		data: {
+			publiclyAccessible: true,
+		} as BadgrRouteData,
+	},
+	{
+		path: 'networks/:networkId',
+		component: PublicNetworkComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,

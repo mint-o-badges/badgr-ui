@@ -1,4 +1,5 @@
 import { ApiEntityRef } from '../../common/model/entity-ref';
+import { ApiNetwork } from './network-api.model';
 
 export type IssuerSlug = string;
 export type IssuerUrl = string;
@@ -37,6 +38,7 @@ export interface ApiIssuer {
 	verified: boolean;
 
 	source_url?: string;
+	linkedinId: string;
 
 	category?: string;
 	street?: string;
@@ -48,6 +50,8 @@ export interface ApiIssuer {
 	lon?: number;
 	intendedUseVerified: boolean;
 	ownerAcceptedTos: boolean;
+
+	networks: ApiNetwork[];
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';
@@ -86,6 +90,7 @@ export interface ApiIssuerForCreation {
 	city?: string;
 
 	intendedUseVerified: boolean;
+	linkedinId: string;
 
 	lat?: number;
 	lon?: number;
@@ -104,6 +109,7 @@ export interface ApiIssuerForEditing {
 	city?: string;
 
 	intendedUseVerified: boolean;
+	linkedinId: string;
 
 	lat?: number;
 	lon?: number;

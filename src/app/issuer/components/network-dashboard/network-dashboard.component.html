@@ -1,0 +1,58 @@
+<div class="oeb tw-relative tw-w-full">
+	<div class="page-padding">
+		<div class="oeb-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
+		</div>
+		<h1 hlmH1 class="tw-text-purple tw-font-black">{{ 'Network.welcomeDashboard' | translate }}</h1>
+		<ng-template [bgAwaitPromises]="[networkLoaded()]">
+			<section class="tw-flex tw-gap-4 tw-mt-8 tw-items-center">
+				<img width="100px" [src]="network().image" alt="Network Logo" />
+				<div class="tw-flex tw-flex-col">
+					<span class="tw-font-bold tw-text-3xl tw-text-oebblack">{{ network().name }}</span>
+					<span class="tw-text-oebblack tw-text-lg tw-font-semibold">
+						{{
+							'Network.yourRole'
+								| translate
+									: {
+											role:
+												'Network.role.' + network().currentUserStaffMember.roleSlug | translate
+									  }
+						}}</span
+					>
+				</div>
+			</section>
+			<p class="tw-text-oebblack tw-text-lg tw-mt-2 tw-pb-8">
+				{{ network().description }}
+			</p>
+			<oeb-tabs
+				[variant]="'lightpurple'"
+				(onTabChanged)="onTabChange($event)"
+				[activeTab]="activeTab"
+				[tabs]="tabs"
+			>
+			</oeb-tabs>
+		</ng-template>
+		<ng-template #overviewTemplate>
+			<div class="tw-my-8">
+				<oeb-button (click)="openDialog()" [text]="'Network.inviteInstitutions' | translate"> </oeb-button>
+			</div>
+		</ng-template>
+	</div>
+</div>
+
+<ng-template #partnerTemplate>
+	<network-partners
+		[network]="network()"
+		[issuers]="partnerIssuers()"
+		(removePartnerRequest)="onRemovePartner($event)"
+		[addInstitutionsTemplate]="addInstitutionsTemplate"
+	></network-partners>
+</ng-template>
+
+<ng-template #headerTemplate>
+	<h1 class="tw-font-bold tw-text-purple tw-text-2xl tw-mb-4">{{ 'Network.inviteInstitutions' | translate }}</h1>
+</ng-template>
+
+<ng-template #addInstitutionsTemplate>
+	<add-institution [network]="network()"> </add-institution>
+</ng-template>

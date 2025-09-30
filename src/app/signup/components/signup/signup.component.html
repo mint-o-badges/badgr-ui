@@ -10,15 +10,7 @@
 
 					<div class="tw-relative tw-z-20">
 						<!-- Title Message -->
-						<h1
-							[innerHTML]="'Signup.createAccountFor' | translate"
-							class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
-						></h1>
-						<h1
-							class="tw-font-black tw-text-purple tw-text-[30px] tw-leading-[36px] md:tw-text-[46px] md:tw-leading-[55.2px]"
-						>
-							Open Educational Badges
-						</h1>
+						<oeb-header-text [text1]="'Signup.createAccountFor'" [text2]="'Open Educational Badges'" />
 
 						@if (!oAuthManager.currentAuthorization) {
 							<p hlmP class="tw-font-normal tw-mt-3 tw-mb-5 md:tw-mt-4 md:tw-mb-6">
@@ -573,6 +565,7 @@
 					<div class="tw-w-full tw-flex tw-justify-end tw-mt-16 oeb-max-form-width">
 						<oeb-button
 							variant="meinBildungsraum"
+							[disabled]="true"
 							text="{{ 'Signup.registerWithBildungsraum' | translate }}"
 							[img]="'assets/logos/mein-bildungsraum.svg'"
 						>

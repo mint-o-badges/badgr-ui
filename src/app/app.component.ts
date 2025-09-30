@@ -15,7 +15,6 @@ import { MessageService } from './common/services/message.service';
 import { SessionService } from './common/services/session.service';
 import { CommonDialogsService } from './common/services/common-dialogs.service';
 import { AppConfigService } from './common/app-config.service';
-import { ShareSocialDialog } from './common/dialogs/share-social-dialog/share-social-dialog.component';
 import { ConfirmDialog } from './common/dialogs/confirm-dialog.component';
 import { NounprojectDialog } from './common/dialogs/nounproject-dialog/nounproject-dialog.component';
 import '../thirdparty/scopedQuerySelectorShim';
@@ -23,19 +22,13 @@ import { EventsService } from './common/services/events.service';
 import { OAuthManager } from './common/services/oauth-manager.service';
 import { EmbedService } from './common/services/embed.service';
 import { InitialLoadingIndicatorService } from './common/services/initial-loading-indicator.service';
-import { ApiExternalToolLaunchpoint } from '../app/externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from '../app/externaltools/services/externaltools-manager.service';
 import { UserProfileManager } from './common/services/user-profile-manager.service';
 import { NewTermsDialog } from './common/dialogs/new-terms-dialog.component';
 import { QueryParametersService } from './common/services/query-parameters.service';
 import { Title } from '@angular/platform-browser';
-import { MarkdownHintsDialog } from './common/dialogs/markdown-hints-dialog.component';
 import { Issuer } from './issuer/models/issuer.model';
 import { IssuerManager } from './issuer/services/issuer-manager.service';
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
-import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
-import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
-import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { LanguageService } from './common/services/language.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
@@ -51,6 +44,7 @@ import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
 import { IconsProvider } from './icons-provider';
 import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 import { HlmIcon } from '@spartan-ng/helm/icon';
+import { environment } from 'src/environments/environment';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -79,13 +73,8 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 		MenuItemDirective,
 		RouterOutlet,
 		ConfirmDialog,
-		ShareSocialDialog,
 		ExportPdfDialog,
 		NounprojectDialog,
-		CopyBadgeDialog,
-		ForkBadgeDialog,
-		MarkdownHintsDialog,
-		SelectIssuerDialog,
 		TranslatePipe,
 		CmsMenuItemsPipe,
 	],
@@ -108,6 +97,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
+		// {
+		// 	title: 'Network.networksNav',
+		// 	routerLink: ['/catalog/networks'],
+		// 	icon: 'lucideNetwork',
+		// },
 	];
 	accountMenuItems: MenuItem[] = [
 		{
@@ -136,7 +130,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 	loggedIn = false;
 	mobileNavOpen = false;
 	isUnsupportedBrowser = false;
-	launchpoints?: ApiExternalToolLaunchpoint[];
 	issuers = signal<Issuer[] | undefined>(undefined);
 	showIssuersTab = computed(() => {
 		return !this.features.disableIssuers && this.issuers() !== undefined;
@@ -156,23 +149,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 	@ViewChild('newTermsDialog')
 	private newTermsDialog: NewTermsDialog;
 
-	@ViewChild('shareSocialDialog')
-	private shareSocialDialog: ShareSocialDialog;
-
-	@ViewChild('markdownHintsDialog')
-	private markdownHintsDialog: MarkdownHintsDialog;
-
 	@ViewChild('exportPdfDialog')
 	private exportPdfDialog: ExportPdfDialog;
-
-	@ViewChild('copyBadgeDialog')
-	private copyBadgeDialog: CopyBadgeDialog;
-
-	@ViewChild('forkBadgeDialog')
-	private forkBadgeDialog: ForkBadgeDialog;
-
-	@ViewChild('selectIssuerDialog')
-	private selectIssuerDialog: SelectIssuerDialog;
 
 	@ViewChild('issuerLink')
 	private issuerLink: unknown;
@@ -223,7 +201,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private embedService: EmbedService,
 		private renderer: Renderer2,
 		private queryParams: QueryParametersService,
-		private externalToolsManager: ExternalToolsManager,
 		private initialLoadingIndicatorService: InitialLoadingIndicatorService,
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
@@ -254,10 +231,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 		const authCode = this.queryParams.queryStringValue('authCode', true);
 		if (sessionService.isLoggedIn && !authCode) this.refreshProfile();
-
-		this.externalToolsManager.getToolLaunchpoints('navigation_external_launch').then((launchpoints) => {
-			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
-		});
 
 		if (this.embedService.isEmbedded) {
 			// Enable the embedded indicator class on the body
@@ -341,19 +314,22 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.translate.onLangChange.subscribe(() => {
 			this.document.documentElement.lang = this.translate.currentLang;
 		});
+
+		if (environment.networksEnabled) {
+			this.aboutBadgesMenuItems.push({
+				title: 'Network.networksNav',
+				routerLink: ['/catalog/networks'],
+				icon: 'lucideNetwork',
+			});
+		}
 	}
 
 	ngAfterViewInit() {
 		this.commonDialogsService.init(
 			this.confirmDialog,
-			this.shareSocialDialog,
 			this.newTermsDialog,
-			this.markdownHintsDialog,
 			this.exportPdfDialog,
 			this.nounprojectDialog,
-			this.copyBadgeDialog,
-			this.forkBadgeDialog,
-			this.selectIssuerDialog,
 		);
 	}
 

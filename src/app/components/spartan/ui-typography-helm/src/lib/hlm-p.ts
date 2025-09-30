@@ -8,6 +8,7 @@ export const pVariants = cva('', {
 		variant: {
 			default: 'tw-text-oebblack',
 			light: 'tw-text-[#6B6B6B]',
+			white: 'tw-text-white',
 			// destructive: 'tw-bg-destructive tw-text-destructive-foreground hover:btw-g-destructive/90',
 		},
 		size: {
@@ -32,8 +33,8 @@ export type PVariants = VariantProps<typeof pVariants>;
 })
 export class HlmP {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	public readonly _variant = input<PVariants['variant']>('default');
-	public readonly _size = input<PVariants['size']>('default');
+	public readonly _variant = input<PVariants['variant']>('default', { alias: 'variant' });
+	public readonly _size = input<PVariants['size']>('default', { alias: 'size' });
 	protected _computedClass = computed(() =>
 		hlm(pVariants({ variant: this._variant(), size: this._size() }), this.userClass()),
 	);

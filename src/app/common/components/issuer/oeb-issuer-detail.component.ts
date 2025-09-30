@@ -7,7 +7,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { MenuItem } from '../badge-detail/badge-detail.component.types';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
@@ -23,16 +22,24 @@ import { NgIf, NgFor } from '@angular/common';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { SvgIconComponent } from '../svg-icon.component';
-import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
+import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
 import { DatatableComponent } from '../../../components/datatable-badges.component';
 import { FormsModule } from '@angular/forms';
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathDatatableComponent } from '../../../components/datatable-learningpaths.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
-import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../../public/models/public-api.model';
+import {
+	PublicApiBadgeClass,
+	PublicApiIssuer,
+	PublicApiLearningPath,
+	PublicApiNetwork,
+} from '../../../public/models/public-api.model';
+import { Network } from '../../../issuer/models/network.model';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -65,12 +72,14 @@ export class OebIssuerDetailComponent implements OnInit {
 	@Input() issuerActionsMenu: any;
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
 	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
+	@Input() networks: Network[] | PublicApiNetwork[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 
 	learningPathsPromise: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	userIsMember = false;
+	env = environment;
 
 	constructor(
 		private router: Router,
@@ -131,7 +140,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
 
-	ngAfterContentInit() {
+	ngAfterViewInit() {
 		this.tabs = [
 			{
 				key: 'badges',

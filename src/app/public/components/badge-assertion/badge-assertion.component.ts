@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
@@ -15,11 +15,12 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { MessageService } from '../../../common/services/message.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { saveAs } from 'file-saver';
-import { Title } from '@angular/platform-browser';
+import { SafeResourceUrl, Title } from '@angular/platform-browser';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
-import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
+import { PdfService } from '../../../common/services/pdf.service';
+import { SessionService } from '~/common/services/session.service';
 
 @Component({
 	template: ` <bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam.loadedPromise]"></bg-badgedetail>`,
@@ -32,12 +33,18 @@ export class PublicBadgeAssertionComponent {
 		public messageService: MessageService,
 		public configService: AppConfigService,
 		public queryParametersService: QueryParametersService,
-		private dialogService: CommonDialogsService,
 		private title: Title,
 		private translate: TranslateService,
+		private pdfService: PdfService,
+		private sessionService: SessionService,
+		protected route: ActivatedRoute,
 	) {
 		title.setTitle(`Assertion - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.assertionIdParam = this.createLoadedRouteParam();
+	}
+
+	get assertionSlug() {
+		return this.route.snapshot.params['assertionId'];
 	}
 
 	readonly issuerImagePlacholderUrl = preloadImageURL(
@@ -55,6 +62,8 @@ export class PublicBadgeAssertionComponent {
 	awardedToDisplayName: string;
 
 	config: PageConfig;
+
+	pdfSrc: SafeResourceUrl;
 
 	routerLinkForUrl = routerLinkForUrl;
 
@@ -207,7 +216,8 @@ export class PublicBadgeAssertionComponent {
 						{
 							title: 'RecBadgeDetail.downloadPDF',
 							icon: 'lucideFileText',
-							action: () => this.exportPdf(),
+							action: () => this.downloadCertificate(),
+							disabled: !this.sessionService.isLoggedIn,
 						},
 						// Disabled for now
 						// {
@@ -217,8 +227,9 @@ export class PublicBadgeAssertionComponent {
 						// },
 					],
 					badgeDescription: assertion.badge.description,
-					badgeCriteria:
-						typeof assertion.badge.criteria != 'string' ? assertion.badge.criteria.narrative : null,
+					awardCriteria: assertion.badge.criteria['narrative'],
+					// criteria:
+					// 	typeof assertion.badge.criteria != 'string' ? assertion.badge.criteria.narrative : null,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
 					category:
@@ -289,7 +300,15 @@ export class PublicBadgeAssertionComponent {
 			.catch((error) => console.error('Download failed:', error));
 	}
 
-	exportPdf() {
-		this.dialogService.exportPdfDialog.openDialog(this.assertion).catch((error) => console.log(error));
+	downloadCertificate() {
+		this.pdfService
+			.getPdf(this.assertionSlug, 'badges')
+			.then((url) => {
+				this.pdfSrc = url;
+				this.pdfService.downloadPdf(this.pdfSrc, this.assertion.badge.name, new Date(this.assertion.validFrom));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 }

@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { DialogComponent } from '../../../components/dialog.component';
-import { OebTabsComponent, Tab } from '../../../components/oeb-backpack-tabs.component';
+import { OebTabsComponent, Tab } from '../../../components/oeb-tabs.component';
 import { TranslateModule } from '@ngx-translate/core';
 import {
 	UploadTabComponent,

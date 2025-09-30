@@ -4,7 +4,6 @@ import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
 import { PublicApiBadgeClassWithIssuer, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
-import { EmbedService } from '../../../common/services/embed.service';
 import { stripQueryParamsFromUrl } from '../../../common/util/url-util';
 import { routerLinkForUrl } from '../public/public.component';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -15,7 +14,6 @@ import { SessionService } from '../../../common/services/session.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
@@ -76,14 +74,12 @@ export class PublicBadgeClassComponent {
 
 	constructor(
 		private injector: Injector,
-		public embedService: EmbedService,
 		public configService: AppConfigService,
 		private title: Title,
 		private sessionService: SessionService,
 		private recipientBadgeApiService: RecipientBadgeApiService,
 		private translate: TranslateService,
 		protected issuerManager: IssuerManager,
-		protected dialogService: CommonDialogsService,
 		private router: Router,
 		protected badgeClassManager: BadgeClassManager,
 		protected userProfileManager: UserProfileManager,
@@ -103,7 +99,7 @@ export class PublicBadgeClassComponent {
 					},
 					badgeTitle: badge.name,
 					badgeDescription: badge.description,
-					badgeCriteria: badge.criteria['narrative'],
+					awardCriteria: badge.criteria['narrative'],
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
 					category: this.translate.instant(

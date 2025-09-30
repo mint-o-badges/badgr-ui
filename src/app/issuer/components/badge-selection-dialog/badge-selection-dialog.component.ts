@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 
 export interface BadgeSelectionDialogOptions {
 	dialogId: string;
@@ -475,25 +476,5 @@ class MatchingIssuerBadges {
 				this.badges.push(badge);
 			}
 		}
-	}
-}
-
-class MatchingAlgorithm {
-	static issuerMatcher(inputPattern: string): (issuer: Issuer) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (issuer) =>
-			StringMatchingUtil.stringMatches(issuer.slug, patternStr, patternExp) ||
-			StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp);
-	}
-
-	static badgeMatcher(inputPattern: string): (badge: BadgeClass) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (badge) =>
-			StringMatchingUtil.stringMatches(badge.slug, patternStr, patternExp) ||
-			StringMatchingUtil.stringMatches(badge.name, patternStr, patternExp);
 	}
 }

@@ -158,14 +158,6 @@
 	</nav>
 
 	<!-- Nav dropdown menus -->
-	<bg-popup-menu #appsMenu>
-		@for (lp of launchpoints; track lp) {
-			<a class="menuitem" href="{{ lp.launch_url }}" target="_blank">
-				{{ lp.label }}
-			</a>
-		}
-	</bg-popup-menu>
-
 	<bg-popup-menu #customMenu>
 		@for (item of theme?.customMenu?.items; track item) {
 			<a class="menuitem" [href]="item.url" target="_blank">
@@ -228,14 +220,6 @@
 					'NavItems.register' | translate
 				}}</a>
 				<hr class="mobilenav-x-rule" />
-				@if (launchpoints?.length) {
-					<p class="mobilenav-x-label">Apps</p>
-				}
-				@for (lp of launchpoints; track lp) {
-					<a href="{{ lp.launch_url }}" target="_blank">
-						{{ lp.label }}
-					</a>
-				}
 			</div>
 		</nav>
 	}
@@ -262,6 +246,7 @@
 				<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
 				<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
 				<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
+				<!-- <a [routerLink]="['/catalog/networks']">{{ 'Network.networksNav' | translate }}</a> -->
 
 				@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
 					@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
@@ -282,14 +267,6 @@
 				<!-- <a [routerLink]="['/recipient/badge-collections']">{{ 'General.collections' | translate }}</a> -->
 				@if (showIssuersTab()) {
 					<a [routerLink]="['/issuer']">{{ 'NavItems.myInstitutions' | translate }}</a>
-				}
-
-				@if (launchpoints?.length) {
-					<hr class="mobilenav-x-rule" />
-					<p class="mobilenav-x-label">Apps</p>
-					@for (lp of launchpoints; track lp) {
-						<a href="{{ lp.launch_url }}" target="_blank"> {{ lp.label }} </a>
-					}
 				}
 
 				@if (theme.customMenu) {
@@ -347,14 +324,8 @@
 
 <!-- TODO: Assess dialog patterns - use inert polyfill -->
 <confirm-dialog #confirmDialog></confirm-dialog>
-<!-- <new-terms-dialog #newTermsDialog></new-terms-dialog> -->
-<share-social-dialog #shareSocialDialog></share-social-dialog>
 <export-pdf-dialog #exportPdfDialog></export-pdf-dialog>
 <nounproject-dialog #nounprojectDialog></nounproject-dialog>
-<copy-badge-dialog #copyBadgeDialog></copy-badge-dialog>
-<fork-badge-dialog #forkBadgeDialog></fork-badge-dialog>
-<markdown-hints-dialog #markdownHintsDialog></markdown-hints-dialog>
-<select-issuer-dialog #selectIssuerDialog></select-issuer-dialog>
 
 <!-- Footer -->
 <footer class="tw-relative tw-w-full tw-bg-oebgrey tw-mt-8">
@@ -381,7 +352,7 @@
 			</div>
 		</div>
 
-		<div class="tw-flex tw-flex-col tw-align-stretch tw-min-w-[24rem]">
+		<div class="tw-flex tw-flex-col tw-align-stretch tw-min-w-full sm:tw-min-w-[24rem]">
 			<oeb-button
 				[routerLink]="['/public/about/newsletter']"
 				[text]="'Newsletter.signup' | translate"

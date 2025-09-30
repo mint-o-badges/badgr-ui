@@ -32,6 +32,9 @@ import { NgIcon } from '@ng-icons/core';
 		RouterModule,
 		NgIcon,
 	],
+	host: {
+		class: 'tw-block tw-overflow-x-auto',
+	},
 	template: ` <table hlmTable oeb-table>
 			<thead hlmTHead>
 				@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
@@ -90,7 +93,7 @@ import { NgIcon } from '@ng-icons/core';
 		</table>
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate | titlecase }}
+			{{ context.header.id | translate }}
 		</ng-template>
 
 		<ng-template #badgeCellTemplate let-context>
@@ -136,8 +139,8 @@ export class LearningPathDatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'Micro Degree',
-			desc: false,
+			id: 'Badge.createdOn',
+			desc: true,
 		},
 	]);
 
@@ -151,8 +154,8 @@ export class LearningPathDatatableComponent {
 		{
 			id: 'Badge.createdOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.created_at, 'dd.MM.yyyy', 'de-DE'),
-			cell: (info) => info.getValue(),
+			accessorFn: (row) => row.created_at,
+			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'Issuer.learningPathParticipants',

@@ -1,0 +1,26 @@
+<ng-container>
+	@if (!issuers().length) {
+		<div class="tw-my-8">
+			<span class="tw-text-oebblack tw-text-lg tw-block">{{ 'Network.noInstitutionAddedYet' | translate }}</span>
+			<oeb-button (click)="openDialog()" [text]="'Network.inviteInstitutions' | translate"> </oeb-button>
+		</div>
+	} @else {
+		<network-partners-datatable
+			[network]="network()"
+			[partners]="issuers()"
+			[approvedInvites]="approvedInvites()"
+			(removePartnerRequest)="onPartnerRemoved($any($event))"
+		></network-partners-datatable>
+	}
+	@if (pendingInvites().length) {
+		<network-invites-datatable
+			[network]="network()"
+			(inviteRevoked)="onInviteRevoked($event)"
+			[invites]="pendingInvites()"
+		></network-invites-datatable>
+	}
+</ng-container>
+
+<ng-template #headerTemplate>
+	<h1 class="tw-font-bold tw-text-purple tw-text-2xl tw-mb-4">{{ 'Network.inviteInstitutions' | translate }}</h1>
+</ng-template>

@@ -3,12 +3,8 @@ import { animate, animateChild, query, stagger, style, transition, trigger } fro
 import { LearningPathApiService } from '../../services/learningpath-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
-import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
-import { BadgeInstanceManager } from '../../../issuer/services/badgeinstance-manager.service';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { MessageService } from '../../services/message.service';
 import { SuccessDialogComponent } from '../../dialogs/oeb-dialogs/success-dialog.component';
-import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { CommonDialogsService } from '../../services/common-dialogs.service';
 import { BaseRoutableComponent } from '../../pages/base-routable.component';
 import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-api.service';
@@ -58,9 +54,6 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 
 	constructor(
 		private learningPathApiService: LearningPathApiService,
-		private badgeClassManager: BadgeClassManager,
-		private badgeInstanceManager: BadgeInstanceManager,
-		private messageService: MessageService,
 		private dialogService: CommonDialogsService,
 		private badgeInstanceApiservice: BadgeInstanceApiService,
 		private pdfService: PdfService,
@@ -124,15 +117,13 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		return this.dialogService.confirmDialog;
 	}
 
-	async revokeLpParticipationBadge(participant: any) {
-		const participationBadgeInstance: BadgeInstance = participant.participationBadgeAssertion;
-
+	async revokeLpParticipationBadge(participant: ApiLearningPathParticipant) {
 		this.confirmDialog
 			.openResolveRejectDialog({
 				dialogTitle: this.translate.instant('General.warning'),
 				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', {
 					badge: this.learningPath.name,
-					recipient: participationBadgeInstance.recipientIdentifier,
+					recipient: `${participant.user.first_name} ${participant.user.last_name}`,
 				}),
 				resolveButtonLabel: this.translate.instant('General.revoke'),
 				rejectButtonLabel: this.translate.instant('General.cancel'),
@@ -143,7 +134,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 						this.badgeInstanceApiservice.revokeBadgeInstance(
 							this.issuer.slug,
 							this.learningPath.participationBadge_id,
-							participationBadgeInstance.slug,
+							participant.participationBadgeAssertion.slug,
 							'revoked',
 						),
 					]);
@@ -159,13 +150,13 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 			});
 	}
 
-	downloadCertificate(participant: any) {
+	downloadCertificate(participant: ApiLearningPathParticipant) {
 		const instance = participant.participationBadgeAssertion;
 		this.pdfService
 			.getPdf(instance.slug, 'badges')
 			.then((url) => {
 				this.pdfSrc = url;
-				this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date(instance.json.issuedOn));
+				this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date(participant.completed_at));
 			})
 			.catch((error) => {
 				console.log(error);

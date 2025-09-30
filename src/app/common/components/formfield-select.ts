@@ -163,10 +163,7 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 		return (this.label || this.placeholder || this.randomName).replace(/[^\w]+/g, '_').toLowerCase();
 	}
 
-	constructor(
-		private dialogService: CommonDialogsService,
-		private elemRef: ElementRef,
-	) {}
+	constructor(private dialogService: CommonDialogsService) {}
 
 	ngAfterViewInit() {
 		if (this.autofocus) {

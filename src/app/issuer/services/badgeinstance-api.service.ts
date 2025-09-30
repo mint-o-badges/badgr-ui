@@ -97,7 +97,7 @@ export class BadgeInstanceApiService extends BaseHttpApiService {
 		issuerSlug: string,
 		badgeSlug: string,
 		query?: string,
-		num = 100,
+		num = 500,
 	): Promise<BadgeInstanceResultSet> {
 		let url = `/v1/issuer/issuers/${issuerSlug}/badges/${badgeSlug}/assertions?num=${num}`;
 		if (query) {

@@ -28,6 +28,9 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1 } from '@spartan-ng/helm/typography';
+import { BadgeClass } from '~/issuer/models/badgeclass.model';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
 
 @Component({
 	selector: 'app-issuer-catalog',
@@ -36,7 +39,6 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		HlmH1,
 		BgAwaitPromises,
 		CountUpModule,
 		FormsModule,
@@ -50,6 +52,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		IssuerCardComponent,
 		PaginationAdvancedComponent,
 		TranslatePipe,
+		OebHeaderText,
 	],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
@@ -236,7 +239,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					type: 'raster',
 					tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
 					tileSize: 256,
-					attribution: '&copy; OpenStreetMap Contributors',
+					attribution:
+						'Map data & geocoding from <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 					maxzoom: 19,
 				},
 			},
@@ -549,15 +553,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					this.router.navigate([isMember ? '/issuer/issuers/' : '/public/issuers/', issuerData.slug]);
 				});
 		}
-	}
-}
-
-class MatchingAlgorithm {
-	static issuerMatcher(inputPattern: string): (issuer) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (issuer) => StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp);
 	}
 }
 

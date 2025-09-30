@@ -11,6 +11,7 @@ import { ManagedEntity } from '../../common/model/managed-entity';
 import { ApiEntityRef } from '../../common/model/entity-ref';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { EmbeddedEntitySet } from '../../common/model/managed-entity-set';
+import { ApiNetwork } from './network-api.model';
 
 export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	readonly staff = new EmbeddedEntitySet(
@@ -101,12 +102,29 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return this.apiModel.source_url;
 	}
 
+	get linkedinId(): string {
+		return this.apiModel.linkedinId;
+	}
+
+	get networks(): ApiNetwork[] {
+		return this.apiModel.networks;
+	}
+
 	get badgeClassCount(): number {
 		const badges = this.commonManager.badgeManager.badgesList;
 
-		return badges.loaded
-			? badges.entities.filter((b) => b.issuerSlug === this.slug).length
-			: this.apiModel.badgeClassCount;
+		if (!badges.loaded) {
+			return this.apiModel.badgeClassCount;
+		}
+
+		const filteredBadges = badges.entities?.filter((b) => b.issuerSlug === this.slug) || [];
+
+		// If no badges found but API says there should be some, use API value
+		if (filteredBadges.length === 0 && this.apiModel.badgeClassCount > 0) {
+			return this.apiModel.badgeClassCount;
+		}
+
+		return filteredBadges.length;
 	}
 
 	get ownerAcceptedTos(): boolean {
@@ -199,6 +217,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		} else {
 			return null;
 		}
+	}
+
+	static urlFromApiModel(apiIssuer: ApiIssuer): IssuerUrl {
+		return apiIssuer.json.id;
 	}
 }
 

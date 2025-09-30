@@ -2,16 +2,14 @@
 <div class="oeb page-padding">
 	<div class="oeb-section-sm">
 		<header class="oeb-headline-container tw-relative tw-flex tw-flex-col">
-			<h2 hlmH1 class="tw-text-oebblack">
-				{{ 'Issuer.institutionsHeadline' | translate }}
-			</h2>
-			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-				<span hlmH1 class="lg:tw-pl-[10%] tw-text-purple tw-font-black tw-break-words">
+			<oeb-header-text [text1]="'Issuer.institutionsHeadline'" [text2Template]="text2Template" />
+			<ng-template #text2Template>
+				<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 					<span [countUp]="issuers.length">{{ issuers.length }}</span>
 					<span>
 						{{ issuersPluralWord }}
 					</span>
-				</span>
+				</ng-template>
 			</ng-template>
 		</header>
 	</div>
@@ -79,8 +77,8 @@
 						@for (issuer of issuerResults; track issuer) {
 							<oeb-issuer-card
 								@appearAnimation
-								[issuer]="issuer"
 								[plural]="plural"
+								[issuer]="issuer"
 								(navigate)="navigateToIssuer(issuer)"
 							></oeb-issuer-card>
 						}
