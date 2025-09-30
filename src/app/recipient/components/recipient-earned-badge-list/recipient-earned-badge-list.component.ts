@@ -119,11 +119,11 @@ export class RecipientEarnedBadgeListComponent
 	importedBadgesLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
 	allSkills: ApiRootSkill[] = [];
-	allLearningPaths: ApiLearningPath[] = [];
+	allLearningPaths: any[] = [];
 	collections: RecipientBadgeCollection[] = [];
 
 	badgeResults: BadgeResult[] = [];
-	learningPathResults: LearningPath[] = [];
+	learningPathResults: any[] = [];
 	learningPathsInProgress: LearningPath[] = [];
 	learningPathsCompleted: LearningPath[] = [];
 	learningPathsReadyToRequest: LearningPath[] = [];
@@ -493,7 +493,7 @@ export class RecipientEarnedBadgeListComponent
 			return true;
 		};
 
-		const addToLearningPathResults = (learningPath: ApiLearningPath) => {
+		const addToLearningPathResults = (learningPath: any) => {
 			// Restrict Length
 			if (this.learningPathResults.length > this.maxDisplayedResults) {
 				return false;
