@@ -55,7 +55,7 @@
 								labelStyle="tw-text-oebblack"
 								[label]="'QrCode.expirationStart' | translate"
 								[errorMessage]="{
-									invalidDate: 'QrCode.invalidDate' | translate
+									invalidDate: 'QrCode.invalidDate' | translate,
 								}"
 								[control]="qrForm.rawControlMap.valid_from"
 								fieldType="date"
@@ -65,7 +65,7 @@
 								[label]="'QrCode.expirationEnd' | translate"
 								[errorMessage]="{
 									expiresBeforeValidFrom: ('QrCode.invalidDateRange' | translate),
-									invalidDate: ('QrCode.invalidDate' | translate)
+									invalidDate: ('QrCode.invalidDate' | translate),
 								}"
 								[control]="qrForm.rawControlMap.expires_at"
 								fieldType="date"

@@ -1779,7 +1779,8 @@ dialog[open] {
 .button-confetti::before {
 	display: none;
 	top: -75%;
-	background-image: radial-gradient(circle, var(--color-accent1) 20%, transparent 20%),
+	background-image:
+		radial-gradient(circle, var(--color-accent1) 20%, transparent 20%),
 		radial-gradient(circle, transparent 20%, var(--color-accent2) 20%, transparent 30%),
 		radial-gradient(circle, var(--color-accent3) 20%, transparent 20%),
 		radial-gradient(circle, var(--color-accent4) 20%, transparent 20%),
@@ -1803,7 +1804,8 @@ dialog[open] {
 .button-confetti::after {
 	display: none;
 	bottom: -75%;
-	background-image: radial-gradient(circle, var(--color-accent5) 20%, transparent 20%),
+	background-image:
+		radial-gradient(circle, var(--color-accent5) 20%, transparent 20%),
 		radial-gradient(circle, var(--color-accent1) 20%, transparent 20%),
 		radial-gradient(circle, transparent 10%, var(--color-accent2) 15%, transparent 20%),
 		radial-gradient(circle, var(--color-accent3) 20%, transparent 20%),
@@ -9322,7 +9324,8 @@ dialog[open] {
 	color: var(--color-light1);
 	width: 100%;
 	padding-right: calc(var(--gridspacing) * 2);
-	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.225) 0%, rgba(0, 0, 0, 0.225) 100%),
+	background:
+		linear-gradient(to bottom, rgba(0, 0, 0, 0.225) 0%, rgba(0, 0, 0, 0.225) 100%),
 		var(--notification-icon-background);
 }
 .notification-sidebar .notification-x-text h2 {
@@ -16223,7 +16226,8 @@ dialog[open] {
 .draft {
 	background-color: var(--color-light2);
 	background-size: 10px 10px;
-	background-image: linear-gradient(to right, var(--color-light3) 1px, transparent 1px),
+	background-image:
+		linear-gradient(to right, var(--color-light3) 1px, transparent 1px),
 		linear-gradient(to bottom, var(--color-light3) 1px, transparent 1px);
 }
 
