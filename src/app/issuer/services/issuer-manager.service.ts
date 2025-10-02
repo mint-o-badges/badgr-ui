@@ -39,6 +39,10 @@ export class IssuerManager {
 		return this.issuersList.loaded$.pipe(map((l) => l.entities));
 	}
 
+	get allIssuers$(): Observable<Issuer[]> {
+		return this.allIssuersList.loaded$.pipe(map((l) => l.entities));
+	}
+
 	getAllIssuers(): Observable<Issuer[]> {
 		return this.allIssuersList.loaded$.pipe(map((l) => l.entities));
 	}
@@ -72,6 +76,19 @@ export class IssuerManager {
 			(issuers) =>
 				issuers.find((i) => i.slug === issuerSlug) || this.throwError(`Issuer Slug '${issuerSlug}' not found`),
 		);
+	}
+
+	issuersByUrls(issuerUrls: string[]): Promise<Issuer[]> {
+		if (!issuerUrls || issuerUrls.length === 0) {
+			return Promise.resolve([]);
+		}
+
+		const uniqueUrls = [...new Set(issuerUrls)];
+
+		return this.allIssuers$
+			.pipe(first())
+			.toPromise()
+			.then((issuers) => issuers.filter((i) => uniqueUrls.indexOf(i.issuerUrl) >= 0));
 	}
 
 	private throwError(message: string): never {

@@ -137,6 +137,37 @@
 									</div>
 								</div>
 							</div>
+
+							<!-- Awarding Issuers Section (for network/shared badges) -->
+							@if (
+								(config.networkBadge || config.sharedOnNetwork) && config.awardingIssuers?.length > 0
+							) {
+								@for (issuer of config.awardingIssuers; track issuer.slug) {
+									<a
+										[href]="issuer.url"
+										class="tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-pr-2 tw-py-4 tw-bg-white tw-rounded-lg"
+									>
+										<div>
+											<img
+												class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image tw-aspect-square"
+												[loaded-src]="issuer.image"
+												[loading-src]="config.issuerImagePlacholderUrl"
+												[error-src]="config.issuerImagePlacholderUrl"
+											/>
+										</div>
+
+										<div class="tw-leading-[120%] tw-ml-2">
+											<dt class="tw-text-[#757575]">
+												{{ 'RecBadgeDetail.issuedBy' | translate }}
+											</dt>
+											<dd class="oeb-break-words tw-font-bold tw-text-oebblack">
+												{{ issuer.name }}
+											</dd>
+										</div>
+									</a>
+								}
+							}
+
 							@if (config.copy_permissions && !config.copy_permissions.includes('none')) {
 								<div class="tw-flex tw-flex-row tw-gap-1">
 									<dt

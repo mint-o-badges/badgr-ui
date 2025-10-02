@@ -156,6 +156,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	showAssertionCount = false;
 	badgeClass: BadgeClass;
 	allBadgeInstances: BadgeClassInstances;
+	awardingIssuers: Issuer[];
 	instanceResults: BadgeInstance[] = [];
 	popInstance: BadgeInstance | null = null;
 	resultsPerPage = 100;
@@ -422,6 +423,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			issuerName: badgeClass.issuerName,
 			issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
 			issuerImage: this.issuer.image,
+			awardingIssuers: this.awardingIssuers,
 			networkBadge: badgeClass.isNetworkBadge,
 			sharedOnNetwork: badgeClass.sharedOnNetwork,
 			badgeLoadingImageUrl: this.badgeLoadingImageUrl,
@@ -505,7 +507,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		);
 		this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug);
 		this.badgeInstancesLoaded = instances.loadedPromise.then(
-			(retInstances) => {
+			async (retInstances) => {
 				this.crumbs = [
 					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuerSlug] },
@@ -515,6 +517,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					},
 				];
 				this.allBadgeInstances = retInstances;
+				const issuerUrls = retInstances.entities.map((i) => i.issuerUrl);
+				this.awardingIssuers = await this.issuerManager.issuersByUrls(issuerUrls);
 				this.updateResults();
 				this.loadConfig(this.badgeClass);
 			},
