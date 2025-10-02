@@ -81,7 +81,9 @@ export class SelectNetworkComponent implements AfterViewInit {
 			this.networksLoading = true;
 			try {
 				this.networkSearchResults = [];
-				this.networkSearchResults = await this.publicApiService.searchIssuers(this.networkSearchQuery);
+				this.networkSearchResults = (await this.publicApiService.searchIssuers(this.networkSearchQuery)).filter(
+					(i) => i.is_network,
+				);
 			} catch (error) {
 				this.messageService.reportAndThrowError(`Failed to networks: ${error.message}`, error);
 			}

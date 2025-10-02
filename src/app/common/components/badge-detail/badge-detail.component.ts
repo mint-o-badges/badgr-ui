@@ -30,7 +30,6 @@ import {
 	ShareBadgeDialogComponent,
 	ShareBadgeDialogContext,
 } from '~/common/dialogs/oeb-dialogs/share-badge-dialog.component';
-import { NgClass } from '@angular/common';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -57,7 +56,6 @@ import { NgClass } from '@angular/common';
 		BgLearningPathCard,
 		TranslatePipe,
 		HourPipe,
-		NgClass,
 	],
 })
 export class BgBadgeDetail {

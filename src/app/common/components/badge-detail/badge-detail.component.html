@@ -125,12 +125,7 @@
 														: ('RecBadgeDetail.issuedBy' | translate)
 											}}:
 										</dt>
-										<dd
-											class="oeb-break-words tw-font-bold"
-											[ngClass]="{
-												'tw-text-oebblack': config.networkBadge || config.sharedOnNetwork
-											}"
-										>
+										<dd class="oeb-break-words tw-font-bold tw-text-oebblack">
 											{{
 												config.networkBadge
 													? config.issuerName
