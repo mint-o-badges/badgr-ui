@@ -34,7 +34,7 @@ import {
 	tap,
 } from 'rxjs';
 import { OebHeaderText } from '~/components/oeb-header-text.component';
-import { INetworkV3 } from '~/issuer/models/networkv3.model';
+import { NetworkV3 } from '~/issuer/models/networkv3.model';
 
 @Component({
 	selector: 'app-network-catalog',
@@ -56,7 +56,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	@ViewChild('loadMore') loadMore: ElementRef | undefined;
 
 	Array = Array;
-	networks = signal<INetworkV3[]>([]);
+	networks = signal<NetworkV3[]>([]);
 	networksPerPage = 30;
 	totalPages: number;
 	nextLink: string;

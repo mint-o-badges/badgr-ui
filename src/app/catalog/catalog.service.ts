@@ -164,5 +164,5 @@ export interface PaginatedNetwork {
 	count: number;
 	next: string | null;
 	previous: string | null;
-	results: INetworkV3[];
+	results: NetworkV3[];
 }

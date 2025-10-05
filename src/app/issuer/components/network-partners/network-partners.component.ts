@@ -14,6 +14,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { ApiIssuer } from '~/issuer/models/issuer-api.model';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'network-partners',
@@ -22,7 +23,7 @@ import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 })
 export class NetworkPartnersComponent {
 	issuers = input.required<Issuer[]>();
-	network = input.required<any>();
+	network = input.required<Network>();
 	addInstitutionsTemplate = input.required<TemplateRef<void>>();
 
 	pendingInvites = signal<ApiNetworkInvitation[]>([]);

@@ -226,10 +226,6 @@ export class NetworkSharedBadgesDatatableComponent {
 
 	constructor() {}
 
-	ngOnInit() {
-		console.log('badges', this.badges());
-	}
-
 	sharedOn(date: string) {
 		return formatDate(date, 'dd.MM.yyyy', 'de-DE');
 	}

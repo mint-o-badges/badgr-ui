@@ -18,6 +18,7 @@ export interface INetworkV3 {
 	partner_issuers: ApiIssuer[];
 
 	json: { id: string };
+	current_user_network_role?: string;
 }
 
 export class NetworkV3 implements INetworkV3 {
@@ -33,6 +34,7 @@ export class NetworkV3 implements INetworkV3 {
 	json: { id: string };
 	staff: ApiIssuerStaff[];
 	partner_issuers: ApiIssuer[];
+	current_user_network_role?: string;
 
 	constructor(data: INetworkV3) {
 		this.created_at = data.created_at;

@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '~/components/oeb-button.component';
+import { NetworkV3 } from '~/issuer/models/networkv3.model';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'oeb-networkcard',
@@ -63,6 +65,6 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 export class OebNetworkCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
-	@Input() network: any;
+	@Input() network: Network | NetworkV3;
 	@Input() public = true;
 }

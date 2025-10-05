@@ -35,11 +35,7 @@ export class BadgeClassManager extends BaseHttpApiService {
 		(apiModel) => apiModel.json.id,
 		() => this.badgeClassApi.getAllBadgeClasses(),
 	);
-	// awardableBadgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
-	// 	(apiModel) => new BadgeClass(this.commonEntityManager),
-	// 	(apiModel) => apiModel.json.id,
-	// 	() => this.badgeClassApi.getAwardableBadgesForIssuer(),
-	// );
+
 	badgesByIssuerUrl = new ManagedEntityGrouping<BadgeClass>(this.badgesList, (badgeClass) => badgeClass.issuerUrl);
 
 	get badgeClasses() {
@@ -175,17 +171,6 @@ export class BadgeClassManager extends BaseHttpApiService {
 					this.throwError(`Badge with ID '${badgeSlug}' not found.'`),
 			);
 	}
-
-	// badgeByIssuerSlugAndSlug(issuerSlug: IssuerSlug, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
-	// 	return this.allBadges$
-	// 		.pipe(first())
-	// 		.toPromise()
-	// 		.then(
-	// 			(badges) =>
-	// 				badges.find((b) => b.issuerSlug === issuerSlug && b.slug === badgeSlug) ||
-	// 				this.throwError(`Issuer Slug '${issuerSlug}' has no badge with slug '${badgeSlug}'`),
-	// 		);
-	// }
 
 	loadedBadgeByRef(badgeRef: BadgeClassRef | BadgeClassUrl): BadgeClass {
 		const badgeUrl = EntityRef.urlForRef(badgeRef);

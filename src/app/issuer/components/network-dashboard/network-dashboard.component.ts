@@ -32,6 +32,7 @@ import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 import { RouterLink } from '@angular/router';
+import { Network } from '~/issuer/network.model';
 @Component({
 	selector: 'network-dashboard',
 	templateUrl: './network-dashboard.component.html',
@@ -61,7 +62,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
 
-	network = signal<any | null>(null);
+	network = signal<Network | null>(null);
 	partnerIssuers = signal<Issuer[]>([]);
 
 	refetchCounter = 0;
