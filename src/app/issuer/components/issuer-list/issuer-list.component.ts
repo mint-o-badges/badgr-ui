@@ -31,7 +31,7 @@ import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { environment } from 'src/environments/environment';
 import { NetworkListComponent } from '../network-list/network-list.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
-import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { HlmH1, HlmH3, HlmP } from '@spartan-ng/helm/typography';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { Network } from '~/issuer/network.model';
@@ -43,6 +43,7 @@ import { UserPreferenceService } from '~/common/services/user-preference.service
 	imports: [
 		FormMessageComponent,
 		HlmH1,
+		HlmH3,
 		HlmP,
 		OebButtonComponent,
 		RouterLink,
@@ -404,8 +405,9 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	linkedInIdHeaderTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogHeader');
 	linkedInIdBodyTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogBody');
 
-	public async openLinkedInHintDialog(slug: string) {
-		const issuerSlug = slug;
+	public async openLinkedInHintDialog(issuer: Issuer) {
+		if (!issuer.currentUserStaffMember.isOwner) return;
+		const issuerSlug = issuer.slug;
 		const prefKey = 'linkedInIDPromptForInstitution';
 		const pref = await this.userPreferences.getPreference(prefKey, '[]');
 		if (pref === undefined || pref === null)

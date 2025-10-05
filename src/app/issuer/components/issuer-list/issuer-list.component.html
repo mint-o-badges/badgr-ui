@@ -175,17 +175,20 @@
 </ng-template>
 
 <ng-template #issuersTemplate>
-	<p class="tw-mt-8 tw-text-oebblack tw-text-lg">
+	<p class="tw-pb-4 tw-mt-10 tw-text-oebblack tw-text-lg tw-leading-[130%]">
 		<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
 		<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
 	</p>
 
-	<p class="tw-pb-3 tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
+	<p
+		class="tw-pb-3 tw-text-oebblack tw-text-lg tw-leading-[130%]"
+		[innerHTML]="'Issuer.myLearningPathText' | translate"
+	></p>
 	@if (issuers?.length === 0) {
 		<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
 			<span
 				[innerHTML]="'Issuer.createFirstInstitution' | translate"
-				class="tw-text-2xl tw-italic tw-text-oebblack"
+				class="tw-text-lg tw-italic tw-text-oebblack"
 			>
 			</span>
 			<oeb-button
@@ -216,7 +219,7 @@
 						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4 oeb-break-words">
 							<a
 								class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold"
-								(click)="openLinkedInHintDialog(issuer.slug)"
+								(click)="openLinkedInHintDialog(issuer)"
 								[routerLink]="['/issuer/issuers/', issuer.slug]"
 								>{{ issuer.name }}</a
 							>
@@ -238,7 +241,7 @@
 							[id]="'create-new-badge-btn-1'"
 							[class.disabled]="!issuer.canCreateBadge"
 							class="tw-whitespace-nowrap"
-							(click)="openLinkedInHintDialog(issuer.slug)"
+							(click)="openLinkedInHintDialog(issuer)"
 							[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'select']"
 							[disabled]="!issuer.currentUserStaffMember"
 							[text]="'Issuer.createBadge' | translate"
@@ -252,7 +255,7 @@
 						<div>
 							<oeb-button
 								class="tw-whitespace-nowrap tw-flex-grow"
-								(click)="openLinkedInHintDialog(issuer.slug)"
+								(click)="openLinkedInHintDialog(issuer)"
 								[routerLink]="['/issuer/issuers/', issuer.slug]"
 								[text]="'Issuer.giveBadge' | translate"
 								width="full_width"
@@ -287,7 +290,7 @@
 	<!-- Staff Requests section -->
 
 	<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-6">
-		<p class="tw-text-xl tw-italic tw-text-oebblack">
+		<p class="tw-text-lg tw-italic tw-text-oebblack">
 			{{ 'Issuer.partOfInstitution' | translate }}
 		</p>
 		@if (staffRequests.length > 0) {
@@ -419,7 +422,7 @@
 </ng-template>
 
 <ng-template #linkedInIdDialogHeader>
-	<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-4">
+	<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-6">
 		{{ 'Issuer.addLinkedInId' | translate }}
 	</h3>
 </ng-template>
@@ -427,16 +430,19 @@
 	<p hlmP [size]="'sm'" class="oeb tw-pb-4">
 		{{ 'Issuer.linkedInUseNoteText' | translate }}
 	</p>
-	<p hlmP [size]="'sm'" class="oeb tw-font-semibold">
+	<p hlmP [size]="'sm'" class="oeb tw-font-semibold tw-pb-1">
 		{{ 'Issuer.findLinkedInId' | translate }}
 	</p>
-	<p hlmP [size]="'sm'" class="oeb tw-italic tw-text-purple tw-pb-6">
-		{{ 'Issuer.findLinkedInIdText' | translate }}
-	</p>
-	<div class="tw-flex tw-flex-row tw-pb-6 tw-gap-4">
+	<p
+		hlmP
+		[size]="'sm'"
+		[innerHTML]="'Issuer.findLinkedInIdText' | translate"
+		class="oeb tw-italic tw-text-purple tw-pb-8"
+	></p>
+	<div class="tw-flex tw-flex-row tw-pb-8 tw-gap-4">
 		<oeb-button
 			[size]="'sm'"
-			[variant]="'blackborder'"
+			[variant]="'secondary'"
 			[text]="'General.notNow' | translate"
 			(click)="closeDialog()"
 			[routerLink]="forwardTo"

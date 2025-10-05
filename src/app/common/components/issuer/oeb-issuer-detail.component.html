@@ -63,29 +63,30 @@
 				</oeb-button>
 
 				<!-- Network section -->
-
-				<section
-					class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
-				>
-					<div>
-						<h2 class="tw-w-full tw-text-lg tw-font-boldtw-text-lg tw-text-oebblack tw-font-bold">
-							{{ 'Issuer.partOfNetwork' | translate }}
-						</h2>
-						<ul class="tw-w-full tw-list-none tw-mt-2">
-							@for (network of networks; track network) {
-								<li
-									class="tw-flex tw-gap-2 tw-items-center"
-									[routerLink]="['/public/networks', network.slug]"
-								>
-									<img class="tw-w-[33px]" [src]="network.image" />
-									<span class="tw-text-oebblack">
-										{{ network.name }}
-									</span>
-								</li>
-							}
-						</ul>
-					</div>
-				</section>
+				@if (env.networksEnabled) {
+					<section
+						class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
+					>
+						<div>
+							<h2 class="tw-w-full tw-text-lg tw-font-boldtw-text-lg tw-text-oebblack tw-font-bold">
+								{{ 'Issuer.partOfNetwork' | translate }}
+							</h2>
+							<ul class="tw-w-full tw-list-none tw-mt-2">
+								@for (network of networks; track network) {
+									<li
+										class="tw-flex tw-gap-2 tw-items-center"
+										[routerLink]="['/public/networks', network.slug]"
+									>
+										<img class="tw-w-[33px]" [src]="network.image" />
+										<span class="tw-text-oebblack">
+											{{ network.name }}
+										</span>
+									</li>
+								}
+							</ul>
+						</div>
+					</section>
+				}
 			</div>
 			<oeb-dropdown
 				[trigger]="svgTrigger"

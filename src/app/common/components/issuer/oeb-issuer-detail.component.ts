@@ -54,6 +54,7 @@ interface NetworkBadgeGroup {
 }
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -96,6 +97,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	networkRequestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	userIsMember = false;
+	env = environment;
 
 	constructor(
 		private router: Router,

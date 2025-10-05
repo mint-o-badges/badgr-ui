@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, input, ElementRef, viewChild, TemplateRef } from '@angular/core';
 import { TypedFormGroup, typedFormGroup } from '../../../common/util/typed-forms';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
@@ -432,5 +432,16 @@ export class IssuerEditFormComponent implements OnInit {
 	urlBlurred(ev) {
 		const control = this.issuerForm.rawControlMap['issuer_url'];
 		UrlValidator.addMissingHttpToControl(control);
+	}
+
+	positiveIntegerString() {
+		return (control: AbstractControl) => {
+			const val = parseFloat(control.value);
+			if (!val) return;
+
+			if (!Number.isInteger(val) || val < 0) {
+				return { negativeDuration: this.translate.instant('CreateBadge.valuePositive') };
+			}
+		};
 	}
 }

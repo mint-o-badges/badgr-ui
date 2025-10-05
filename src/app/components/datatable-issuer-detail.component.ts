@@ -274,7 +274,7 @@ export class IssuerDetailDatatableComponent {
 	readonly tableSorting = signal<SortingState>([
 		{
 			id: 'RecBadgeDetail.issuedOn',
-			desc: false,
+			desc: true,
 		},
 	]);
 
