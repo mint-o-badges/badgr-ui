@@ -117,7 +117,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 			this.network.set(network);
 			this.partnerIssuers.set(network.partner_issuers.entities);
 			this.title.setTitle(
-				`Issuer - ${this.network.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
+				`Issuer - ${this.network().name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 			);
 			this.crumbs = [
 				{ title: this.translate.instant('NavItems.myInstitutions'), routerLink: ['/issuer/issuers'] },
@@ -126,7 +126,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 					routerLink: ['/issuer'],
 					queryParams: { tab: 'networks' },
 				},
-				{ title: this.network.name, routerLink: ['/issuer/network/' + this.network().slug] },
+				{ title: this.network().name, routerLink: ['/issuer/network/' + this.network().slug] },
 			];
 		});
 	}
