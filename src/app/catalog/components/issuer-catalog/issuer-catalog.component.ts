@@ -190,7 +190,9 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.issuerManager.getAllIssuers().subscribe(
 				(issuers) => {
 					this.issuers = issuers
-						.filter((i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url)
+						.filter(
+							(i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url && !i.is_network,
+						)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.totalPages = Math.ceil(this.issuers.length / this.issuersPerPage);
 					this.updatePaginatedResults();
