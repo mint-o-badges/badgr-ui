@@ -46,7 +46,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { ApiSkill } from '../../../common/model/ai-skills.model';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { NavigationService } from '../../../common/services/navigation.service';
 import { base64ByteSize } from '../../../common/util/file-util';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -100,6 +100,7 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		AutocompleteLibModule,
 		DecimalPipe,
 		TranslatePipe,
+		TranslateModule,
 	],
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
@@ -446,7 +447,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
 		participation: this.translate.instant('Badge.participation'),
-		// learningpath: this.translate.instant('Badge.learningpath'),
 	};
 
 	competencyCategoryOptions = {
