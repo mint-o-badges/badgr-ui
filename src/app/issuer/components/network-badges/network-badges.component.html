@@ -12,12 +12,14 @@
 
 <ng-template #networkTemplate>
 	@if (badgeResults.length) {
-		<badges-datatable
-			[badges]="badgeResults"
-			(directBadgeAward)="routeToBadgeAward($event)"
-			(qrCodeAward)="routeToQRCodeAward($event)"
-			(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, network().slug, $event.focusRequests)"
-		></badges-datatable>
+		<div class="tw-mt-12">
+			<badges-datatable
+				[badges]="badgeResults"
+				(directBadgeAward)="routeToBadgeAward($event)"
+				(qrCodeAward)="routeToQRCodeAward($event)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, network().slug, $event.focusRequests)"
+			></badges-datatable>
+		</div>
 	} @else {
 		<span
 			class="tw-text-lg tw-text-oebblack tw-my-6 tw-block"
@@ -78,17 +80,20 @@
 </ng-template>
 
 <ng-template #partnerTemplate>
-	<div class="tw-mt-12">
-		<span class="tw-text-oebblack tw-text-lg tw-leading-[130%]">
-			{{ 'Network.noPartnerBadgesYet' | translate }}
-		</span>
-	</div>
-	<div *bgAwaitPromises="sharedBadgesLoaded">
-		<network-shared-badges-datatable
-			[badges]="sharedBadges"
-			(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.issuerSlug, $event.focusRequests)"
-			(directBadgeAward)="routeToBadgeAward($event)"
-			(qrCodeAward)="routeToQRCodeAward($event)"
-		></network-shared-badges-datatable>
-	</div>
+	@if (!sharedBadges.length) {
+		<div class="tw-mt-12">
+			<span class="tw-text-oebblack tw-text-lg tw-leading-[130%]">
+				{{ 'Network.noPartnerBadgesYet' | translate }}
+			</span>
+		</div>
+	} @else {
+		<div class="tw-mt-12" *bgAwaitPromises="sharedBadgesLoaded">
+			<network-shared-badges-datatable
+				[badges]="sharedBadges"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.issuerSlug, $event.focusRequests)"
+				(directBadgeAward)="routeToBadgeAward($event)"
+				(qrCodeAward)="routeToQRCodeAward($event)"
+			></network-shared-badges-datatable>
+		</div>
+	}
 </ng-template>
