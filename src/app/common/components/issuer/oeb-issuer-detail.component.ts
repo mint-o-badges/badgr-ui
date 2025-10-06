@@ -310,7 +310,6 @@ export class OebIssuerDetailComponent implements OnInit {
 				const bTime = b.badges[0]?.badge.createdAt.getTime() ?? 0;
 				return bTime - aTime;
 			});
-			console.log('network instance results', this.networkBadgeInstanceResults);
 		} catch (error) {
 			console.error('Error loading network badge groups:', error);
 		}

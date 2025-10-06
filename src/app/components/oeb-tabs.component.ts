@@ -30,7 +30,7 @@ export type Tab = {
 							<img class="tw-w-10 tw-mr-2" [src]="tab.img" alt="Tab Image" />
 						}
 						<span class="tw-text-lg tw-leading-[130%]">{{ tab.title | translate }}</span>
-						@if (tab.count) {
+						@if (tab.count !== undefined) {
 							@if (countStyle() === 'parentheses') {
 								<span class="tw-ml-1 md:tw-text-lg tw-font-semibold"> ({{ tab.count }}) </span>
 							} @else {
