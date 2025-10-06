@@ -98,7 +98,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 						<ng-template #progressTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left">
 								<span class="tw-ml-2 tw-text-sm tw-text-purple"
-									>Micro Degree
+									>{{ 'General.learningPath' | translate }}
 									@if (!completed) {
 										<span>{{ progressValue }}%</span>
 									}
