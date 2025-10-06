@@ -118,17 +118,20 @@ export class PublicApiService extends BaseHttpApiService {
 		badges: PublicApiBadgeClass[];
 		learningpaths: PublicApiLearningPath[];
 		networks: PublicApiIssuer[];
+		partner_issuers: PublicApiIssuer[];
 	}> {
 		return Promise.all([
 			this.getIssuer(issuerId),
 			this.getIssuerBadges(issuerId),
 			this.getIssuerLearningPaths(issuerId),
 			this.getIssuerNetworks(issuerId),
-		]).then(([issuer, badges, learningpaths, networks]) => ({
+			this.getNetworkIssuers(issuerId),
+		]).then(([issuer, badges, learningpaths, networks, partner_issuers]) => ({
 			issuer,
 			badges,
 			learningpaths,
 			networks,
+			partner_issuers,
 		}));
 	}
 

@@ -90,6 +90,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
 	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
 	@Input() networks: PublicApiIssuer[];
+	@Input() partner_issuers: PublicApiIssuer[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 

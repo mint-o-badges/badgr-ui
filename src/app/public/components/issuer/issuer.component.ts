@@ -29,6 +29,7 @@ export class PublicIssuerComponent {
 		badges: PublicApiBadgeClass[];
 		learningpaths: PublicApiLearningPath[];
 		networks: PublicApiIssuer[];
+		partner_issuers: PublicApiIssuer[];
 	}>;
 	routerLinkForUrl = routerLinkForUrl;
 	plural = {
@@ -66,6 +67,10 @@ export class PublicIssuerComponent {
 
 	get networks(): PublicApiIssuer[] {
 		return this.issuerIdParam.value.networks;
+	}
+
+	get partner_issuers(): PublicApiIssuer[] {
+		return this.issuerIdParam.value.partner_issuers;
 	}
 
 	private get rawJsonUrl() {

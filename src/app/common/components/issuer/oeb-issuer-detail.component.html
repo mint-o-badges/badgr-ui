@@ -63,7 +63,7 @@
 				</oeb-button>
 
 				<!-- Network section -->
-				@if (env.networksEnabled) {
+				@if (env.networksEnabled && networks.length) {
 					<section
 						class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
 					>
@@ -80,6 +80,32 @@
 										<img class="tw-w-[33px]" [src]="network.image" />
 										<span class="tw-text-oebblack">
 											{{ network.name }}
+										</span>
+									</li>
+								}
+							</ul>
+						</div>
+					</section>
+				}
+
+				<!-- Partner Issuers section -->
+				@if (env.networksEnabled && partner_issuers.length) {
+					<section
+						class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
+					>
+						<div>
+							<h2 class="tw-w-full tw-text-lg tw-font-boldtw-text-lg tw-text-oebblack tw-font-bold">
+								{{ 'Network.partner' | translate }}
+							</h2>
+							<ul class="tw-w-full tw-list-none tw-mt-2">
+								@for (partner of partner_issuers; track partner) {
+									<li
+										class="tw-flex tw-gap-2 tw-items-center"
+										[routerLink]="['/public/issuers', partner.slug]"
+									>
+										<img class="tw-w-[33px]" [src]="partner.image" />
+										<span class="tw-text-oebblack">
+											{{ partner.name }}
 										</span>
 									</li>
 								}
