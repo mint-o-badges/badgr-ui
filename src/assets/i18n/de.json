@@ -386,7 +386,21 @@
 		"addLinkedInId": "LinkedIn-ID ergänzen",
 		"findLinkedInId": "So findest du die LinkedIn-ID:",
 		"findLinkedInIdText": "Gehe zur Seite deiner Institution auf LinkedIn.  Die ID ist die Zahlenfolge in der entsprechenden URL. Die URL lautet zum Beispiel: www.linkedin.com/company/<span class='tw-font-bold'>12345678</span>/admin. → ID = <span class='tw-font-bold'>12345678</span>.",
-		"findLinkedInIdNote": "Du kannst die Linkedin-ID jederzeit auf der Seite deiner Institution durch „Bearbeiten” der Institutions-Details ergänzen."
+		"findLinkedInIdNote": "Du kannst die Linkedin-ID jederzeit auf der Seite deiner Institution durch „Bearbeiten” der Institutions-Details ergänzen.",
+		"issueByEmail": "per E-Mail vergeben",
+		"recipientEmail": "E-Mail-Adresse Empfänger:in",
+		"emailIsIdentifier": "Die E-Mail dient als Identifier für den Badge. Hierhin wird der Badge gesendet.",
+		"receivesBadgeByEmail": "Der/die Empfänger:in erhält den Badge per E-Mail.",
+		"issuerBadges": "Institutions-Badges",
+		"networkBadges": "Netzwerk-Badges",
+		"badgesInNetworks": "Badges in Netzwerken",
+		"yourIssuersAreInNetworks": "Institutionen von dir sind Teil folgender Netzwerke:",
+		"awardedNetworkBadges": "Diese Badges hat {{issuer}} <span class='tw-underline'>über das jeweilige Netzwerk vergeben</span>:",
+		"noAwardedNetworkBadges": "{{issuer}} hat noch keine Badges <span class='tw-underline'>über ein Netzwerk vergeben</span>.",
+		"badgesApprovedForNetworks": " Diese Badges hat {{ issuer }} für die Nutzung im jeweiligen Netzwerk <span class='tw-underline'>freigegeben</span>:",
+		"noBadgesApprovedForNetworks": "{{ issuer }} hat noch keine Badges für die Nutzung im Netzwerk <span class='tw-underline'>freigegeben</span>.",
+		"badgeAwards": "Badge-Vergaben",
+		"partnerBadges": "Partner-Badges"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",

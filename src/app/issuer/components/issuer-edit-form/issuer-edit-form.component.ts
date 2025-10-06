@@ -306,18 +306,33 @@ export class IssuerEditFormComponent implements OnInit {
 			issuer.image = formState.issuer_image;
 		}
 
-		this.addIssuerFinished = this.issuerManager
-			.createIssuer(issuer)
-			.then(
-				(newIssuer) => {
-					this.router.navigate(['issuer/issuers', newIssuer.slug]);
-					this.messageService.setMessage('Issuer created successfully.', 'success');
-				},
-				(error) => {
-					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
-				},
-			)
-			.then(() => (this.addIssuerFinished = null));
+		if (this.existingIssuer) {
+			this.editIssuerFinished = this.issuerManager
+				.editIssuer(this.issuerSlug, issuer)
+				.then(
+					(newIssuer) => {
+						this.router.navigate(['issuer/issuers', newIssuer.slug]);
+						this.messageService.setMessage('Issuer created successfully.', 'success');
+					},
+					(error) => {
+						this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+					},
+				)
+				.then(() => (this.editIssuerFinished = null));
+		} else {
+			this.addIssuerFinished = this.issuerManager
+				.createIssuer(issuer)
+				.then(
+					(newIssuer) => {
+						this.router.navigate(['issuer/issuers', newIssuer.slug]);
+						this.messageService.setMessage('Issuer created successfully.', 'success');
+					},
+					(error) => {
+						this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+					},
+				)
+				.then(() => (this.addIssuerFinished = null));
+		}
 	}
 
 	private handleNetworkSubmit(formState: any) {
