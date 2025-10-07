@@ -37,6 +37,17 @@
 								"src/app/recipient/components/recipient-skill-visualisation/recipient-skill-visualisation.component.scss"
 							],
 							"assets": ["src/favicon.ico", "src/assets/@concentricsky/badgr-style/dist/images/icons.svg"]
+						},
+						"oeb-badge-creation": {
+							"main": "src/app/issuer/components/badgeclass-edit-form/badgeclass-edit-form.web-component.ts",
+							"outputPath": "dist/webcomponents/oeb-badgeclass-edit-form",
+							"styles": [
+								"src/styles/oeb/oeb_styles.scss",
+								"src/styles/google-webfonts/nunito.scss",
+								"src/styles/google-webfonts/rubik.scss",
+								"src/app/issuer/components/badgeclass-edit-form/badgeclass-edit-form.component.css"
+							],
+							"assets": ["src/favicon.ico", "src/assets/@concentricsky/badgr-style/dist/images/icons.svg"]
 						}
 					}
 				}
