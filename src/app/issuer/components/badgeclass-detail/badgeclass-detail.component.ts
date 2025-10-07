@@ -543,6 +543,11 @@ export class BadgeClassDetailComponent
 		super.ngOnInit();
 		this.checkForActiveTask();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
+		this.route.queryParams.subscribe((params) => {
+			if (params['tab']) {
+				this.activeTab = params['tab'];
+			}
+		});
 	}
 
 	ngOnDestroy() {
@@ -566,6 +571,7 @@ export class BadgeClassDetailComponent
 		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
 			(taskResult: TaskResult) => {
 				this.currentTaskStatus = taskResult;
+				console.log('task result', taskResult);
 
 				if (taskResult.status === TaskStatus.SUCCESS) {
 					this.handleTaskSuccess(taskResult);
@@ -592,6 +598,7 @@ export class BadgeClassDetailComponent
 	}
 
 	private handleTaskFailure(taskResult: TaskResult) {
+		console.log('handle failure');
 		this.isTaskActive = false;
 
 		const errorMessage = taskResult.result?.error || 'Batch award process failed';
