@@ -259,10 +259,10 @@ export class BadgeClassDetailComponent
 		try {
 			this.issuerLoaded = issuerManager.issuerBySlug(this.issuerSlug).then(
 				(issuer) => {
-					(this.issuer = issuer),
-						(this.issuerNetworks = this.issuer.networks.map((n) => {
-							return new Network(this.commonManager, n);
-						}));
+					this.issuer = issuer;
+					this.issuerNetworks = this.issuer.networks.map((n) => {
+						return new Network(this.commonManager, n);
+					});
 				},
 				(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 			);

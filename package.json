@@ -19,7 +19,7 @@
 		"test": "ng test",
 		"test-intellij": "ng test 2>&1 | perl -e '$|++; while (<>) { s/((ERROR|WARNING) in\\s*)(.*)/$1\\n$3/g; print $_; }'",
 		"test-headless": "ng test --source-map=false --watch=false --browsers=ChromeHeadless",
-		"lint": "ng lint web-components-cli && ng lint badgr-ui-cli",
+		"lint": "ng lint --quiet web-components-cli && ng lint --quiet badgr-ui-cli",
 		"postversion": "git push && git push --tags",
 		"prepare": "husky"
 	},

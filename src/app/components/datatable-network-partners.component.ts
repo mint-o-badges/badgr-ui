@@ -81,20 +81,19 @@ import { Network } from '~/issuer/network.model';
 						</tr>
 					}
 				</thead>
-				@if(approvedInvites().length){
-
+				@if (approvedInvites().length) {
 					<tbody hlmTBody>
 						@for (row of table.getRowModel().rows; track row.id; let i = $index) {
 							<tr hlmTr>
-									@for (cell of row.getVisibleCells(); track cell.id;) {
-										<td hlmTd>
-											<ng-container
-												*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
-											>
-												<div [innerHTML]="cell"></div>
-											</ng-container>
-										</td>
-									}
+								@for (cell of row.getVisibleCells(); track cell.id) {
+									<td hlmTd>
+										<ng-container
+											*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+										>
+											<div [innerHTML]="cell"></div>
+										</ng-container>
+									</td>
+								}
 							</tr>
 						}
 					</tbody>
@@ -103,7 +102,7 @@ import { Network } from '~/issuer/network.model';
 		</div>
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate  }}
+			{{ context.header.id | translate }}
 		</ng-template>
 
 		<ng-template #issuerActionsCellTemplate let-context>
