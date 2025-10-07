@@ -260,7 +260,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						(this.issuerNetworks = this.issuer.networks.map((n) => {
 							return new Network(this.commonManager, n);
 						}));
-					console.log('issuerNetworks', this.issuerNetworks);
 				},
 				(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 			);
@@ -279,6 +278,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					this.loadNetworkQrCodes(this.issuerSlug, this.badgeSlug);
 					this.loadPartnerInstances();
 					this.loadNetworkUserIssuers();
+					this.loadInstances();
 				} else {
 					this.qrCodeApiService
 						.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug)

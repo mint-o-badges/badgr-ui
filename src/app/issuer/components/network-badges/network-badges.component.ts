@@ -139,6 +139,7 @@ export class NetworkBadgesComponent {
 				key: 'partner',
 				title: 'Partner-Badges',
 				icon: 'lucideHexagon',
+				count: this.sharedBadges.length,
 				component: this.partnerTemplate,
 			},
 		];
