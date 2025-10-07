@@ -949,9 +949,11 @@
 								<h2 hlmH2 class="tw-font-bold">4. {{ 'CreateBadge.addTags' | translate }}</h2>
 							}
 						</div>
-						<p class="tw-italic tw-text-purple tw-mt-2">
-							{{ 'CreateBadge.tagInfo' | translate }}
-						</p>
+						<p
+							class="tw-italic tw-text-purple tw-mt-2"
+							[translate]="'CreateBadge.tagInfo'"
+							[translateParams]="{ items: 'Badges' }"
+						></p>
 						<div class="formsection-x-body tw-mt-4">
 							<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
 								<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>

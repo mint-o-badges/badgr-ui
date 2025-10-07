@@ -179,7 +179,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			},
 			{
 				key: 'micro-degrees',
-				title: 'Micro Degrees',
+				title: 'LearningPath.learningpathsPlural',
 				component: this.learningPathTemplate,
 			},
 		];
@@ -492,7 +492,7 @@ export class OebIssuerDetailComponent implements OnInit {
 				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
 				// qrCodeRequested: () => {},
 				variant: 'danger',
-				text: 'Möchtest du diesen Micro Degree wirklich löschen?',
+				text: this.translate.instant('LearningPath.confirmDelete'),
 				title: this.translate.instant('LearningPath.deleteMd'),
 			},
 		});
