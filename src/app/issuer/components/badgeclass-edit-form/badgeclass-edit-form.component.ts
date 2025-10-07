@@ -3,7 +3,6 @@ import {
 	Component,
 	ElementRef,
 	EventEmitter,
-	inject,
 	Input,
 	OnInit,
 	Output,
@@ -51,7 +50,6 @@ import { ApiSkill } from '../../../common/model/ai-skills.model';
 import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { NavigationService } from '../../../common/services/navigation.service';
 import { base64ByteSize } from '../../../common/util/file-util';
-import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { StepperComponent } from '../../../components/stepper/stepper.component';
 import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclass-details/badgeclass-details.component';
 import { Issuer } from '../../models/issuer.model';
@@ -110,8 +108,6 @@ export class BadgeClassEditFormComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, AfterViewInit, AfterViewChecked, OnChanges
 {
-	private readonly _hlmDialogService = inject(HlmDialogService);
-
 	baseUrl: string;
 	badgeCategory: string;
 
@@ -490,14 +486,10 @@ export class BadgeClassEditFormComponent
 		sessionService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
-		protected fb: FormBuilder,
-		protected title: Title,
 		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
 		private configService: AppConfigService,
 		protected badgeClassManager: BadgeClassManager,
 		protected dialogService: CommonDialogsService,
-		protected componentElem: ElementRef<HTMLElement>,
 		protected aiSkillsService: AiSkillsService,
 		private translate: TranslateService,
 		private navService: NavigationService,
