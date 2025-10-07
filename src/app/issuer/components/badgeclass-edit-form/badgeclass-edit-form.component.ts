@@ -48,7 +48,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { ApiSkill } from '../../../common/model/ai-skills.model';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { NavigationService } from '../../../common/services/navigation.service';
 import { base64ByteSize } from '../../../common/util/file-util';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -70,6 +70,7 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
+import { Network } from '~/issuer/network.model';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -102,6 +103,7 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		AutocompleteLibModule,
 		DecimalPipe,
 		TranslatePipe,
+		TranslateModule,
 	],
 })
 export class BadgeClassEditFormComponent
@@ -420,7 +422,7 @@ export class BadgeClassEditFormComponent
 	cancelEdit = new EventEmitter<void>();
 
 	@Input()
-	issuer: Issuer;
+	issuer: Issuer | Network;
 
 	@Input()
 	category: string;
@@ -451,7 +453,6 @@ export class BadgeClassEditFormComponent
 	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
 		participation: this.translate.instant('Badge.participation'),
-		// learningpath: this.translate.instant('Badge.learningpath'),
 	};
 
 	competencyCategoryOptions = {
@@ -616,6 +617,10 @@ export class BadgeClassEditFormComponent
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		if (this.issuer.is_network) {
+			this.badgeClassForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
+		}
 
 		this.criteriaOptions.forEach((option) => {
 			const selectionGroup = typedFormGroup()
@@ -1372,9 +1377,14 @@ export class BadgeClassEditFormComponent
 			const aiCompetenciesSuggestions = this.aiCompetenciesSuggestions;
 			const keywordCompetenciesResults = this.selectedKeywordCompetencies;
 
-			const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
-			if (formState.copy_permissions_allow_others) {
-				copy_permissions.push('others');
+			let copy_permissions: BadgeClassCopyPermissions[];
+			if (this.issuer.is_network) {
+				copy_permissions = ['none'];
+			} else {
+				copy_permissions = ['issuer'];
+				if (formState.copy_permissions_allow_others) {
+					copy_permissions.push('others');
+				}
 			}
 
 			if (this.existingBadgeClass) {

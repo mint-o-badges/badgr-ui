@@ -49,7 +49,7 @@
 										[noTopMargin]="true"
 										[errorMessage]="{
 											required: giveBadgeTitle,
-											mustChange: changeBadgeTitle,
+											mustChange: changeBadgeTitle
 										}"
 									>
 									</oeb-input>
@@ -597,7 +597,7 @@
 																'bottom.px': calculateDropdownBottom(
 																	keywordCompetenciesInput,
 																	100
-																),
+																)
 															}"
 														>
 															<ul>
@@ -834,7 +834,7 @@
 															"
 															[optionMap]="competencyCategoryOptions"
 															[errorMessage]="{
-																required: competencyCategoryError,
+																required: competencyCategoryError
 															}"
 															[noTopMargin]="true"
 															[disabled]="
@@ -868,7 +868,7 @@
 																		class="tw-max-w-40"
 																		[control]="competency.rawControlMap.hours"
 																		[errorMessage]="{
-																			max: maxValue1000,
+																			max: maxValue1000
 																		}"
 																		[noTopMargin]="true"
 																	>
@@ -880,7 +880,7 @@
 																		class="tw-max-w-40"
 																		[control]="competency.rawControlMap.minutes"
 																		[errorMessage]="{
-																			max: minMaxError,
+																			max: minMaxError
 																		}"
 																		[noTopMargin]="true"
 																	>
@@ -949,9 +949,11 @@
 								<h2 hlmH2 class="tw-font-bold">4. {{ 'CreateBadge.addTags' | translate }}</h2>
 							}
 						</div>
-						<p class="tw-italic tw-text-purple tw-mt-2">
-							{{ 'CreateBadge.tagInfo' | translate }}
-						</p>
+						<p
+							class="tw-italic tw-text-purple tw-mt-2"
+							[translate]="'CreateBadge.tagInfo'"
+							[translateParams]="{ items: 'Badges' }"
+						></p>
 						<div class="formsection-x-body tw-mt-4">
 							<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
 								<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
@@ -1015,25 +1017,27 @@
 						{{ 'CreateBadge.optionalBadgeDetails' | translate }}
 					</h2>
 
-					<div class="section tw-text-oebblack tw-mt-6">
-						<h2 hlmH2 class="!tw-text-oebblack">
-							{{ 'Badge.copyBadgeHeadline' | translate }}
-						</h2>
-						<span
-							class="tw-text-oebblack tw-italic tw-text-lg"
-							[innerHTML]="'Badge.copyBadgeDescription1' | translate"
-						></span>
-						<span
-							class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
-							[innerHTML]="'Badge.copyBadgeDescription2' | translate"
-						></span>
-						<div class="tw-mt-2 tw-mb-2">
-							<oeb-checkbox
-								[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-								[text]="'Badge.copyLabelOthers' | translate"
-							/>
+					@if (!issuer.is_network) {
+						<div class="section tw-text-oebblack tw-mt-6">
+							<h2 hlmH2 class="!tw-text-oebblack">
+								{{ 'Badge.copyBadgeHeadline' | translate }}
+							</h2>
+							<span
+								class="tw-text-oebblack tw-italic tw-text-lg"
+								[innerHTML]="'Badge.copyBadgeDescription1' | translate"
+							></span>
+							<span
+								class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
+								[innerHTML]="'Badge.copyBadgeDescription2' | translate"
+							></span>
+							<div class="tw-mt-2 tw-mb-2">
+								<oeb-checkbox
+									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
+									[text]="'Badge.copyLabelOthers' | translate"
+								/>
+							</div>
 						</div>
-					</div>
+					}
 					@if (category === 'competency') {
 						<div class="section tw-text-oebblack tw-mt-6">
 							<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack">
@@ -1128,7 +1132,7 @@
 									[maxchar]="4"
 									[min]="1"
 									[errorMessage]="{
-										max: maxValue1000,
+										max: maxValue1000
 									}"
 								></oeb-input>
 								<oeb-select

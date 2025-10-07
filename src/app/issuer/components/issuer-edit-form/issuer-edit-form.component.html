@@ -1,28 +1,25 @@
-<form (ngSubmit)="onSubmit()" class="oeb-max-form-width tw-mt-6" novalidate>
-	<div #imageField>
-		<bg-formfield-image
-			label="{{ 'Issuer.imageLogo' | translate }}"
-			sublabelRight="{{ 'Issuer.imageFormat' | translate }}"
-			imageLoaderName="issuer"
-			[text_body]="selectFromMyFiles"
-			dropZoneInfo1="Drag & Drop"
-			[dropZoneInfo3]="useImageFormat"
-			[placeholderImage]="issuerImagePlacholderUrl"
-			[control]="issuerForm.rawControlMap.issuer_image"
-			[allowedFileFormats]="['image/png', 'image/svg+xml']"
-			[errorMessage]="imageError"
-			(imageError)="onImageError($event)"
-			[enableIconSearch]="false"
-			[maxSizeInMB]="2"
-			[labelStyle]="'forminput-x-label u-margin-bottom1x'"
-		></bg-formfield-image>
-	</div>
-	<span class="tw-text-oebblack tw-italic tw-text-lg"
-		>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
-	>
+<form (ngSubmit)="onSubmit()" class="oeb-max-form-width" novalidate>
+	<bg-formfield-image
+		#imageField
+		label="{{ 'Issuer.imageLogo' | translate }}"
+		sublabelRight="{{ 'Issuer.imageFormat' | translate }}"
+		imageLoaderName="issuer"
+		[text_body]="selectFromMyFiles"
+		dropZoneInfo1="Drag & Drop"
+		[dropZoneInfo3]="useImageFormat"
+		[placeholderImage]="issuerImagePlacholderUrl"
+		[control]="issuerForm.rawControlMap.issuer_image"
+		[allowedFileFormats]="['image/png', 'image/svg+xml']"
+		[errorMessage]="imageError"
+		(imageError)="onImageError($event)"
+		[enableIconSearch]="false"
+		[maxSizeInMB]="2"
+		[labelStyle]="'forminput-x-label u-margin-bottom1x'"
+	></bg-formfield-image>
 
 	<oeb-input
-		label="{{ 'Issuer.nameOfIssuer' | translate }}"
+		class="tw-mt-8"
+		[label]="networkForm() ? ('Network.name' | translate) : ('Issuer.nameOfIssuer' | translate)"
 		[control]="issuerForm.rawControlMap.issuer_name"
 		[fieldType]="'text'"
 		[autofocus]="true"
@@ -31,51 +28,46 @@
 		#issuer_name_field
 	></oeb-input>
 
-	<oeb-input
-		label="{{ 'Issuer.websiteUrl' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_url"
-		[urlField]="true"
-		[fieldType]="'url'"
-		errorMessage="{{ 'Issuer.enterURL' | translate }}"
-		#issuer_url_field
-	></oeb-input>
+	@if (!networkForm()) {
+		<oeb-input
+			label="{{ 'Issuer.linkedInId' | translate }}"
+			[sublabelRightTemplate]="linkedInIdSublabelRight"
+			[fieldType]="'number'"
+			sublabel="{{ 'Issuer.linkedInIdHint' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_linkedin_id"
+		/>
+		<ng-template #linkedInIdSublabelRight>
+			({{ 'Issuer.linkedInIdUse1' | translate }}
+			<a (click)="openLinkedInInfoDialog()" class="tw-text-link tw-underline tw-cursor-pointer">{{
+				'Issuer.linkedInIdUseLink' | translate
+			}}</a>
+			{{ 'Issuer.linkedInIdUse2' | translate }})
+		</ng-template>
+		<ng-template #linkedInIdDialogHeader>
+			<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-4">
+				{{ 'Issuer.linkedInUseNoteHeader' | translate }}
+			</h3>
+		</ng-template>
+		<ng-template #linkedInIdDialogBody>
+			<p hlmP [size]="'sm'" class="oeb">
+				{{ 'Issuer.linkedInUseNoteText' | translate }}
+			</p>
+		</ng-template>
+	}
+
+	@if (!networkForm()) {
+		<oeb-select
+			[control]="issuerForm.rawControlMap.issuer_email"
+			label="{{ 'General.contact' | translate }}-E-Mail"
+			placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
+			[options]="emailsOptions"
+			errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
+			#issuer_contact_Email
+		></oeb-select>
+	}
 
 	<oeb-input
-		class="oeb-input-hide-arrows"
-		label="{{ 'Issuer.linkedInId' | translate }}"
-		[sublabelRightTemplate]="linkedInIdSublabelRight"
-		[fieldType]="'number'"
-		sublabel="{{ 'Issuer.linkedInIdHint' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_linkedin_id"
-	/>
-	<ng-template #linkedInIdSublabelRight>
-		({{ 'Issuer.linkedInIdUse1' | translate }}
-		<a (click)="openLinkedInInfoDialog()" class="tw-text-link tw-underline tw-cursor-pointer">{{
-			'Issuer.linkedInIdUseLink' | translate
-		}}</a>
-		{{ 'Issuer.linkedInIdUse2' | translate }})
-	</ng-template>
-	<ng-template #linkedInIdDialogHeader>
-		<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-4">
-			{{ 'Issuer.linkedInUseNoteHeader' | translate }}
-		</h3>
-	</ng-template>
-	<ng-template #linkedInIdDialogBody>
-		<p hlmP [size]="'sm'" class="oeb">
-			{{ 'Issuer.linkedInUseNoteText' | translate }}
-		</p>
-	</ng-template>
-
-	<oeb-select
-		[control]="issuerForm.rawControlMap.issuer_email"
-		label="{{ 'General.contact' | translate }}-E-Mail"
-		placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
-		[options]="emailsOptions"
-		errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
-		#issuer_contact_Email
-	></oeb-select>
-
-	<oeb-input
+		class="tw-mt-8"
 		label="{{ 'CreateBadge.shortDescription' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_description"
 		[fieldType]="'textarea'"
@@ -83,79 +75,122 @@
 		sublabelRight="(min. 200 / max. 300 {{ 'General.characters' | translate }})"
 	></oeb-input>
 
-	<oeb-select
-		[control]="issuerForm.rawControlMap.issuer_category"
-		label="{{ 'General.category' | translate }}"
-		placeholder="{{ 'Issuer.enterCategory' | translate }}"
-		[options]="[
-			{
-				label: 'Issuer.schoolLabel' | translate,
-				value: 'schule',
-			},
-			{
-				label: 'Issuer.universityLabel' | translate,
-				value: 'hochschule',
-			},
-			{
-				label: 'Issuer.othersLabel' | translate,
-				value: 'andere',
-			},
-		]"
-		#issuer_category
-	></oeb-select>
+	@if (!networkForm()) {
+		<oeb-select
+			class="tw-mt-8"
+			[control]="issuerForm.rawControlMap.issuer_category"
+			label="{{ 'General.category' | translate }}"
+			placeholder="{{ 'Issuer.enterCategory' | translate }}"
+			[options]="[
+				{
+					label: 'Issuer.schoolLabel' | translate,
+					value: 'schule'
+				},
+				{
+					label: 'Issuer.universityLabel' | translate,
+					value: 'hochschule'
+				},
+				{
+					label: 'Issuer.othersLabel' | translate,
+					value: 'andere'
+				}
+			]"
+			#issuer_category
+		></oeb-select>
 
-	<oeb-input
-		label="{{ 'General.street' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_street"
-		[fieldType]="'text'"
-		errorMessage="{{ 'Issuer.enterStreet' | translate }}"
-		#issuer_street_field
-	></oeb-input>
+		<oeb-input
+			class="tw-mt-8"
+			label="{{ 'General.street' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_street"
+			[fieldType]="'text'"
+			errorMessage="{{ 'Issuer.enterStreet' | translate }}"
+			#issuer_street_field
+		></oeb-input>
 
-	<oeb-input
-		label="{{ 'Issuer.houseNo' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_streetnumber"
-		errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
-		#issuer_streetnumber_field
-	></oeb-input>
+		<oeb-input
+			class="tw-mt-8"
+			label="{{ 'Issuer.houseNo' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_streetnumber"
+			errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
+			#issuer_streetnumber_field
+		></oeb-input>
 
-	<oeb-input
-		class="oeb-input-hide-arrows"
-		label="{{ 'General.postalCode' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_zip"
-		[fieldType]="'number'"
-		errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
-		#issuer_zip_field
-	></oeb-input>
+		<oeb-input
+			class="oeb-input-hide-arrows tw-mt-8"
+			label="{{ 'General.postalCode' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_zip"
+			[fieldType]="'number'"
+			errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
+			#issuer_zip_field
+		></oeb-input>
 
-	<oeb-input
-		label="{{ 'General.city' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_city"
-		[fieldType]="'text'"
-		errorMessage="{{ 'Issuer.enterCity' | translate }}"
-		#issuer_city_field
-	></oeb-input>
-
-	<div class="tw-mt-6 md:tw-mt-7">
-		<oeb-checkbox
-			id="verify-intent"
-			name="verify-intent"
-			[text]="'Issuer.herebyIConfirm' | translate"
-			[control]="issuerForm.rawControlMap.verify_intended_use"
-			[multiLineText]="true"
-		>
-		</oeb-checkbox>
-	</div>
-
-	@if (!existingIssuer) {
-		<p
-			hlmP
-			class="tw-mt-6 md:tw-mt-7 tw-italic tw-leading-[130%]"
-			[innerHTML]="'Issuer.contract26' | translate"
-		></p>
+		<oeb-input
+			class="tw-mt-8"
+			label="{{ 'General.city' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_city"
+			[fieldType]="'text'"
+			errorMessage="{{ 'Issuer.enterCity' | translate }}"
+			#issuer_city_field
+		></oeb-input>
 	}
 
-	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
+	<section class="tw-flex md:tw-flex-row tw-mt-8 tw-flex-col tw-w-full tw-gap-2 md:tw-justify-between">
+		<oeb-select
+			class="md:tw-min-w-[288px]"
+			[control]="issuerForm.rawControlMap.country"
+			label="{{ 'General.country' | translate }}"
+			placeholder="{{ 'General.select' | translate }}"
+			[options]="_countriesOptions"
+			#networkCountry
+		>
+		</oeb-select>
+		<oeb-select
+			class="md:tw-min-w-[288px]"
+			[control]="issuerForm.rawControlMap.state"
+			label="{{ 'General.state' | translate }}"
+			placeholder="{{ 'General.select' | translate }}"
+			[options]="_germanStateOptions"
+			[disabled]="issuerForm.rawControlMap.country.value != 'Germany'"
+			#networkState
+		>
+		</oeb-select>
+	</section>
+
+	<oeb-input
+		class="tw-mt-8"
+		label="{{ 'Issuer.websiteUrl' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_url"
+		[urlField]="true"
+		[fieldType]="'url'"
+		errorMessage="{{ 'Issuer.enterURL' | translate }}"
+		#issuer_url_field
+	></oeb-input>
+	@if (networkForm()) {
+		<span class="tw-text-purple tw-text-lg tw-italic">{{ 'Network.addPartnerNext' | translate }}</span>
+	}
+
+	@if (!networkForm()) {
+		<div class="tw-mt-6 md:tw-mt-8">
+			<oeb-checkbox
+				id="verify-intent"
+				name="verify-intent"
+				[text]="'Issuer.herebyIConfirm' | translate"
+				[control]="issuerForm.rawControlMap.verify_intended_use"
+				[multiLineText]="true"
+			>
+			</oeb-checkbox>
+		</div>
+
+		@if (!existingIssuer) {
+			<p
+				hlmP
+				class="tw-mt-6 md:tw-mt-8 tw-italic tw-leading-[130%]"
+				[innerHTML]="'Issuer.contract26' | translate"
+			></p>
+		}
+	}
+
+	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
 		<oeb-button
 			type="button"
 			class="tw-mr-4"
@@ -165,14 +200,26 @@
 			text="{{ 'General.cancel' | translate }}"
 		></oeb-button>
 
-		<oeb-button
-			type="submit"
-			width="max_content"
-			[disabled]="!!addIssuerFinished"
-			text="{{ existingIssuer ? ('General.save' | translate) : ('Issuer.createInstitution' | translate) }}"
-			[loading-promises]="[addIssuerFinished]"
-			loading-message="Hinzufügen"
-		>
-		</oeb-button>
+		@if (networkForm()) {
+			<oeb-button
+				type="submit"
+				width="max_content"
+				[disabled]="!!addIssuerFinished"
+				text="{{ existingIssuer ? ('General.save' | translate) : ('Network.create' | translate) }}"
+				[loading-promises]="[addIssuerFinished]"
+				loading-message="Hinzufügen"
+			>
+			</oeb-button>
+		} @else {
+			<oeb-button
+				type="submit"
+				width="max_content"
+				[disabled]="!!addIssuerFinished"
+				text="{{ existingIssuer ? ('General.save' | translate) : ('Issuer.createInstitution' | translate) }}"
+				[loading-promises]="[addIssuerFinished]"
+				loading-message="Hinzufügen"
+			>
+			</oeb-button>
+		}
 	</div>
 </form>

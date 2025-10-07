@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output, signal, TemplateRef, ViewChild, OnInit } from '@angular/core';
+import { Component, effect, inject, input, output, signal, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -7,26 +7,28 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { NetworkPartnersDatatableComponent } from '../../../components/datatable-network-partners.component';
 import { NetworkInvitesDatatableComponent } from '../../../components/datatable-network-invites.component';
 import { Issuer } from '../../../issuer/models/issuer.model';
-import { Network } from '../../../issuer/models/network.model';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 import { NgModel } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'network-partners',
 	templateUrl: './network-partners.component.html',
 	imports: [TranslatePipe, OebButtonComponent, NetworkPartnersDatatableComponent, NetworkInvitesDatatableComponent],
 })
-export class NetworkPartnersComponent implements OnInit {
+export class NetworkPartnersComponent {
 	issuers = input.required<Issuer[]>();
 	network = input.required<Network>();
 	addInstitutionsTemplate = input.required<TemplateRef<void>>();
 
 	pendingInvites = signal<ApiNetworkInvitation[]>([]);
 	approvedInvites = signal<ApiNetworkInvitation[]>([]);
+
+	networkInvites = input<ApiNetworkInvitation[]>([]);
 
 	removePartnerRequest = output<Issuer>();
 
@@ -47,12 +49,11 @@ export class NetworkPartnersComponent implements OnInit {
 		private networkApiService: NetworkApiService,
 		private publicApiService: PublicApiService,
 		private messageService: MessageService,
-	) {}
-
-	ngOnInit() {
-		this.networkApiService.getNetworkInvites(this.network().slug).then((invites) => {
+	) {
+		effect(() => {
+			const invites = this.networkInvites();
 			this.approvedInvites.set(invites.filter((i) => i.acceptedOn));
-			this.pendingInvites.set(invites.filter((i) => i.status.toLowerCase() == 'pending'));
+			this.pendingInvites.set(invites.filter((i) => i.status.toLowerCase() === 'pending'));
 		});
 	}
 

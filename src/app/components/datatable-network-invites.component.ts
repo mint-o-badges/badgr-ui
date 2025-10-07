@@ -20,7 +20,6 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { ApiNetworkInvitation } from '../issuer/models/network-invite-api.model';
 import { NetworkApiService } from '../issuer/services/network-api.service';
 import { Issuer } from '../issuer/models/issuer.model';
-import { Network } from '../issuer/models/network.model';
 
 @Component({
 	selector: 'network-invites-datatable',
@@ -122,7 +121,7 @@ import { Network } from '../issuer/models/network.model';
 })
 export class NetworkInvitesDatatableComponent {
 	invites = input.required<ApiNetworkInvitation[]>();
-	network = input.required<Network>();
+	network = input.required<any>();
 	actionElement = output<ApiNetworkInvitation>();
 
 	inviteRevoked = output<ApiNetworkInvitation>();

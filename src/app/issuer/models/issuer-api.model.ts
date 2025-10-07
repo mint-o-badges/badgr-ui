@@ -1,5 +1,4 @@
 import { ApiEntityRef } from '../../common/model/entity-ref';
-import { ApiNetwork } from './network-api.model';
 
 export type IssuerSlug = string;
 export type IssuerUrl = string;
@@ -21,37 +20,82 @@ export interface ApiIssuerJsonld {
 	image: string;
 }
 
-export interface ApiIssuer {
+export interface ApiBaseIssuer {
 	name: string;
 	slug: IssuerSlug;
 	description: string;
 	image: string;
-
 	created_at: string;
 	created_by: string;
 	staff: ApiIssuerStaff[];
+	json: ApiIssuerJsonld;
+	country?: string;
+	state?: string;
+	linkedinId: string;
+}
+
+export interface ApiIssuer extends ApiBaseIssuer {
+	is_network: false;
 
 	badgeClassCount: number;
 	learningPathCount: number;
-	json: ApiIssuerJsonld;
-
 	verified: boolean;
+	intendedUseVerified: boolean;
+	ownerAcceptedTos: boolean;
 
 	source_url?: string;
-	linkedinId: string;
-
 	category?: string;
 	street?: string;
 	streetnumber?: string;
 	zip?: string;
 	city?: string;
 
+	country?: string;
+	state?: string;
+
 	lat?: number;
 	lon?: number;
-	intendedUseVerified: boolean;
-	ownerAcceptedTos: boolean;
 
 	networks: ApiNetwork[];
+}
+
+export interface ApiNetwork extends ApiBaseIssuer {
+	is_network: true;
+	partner_issuers: ApiIssuer[];
+	current_user_network_role: IssuerStaffRoleSlug | null;
+}
+
+export type ApiAnyIssuer = ApiIssuer | ApiNetwork;
+
+export interface ApiIssuerForCreation {
+	name: string;
+	description: string;
+	image?: string;
+	email: string;
+	url: string;
+	category?: string;
+	street?: string;
+	streetnumber?: string;
+	zip?: string;
+	city?: string;
+	country?: string;
+	state?: string;
+	intendedUseVerified: boolean;
+	lat?: number;
+	lon?: number;
+
+	is_network?: false;
+	linkedinId: string;
+}
+
+export interface ApiNetworkForCreation {
+	name: string;
+	description: string;
+	image: string;
+	url: string;
+	country: string;
+	state?: string;
+	is_network?: boolean;
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';
@@ -89,6 +133,9 @@ export interface ApiIssuerForCreation {
 	zip?: string;
 	city?: string;
 
+	country?: string;
+	state?: string;
+
 	intendedUseVerified: boolean;
 	linkedinId: string;
 
@@ -107,6 +154,9 @@ export interface ApiIssuerForEditing {
 	streetnumber?: string;
 	zip?: string;
 	city?: string;
+
+	country?: string;
+	state?: string;
 
 	intendedUseVerified: boolean;
 	linkedinId: string;

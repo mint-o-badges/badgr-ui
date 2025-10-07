@@ -7,6 +7,7 @@ import { MessageService } from '../../common/services/message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ApiIssuer } from '../models/issuer-api.model';
 
 @Injectable({ providedIn: 'root' })
 export class QrCodeApiService extends BaseHttpApiService {
@@ -45,6 +46,16 @@ export class QrCodeApiService extends BaseHttpApiService {
 		return this.get<ApiQRCode[]>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes`).then(
 			(r) => r.body,
 		);
+	}
+
+	getQrCodesForNetworkBadge(networkSlug: string, badgeSlug: string) {
+		return this.get<{
+			[issuerSlug: string]: {
+				issuer: ApiIssuer;
+				qrcodes: ApiQRCode[];
+				staff: boolean;
+			};
+		}>(`/v1/issuer/networks/${networkSlug}/badges/${badgeSlug}/qrcodes`).then((r) => r.body);
 	}
 
 	getQrCodePdf(slug: string, badgeSlug: string, base64QrImage: string): Observable<Blob> {

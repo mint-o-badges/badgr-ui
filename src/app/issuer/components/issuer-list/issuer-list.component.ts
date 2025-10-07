@@ -40,12 +40,12 @@ import { NgIcon } from '@ng-icons/core';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { environment } from 'src/environments/environment';
-import { NetworkManager } from '../../services/network-manager.service';
-import { Network } from '../../models/network.model';
 import { NetworkListComponent } from '../network-list/network-list.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmH3, HlmP } from '@spartan-ng/helm/typography';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { Network } from '~/issuer/network.model';
 import { UserPreferenceService } from '~/common/services/user-preference.service';
 
 @Component({
@@ -81,20 +81,14 @@ export class IssuerListComponent
 	Array = Array;
 
 	issuers: Issuer[] = null;
+	networks = signal<Network[]>([]);
 	badges: BadgeClass[] = null;
-	networksLoaded = signal<boolean>(false);
 
 	issuersLoaded: Promise<unknown>;
-	networks = toSignal(
-		this.networkManager.myNetworks$.pipe(
-			tap(() => this.networksLoaded.set(true)),
-			map((networks) => networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())),
-			catchError((error) => {
-				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-			}),
-		),
-		{ initialValue: [] as Network[] },
-	);
+	networksLoaded: Promise<unknown>;
+
+	badgesLoaded: Promise<unknown>;
+
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
 	@ViewChild('headerTemplate')
@@ -186,6 +180,7 @@ export class IssuerListComponent
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
+		this.networksLoaded = this.loadNetworks();
 	}
 
 	issuerSearchInputFocusOut() {
@@ -199,7 +194,10 @@ export class IssuerListComponent
 		return new Promise<void>((resolve, reject) => {
 			this.issuerManager.myIssuers$.subscribe(
 				(issuers) => {
-					this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.issuers = issuers
+						.filter((i) => !i.is_network)
+						.slice()
+						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					resolve();
 				},
 				(error) => {
@@ -210,20 +208,24 @@ export class IssuerListComponent
 		});
 	};
 
-	// loadNetworks = () => {
-	// 	return new Promise<void>((resolve, reject) => {
-	// 		this.networkManager.myNetworks$.subscribe(
-	// 			(networks) => {
-	// 				this.networks.set(networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
-	// 				resolve();
-	// 			},
-	// 			(error) => {
-	// 				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-	// 				resolve();
-	// 			},
-	// 		);
-	// 	});
-	// };
+	loadNetworks = () => {
+		return new Promise<void>((resolve, reject) => {
+			this.networkManager.myNetworks$.subscribe(
+				(issuers) => {
+					this.networks.set(
+						issuers
+							.filter((i) => i.is_network)
+							.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
+					);
+					resolve();
+				},
+				(error) => {
+					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+					resolve();
+				},
+			);
+		});
+	};
 
 	ngOnInit() {
 		super.ngOnInit();

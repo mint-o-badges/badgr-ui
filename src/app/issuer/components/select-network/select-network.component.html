@@ -1,0 +1,65 @@
+<ng-container>
+	<div class="tw-relative">
+		<input
+			#networkSearchInput
+			#networkSearchInputModel="ngModel"
+			class="tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-md tw-shadow-sm tw-p-2 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full tw-mb-6"
+			[(ngModel)]="networkSearchQuery"
+			[ngModelOptions]="{ standalone: true }"
+			[placeholder]="'Issuer.searchIssuer' | translate"
+			(focus)="networksShowResults = true"
+			(focusout)="networkSearchInputFocusOut()"
+			(keydown.enter)="$event.preventDefault()"
+		/>
+		<ng-icon
+			hlm
+			size="lg"
+			class="tw-absolute tw-top-[3px] tw-right-1 tw-w-6 tw-h-6 tw-pointer-events-none tw-text-purple"
+			name="lucideSearch"
+		/>
+		@if (networksShowResults && (networksLoading || networkSearchResults.length || networkSearchLoaded)) {
+			<div
+				class="tw-absolute tw-mt-1 tw-z-10 tw-bg-white tw-rounded-md tw-shadow-sm tw-border tw-border-solid tw-border-gray-700 tw-w-full tw-overflow-auto"
+				[ngStyle]="{
+					'max-height.px': calculateDropdownMaxHeight(networkSearchInput, 100),
+					'bottom.px': calculateDropdownBottom(networkSearchInput, 100)
+				}"
+			>
+				<ul>
+					@if (networksLoading) {
+						<li class="tw-p-2 tw-cursor-default">Loading...</li>
+					}
+					@for (network of networkSearchResults; track network) {
+						<li
+							class="tw-p-2 hover:tw-bg-[var(--color-lightpurple)] tw-cursor-pointer tw-flex tw-items-center tw-gap-2"
+							(click)="selectNetworkFromDropdown(network)"
+						>
+							<img [src]="network.image" width="24" class="tw-aspect-square" />
+							<span>{{ network.name }}</span>
+						</li>
+					}
+					@if (networkSearchResults.length == 0) {
+						<li class="tw-p-2 tw-text-gray-500 tw-cursor-default">Keine Ergebnisse</li>
+					}
+				</ul>
+			</div>
+		}
+		<div class="tw-flex tw-justify-start tw-items-center tw-gap-4">
+			<oeb-button
+				(click)="close.emit()"
+				size="sm"
+				variant="secondary"
+				(click)="shareBadge()"
+				[text]="'General.cancel' | translate"
+			>
+			</oeb-button>
+			<oeb-button
+				size="sm"
+				(click)="shareBadge()"
+				[disabled]="!selectedNetwork"
+				[text]="'Badge.shareBadgeOnNetwork' | translate"
+			>
+			</oeb-button>
+		</div>
+	</div>
+</ng-container>

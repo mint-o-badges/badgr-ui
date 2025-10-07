@@ -45,7 +45,7 @@
 						<section class="tw-flex tw-flex-col tw-gap-2">
 							<oeb-button
 								type="button"
-								text="Micro Degree herunterladen"
+								[text]="'RecBadgeDetail.downloadMicroDegree' | translate"
 								width="full_width"
 								(click)="downloadMicroDegree()"
 							></oeb-button>
@@ -53,7 +53,7 @@
 								type="button"
 								variant="secondary"
 								width="full_width"
-								text="PDF-Zertifikat herunterladen"
+								[text]="'RecBadgeDetail.pdfDownload' | translate"
 								(click)="downloadPdf()"
 							></oeb-button>
 						</section>

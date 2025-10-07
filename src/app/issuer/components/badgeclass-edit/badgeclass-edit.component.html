@@ -18,9 +18,9 @@
 		<badgeclass-edit-form
 			#badgeimage
 			(save)="badgeClassSaved($event)"
-			(cancelEdit)="editingCanceled()"
-			[issuer]="issuer"
+			(cancel)="editingCanceled()"
 			[badgeClass]="badgeClass"
+			[issuer]="issuer"
 			[scrolled]="scrolled"
 			isForked="false"
 		></badgeclass-edit-form>

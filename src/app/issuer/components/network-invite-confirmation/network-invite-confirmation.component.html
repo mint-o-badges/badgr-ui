@@ -2,7 +2,7 @@
 	<div class="page-padding">
 		<div
 			*bgAwaitPromises="[inviteLoaded]"
-			class="tw-bg-lightgrey tw-py-7 tw-pl-8 tw-pr-10 md:tw-py-[60px] md:tw-pl-28 md:tw-pr-80 tw-flex md:tw-justify-between"
+			class="tw-bg-lightgrey tw-py-7 tw-pl-8 tw-pr-10 md:tw-py-[60px] md:tw-pl-28 md:tw-pr-40 tw-flex md:tw-justify-between"
 		>
 			@if (alreadyConfirmed) {
 				<div class="tw-flex tw-flex-col tw-gap-16">
@@ -13,7 +13,7 @@
 								| translate
 									: {
 											networkName: invite.network.name,
-											issuerName: invite.issuer.name,
+											issuerName: invite.issuer.name
 									  }
 						"
 					></p>
@@ -24,23 +24,25 @@
 					</oeb-button>
 				</div>
 			} @else {
-				<div class="tw-flex tw-flex-col tw-gap-16">
-					<p
-						class="md:tw-text-3xl tw-text-oebblack"
-						[innerHTML]="
-							'Network.confirmNetworkInvitation'
-								| translate
-									: {
-											networkName: invite.network.name,
-											issuerName: invite.issuer.name,
-									  }
-						"
-					></p>
-					<oeb-button (click)="confirmInvitation()" [text]="'Network.confirmInvitation' | translate">
-					</oeb-button>
+				<div class="tw-w-full tw-flex tw-gap-20">
+					<div class="tw-flex tw-flex-col tw-gap-16">
+						<p
+							class="md:tw-text-3xl tw-text-oebblack"
+							[innerHTML]="
+								'Network.confirmNetworkInvitation'
+									| translate
+										: {
+												networkName: invite.network.name,
+												issuerName: invite.issuer.name
+										  }
+							"
+						></p>
+						<oeb-button (click)="confirmInvitation()" [text]="'Network.confirmInvitation' | translate">
+						</oeb-button>
+					</div>
+					<img class="tw-w-16 md:tw-w-[230px]" src="/assets/oeb/images/network/Network.svg" />
 				</div>
 			}
-			<img class="tw-w-16 md:tw-w-[230px]" src="/assets/oeb/images/network/Network.svg" />
 		</div>
 	</div>
 </div>

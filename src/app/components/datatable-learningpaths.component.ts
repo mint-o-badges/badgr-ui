@@ -147,7 +147,8 @@ export class LearningPathDatatableComponent {
 
 	private readonly tableColumnDefinition: ColumnDef<ApiLearningPath>[] = [
 		{
-			header: 'Micro Degree',
+			id: 'General.learningPath',
+			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => row.name,
 			cell: () => this.badgeCellTemplate(),
 			sortDescFirst: false,

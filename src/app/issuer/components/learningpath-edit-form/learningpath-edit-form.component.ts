@@ -24,7 +24,7 @@ import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LearningPath } from '../../models/learningpath.model';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
 import { StepperComponent } from '../../../components/stepper/stepper.component';
@@ -77,6 +77,7 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		AutocompleteLibModule,
 		OebButtonComponent,
 		TranslatePipe,
+		TranslateModule,
 		OebInputComponent,
 		BgFormFieldImageComponent,
 		BadgeStudioComponent,
@@ -191,7 +192,6 @@ export class LearningPathEditFormComponent
 	badgeResults: BadgeResult[] = null;
 	badgesFormArray: any;
 
-	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
 	badgeResultsByCategory: MatchingBadgeCategory[] = [];
 	selectedTag: string = null;
 	order = 'asc';
@@ -247,6 +247,8 @@ export class LearningPathEditFormComponent
 	next: string;
 	previous: string;
 
+	learningpathsPlural: string;
+
 	draggableList: {
 		id: string;
 		name: string;
@@ -281,6 +283,11 @@ export class LearningPathEditFormComponent
 		if (!this.initialisedLearningpath) {
 			this.learningPathForm.controls.license.addFromTemplate();
 		}
+
+		if (this.issuer.is_network) {
+			this.learningPathForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
+		}
+
 		this.draggableList = this.selectedBadges.map((badge, index) => {
 			return {
 				id: badge.slug,
@@ -299,12 +306,12 @@ export class LearningPathEditFormComponent
 			this.previous = previous;
 		});
 
-		this.translate.get('Badge.category').subscribe((translatedText: string) => {
-			this.groups[0] = translatedText;
+		this.translate.get('LearningPath.learningpathsPlural').subscribe((txt) => {
+			this.learningpathsPlural = txt;
 		});
 
-		this.translate.get('Badge.issuer').subscribe((translatedText: string) => {
-			this.groups[1] = translatedText;
+		this.translate.get('Badge.category').subscribe((translatedText: string) => {
+			this.groups[0] = translatedText;
 		});
 
 		this.translate.get('CreateBadge.useOurEditor').subscribe((res: string) => {
@@ -454,7 +461,6 @@ export class LearningPathEditFormComponent
 		});
 	}
 	groups: string[] = [];
-	// groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		competency: '',
 		participation: '',
@@ -691,17 +697,11 @@ export class LearningPathEditFormComponent
 		this.order = order;
 		if (this.order === 'asc') {
 			this.badgeResults.sort((a, b) => a.name.localeCompare(b.name));
-			this.badgeResultsByIssuer
-				.sort((a, b) => a.issuerName.localeCompare(b.issuerName))
-				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
 			this.badgeResultsByCategory
 				.sort((a, b) => a.category.localeCompare(b.category))
 				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
 		} else {
 			this.badgeResults.sort((a, b) => b.name.localeCompare(a.name));
-			this.badgeResultsByIssuer
-				.sort((a, b) => b.issuerName.localeCompare(a.issuerName))
-				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
 			this.badgeResultsByCategory
 				.sort((a, b) => b.category.localeCompare(a.category))
 				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
@@ -711,24 +711,9 @@ export class LearningPathEditFormComponent
 	private updateResults() {
 		// Clear Results
 		this.badgeResults = [];
-		this.badgeResultsByIssuer = [];
-		const badgeResultsByIssuerLocal = {};
 		this.badgeResultsByCategory = [];
 		const badgeResultsByCategoryLocal = {};
-		const addBadgeToResultsByIssuer = (item) => {
-			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
-			if (!issuerResults) {
-				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
-					item.issuerName,
-					'',
-				);
-				// append result to the issuerResults array bound to the view template.
-				this.badgeResultsByIssuer.push(issuerResults);
-			}
-			issuerResults.addBadge(item);
-			return true;
-		};
-		const addBadgeToResultsByCategory = (item) => {
+		var addBadgeToResultsByCategory = (item) => {
 			let itemCategory =
 				item.extension && item.extension['extensions:CategoryExtension']
 					? item.extension['extensions:CategoryExtension'].Category
@@ -751,7 +736,6 @@ export class LearningPathEditFormComponent
 			.filter((i) => !i.apiModel.source_url)
 			.forEach((item) => {
 				this.badgeResults.push(item);
-				addBadgeToResultsByIssuer(item);
 				addBadgeToResultsByCategory(item);
 			});
 	}
@@ -1053,21 +1037,6 @@ export class LearningPathEditFormComponent
 		return this.selectedBadges.length >= 2
 			? null
 			: { minSelectedBadges: { required: 2, actual: this.selectedBadges.length } };
-	}
-}
-
-class MatchingBadgeIssuer {
-	constructor(
-		public issuerName: string,
-		public badge,
-		public badges: BadgeClass[] = [],
-	) {}
-	async addBadge(badge) {
-		if (badge.issuerName === this.issuerName) {
-			if (this.badges.indexOf(badge) < 0) {
-				this.badges.push(badge);
-			}
-		}
 	}
 }
 class MatchingBadgeCategory {
