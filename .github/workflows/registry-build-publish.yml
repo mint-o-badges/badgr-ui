@@ -30,6 +30,8 @@ jobs:
                   node-version-file: '.nvmrc'
             - name: 📲 Install dependencies
               run: npm ci
+            - name: Lint
+              run: npm run lint
             - name: Prettier
               run: npx prettier --check .
 
