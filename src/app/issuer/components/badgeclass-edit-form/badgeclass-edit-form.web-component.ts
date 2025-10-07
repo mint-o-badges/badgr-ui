@@ -8,6 +8,8 @@ import { LanguageService } from '~/common/services/language.service';
 import * as translationsEn from 'src/assets/i18n/en.json';
 import * as translationsDe from 'src/assets/i18n/de.json';
 import { BadgeClassEditFormComponent } from './badgeclass-edit-form.component';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { ROUTE_CONFIG } from '~/app.routes';
 
 createWebcomponent(BadgeClassEditFormComponent, 'oeb-badgeclass-edit-form', {
 	providers: [
@@ -21,5 +23,9 @@ createWebcomponent(BadgeClassEditFormComponent, 'oeb-badgeclass-edit-form', {
 			const lang = inject(LanguageService);
 			useWebComponentLanguageSetting(lang);
 		}),
+		provideRouter(
+			ROUTE_CONFIG,
+			withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
+		),
 	],
 });
