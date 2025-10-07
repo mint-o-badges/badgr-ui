@@ -9,7 +9,7 @@ import { Issuer, issuerStaffRoles } from '../../../issuer/models/issuer.model';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { NgStyle } from '@angular/common';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { HlmIcon } from '@spartan-ng/helm/icon';
@@ -19,6 +19,7 @@ import { Network } from '~/issuer/network.model';
 import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'select-network',
@@ -41,6 +42,8 @@ export class SelectNetworkComponent implements AfterViewInit {
 
 	networkSelected = output();
 
+	private destroy$ = new Subject<void>();
+
 	@ViewChild('inviteSuccessContent')
 	inviteSuccessContent: TemplateRef<void>;
 
@@ -62,11 +65,13 @@ export class SelectNetworkComponent implements AfterViewInit {
 
 	ngAfterViewInit() {
 		this.networkSearchInputModel.valueChanges
-			.pipe(debounceTime(500))
-			.pipe(distinctUntilChanged())
-			.subscribe(() => {
-				this.networkSearchChange();
-			});
+			.pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.destroy$))
+			.subscribe(() => this.networkSearchChange());
+	}
+
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	networkSearchInputFocusOut() {

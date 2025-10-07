@@ -13,7 +13,7 @@ export const tabsVariants = cva('', {
 				'data-[state=inactive]:tw-border-lightpurple data-[state=active]:tw-border-purple data-[state=active]:tw-text-purple',
 			black: 'data-[state=inactive]:tw-border-aipurple data-[state=active]:tw-border-oebblack',
 			bluebackground:
-				'data-[state=active]:tw-bg-[#CCD7FF] tw-rounded-[10px] data-[state=inactive]:tw-border-[#CCD7FF] tw-border-2 tw-text-purple data-[state=active]:tw-font-semibold',
+				'data-[state=active]:tw-bg-aipurple tw-rounded-[10px] data-[state=inactive]:tw-border-[#CCD7FF] tw-border-2 tw-text-purple data-[state=active]:tw-font-semibold',
 		},
 	},
 	defaultVariants: {
