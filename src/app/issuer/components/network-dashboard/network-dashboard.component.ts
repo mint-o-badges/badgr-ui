@@ -15,7 +15,7 @@ import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { NgIcon } from '@ng-icons/core';
 import { NgModel, FormsModule } from '@angular/forms';
-import { Issuer, issuerStaffRoles } from '../../../issuer/models/issuer.model';
+import { Issuer } from '../../../issuer/models/issuer.model';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { NgStyle } from '@angular/common';
@@ -28,9 +28,7 @@ import { AddInstitutionComponent } from '../add-institution/add-institution.comp
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 import { NetworkBadgesComponent } from '../network-badges/network-badges.component';
-import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
-import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 import { RouterLink } from '@angular/router';
 import { Network } from '~/issuer/network.model';
 @Component({
@@ -65,9 +63,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	network = signal<Network | null>(null);
 	partnerIssuers = signal<Issuer[]>([]);
 
-	refetchCounter = 0;
-
-	pendingInvites: ApiNetworkInvitation[];
+	networkInvites = signal<ApiNetworkInvitation[]>([]);
 
 	issuersShowResults = false;
 	issuersLoading = false;
@@ -109,8 +105,8 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 		this.networkSlug = this.route.snapshot.params['networkSlug'];
 
-		this.networkApiService.getNetworkInvites(this.networkSlug, 'pending').then((invites) => {
-			this.pendingInvites = invites;
+		this.networkApiService.getNetworkInvites(this.networkSlug).then((invites) => {
+			this.networkInvites.set(invites);
 		});
 
 		this.networkLoaded = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
@@ -195,7 +191,9 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	onInstitutionsInvited() {
-		this.refetchCounter++;
+		this.networkApiService.getNetworkInvites(this.networkSlug).then((invites) => {
+			this.networkInvites.set(invites);
+		});
 		if (this.dialogRef) {
 			this.dialogRef.close();
 		}

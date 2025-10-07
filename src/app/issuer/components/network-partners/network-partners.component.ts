@@ -29,9 +29,9 @@ export class NetworkPartnersComponent {
 	pendingInvites = signal<ApiNetworkInvitation[]>([]);
 	approvedInvites = signal<ApiNetworkInvitation[]>([]);
 
-	removePartnerRequest = output<Issuer>();
+	networkInvites = input<ApiNetworkInvitation[]>([]);
 
-	refetchTrigger = input<number>(0);
+	removePartnerRequest = output<Issuer>();
 
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
@@ -52,20 +52,9 @@ export class NetworkPartnersComponent {
 		private messageService: MessageService,
 	) {
 		effect(() => {
-			if (this.refetchTrigger() > 0) {
-				this.fetchNetworkInvites();
-			}
-		});
-	}
-
-	ngOnInit() {
-		this.fetchNetworkInvites();
-	}
-
-	fetchNetworkInvites() {
-		this.networkApiService.getNetworkInvites(this.network().slug).then((invites) => {
+			const invites = this.networkInvites();
 			this.approvedInvites.set(invites.filter((i) => i.acceptedOn));
-			this.pendingInvites.set(invites.filter((i) => i.status.toLowerCase() == 'pending'));
+			this.pendingInvites.set(invites.filter((i) => i.status.toLowerCase() === 'pending'));
 		});
 	}
 
