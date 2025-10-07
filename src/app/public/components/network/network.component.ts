@@ -4,12 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
-import {
-	PublicApiBadgeClass,
-	PublicApiIssuer,
-	PublicApiLearningPath,
-	PublicApiNetwork,
-} from '../../models/public-api.model';
+import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
 import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/util/url-util';
 import { routerLinkForUrl } from '../public/public.component';
@@ -30,7 +25,7 @@ export class PublicNetworkComponent {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
 	networkIdParam: LoadedRouteParam<{
-		network: PublicApiNetwork;
+		network: PublicApiIssuer;
 		issuers: PublicApiIssuer[];
 	}>;
 	routerLinkForUrl = routerLinkForUrl;
@@ -56,7 +51,7 @@ export class PublicNetworkComponent {
 		});
 	}
 
-	get network(): PublicApiNetwork {
+	get network(): PublicApiIssuer {
 		return this.networkIdParam.value.network;
 	}
 

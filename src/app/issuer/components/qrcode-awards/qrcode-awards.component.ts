@@ -22,6 +22,7 @@ import { Issuer } from '../../models/issuer.model';
 import { SvgIconComponent } from '~/common/components/svg-icon.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH3 } from '@spartan-ng/helm/typography';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'qrcode-awards',
@@ -61,9 +62,10 @@ export class QrCodeAwardsComponent {
 
 	@Input() awards: any[];
 	@Input() routerLinkText: string[];
-	@Input() issuer: Issuer;
+	@Input() issuer: Issuer | Network;
 	@Input() badgeClass: BadgeClass;
 	@Input() defaultUnfolded: boolean | undefined = false;
+	@Input() interactive = true;
 	@Output() qrBadgeAward = new EventEmitter<number>();
 
 	requestedBadges: any[] = [];
@@ -77,7 +79,7 @@ export class QrCodeAwardsComponent {
 	}
 
 	private setupQrCodeMenus() {
-		if (!this.issuer || !this.awards || !this.badgeClass) {
+		if (!this.issuer || !this.awards || !this.badgeClass || !this.interactive) {
 			return;
 		}
 

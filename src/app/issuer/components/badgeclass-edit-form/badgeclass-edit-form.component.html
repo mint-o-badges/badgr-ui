@@ -1017,25 +1017,27 @@
 						{{ 'CreateBadge.optionalBadgeDetails' | translate }}
 					</h2>
 
-					<div class="section tw-text-oebblack tw-mt-6">
-						<h2 hlmH2 class="!tw-text-oebblack">
-							{{ 'Badge.copyBadgeHeadline' | translate }}
-						</h2>
-						<span
-							class="tw-text-oebblack tw-italic tw-text-lg"
-							[innerHTML]="'Badge.copyBadgeDescription1' | translate"
-						></span>
-						<span
-							class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
-							[innerHTML]="'Badge.copyBadgeDescription2' | translate"
-						></span>
-						<div class="tw-mt-2 tw-mb-2">
-							<oeb-checkbox
-								[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-								[text]="'Badge.copyLabelOthers' | translate"
-							/>
+					@if (!issuer.is_network) {
+						<div class="section tw-text-oebblack tw-mt-6">
+							<h2 hlmH2 class="!tw-text-oebblack">
+								{{ 'Badge.copyBadgeHeadline' | translate }}
+							</h2>
+							<span
+								class="tw-text-oebblack tw-italic tw-text-lg"
+								[innerHTML]="'Badge.copyBadgeDescription1' | translate"
+							></span>
+							<span
+								class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
+								[innerHTML]="'Badge.copyBadgeDescription2' | translate"
+							></span>
+							<div class="tw-mt-2 tw-mb-2">
+								<oeb-checkbox
+									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
+									[text]="'Badge.copyLabelOthers' | translate"
+								/>
+							</div>
 						</div>
-					</div>
+					}
 					@if (category == 'competency') {
 						<div class="section tw-text-oebblack tw-mt-6">
 							<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack">

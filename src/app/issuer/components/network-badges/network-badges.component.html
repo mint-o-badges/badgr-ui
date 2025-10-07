@@ -1,0 +1,99 @@
+<ng-container>
+	<div class="tw-my-12">
+		<oeb-tabs
+			[variant]="'bluebackground'"
+			(onTabChanged)="onTabChange($event)"
+			[activeTab]="activeTab"
+			[tabs]="tabs"
+			countStyle="parentheses"
+		></oeb-tabs>
+	</div>
+</ng-container>
+
+<ng-template #networkTemplate>
+	@if (badgeResults.length) {
+		<div class="tw-mt-12">
+			<badges-datatable
+				[badges]="badgeResults"
+				(directBadgeAward)="routeToBadgeAward($event)"
+				(qrCodeAward)="routeToQRCodeAward($event)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, network().slug, $event.focusRequests)"
+			></badges-datatable>
+		</div>
+	} @else {
+		<span
+			class="tw-text-lg tw-text-oebblack tw-my-6 tw-block"
+			[innerHTML]="'Network.noBadgesYet' | translate: { network: network().name }"
+		></span>
+		@if (
+			network().current_user_network_role &&
+			network().current_user_network_role != 'staff' &&
+			!badgeResults.length
+		) {
+			<oeb-button
+				[text]="'Network.createBadge' | translate"
+				[routerLink]="[`/issuer/issuers/${network().slug}/badges/select/`]"
+			></oeb-button>
+		}
+	}
+</ng-template>
+
+<ng-template #headerTemplate>
+	<div class="tw-px-4">
+		<h2
+			class="tw-text-purple tw-text-[22px] tw-uppercase tw-mb-6"
+			[innerHTML]="'Network.awardBadgeIssuer' | translate"
+		></h2>
+	</div>
+</ng-template>
+<ng-template #issuerSelection>
+	<div class="tw-mb-6 tw-px-4">
+		@if (isLoadingIssuers()) {
+			<div>{{ 'General.loading' | translate }}</div>
+		} @else {
+			@for (issuer of userIssuers(); track issuer) {
+				<label class="radio tw-mb-6">
+					<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+					<span class="radio-x-text">{{ issuer.name }}</span>
+				</label>
+			}
+		}
+	</div>
+	<div class="tw-flex tw-gap-2 tw-px-4">
+		<oeb-button
+			type="button"
+			variant="secondary"
+			[text]="'General.cancel' | translate"
+			size="sm"
+			(click)="closeDialog()"
+		>
+		</oeb-button>
+		<oeb-button
+			type="button"
+			[disabled]="!selectedIssuer"
+			(click)="closeDialogContinue()"
+			size="sm"
+			[text]="'Issuer.giveBadge' | translate"
+		>
+		</oeb-button>
+	</div>
+</ng-template>
+
+<ng-template #partnerTemplate>
+	@if (!sharedBadges.length) {
+		<div class="tw-mt-12">
+			<span class="tw-text-oebblack tw-text-lg tw-leading-[130%]">
+				{{ 'Network.noPartnerBadgesYet' | translate }}
+			</span>
+		</div>
+	} @else {
+		<div class="tw-mt-12" *bgAwaitPromises="sharedBadgesLoaded">
+			<network-shared-badges-datatable
+				[badges]="sharedBadges"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.issuerSlug, $event.focusRequests)"
+				(directBadgeAward)="routeToBadgeAward($event)"
+				(qrCodeAward)="routeToQRCodeAward($event)"
+			></network-shared-badges-datatable>
+		</div>
+	}
+</ng-template>

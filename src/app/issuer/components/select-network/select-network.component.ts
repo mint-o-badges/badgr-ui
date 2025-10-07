@@ -9,75 +9,91 @@ import { Issuer, issuerStaffRoles } from '../../../issuer/models/issuer.model';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { NgStyle } from '@angular/common';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { MemoizedProperty } from '~/common/util/memoized-property-decorator';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { Network } from '~/issuer/network.model';
+import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
+import { BadgeClass } from '~/issuer/models/badgeclass.model';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
-	selector: 'add-institution',
-	templateUrl: './add-institution.component.html',
+	selector: 'select-network',
+	templateUrl: './select-network.component.html',
 	imports: [TranslatePipe, OebButtonComponent, NgIcon, HlmIcon, FormsModule, NgStyle],
 })
-export class AddInstitutionComponent implements AfterViewInit {
+export class SelectNetworkComponent implements AfterViewInit {
 	constructor(
 		private publicApiService: PublicApiService,
 		private messageService: MessageService,
 		private networkApiService: NetworkApiService,
+		private badgeClassApiService: BadgeClassApiService,
+		private router: Router,
 	) {}
 
-	network = input.required<any>();
+	issuer = input.required<Issuer | Network>();
+	badge = input.required<BadgeClass>();
 
-	institutionsInvited = output();
+	close = output();
+
+	networkSelected = output();
+
+	private destroy$ = new Subject<void>();
 
 	@ViewChild('inviteSuccessContent')
 	inviteSuccessContent: TemplateRef<void>;
 
-	@ViewChild('issuerSearchInputModel') issuerSearchInputModel: NgModel;
+	@ViewChild('networkSearchInputModel') networkSearchInputModel: NgModel;
 
 	private _networkStaffRoleOptions: FormFieldSelectOption[];
 
 	dialogRef: BrnDialogRef<any> = null;
 
-	issuerSearchQuery = '';
-	selectedIssuers: Issuer[] = [];
+	networkSearchQuery = '';
+	selectedNetwork: Network = null;
 
-	issuersShowResults = false;
-	issuersLoading = false;
-	issuerSearchLoaded = false;
-	issuerSearchResults = [];
+	networksShowResults = false;
+	networksLoading = false;
+	networkSearchLoaded = false;
+	networkSearchResults = [];
 
 	rightsAndRolesExpanded = false;
 
 	ngAfterViewInit() {
-		this.issuerSearchInputModel.valueChanges
-			.pipe(debounceTime(500))
-			.pipe(distinctUntilChanged())
-			.subscribe(() => {
-				this.issuerSearchChange();
-			});
+		this.networkSearchInputModel.valueChanges
+			.pipe(debounceTime(500), distinctUntilChanged(), takeUntil(this.destroy$))
+			.subscribe(() => this.networkSearchChange());
 	}
 
-	issuerSearchInputFocusOut() {
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
+	}
+
+	networkSearchInputFocusOut() {
 		// delay hiding for click event
 		setTimeout(() => {
-			this.issuersShowResults = false;
+			this.networksShowResults = false;
 		}, 200);
 	}
 
-	async issuerSearchChange() {
-		if (this.issuerSearchQuery.length >= 3) {
-			this.issuersLoading = true;
+	async networkSearchChange() {
+		if (this.networkSearchQuery.length >= 3) {
+			this.networksLoading = true;
 			try {
-				this.issuerSearchResults = [];
-				this.issuerSearchResults = await this.publicApiService.searchIssuers(this.issuerSearchQuery);
+				this.networkSearchResults = [];
+				this.networkSearchResults = (await this.publicApiService.searchIssuers(this.networkSearchQuery)).filter(
+					(i) => i.is_network,
+				);
 			} catch (error) {
-				this.messageService.reportAndThrowError(`Failed to issuers: ${error.message}`, error);
+				this.messageService.reportAndThrowError(`Failed to networks: ${error.message}`, error);
 			}
-			this.issuersLoading = false;
-			this.issuerSearchLoaded = true;
+			this.networksLoading = false;
+			this.networkSearchLoaded = true;
 		}
 	}
 
@@ -98,52 +114,25 @@ export class AddInstitutionComponent implements AfterViewInit {
 		return null;
 	}
 
-	selectIssuerFromDropdown(issuer) {
-		this.selectedIssuers.push(issuer);
+	selectNetworkFromDropdown(network) {
+		this.networkSearchQuery = network.name;
+		this.selectedNetwork = network;
 	}
 
-	removeSelectedissuer(issuer) {
-		const index = this.selectedIssuers.indexOf(issuer);
-		this.selectedIssuers.splice(index, 1);
+	removeSelectednetwork() {
+		this.selectedNetwork = null;
 	}
 
-	collapseRoles() {
-		this.rightsAndRolesExpanded = !this.rightsAndRolesExpanded;
-	}
-
-	@MemoizedProperty()
-	get issuerStaffRoleOptions() {
-		return issuerStaffRoles.map((r) => ({
-			label: r.label,
-			value: r.slug,
-			description: r.description,
-		}));
-	}
-
-	inviteInstitutions(issuers: Issuer[]) {
-		if (!issuers.length) return;
-		this.networkApiService.inviteInstitutions(this.network().slug, issuers).then((res) => {
-			if (res) {
-				this.openSuccessDialog();
-				this.institutionsInvited.emit();
-			}
-		});
-	}
-
-	private readonly _hlmDialogService = inject(HlmDialogService);
-
-	public openSuccessDialog() {
-		const dialogRef = this._hlmDialogService.open(DialogComponent, {
-			context: {
-				content: this.inviteSuccessContent,
-				variant: 'success',
-			},
-		});
-
-		this.dialogRef = dialogRef;
-	}
-
-	closeDialog() {
-		this.dialogRef.close();
+	shareBadge() {
+		try {
+			this.badgeClassApiService.shareOnNetwork(this.selectedNetwork.slug, this.badge().slug).then((s) => {
+				this.close.emit();
+				this.router.navigate(['/issuer/networks/', this.selectedNetwork.slug], {
+					queryParams: { tab: 'badges', innerTab: 'partner' },
+				});
+			});
+		} catch (e) {
+			this.messageService.reportAndThrowError(e);
+		}
 	}
 }

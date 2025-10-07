@@ -10,7 +10,7 @@ export type BadgeClassExpiresDuration = 'days' | 'weeks' | 'months' | 'years';
 
 export type BadgeClassLevel = 'a1' | 'a2' | 'b1' | 'b2' | 'c1' | 'c2';
 export type BadgeClassCategory = 'competency' | 'participation' | 'learningpath';
-export type BadgeClassCopyPermissions = 'issuer' | 'others';
+export type BadgeClassCopyPermissions = 'issuer' | 'others' | 'none';
 
 export interface ApiBadgeClassJsonld {
 	'@context': string;
@@ -74,10 +74,35 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 
 	issuerVerified: boolean;
 	issuerOwnerAcceptedTos: boolean;
+	isNetworkBadge: boolean;
+	sharedOnNetwork: {
+		slug: string;
+		name: string;
+		image: string | null;
+		description: string | null;
+	} | null;
 }
 
 export interface BadgeImageResponse {
 	success: boolean;
 	image_url: string;
 	message: string;
+}
+
+export interface ApiBadgeClassNetworkShare {
+	id: string;
+	badgeclass: ApiBadgeClass;
+	network: {
+		slug: string;
+		name: string;
+		image: string;
+	};
+	shared_at: string;
+	shared_by_user: string;
+	shared_by_issuer?: {
+		slug: string;
+		name: string;
+		image: string;
+	};
+	is_active: boolean;
 }

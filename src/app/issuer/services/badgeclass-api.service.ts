@@ -35,8 +35,16 @@ export class BadgeClassApiService extends BaseHttpApiService {
 		return this.get<ApiBadgeClass[]>('/v1/issuer/issuers/' + issuerSlug + '/badges').then((r) => r.body);
 	}
 
+	getAwardableBadgesForIssuer(issuerSlug: string) {
+		return this.get<ApiBadgeClass[]>('/v1/issuer/issuers/' + issuerSlug + '/awardable-badges').then((r) => r.body);
+	}
+
 	getBadgeForIssuerSlugAndBadgeSlug(issuerSlug: IssuerSlug, badgeSlug: BadgeClassSlug) {
 		return this.get<ApiBadgeClass>('/v1/issuer/issuers/' + issuerSlug + '/badges/' + badgeSlug).then((r) => r.body);
+	}
+
+	getNetworkBadgeClasses(networkSlug: string) {
+		return this.get<ApiBadgeClass[]>(`/v1/issuer/networks/${networkSlug}/badges`).then((r) => r.body);
 	}
 
 	deleteBadgeClass(issuerSlug: IssuerSlug, badgeSlug: BadgeClassSlug) {
@@ -53,10 +61,10 @@ export class BadgeClassApiService extends BaseHttpApiService {
 		);
 	}
 
-	createBadgeImage(issuerSlug: string, image: string, category: string, useIssuerImage: boolean) {
+	createBadgeImage(issuerSlug: string, badgeSlug: string, category: string, useIssuerImage: boolean) {
 		return this.post(`/v1/issuer/issuers/${issuerSlug}/badges/image/compose`, {
 			issuerSlug: issuerSlug,
-			image: image,
+			badgeSlug: badgeSlug,
 			category: category,
 			useIssuerImage: useIssuerImage,
 		}).then((r) => r.body as BadgeImageResponse);
@@ -75,5 +83,13 @@ export class BadgeClassApiService extends BaseHttpApiService {
 
 	getBadgeById(id: BadgeClassSlug) {
 		return this.get<ApiBadgeClass>('/v1/issuer/all-badges/find?identifier=' + id).then((r) => r.body);
+	}
+
+	getSharedBadgesInNetwork(networkId: string): Promise<ApiBadgeClass[]> {
+		return this.get<ApiBadgeClass[]>(`/v1/issuer/issuers/${networkId}/shared-badges/`).then((r) => r.body);
+	}
+
+	shareOnNetwork(networkSlug: string, badgeSlug: string) {
+		return this.post(`/v1/issuer/networks/${networkSlug}/badges/${badgeSlug}/share`, {}).then((r) => r.body);
 	}
 }

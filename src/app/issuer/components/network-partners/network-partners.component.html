@@ -1,7 +1,9 @@
 <ng-container>
 	@if (!issuers().length) {
-		<div class="tw-my-8">
-			<span class="tw-text-oebblack tw-text-lg tw-block">{{ 'Network.noInstitutionAddedYet' | translate }}</span>
+		<span class="tw-mt-12 tw-mb-4 tw-text-oebblack tw-text-lg tw-block">{{
+			'Network.noInstitutionAddedYet' | translate
+		}}</span>
+		<div>
 			<oeb-button (click)="openDialog()" [text]="'Network.inviteInstitutions' | translate"> </oeb-button>
 		</div>
 	} @else {

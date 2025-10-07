@@ -25,6 +25,7 @@ import {
 } from '@tanstack/angular-table';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { Issuer } from '~/issuer/models/issuer.model';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -44,7 +45,7 @@ import { Issuer } from '~/issuer/models/issuer.model';
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
-		<div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-8">
+		<div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-2">
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x tw-w-full tw-flex tw-justify-between">
 					<h3
@@ -257,7 +258,7 @@ import { Issuer } from '~/issuer/models/issuer.model';
 	`,
 })
 export class IssuerDetailDatatableComponent {
-	issuer = input<Issuer>();
+	issuer = input<Issuer | Network>();
 	recipientCount = input<number>(0);
 	downloadStates = input<boolean[]>([]);
 	awardInProgress = input<boolean>(false);
