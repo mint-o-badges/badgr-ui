@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, Input, output, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, effect, inject, input, output, signal, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -13,7 +13,6 @@ import { NgModel } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
-import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 import { Network } from '~/issuer/network.model';
 
 @Component({
@@ -58,7 +57,7 @@ export class NetworkPartnersComponent {
 		});
 	}
 
-	dialogRefPartner: BrnDialogRef<any> = null;
+	dialogRefPartner: BrnDialogRef = null;
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 

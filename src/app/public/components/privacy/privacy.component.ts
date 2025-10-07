@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 
 @Component({
@@ -7,8 +7,4 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 	styleUrls: ['./privacy.component.css'],
 	imports: [FormMessageComponent],
 })
-export class PrivacyComponent implements OnInit {
-	constructor() {}
-
-	ngOnInit() {}
-}
+export class PrivacyComponent {}

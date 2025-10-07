@@ -16,12 +16,12 @@
 							'Network.yourRole'
 								| translate
 									: {
-											role: 'Network.role.' + role | translate
+											role: 'Network.role.' + role | translate,
 									  }
 						}}</span
 					>
 				</div>
-				@if (activeTab == 'badges') {
+				@if (activeTab === 'badges') {
 					<div class="tw-ml-auto">
 						<oeb-button
 							variant="secondary"

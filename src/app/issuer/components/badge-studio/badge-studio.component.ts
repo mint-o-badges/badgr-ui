@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 // import "font-awesome/css/font-awesome.css";
 import FontFaceObserver from 'fontfaceobserver';
 import { canvasVisualCenter } from '../../../common/util/visual-center';
@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 	template: ` <canvas #canvas width="400" height="400"></canvas> `,
 	styleUrls: ['../../../../../node_modules/font-awesome/css/font-awesome.css'],
 })
-export class BadgeStudioComponent implements OnInit, OnChanges {
+export class BadgeStudioComponent implements OnInit {
 	get canvas() {
 		return this.canvasElem.nativeElement as HTMLCanvasElement;
 	}
@@ -39,8 +39,6 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 	ngOnInit() {
 		this.fontPromise = new FontFaceObserver('FontAwesome').load('').catch((e) => console.error(e));
 	}
-
-	ngOnChanges() {}
 
 	generateRandom(): Promise<string> {
 		return this.fontPromise.then(

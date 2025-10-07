@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, input, Input, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
 import { HlmInput, InputVariants } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -115,7 +115,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		</div>
 	</div>`,
 })
-export class OebInputComponent {
+export class OebInputComponent implements AfterViewInit {
 	@Input() error: string;
 	@Input() errorOverride?: boolean = false;
 	@Input() label: string;

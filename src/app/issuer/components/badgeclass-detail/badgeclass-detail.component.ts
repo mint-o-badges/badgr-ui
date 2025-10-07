@@ -22,7 +22,7 @@ import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
-import { inject } from '@angular/core';
+import { inject, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
@@ -67,7 +67,10 @@ interface groupedInstances {
 		SelectNetworkComponent,
 	],
 })
-export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassDetailComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, AfterViewChecked, AfterViewInit, OnDestroy
+{
 	@ViewChild('qrAwards') qrAwards!: ElementRef;
 	@ViewChild('batchAwards') batchAwards!: ElementRef;
 
@@ -256,10 +259,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		try {
 			this.issuerLoaded = issuerManager.issuerBySlug(this.issuerSlug).then(
 				(issuer) => {
-					(this.issuer = issuer),
-						(this.issuerNetworks = this.issuer.networks.map((n) => {
-							return new Network(this.commonManager, n);
-						}));
+					this.issuer = issuer;
+					this.issuerNetworks = this.issuer.networks.map((n) => {
+						return new Network(this.commonManager, n);
+					});
 				},
 				(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 			);

@@ -27,7 +27,7 @@
 		></span>
 		@if (
 			network().current_user_network_role &&
-			network().current_user_network_role != 'staff' &&
+			network().current_user_network_role !== 'staff' &&
 			!badgeResults.length
 		) {
 			<oeb-button

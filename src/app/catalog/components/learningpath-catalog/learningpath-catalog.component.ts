@@ -253,7 +253,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	// }
 
 	private updatePaginatedResults() {
-		let that = this;
 		this.learningPathResults = [];
 
 		this.filteredMicroDegrees = this.learningPaths
@@ -268,7 +267,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		const start = (this.currentPage - 1) * this.microDegreesPerPage;
 		const end = start + this.microDegreesPerPage;
 
-		that.learningPathResults = this.filteredMicroDegrees.slice(start, end);
+		this.learningPathResults = this.filteredMicroDegrees.slice(start, end);
 	}
 
 	async loadIssuers() {

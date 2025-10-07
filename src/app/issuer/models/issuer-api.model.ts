@@ -112,7 +112,7 @@ export interface ApiIssuerStaff {
 	};
 }
 
-export interface IssuerStaffRef extends ApiEntityRef {}
+export type IssuerStaffRef = ApiEntityRef;
 
 export interface ApiIssuerStaffOperation {
 	action: 'add' | 'modify' | 'remove';

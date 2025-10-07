@@ -1,4 +1,14 @@
-import { Component, ElementRef, inject, OnInit, output, signal, TemplateRef, ViewChild } from '@angular/core';
+import {
+	AfterContentInit,
+	Component,
+	ElementRef,
+	inject,
+	OnInit,
+	output,
+	signal,
+	TemplateRef,
+	ViewChild,
+} from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SessionService } from '../../../common/services/session.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -50,7 +60,7 @@ import { Network } from '~/issuer/network.model';
 		RouterLink,
 	],
 })
-export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
 	networkLoaded: Promise<unknown>;
 	networkSlug: string;
 	crumbs: LinkEntry[];

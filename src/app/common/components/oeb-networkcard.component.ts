@@ -30,7 +30,7 @@ import { Network } from '~/issuer/network.model';
 								'Network.yourRole'
 									| translate
 										: {
-												role: 'Network.role.' + network.current_user_network_role | translate
+												role: 'Network.role.' + network.current_user_network_role | translate,
 										  }
 							}}
 						</span>

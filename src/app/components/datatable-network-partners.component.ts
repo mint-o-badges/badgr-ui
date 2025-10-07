@@ -39,10 +39,7 @@ import { Network } from '~/issuer/network.model';
 	providers: [provideIcons({ lucideSearch })],
 	template: `
 		<div class="tw-mt-8 tw-overflow-x-auto">
-			<table
-				hlmTable
-				oeb-table
-			>
+			<table hlmTable oeb-table>
 				<thead hlmTHead>
 					@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
 						<tr hlmTr>
@@ -67,7 +64,8 @@ import { Network } from '~/issuer/network.model';
 											</div>
 
 											@if (headerCell.column.getIsSorted()) {
-												@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+												@let order =
+													headerCell.column.getNextSortingOrder() === 'asc' ? 'desc' : 'asc';
 												@if (order === 'asc') {
 													<ng-icon hlm size="base" name="lucideChevronUp" />
 												} @else {
@@ -83,20 +81,19 @@ import { Network } from '~/issuer/network.model';
 						</tr>
 					}
 				</thead>
-				@if(approvedInvites().length){
-
+				@if (approvedInvites().length) {
 					<tbody hlmTBody>
 						@for (row of table.getRowModel().rows; track row.id; let i = $index) {
 							<tr hlmTr>
-									@for (cell of row.getVisibleCells(); track cell.id;) {
-										<td hlmTd>
-											<ng-container
-												*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
-											>
-												<div [innerHTML]="cell"></div>
-											</ng-container>
-										</td>
-									}
+								@for (cell of row.getVisibleCells(); track cell.id) {
+									<td hlmTd>
+										<ng-container
+											*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+										>
+											<div [innerHTML]="cell"></div>
+										</ng-container>
+									</td>
+								}
 							</tr>
 						}
 					</tbody>
@@ -105,17 +102,17 @@ import { Network } from '~/issuer/network.model';
 		</div>
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate  }}
+			{{ context.header.id | translate }}
 		</ng-template>
 
 		<ng-template #issuerActionsCellTemplate let-context>
-				<oeb-button
-				  class="tw-float-right"
-					size="xs"
-					variant="secondary"
-					(click)="removePartner(context.row.original)"
-					text="{{ 'General.remove' | translate }}"
-					/>
+			<oeb-button
+				class="tw-float-right"
+				size="xs"
+				variant="secondary"
+				(click)="removePartner(context.row.original)"
+				text="{{ 'General.remove' | translate }}"
+			/>
 		</ng-template>
 	`,
 })

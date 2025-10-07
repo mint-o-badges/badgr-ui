@@ -9,6 +9,7 @@ import {
 	Output,
 	EventEmitter,
 	effect,
+	OnChanges,
 } from '@angular/core';
 import { HlmButton } from './spartan/ui-button-helm/src';
 import { HlmIcon } from './spartan/ui-icon-helm/src';
@@ -47,7 +48,7 @@ import { NgTemplateOutlet, NgClass } from '@angular/common';
 					[class]="iconStyle"
 					[ngClass]="{
 						'tw-rotate-90': collapsible.expanded() && closeIcon == 'lucideChevronRight',
-						'tw-rotate-180': collapsible.expanded() && closeIcon == 'lucideChevronDown'
+						'tw-rotate-180': collapsible.expanded() && closeIcon == 'lucideChevronDown',
 					}"
 					[name]="closeIcon"
 				/>
@@ -58,7 +59,7 @@ import { NgTemplateOutlet, NgClass } from '@angular/common';
 		</brn-collapsible>
 	`,
 })
-export class OebCollapsibleComponent implements AfterViewInit {
+export class OebCollapsibleComponent implements AfterViewInit, OnChanges {
 	@Input() trigger: any;
 	@Input() defaultOpen: boolean = false;
 	@Input() id: string = null;
@@ -72,7 +73,7 @@ export class OebCollapsibleComponent implements AfterViewInit {
 
 	constructor() {
 		effect(() => {
-			this.collapsible && this.toggled.emit(this.collapsible.expanded());
+			if (this.collapsible) this.toggled.emit(this.collapsible.expanded());
 		});
 	}
 

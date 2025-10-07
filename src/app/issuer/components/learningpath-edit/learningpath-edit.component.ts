@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { FormBuilder } from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
@@ -38,7 +38,7 @@ import { HlmH1, HlmH3 } from '@spartan-ng/helm/typography';
 		TranslatePipe,
 	],
 })
-export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponent {
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	issuerSlug: string;
 	lpSlug: string;
@@ -85,20 +85,18 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	async loadLearningPath() {
-		return new Promise(async (resolve, reject) => {
+		try {
 			this.learningPath = await this.learningPathManager.getLearningPathForIssuer(this.issuerSlug, this.lpSlug);
 			this.learningPathBadge = await this.badgeClassService.badgeByIssuerSlugAndSlug(
 				this.issuerSlug,
 				this.learningPath.participationBadgeId,
 			);
-			resolve(this.learningPath),
-				(error) => {
-					this.messageService.reportAndThrowError('Failed to load learningPath', error);
-				};
-		});
-	}
 
-	ngOnInit() {}
+			return this.learningPath;
+		} catch (error) {
+			this.messageService.reportAndThrowError('Failed to load learningPath', error);
+		}
+	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog() {

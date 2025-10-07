@@ -4,10 +4,10 @@ import {
 	OnInit,
 	Output,
 	EventEmitter,
-	ElementRef,
 	ViewChild,
 	inject,
 	TemplateRef,
+	AfterViewInit,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
@@ -83,7 +83,7 @@ import { environment } from 'src/environments/environment';
 		NgTemplateOutlet,
 	],
 })
-export class OebIssuerDetailComponent implements OnInit {
+export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	@Input() issuer: Issuer | PublicApiIssuer;
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;

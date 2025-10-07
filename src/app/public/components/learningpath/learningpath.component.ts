@@ -286,8 +286,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	participate() {
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
 			(response) => {
-				//@ts-ignore
-				if (response.body.message === 'Successfully joined the learning path') {
+				if (response.body['message'] === 'Successfully joined the learning path') {
 					this.openSuccessDialog();
 				}
 				this.requestPath();

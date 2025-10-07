@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild, TemplateRef, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, TemplateRef, SimpleChanges, AfterViewInit } from '@angular/core';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -86,7 +86,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		}
 	</div>`,
 })
-export class OebSelectComponent {
+export class OebSelectComponent implements AfterViewInit {
 	@Input() control: FormControl;
 	@Input() initialValue: string;
 	@Input() label: string;

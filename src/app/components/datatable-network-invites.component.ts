@@ -38,10 +38,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 	providers: [provideIcons({ lucideSearch })],
 	template: `
 		<div class="tw-mt-8 tw-overflow-x-auto">
-			<table
-				hlmTable
-				oeb-table-secondary
-			>
+			<table hlmTable oeb-table-secondary>
 				<thead hlmTHead>
 					@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
 						<tr hlmTr>
@@ -66,7 +63,8 @@ import { Issuer } from '../issuer/models/issuer.model';
 											</div>
 
 											@if (headerCell.column.getIsSorted()) {
-												@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+												@let order =
+													headerCell.column.getNextSortingOrder() === 'asc' ? 'desc' : 'asc';
 												@if (order === 'asc') {
 													<ng-icon hlm size="base" name="lucideChevronUp" />
 												} @else {
@@ -85,15 +83,15 @@ import { Issuer } from '../issuer/models/issuer.model';
 				<tbody hlmTBody>
 					@for (row of table.getRowModel().rows; track row.id; let i = $index) {
 						<tr hlmTr>
-								@for (cell of row.getVisibleCells(); track cell.id;) {
-									<td hlmTd>
-										<ng-container
-											*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
-										>
-											<div [innerHTML]="cell"></div>
-										</ng-container>
-									</td>
-								}
+							@for (cell of row.getVisibleCells(); track cell.id) {
+								<td hlmTd>
+									<ng-container
+										*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+									>
+										<div [innerHTML]="cell"></div>
+									</ng-container>
+								</td>
+							}
 						</tr>
 					}
 				</tbody>
@@ -110,14 +108,14 @@ import { Issuer } from '../issuer/models/issuer.model';
 					size="xs"
 					text="{{ 'Network.resendInvitation' | translate }}"
 					(click)="resendInvitation(context.row.original.issuer)"
-					/>
-					<oeb-button
-						size="xs"
-						variant="secondary"
-						text="{{ 'General.revoke' | translate }}"
-						(click)="revokeInvitation(context.row.original)"
-					/>
-				</div>
+				/>
+				<oeb-button
+					size="xs"
+					variant="secondary"
+					text="{{ 'General.revoke' | translate }}"
+					(click)="revokeInvitation(context.row.original)"
+				/>
+			</div>
 		</ng-template>
 	`,
 })

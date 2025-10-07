@@ -6,6 +6,7 @@ import { RecipientBadgeInstance } from '~/recipient/models/recipient-badge.model
 import { RecipientBadgeCollection } from '~/recipient/models/recipient-badge-collection.model';
 import { LearningPath } from '~/issuer/models/learningpath.model';
 import { PublicApiBadgeClass } from '~/public/models/public-api.model';
+import { ApiLearningPath } from '../model/learningpath-api.model';
 
 export class MatchingAlgorithm {
 	static issuerMatcher(inputPattern: string): (issuer: Issuer | ApiRecipientBadgeIssuer) => boolean {
@@ -33,7 +34,9 @@ export class MatchingAlgorithm {
 		};
 	}
 
-	static learningPathMatcher(inputPattern: string): (lp: LearningPath) => boolean {
+	static learningPathMatcher<T extends LearningPath | ApiLearningPath = LearningPath>(
+		inputPattern: string,
+	): (lp: T) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
 

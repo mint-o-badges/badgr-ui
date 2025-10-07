@@ -22,7 +22,7 @@
 				class="tw-absolute tw-mt-1 tw-z-10 tw-bg-white tw-rounded-md tw-shadow-sm tw-border tw-border-solid tw-border-gray-700 tw-w-full tw-overflow-auto"
 				[ngStyle]="{
 					'max-height.px': calculateDropdownMaxHeight(issuerSearchInput, 100),
-					'bottom.px': calculateDropdownBottom(issuerSearchInput, 100)
+					'bottom.px': calculateDropdownBottom(issuerSearchInput, 100),
 				}"
 			>
 				<ul>
@@ -38,7 +38,7 @@
 							<span>{{ issuer.name }}</span>
 						</li>
 					}
-					@if (issuerSearchResults.length == 0) {
+					@if (issuerSearchResults.length === 0) {
 						<li class="tw-p-2 tw-text-gray-500 tw-cursor-default">Keine Ergebnisse</li>
 					}
 				</ul>

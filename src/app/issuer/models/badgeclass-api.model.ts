@@ -4,7 +4,7 @@ import { ApiEntityRef } from '../../common/model/entity-ref';
 export type BadgeClassSlug = string;
 export type BadgeClassUrl = string;
 export type BadgeClassSqlId = number;
-export interface BadgeClassRef extends ApiEntityRef {}
+export type BadgeClassRef = ApiEntityRef;
 
 export type BadgeClassExpiresDuration = 'days' | 'weeks' | 'months' | 'years';
 

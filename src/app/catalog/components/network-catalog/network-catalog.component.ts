@@ -121,7 +121,6 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
 		this.loggedIn = this.sessionService.isLoggedIn;
 
 		this.plural = {

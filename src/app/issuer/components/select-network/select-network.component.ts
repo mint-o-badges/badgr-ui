@@ -1,11 +1,9 @@
-import { AfterViewInit, Component, inject, input, Input, output, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, input, output, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
-import { DialogComponent } from '../../../components/dialog.component';
 import { NgIcon } from '@ng-icons/core';
 import { NgModel, FormsModule } from '@angular/forms';
-import { Issuer, issuerStaffRoles } from '../../../issuer/models/issuer.model';
+import { Issuer } from '../../../issuer/models/issuer.model';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { NgStyle } from '@angular/common';
@@ -13,7 +11,6 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { HlmIcon } from '@spartan-ng/helm/icon';
-import { MemoizedProperty } from '~/common/util/memoized-property-decorator';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { Network } from '~/issuer/network.model';
 import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
@@ -38,7 +35,7 @@ export class SelectNetworkComponent implements AfterViewInit {
 	issuer = input.required<Issuer | Network>();
 	badge = input.required<BadgeClass>();
 
-	close = output();
+	closeSelect = output();
 
 	networkSelected = output();
 
@@ -126,7 +123,7 @@ export class SelectNetworkComponent implements AfterViewInit {
 	shareBadge() {
 		try {
 			this.badgeClassApiService.shareOnNetwork(this.selectedNetwork.slug, this.badge().slug).then((s) => {
-				this.close.emit();
+				this.closeSelect.emit();
 				this.router.navigate(['/issuer/networks/', this.selectedNetwork.slug], {
 					queryParams: { tab: 'badges', innerTab: 'partner' },
 				});

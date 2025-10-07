@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { TypedFormControl } from '../../../common/util/typed-forms';
+import { TypedFormControl, TypedFormGroup } from '../../../common/util/typed-forms';
 import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
 import { FormFieldText } from '../../../common/components/formfield-text';
 
@@ -24,7 +24,7 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 	`,
 })
 export class UploadTabComponent {
-	@Input() form: any;
+	@Input() form: TypedFormGroup<Record<'image', unknown>, Record<'image', TypedFormControl<unknown>>>;
 	@Input() uploadBadgeImageUrl: string;
 	@Output() controlUpdated = new EventEmitter<TypedFormControl<unknown>>();
 
@@ -55,7 +55,7 @@ export class UploadTabComponent {
 	`,
 })
 export class UrlTabComponent {
-	@Input() form: any;
+	@Input() form: TypedFormGroup<Record<'url', string>, Record<'url', TypedFormControl<string>>>;
 	@Output() controlUpdated = new EventEmitter<TypedFormControl<unknown>>();
 
 	onControlUpdated(control: TypedFormControl<unknown>) {
@@ -86,7 +86,7 @@ export class UrlTabComponent {
 	`,
 })
 export class JsonTabComponent {
-	@Input() form: any;
+	@Input() form: TypedFormGroup<Record<'assertion', string>, Record<'assertion', TypedFormControl<string>>>;
 	@Output() controlUpdated = new EventEmitter<TypedFormControl<unknown>>();
 
 	onControlUpdated(control: TypedFormControl<unknown>) {

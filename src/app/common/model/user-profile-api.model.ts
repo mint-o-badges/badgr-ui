@@ -13,7 +13,7 @@ export interface ApiUserProfile {
 	marketing_opt_in: boolean;
 	secure_password_set: boolean;
 }
-export interface UserProfileRef extends ApiEntityRef {}
+export type UserProfileRef = ApiEntityRef;
 
 /**
  * Information about an email address associated with the current user profile from the API.
@@ -24,7 +24,7 @@ export interface ApiUserProfileEmail {
 	primary: boolean;
 	verified: boolean;
 }
-export interface UserProfileEmailRef extends ApiEntityRef {}
+export type UserProfileEmailRef = ApiEntityRef;
 
 /**
  * Information about the link between a Badgr user and an external social account.
@@ -64,7 +64,7 @@ export interface ApiUserProfileSocialAccount {
 	 */
 	url: string;
 }
-export interface UserProfileSocialAccountRef extends ApiEntityRef {}
+export type UserProfileSocialAccountRef = ApiEntityRef;
 
 // TODO: now oAuth providers have been redefined as ExternalAuthProviders, determine if this code is in use for social sharing and prune if appropriate.
 /**

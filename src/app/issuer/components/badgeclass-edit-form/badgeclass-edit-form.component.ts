@@ -10,6 +10,8 @@ import {
 	ViewChild,
 	isDevMode,
 	SimpleChanges,
+	AfterViewChecked,
+	OnChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -104,7 +106,10 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		TranslateModule,
 	],
 })
-export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
+export class BadgeClassEditFormComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, AfterViewInit, AfterViewChecked, OnChanges
+{
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	baseUrl: string;
@@ -414,7 +419,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	save = new EventEmitter<Promise<BadgeClass>>();
 
 	@Output()
-	cancel = new EventEmitter<void>();
+	cancelEdit = new EventEmitter<void>();
 
 	@Input()
 	issuer: Issuer | Network;
@@ -645,9 +650,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.previous = previous;
 		});
 
-		let that = this;
-
-		if (!that.existing) {
+		if (!this.existing) {
 			this.badgeClassForm.controls.license.addFromTemplate();
 		}
 
@@ -687,7 +690,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			}
 			// restore values from sessionStorage
 			const saveableSessionValues = ['badge_name', 'badge_description', 'badge_hours', 'badge_minutes'];
-			const filterSessionValues = (values: Object) => {
+			const filterSessionValues = (values: object) => {
 				const filteredValues = {};
 				for (const [k, v] of Object.entries(values)) {
 					if (saveableSessionValues.includes(k)) {
@@ -900,7 +903,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.existingTags = [];
 		this.existingTagsLoading = true;
 		// outerThis is needed because inside the observable, `this` is something else
-		let outerThis = this;
 		let observable = this.badgeClassManager.allBadges$;
 
 		observable.subscribe({
@@ -908,11 +910,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				let tags: string[] = entities.flatMap((entity) => entity.tags);
 				let unique = [...new Set(tags)];
 				unique.sort();
-				outerThis.existingTags = unique.map((tag, index) => ({
+				this.existingTags = unique.map((tag, index) => ({
 					id: index,
 					name: tag,
 				}));
-				outerThis.tagOptions = outerThis.existingTags.map(
+				this.tagOptions = this.existingTags.map(
 					(tag) =>
 						({
 							value: tag.name,
@@ -921,7 +923,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				);
 				// The tags are loaded in one badge, so it's save to assume
 				// that after the first `next` call, the loading is done
-				outerThis.existingTagsLoading = false;
+				this.existingTagsLoading = false;
 			},
 			error(err) {
 				console.error("Couldn't fetch labels: " + err);
@@ -1392,39 +1394,39 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.existingBadgeClass.imageFrame = imageFrame;
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);
-				(this.existingBadgeClass.criteria = formState.criteria),
-					(this.existingBadgeClass.criteria_text = ''),
-					(this.existingBadgeClass.extension = {
-						...this.existingBadgeClass.extension,
-						'extensions:StudyLoadExtension': {
-							'@context': studyLoadExtensionContextUrl,
-							type: ['Extension', 'extensions:StudyLoadExtension'],
-							StudyLoad: Number(formState.badge_hours) * 60 + Number(formState.badge_minutes),
-						},
-						'extensions:CategoryExtension': {
-							'@context': categoryExtensionContextUrl,
-							type: ['Extension', 'extensions:CategoryExtension'],
-							Category: String(formState.badge_category),
-						},
-						'extensions:LevelExtension': {
-							'@context': levelExtensionContextUrl,
-							type: ['Extension', 'extensions:LevelExtension'],
-							Level: String(formState.badge_level),
-						},
-						'extensions:LicenseExtension': {
-							'@context': licenseExtensionContextUrl,
-							type: ['Extension', 'extensions:LicenseExtension'],
-							id: formState.license[0].id,
-							name: formState.license[0].name,
-							legalCode: formState.license[0].legalCode,
-						},
-						'extensions:CompetencyExtension': this.getCompetencyExtensions(
-							aiCompetenciesSuggestions,
-							keywordCompetenciesResults,
-							formState,
-							competencyExtensionContextUrl,
-						),
-					});
+				this.existingBadgeClass.criteria = formState.criteria;
+				this.existingBadgeClass.criteria_text = '';
+				this.existingBadgeClass.extension = {
+					...this.existingBadgeClass.extension,
+					'extensions:StudyLoadExtension': {
+						'@context': studyLoadExtensionContextUrl,
+						type: ['Extension', 'extensions:StudyLoadExtension'],
+						StudyLoad: Number(formState.badge_hours) * 60 + Number(formState.badge_minutes),
+					},
+					'extensions:CategoryExtension': {
+						'@context': categoryExtensionContextUrl,
+						type: ['Extension', 'extensions:CategoryExtension'],
+						Category: String(formState.badge_category),
+					},
+					'extensions:LevelExtension': {
+						'@context': levelExtensionContextUrl,
+						type: ['Extension', 'extensions:LevelExtension'],
+						Level: String(formState.badge_level),
+					},
+					'extensions:LicenseExtension': {
+						'@context': licenseExtensionContextUrl,
+						type: ['Extension', 'extensions:LicenseExtension'],
+						id: formState.license[0].id,
+						name: formState.license[0].name,
+						legalCode: formState.license[0].legalCode,
+					},
+					'extensions:CompetencyExtension': this.getCompetencyExtensions(
+						aiCompetenciesSuggestions,
+						keywordCompetenciesResults,
+						formState,
+						competencyExtensionContextUrl,
+					),
+				};
 				if (this.currentImage) {
 					this.existingBadgeClass.extension = {
 						...this.existingBadgeClass.extension,
@@ -1589,7 +1591,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	cancelClicked() {
-		this.cancel.emit();
+		this.cancelEdit.emit();
 	}
 
 	generateRandomImage() {

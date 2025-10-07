@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { uiTimestamp } from '../../../../environments/timestamp';
 import { ServerTimestampService } from '../../../common/services/server-timestamp.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
@@ -9,7 +9,7 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 	styleUrls: ['./impressum.component.css'],
 	imports: [FormMessageComponent],
 })
-export class ImpressumComponent implements OnInit {
+export class ImpressumComponent {
 	uiTimestamp = uiTimestamp;
 	serverTimestamp = '?';
 	constructor(protected serverTimestampService: ServerTimestampService) {
@@ -22,5 +22,4 @@ export class ImpressumComponent implements OnInit {
 			},
 		);
 	}
-	ngOnInit() {}
 }

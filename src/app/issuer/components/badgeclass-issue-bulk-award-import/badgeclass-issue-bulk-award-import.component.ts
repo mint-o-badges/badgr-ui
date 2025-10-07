@@ -132,7 +132,8 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 			if (row.length < this.columnHeadersCount) {
 				invalidRows.push(padRowWithMissingCells(row));
 			} else {
-				rowIsValid ? validRows.push(row) : invalidRows.push(row);
+				if (rowIsValid) validRows.push(row);
+				else invalidRows.push(row);
 			}
 		}
 

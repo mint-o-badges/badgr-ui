@@ -11,6 +11,7 @@ import {
 	isDevMode,
 	ChangeDetectorRef,
 	ElementRef,
+	OnChanges,
 } from '@angular/core';
 import { CdkStepper, STEPPER_GLOBAL_OPTIONS, CdkStep } from '@angular/cdk/stepper';
 import { StepComponent } from './step.component';
@@ -36,7 +37,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 	],
 	imports: [NgClass, NgTemplateOutlet],
 })
-export class StepperComponent extends CdkStepper implements OnInit {
+export class StepperComponent extends CdkStepper implements OnInit, OnChanges {
 	@Input()
 	initialStep: number = 0;
 

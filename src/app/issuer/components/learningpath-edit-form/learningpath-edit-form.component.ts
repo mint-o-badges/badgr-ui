@@ -9,6 +9,8 @@ import {
 	Output,
 	SimpleChanges,
 	ViewChild,
+	OnChanges,
+	AfterViewInit,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
@@ -91,7 +93,10 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		BgImageStatusPlaceholderDirective,
 	],
 })
-export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class LearningPathEditFormComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, OnChanges, AfterViewInit
+{
 	@ViewChild(StepperComponent) stepper: StepperComponent;
 
 	@ViewChild('badgeStudio')
@@ -132,7 +137,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	save = new EventEmitter<Promise<LearningPath>>();
 
 	@Output()
-	cancel = new EventEmitter<void>();
+	cancelEdit = new EventEmitter<void>();
 
 	@Input()
 	submittingText: string;
@@ -603,7 +608,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	cancelClicked() {
-		this.cancel.emit();
+		this.cancelEdit.emit();
 	}
 
 	async loadBadges() {
@@ -704,12 +709,11 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	private updateResults() {
-		let that = this;
 		// Clear Results
 		this.badgeResults = [];
 		this.badgeResultsByCategory = [];
 		const badgeResultsByCategoryLocal = {};
-		var addBadgeToResultsByCategory = function (item) {
+		var addBadgeToResultsByCategory = (item) => {
 			let itemCategory =
 				item.extension && item.extension['extensions:CategoryExtension']
 					? item.extension['extensions:CategoryExtension'].Category
@@ -721,7 +725,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					'',
 				);
 				// append result to the categoryResults array bound to the view template.
-				that.badgeResultsByCategory.push(categoryResults);
+				this.badgeResultsByCategory.push(categoryResults);
 			}
 			categoryResults.addBadge(item);
 			return true;
@@ -731,7 +735,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			.filter(this.badgeTagMatcher(this.selectedTag))
 			.filter((i) => !i.apiModel.source_url)
 			.forEach((item) => {
-				that.badgeResults.push(item);
+				this.badgeResults.push(item);
 				addBadgeToResultsByCategory(item);
 			});
 	}
@@ -764,7 +768,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		this.existingTags = [];
 		this.existingTagsLoading = true;
 		// outerThis is needed because inside the observable, `this` is something else
-		let outerThis = this;
 		let observable = this.learningPathManager.allLearningPaths$;
 
 		observable.subscribe({
@@ -772,11 +775,11 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				let tags: string[] = entities.flatMap((entity) => entity.tags);
 				let unique = [...new Set(tags)];
 				unique.sort();
-				outerThis.existingTags = unique.map((tag, index) => ({
+				this.existingTags = unique.map((tag, index) => ({
 					id: index,
 					name: tag,
 				}));
-				outerThis.tagOptions = outerThis.existingTags.map(
+				this.tagOptions = this.existingTags.map(
 					(tag) =>
 						({
 							value: tag.name,
@@ -785,7 +788,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				);
 				// The tags are loaded in one badge, so it's save to assume
 				// that after the first `next` call, the loading is done
-				outerThis.existingTagsLoading = false;
+				this.existingTagsLoading = false;
 			},
 			error(err) {
 				console.error("Couldn't fetch labels: " + err);
@@ -867,31 +870,31 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 			this.existingLpBadge.imageFrame = imageFrame;
 			this.existingLpBadge.image = !imageFrame ? formState.badge_image : null;
-			(this.existingLpBadge.name = formState.name),
-				(this.existingLpBadge.description = formState.description),
-				(this.existingLpBadge.tags = Array.from(this.lpTags)),
-				(this.existingLpBadge.criteria_text = criteriaText),
-				(this.existingLpBadge.criteria_url = ''),
-				(this.existingLpBadge.extension = {
-					'extensions:StudyLoadExtension': {
-						'@context': studyLoadExtensionContextUrl,
-						type: ['Extension', 'extensions:StudyLoadExtension'],
-						StudyLoad: this.studyLoad,
-					},
-					'extensions:CategoryExtension': {
-						'@context': categoryExtensionContextUrl,
-						type: ['Extension', 'extensions:CategoryExtension'],
-						Category: 'learningpath',
-					},
-					'extensions:LicenseExtension': {
-						'@context': licenseExtensionContextUrl,
-						type: ['Extension', 'extensions:LicenseExtension'],
-						id: this.learningPathForm.value.license[0].id,
-						name: this.learningPathForm.value.license[0].name,
-						legalCode: this.learningPathForm.value.license[0].legalCode,
-					},
-					'extensions:CompetencyExtension': [],
-				});
+			this.existingLpBadge.name = formState.name;
+			this.existingLpBadge.description = formState.description;
+			this.existingLpBadge.tags = Array.from(this.lpTags);
+			this.existingLpBadge.criteria_text = criteriaText;
+			this.existingLpBadge.criteria_url = '';
+			this.existingLpBadge.extension = {
+				'extensions:StudyLoadExtension': {
+					'@context': studyLoadExtensionContextUrl,
+					type: ['Extension', 'extensions:StudyLoadExtension'],
+					StudyLoad: this.studyLoad,
+				},
+				'extensions:CategoryExtension': {
+					'@context': categoryExtensionContextUrl,
+					type: ['Extension', 'extensions:CategoryExtension'],
+					Category: 'learningpath',
+				},
+				'extensions:LicenseExtension': {
+					'@context': licenseExtensionContextUrl,
+					type: ['Extension', 'extensions:LicenseExtension'],
+					id: this.learningPathForm.value.license[0].id,
+					name: this.learningPathForm.value.license[0].name,
+					legalCode: this.learningPathForm.value.license[0].legalCode,
+				},
+				'extensions:CompetencyExtension': [],
+			};
 
 			if (this.currentImage) {
 				this.existingLpBadge.extension = {
