@@ -1090,7 +1090,7 @@
 		"lastBadgeInfo": "Learners automatically receive the <strong class='tw-text-purple'>Micro Degree</strong> badge by e-mail, as soon as they have earned all badges in the learning path.",
 		"activateMd": "Unlock learning path",
 		"activationInfo": "When you activate the learning path for use, <span class='tw-font-bold'>you can no longer edit it afterwards</span>. ",
-		"activationInfo2": "At the same time, learners who already have the badges included in the learning pathway automatically receive the Micro Degree Badge.",
+		"activationInfo2": "At the same time, learners who already have the badges included in the learning pathway automatically receive the <span class='tw-font-bold'>Micro Degree</span> Badge.",
 		"activateMdForUse": "<span class='tw-font-bold tw-text-white tw-text-lg'>Unlock learning path for use</span>",
 		"notActivatedYetStart": "The learning path is not yet",
 		"notActivatedYetLink": "unlocked",

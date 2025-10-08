@@ -1093,7 +1093,7 @@
 		"lastBadgeInfo": "Den Abschluss-Badge <strong class='tw-text-purple'>Micro Degree</strong> erhalten Lernende automatisiert per E-Mail, sobald sie alle im Lernpfad enthaltenen Badges erworben haben.",
 		"activateMd": "Lernpfad freischalten",
 		"activationInfo": "Wenn du den Lernpfad zur Nutzung freischaltest, <span class='tw-font-bold'>kannst du ihn danach nicht mehr bearbeiten</span>. ",
-		"activationInfo2": "Zeitgleich erhalten Lernende, die bereits im Besitz der im Lernpfad enthaltenen Badges sind, automatisch den Abschluss-Badge Micro Degree.",
+		"activationInfo2": "Zeitgleich erhalten Lernende, die bereits im Besitz der im Lernpfad enthaltenen Badges sind, automatisch den Abschluss-Badge <span class='tw-font-bold'>Micro Degree</span>.",
 		"activateMdForUse": "<span class='tw-font-bold tw-text-white tw-text-lg'>Lernpfad zur Nutzung freischalten</span>",
 		"notActivatedYetStart": "Der Lernpfad ist noch nicht zur Nutzung",
 		"notActivatedYetLink": "freigeschaltet",
