@@ -91,7 +91,7 @@
 		"@angular-eslint/eslint-plugin-template": "^20.3.0",
 		"@angular-eslint/schematics": "^20.3.0",
 		"@angular-eslint/template-parser": "^20.3.0",
-		"@angular/compiler-cli": "20.3.2",
+		"@angular/compiler-cli": "20.3.4",
 		"@angular/language-service": "20.3.2",
 		"@commitlint/cli": "^19.8.1",
 		"@commitlint/config-angular": "^19.8.1",
