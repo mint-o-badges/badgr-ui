@@ -29,17 +29,21 @@
 
 					<div class="md:tw-mx-10">
 						<oeb-input
-							[label]="'1. ' + ('General.title' | translate)"
+							[label]="'General.title' | translate | uppercase"
 							[control]="learningPathForm.rawControlMap.name"
 							[autofocus]="true"
 							[sublabelRight]="'(max. 60 ' + ('General.characters' | translate) + ')'"
 						></oeb-input>
 						<oeb-input
-							[label]="'2. ' + ('LearningPath.description' | translate)"
+							[label]="'LearningPath.description' | translate | uppercase"
 							[control]="learningPathForm.rawControlMap.description"
 							[fieldType]="'textarea'"
-							sublabelRight="max. 700 {{ 'General.characters' | translate }} "
-							placeholder="{{ 'LearningPathEditor.shortDescription' | translate }}"
+							[sublabelRight]="'(max. 700 ' + ('General.characters' | translate) + ')'"
+							[placeholder]="
+								('LearningPathEditor.shortDescriptionLine1' | translate) +
+								'\n' +
+								('LearningPathEditor.shortDescriptionLine2' | translate)
+							"
 						></oeb-input>
 
 						<div class="tw-mt-6 md:tw-mt-8 tw-relative" id="imageSection" #imageSection>
@@ -47,7 +51,7 @@
 							<span
 								hlmP
 								class="tw-text-oebblack tw-font-semibold"
-								[innerHTML]="3 + '. ' + ('RecBadge.image' | translate)"
+								[innerHTML]="'RecBadge.image' | translate | uppercase"
 							></span>
 							<div
 								class="tw-flex tw-flex-col tw-gap-4 lg:tw-flex-row tw-bg-white tw-p-8 tw-justify-evenly tw-mr-auto tw-rounded-2xl tw-h-fit tw-border tw-border-solid tw-border-purple"
@@ -178,84 +182,28 @@
 										hlmInput
 									/>
 								</div>
-
-								<div class="l-actionbar-x-groupby">
-									<label class="l-flex l-flex-2x">
-										<div class="forminput">
-											<div class="forminput-x-inputs">
-												<select
-													[(ngModel)]="groupBy"
-													#selectInput
-													class="border tw-font-normal"
-													[ngClass]="{ 'tw-font-bold!': groupBy !== '---' }"
-													[ngModelOptions]="{ standalone: true }"
-													id="badge-catalog-select"
-												>
-													<option [ngValue]="'---'">{{ 'Badge.groupBy' | translate }}</option>
-													@for (option of groups; track option) {
-														<option [value]="option">
-															{{ option }}
-														</option>
-													}
-												</select>
-											</div>
-										</div>
-									</label>
-								</div>
 							</div>
-							@if (groupBy === '---') {
-								<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
-									@for (badge of badgeResults; track badge; let i = $index) {
-										<bg-badgecard
-											[badgeTitle]="badge.name"
-											[badgeImage]="badge.image"
-											[badgeDescription]="badge.description"
-											[badgeSlug]="badge.slug"
-											[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-											[badgeIssueDate]="badge.createdAt"
-											[public]="true"
-											[publicUrl]="badge.url"
-											[issuerSlug]="badge.issuerSlug"
-											[competencies]="badge.extension['extensions:CompetencyExtension']"
-											(ngModelChange)="checkboxChange($event, badge)"
-											(checkboxChange)="checkboxChange($event, badge)"
-											[checked]="badgeChecked(badge)"
-											[showCheckbox]="true"
-										></bg-badgecard>
-									}
-								</div>
-							}
-							@if (groupBy === 'Kategorie' || groupBy === 'Category') {
-								@for (categoryGroup of badgeResultsByCategory; track categoryGroup) {
-									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
-										{{ categoryOptions[categoryGroup.category] }}
-										<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
-											>{{ categoryGroup.badges.length }}
-											{{ categoryGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
-										>
-									</h3>
-									<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6">
-										<!-- TODO: Fix the badgecard link for sharing and routing -->
-										@for (badge of categoryGroup.badges; track badge) {
-											<bg-badgecard
-												[badgeTitle]="badge.name"
-												[badgeImage]="badge.image"
-												[badgeDescription]="badge.description"
-												[badgeSlug]="badge.slug"
-												[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-												[badgeIssueDate]="badge.createdAt"
-												[public]="true"
-												[publicUrl]="badge.url"
-												[competencies]="badge.extension['extensions:CompetencyExtension']"
-												[showCheckbox]="true"
-												(ngModelChange)="checkboxChange($event, badge)"
-												(checkboxChange)="checkboxChange($event, badge)"
-												[checked]="badgeChecked(badge)"
-											></bg-badgecard>
-										}
-									</div>
+
+							<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
+								@for (badge of badgeResults; track badge; let i = $index) {
+									<bg-badgecard
+										[badgeTitle]="badge.name"
+										[badgeImage]="badge.image"
+										[badgeDescription]="badge.description"
+										[badgeSlug]="badge.slug"
+										[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
+										[badgeIssueDate]="badge.createdAt"
+										[public]="true"
+										[publicUrl]="badge.url"
+										[issuerSlug]="badge.issuerSlug"
+										[competencies]="badge.extension['extensions:CompetencyExtension']"
+										(ngModelChange)="checkboxChange($event, badge)"
+										(checkboxChange)="checkboxChange($event, badge)"
+										[checked]="badgeChecked(badge)"
+										[showCheckbox]="true"
+									></bg-badgecard>
 								}
-							}
+							</div>
 							@if (selectedBadges.length === 1) {
 								<p class="tw-mt-6">
 									{{ 'LearningPath.selectedBadgesOne' | translate }}
@@ -352,9 +300,11 @@
 						<p
 							class="tw-italic tw-text-purple tw-mt-2"
 							[translate]="'CreateBadge.tagInfo'"
-							[translateParams]="{ items: learningpathsPlural }"
+							[translateParams]="{
+								items: ('LearningPath.learningpathsPlural' | translate),
+								items2: ('General.badges' | translate),
+							}"
 						></p>
-
 						<div class="tw-flex tw-gap-2 oeb tw-mt-4">
 							<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
 								<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
@@ -456,9 +406,9 @@
 
 				<section
 					#activationSection
-					class="tw-bg-purple tw-rounded-[25px] tw-py-[21.2px] tw-px-[11px] md:tw-p-[25.2px] tw-mt-6 md:tw-mt-8 tw-mb-8"
+					class="tw-bg-purple tw-rounded-[10px] tw-py-[21.2px] tw-px-[11px] md:tw-p-[25.2px] tw-mt-6 md:tw-mt-8 tw-mb-8"
 				>
-					<h2 hlmH2 class="tw-text-white">{{ 'LearningPath.activateMd' | translate }}</h2>
+					<h2 hlmH2 class="tw-text-white tw-font-bold">{{ 'LearningPath.activateMd' | translate }}</h2>
 					<p class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
 						<span
 							class="tw-text-white tw-italic tw-text-lg"
@@ -514,7 +464,7 @@
 				<oeb-button
 					variant="secondary"
 					type="button"
-					[text]="previous"
+					[text]="'General.previous' | translate"
 					(click)="previousStep()"
 					[disabled]="!!savePromise"
 					[class.disabled]="!!savePromise"
@@ -526,7 +476,7 @@
 			@if (!lastStep()) {
 				<oeb-button
 					type="button"
-					[text]="next"
+					[text]="'General.next' | translate"
 					(click)="nextStep()"
 					[umamiEvent]="
 						!existingLpBadge ? `create-micro-degree-${this.stepper?.selectedIndex + 1}` : undefined
