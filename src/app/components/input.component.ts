@@ -23,7 +23,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 					} @else {
 						<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 					}
-					@if (sublabelRightTemplate) {
+					@if (sublabelRightTemplate()) {
 						<ng-container *ngTemplateOutlet="sublabelRightTemplate()" />
 					} @else if (sublabelRight) {
 						<span class="tw-pl-[3px] tw-text-oebblack"> {{ sublabelRight }}</span>
