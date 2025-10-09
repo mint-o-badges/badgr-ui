@@ -421,9 +421,7 @@ export class BadgeClassDetailComponent
 			createdAt: badgeClass.createdAt,
 			updatedAt: badgeClass.updatedAt,
 			duration: badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
-			category: this.translate.instant(
-				`Badge.categories.${badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
-			),
+			category: badgeClass.extension['extensions:CategoryExtension']?.Category,
 			tags: badgeClass.tags,
 			issuerName: badgeClass.issuerName,
 			issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
