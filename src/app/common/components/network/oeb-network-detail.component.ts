@@ -113,7 +113,7 @@ export class OebNetworkDetailComponent {
 			},
 			{
 				key: 'partner',
-				title: 'Partner-Badges',
+				title: 'Issuer.partnerBadges',
 				icon: 'lucideHexagon',
 				component: this.partnerTemplate,
 				count: this.partnerBadges.length,
