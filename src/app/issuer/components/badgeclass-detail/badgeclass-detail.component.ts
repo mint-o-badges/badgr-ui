@@ -26,7 +26,7 @@ import { inject, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/cor
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
-import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
@@ -571,7 +571,6 @@ export class BadgeClassDetailComponent
 		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
 			(taskResult: TaskResult) => {
 				this.currentTaskStatus = taskResult;
-				console.log('task result', taskResult);
 
 				if (taskResult.status === TaskStatus.SUCCESS) {
 					this.handleTaskSuccess(taskResult);
@@ -598,7 +597,6 @@ export class BadgeClassDetailComponent
 	}
 
 	private handleTaskFailure(taskResult: TaskResult) {
-		console.log('handle failure');
 		this.isTaskActive = false;
 
 		const errorMessage = taskResult.result?.error || 'Batch award process failed';
