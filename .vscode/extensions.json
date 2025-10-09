@@ -1,0 +1,3 @@
+{
+	"recommendations": ["dbaeumer.vscode-eslint", "lokalise.i18n-ally", "esbenp.prettier-vscode", "angular.ng-template"]
+}

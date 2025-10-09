@@ -173,8 +173,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		this.pageSubscriptions.push(
 			this.observeScrolling$.pipe(filter((_) => this.intersectionObserver !== undefined)).subscribe((observe) => {
 				if (observe) this.intersectionObserver!.observe(this.loadMore!.nativeElement);

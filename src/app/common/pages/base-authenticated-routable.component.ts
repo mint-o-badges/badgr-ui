@@ -16,9 +16,8 @@ export class BaseAuthenticatedRoutableComponent extends BaseRoutableComponent im
 		super(router, route);
 	}
 
+	// eslint-disable-next-line @angular-eslint/contextual-lifecycle
 	ngOnInit() {
-		super.ngOnInit();
-
 		if (!this.sessionService.isLoggedIn) {
 			// Do a hard browser redirect to avoid any corrupted state from not being logged in
 			window.location.replace(`/auth/login?authError=${encodeURIComponent('Please log in first')}`);

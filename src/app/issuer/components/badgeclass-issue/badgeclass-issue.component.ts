@@ -124,6 +124,8 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	badgeClass: BadgeClass;
 
+	previewB64Img: string;
+
 	issueBadgeFinished: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
 	badgeClassLoaded: Promise<unknown>;
@@ -183,9 +185,17 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			this.issuer = issuer;
 
 			this.badgeClassLoaded = this.badgeClassManager
-				.badgeByIssuerUrlAndSlug(issuer.issuerUrl, this.badgeSlug)
+				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
 				.then((badgeClass) => {
 					this.badgeClass = badgeClass;
+
+					const category = badgeClass.extension['extensions:CategoryExtension'].Category;
+
+					this.badgeClassManager
+						.createBadgeImage(issuer.slug, badgeClass.slug, category, true)
+						.then((img) => {
+							this.previewB64Img = img.image_url;
+						});
 
 					this.breadcrumbLinkEntries = [
 						{ title: 'Issuers', routerLink: ['/issuer'] },

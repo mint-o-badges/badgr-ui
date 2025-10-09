@@ -111,7 +111,7 @@
 								[errorMessage]="{
 									required: enterPassword,
 									minlength: passwordMustBe8Char,
-									passwordComplexity: passwordInsecure
+									passwordComplexity: passwordInsecure,
 								}"
 								[fieldType]="'password'"
 								sublabel="{{ 'Profile.passwordMinRequirements' | translate }}"
@@ -122,7 +122,7 @@
 								label="{{ 'Signup.repeatPassword' | translate }}"
 								[errorMessage]="{
 									required: confirmPassword,
-									passwordsMatch: passwordsNotEqual
+									passwordsMatch: passwordsNotEqual,
 								}"
 								[fieldType]="'password'"
 							></oeb-input>

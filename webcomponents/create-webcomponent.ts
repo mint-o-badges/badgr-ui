@@ -10,7 +10,7 @@ import { LanguageService, lngs } from '~/common/services/language.service';
  * @param options ApplicationConfig passed to the web component, used to setup providers and such
  * @returns A promise for creating and registering the web component with the browser
  */
-export const createWebcomponent = (component: Type<any>, tagName: string, options: ApplicationConfig) => {
+export const createWebcomponent = (component: Type<unknown>, tagName: string, options: ApplicationConfig) => {
 	enableProdMode();
 
 	return createApplication(options)

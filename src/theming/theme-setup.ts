@@ -19,7 +19,7 @@ export function initializeTheme(configService: AppConfigService) {
 			) {
 				hasSession = true;
 			}
-		} catch (e) {}
+		} catch {}
 
 		if (!hasSession && selectedTheme.alternateLandingUrl && selectedTheme.alternateLandingUrl.length > 0) {
 			if (configService.featuresConfig.alternateLandingRedirect) {

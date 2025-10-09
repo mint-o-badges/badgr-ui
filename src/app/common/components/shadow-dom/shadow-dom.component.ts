@@ -1,4 +1,4 @@
-import { Component, input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewChild, ViewEncapsulation, OnChanges } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { DynamicHooksComponent } from 'ngx-dynamic-hooks';
 import { Router } from '@angular/router';
@@ -31,7 +31,7 @@ import { VersionComponent } from '~/public/components/version.component';
 	// FIXME: AiAssistantComponent, TimestampComponent used in CMS HTML, ignore Angular warning?
 	imports: [DynamicHooksComponent, LoadingDotsComponent, AiAssistantComponent, VersionComponent],
 })
-export class ShadowDomComponent {
+export class ShadowDomComponent implements OnChanges {
 	content = input<string>();
 	_content: SafeHtml = '';
 
@@ -87,8 +87,7 @@ export class ShadowDomComponent {
 
 			// manual handling of umami data attributes because umami-tracker does not handle shadow dom contents
 			if (a.dataset.umamiEvent) {
-				// @ts-ignore
-				if (window.umami) window.umami.track(a.dataset.umamiEvent);
+				if (window['umami']) window['umami'].track(a.dataset.umamiEvent);
 			}
 
 			if (a.href) {

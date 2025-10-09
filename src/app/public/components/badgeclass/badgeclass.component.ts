@@ -1,4 +1,4 @@
-import { Component, inject, Injector, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, Injector, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
@@ -40,7 +40,7 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 		TranslatePipe,
 	],
 })
-export class PublicBadgeClassComponent {
+export class PublicBadgeClassComponent implements OnInit {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);

@@ -7,7 +7,6 @@ import { BadgeClassUrl } from '../../models/badgeclass-api.model';
 import { Issuer } from '../../models/issuer.model';
 import { MessageService } from '../../../common/services/message.service';
 import { combineLatest } from 'rxjs';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { SettingsService } from '../../../common/services/settings.service';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { first } from 'rxjs/operators';

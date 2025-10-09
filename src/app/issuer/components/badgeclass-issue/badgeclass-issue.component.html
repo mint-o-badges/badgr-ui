@@ -6,29 +6,32 @@
 				<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
 			</div>
 			<form [formGroup]="issueForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
-				<div class="oeb-section">
+				<div class="tw-mt-14">
 					<div class="oeb-headline-container-sm">
-						<h1 hlmH1 class="tw-text-purple">
-							Badge "{{ badgeClass.name }}" {{ 'Issuer.award' | translate }}
+						<h1 class="tw-flex tw-flex-col tw-gap-2" hlmH1>
+							<span class="tw-text-oebblack">{{ badgeClass.name }}</span>
+							<span class="tw-text-purple tw-font-black">
+								{{ 'Issuer.issueByEmail' | translate }}
+							</span>
 						</h1>
 					</div>
 					<div class="tw-flex tw-flex-wrap oeb-standard-padding-bottom">
 						<div
-							class="md:tw-max-w-[250px] tw-max-w-[150px] tw-text-center tw-mr-6 md:tw-h-[300px] tw-h-[200px]"
+							class="md:tw-max-w-[300px] tw-max-w-[150px] tw-text-center tw-mr-6 md:tw-h-[300px] tw-h-[200px]"
 						>
 							<div
 								class="tw-px-6 tw-py-4 tw-border-purple tw-border-solid tw-border tw-rounded-[15px] tw-h-full tw-mb-1 tw-flex"
 							>
 								<img
 									class="badge-image badgeimage-center tw-self-center"
-									[loaded-src]="badgeClass.image"
+									[loaded-src]="previewB64Img"
 									[loading-src]="badgeLoadingImageUrl"
 									[error-src]="badgeFailedImageUrl"
 								/>
 							</div>
 							<p size="sm" hlmP>{{ 'Issuer.badgePreview' | translate }}</p>
 						</div>
-						<div class="md:tw-max-w-[250px] tw-max-w-[150px] tw-text-center md:tw-h-[300px] tw-h-[200px]">
+						<div class="md:tw-max-w-[300px] tw-max-w-[150px] tw-text-center md:tw-h-[300px] tw-h-[200px]">
 							<div
 								class="tw-px-6 tw-py-4 tw-border-purple tw-border-solid tw-border tw-rounded-[15px] tw-relative tw-h-full tw-mb-1 tw-overflow-hidden tw-flex"
 							>
@@ -40,7 +43,7 @@
 
 								<img
 									class="badge-image badgeimage-center tw-z-10 tw-relative tw-w-[50%] tw-mb-[15%] tw-self-center"
-									[loaded-src]="badgeClass.image"
+									[loaded-src]="previewB64Img"
 									[loading-src]="badgeLoadingImageUrl"
 									[error-src]="badgeFailedImageUrl"
 								/>
@@ -49,7 +52,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="tw-border-purple tw-border-solid tw-border tw-px-4 tw-py-6 tw-rounded-[15px] tw-mb-6">
+				<div class="tw-border-purple tw-border-solid tw-border tw-px-4 tw-py-6 tw-rounded-[15px] tw-my-6">
 					<span hlmP [innerHTML]="'Issuer.batchAwardText1' | translate"></span>&nbsp;
 					<a
 						hlmP
@@ -58,35 +61,37 @@
 						>{{ 'Issuer.batchAwardTextLink' | translate }}</a
 					>&nbsp;
 					<span hlmP [innerHTML]="'Issuer.batchAwardText2' | translate"></span>
-					<oeb-input
-						[label]="'Issuer.awardedPerson' | translate"
-						fieldType="text"
-						[autofocus]="true"
-						[control]="issueForm.rawControlMap.recipientprofile_name"
-						#nameField
-					></oeb-input>
-					<p hlmP class="tw-mt-1 tw-text-right" size="sm">{{ 'Issuer.nameWarning' | translate }}</p>
-					<div class="tw-flex tw-justify-end oeb-standard-padding-bottom items-center">
-						<oeb-select
-							class="tw-mr-2 tw-mt-[20px] lg:tw-mt-[30px]"
-							[optionMap]="identifierOptionMap"
-							[control]="issueForm.rawControlMap.recipient_type"
-						/>
+					<div class="md:tw-mt-7 tw-mt-6">
 						<oeb-input
-							class="tw-flex-grow"
-							label="Identifier"
-							[control]="issueForm.rawControlMap.recipient_identifier"
-							ariaLabel="Identifier der Empfänger:in"
-							[fieldType]="recipientIdentifierFieldType"
+							[label]="'Issuer.awardedPerson' | translate"
+							fieldType="text"
+							[autofocus]="true"
+							[control]="issueForm.rawControlMap.recipientprofile_name"
+							[noTopMargin]="true"
+							#nameField
 						></oeb-input>
+						<p class="tw-text-purple tw-italic tw-mt-2 tw-text-sm">
+							{{ 'Issuer.infoNamePlainText' | translate }}
+						</p>
 					</div>
-					<oeb-checkbox
-						name="notifybyemail"
-						id="notifybyemail"
-						[control]="issueForm.rawControlMap.notify_earner"
-						[text]="'Issuer.sendEmail' | translate"
-					></oeb-checkbox>
+					<div class="md:tw-mt-7 tw-mt-6">
+						<oeb-input
+							class="md:tw-mt-7 tw-mt-6"
+							[label]="'Issuer.recipientEmail' | translate"
+							[control]="issueForm.rawControlMap.recipient_identifier"
+							[ariaLabel]="'Issuer.recipientEmail' | translate"
+							[fieldType]="recipientIdentifierFieldType"
+							[noTopMargin]="true"
+						></oeb-input>
+						<p class="tw-text-purple tw-italic tw-mt-2 tw-text-sm">
+							{{ 'Issuer.emailIsIdentifier' | translate }}
+						</p>
+					</div>
 				</div>
+
+				<span class="tw-text-oebblack tw-mt-10 tw-mb-4 tw-text-right tw-text-lg tw-block">
+					{{ 'Issuer.receivesBadgeByEmail' | translate }}</span
+				>
 				<div class="tw-border-purple tw-border-solid tw-border tw-px-4 tw-py-6 tw-rounded-[15px] tw-mb-8">
 					@if (narrativeEnabled) {
 						<div class="" role="group" aria-labelledby="heading-narrative">
@@ -276,7 +281,7 @@
 											class="u-text-body-semibold"
 											[ngClass]="{
 												'u-text-dark2': !narrativeEnabled,
-												'u-text-dark4': narrativeEnabled
+												'u-text-dark4': narrativeEnabled,
 											}"
 										>
 											Narrativ
@@ -300,7 +305,7 @@
 											class="u-text-body-semibold"
 											[ngClass]="{
 												'u-text-dark2': !evidenceEnabled,
-												'u-text-dark4': evidenceEnabled
+												'u-text-dark4': evidenceEnabled,
 											}"
 										>
 											Nachweis
@@ -324,7 +329,7 @@
 											class="u-text-body-semibold"
 											[ngClass]="{
 												'u-text-dark2': !expirationEnabled,
-												'u-text-dark4': expirationEnabled
+												'u-text-dark4': expirationEnabled,
 											}"
 										>
 											Ablaufdatum

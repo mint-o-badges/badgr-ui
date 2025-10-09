@@ -126,9 +126,7 @@ export interface ApiImportedBadgeInstance {
 			identity: string;
 		};
 		type: string;
-		verification: any;
 	};
-	original_json: any;
 	image: string;
 	acceptance: RecipientBadgeAcceptance;
 	narrative: string;

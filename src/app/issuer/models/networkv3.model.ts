@@ -1,5 +1,5 @@
 import { ApiIssuer } from './issuer-api.model';
-import { ApiNetworkStaff } from './network-api.model';
+import { ApiIssuerStaff } from './issuer-api.model';
 
 export interface INetworkV3 {
 	created_at: string;
@@ -14,10 +14,11 @@ export interface INetworkV3 {
 	slug: string;
 	description: string;
 
-	staff: ApiNetworkStaff[];
+	staff: ApiIssuerStaff[];
 	partner_issuers: ApiIssuer[];
 
 	json: { id: string };
+	current_user_network_role?: string;
 }
 
 export class NetworkV3 implements INetworkV3 {
@@ -31,8 +32,9 @@ export class NetworkV3 implements INetworkV3 {
 	slug: string;
 	description: string;
 	json: { id: string };
-	staff: ApiNetworkStaff[];
+	staff: ApiIssuerStaff[];
 	partner_issuers: ApiIssuer[];
+	current_user_network_role?: string;
 
 	constructor(data: INetworkV3) {
 		this.created_at = data.created_at;

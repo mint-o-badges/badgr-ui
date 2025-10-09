@@ -1,4 +1,4 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, input, Input, OnChanges } from '@angular/core';
 import { AppConfigService } from '../../app-config.service';
 import { CmsManager } from '../../services/cms-manager.service';
 import { ShadowDomComponent } from '../shadow-dom/shadow-dom.component';
@@ -33,7 +33,7 @@ import { ShadowDomComponent } from '../shadow-dom/shadow-dom.component';
 	imports: [ShadowDomComponent],
 	standalone: true,
 })
-export class CmsContentComponent {
+export class CmsContentComponent implements OnChanges {
 	headline = input<string>();
 	image = input<string>();
 	content = input<string>();

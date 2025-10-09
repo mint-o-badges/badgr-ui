@@ -1,4 +1,4 @@
-import { Component, NgZone, signal, WritableSignal } from '@angular/core';
+import { Component, NgZone, signal, WritableSignal, OnInit } from '@angular/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
@@ -53,7 +53,7 @@ import { saveAsImage } from '../../util/qrcode-util';
 		<qrcode [className]="'tw-hidden'" #qrcode [qrdata]="qrData"></qrcode>
 	`,
 })
-export class ShareCollectionDialogComponent {
+export class ShareCollectionDialogComponent implements OnInit {
 	constructor(private zone: NgZone) {}
 	private readonly COPY_NOTIF_TIMEOUT_MS: number = 3000;
 

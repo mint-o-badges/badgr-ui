@@ -6,12 +6,12 @@ import {
 	IssuerStaffRef,
 	IssuerStaffRoleSlug,
 	IssuerUrl,
+	ApiNetwork,
 } from './issuer-api.model';
 import { ManagedEntity } from '../../common/model/managed-entity';
 import { ApiEntityRef } from '../../common/model/entity-ref';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { EmbeddedEntitySet } from '../../common/model/managed-entity-set';
-import { ApiNetwork } from './network-api.model';
 
 export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	readonly staff = new EmbeddedEntitySet(
@@ -88,6 +88,14 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return this.apiModel.city;
 	}
 
+	get country(): string {
+		return this.apiModel.country;
+	}
+
+	get state(): string {
+		return this.apiModel.state;
+	}
+
 	get intendedUseVerified(): boolean {
 		return this.apiModel.intendedUseVerified;
 	}
@@ -108,6 +116,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 
 	get networks(): ApiNetwork[] {
 		return this.apiModel.networks;
+	}
+
+	get is_network(): boolean {
+		return this.apiModel.is_network;
 	}
 
 	get badgeClassCount(): number {

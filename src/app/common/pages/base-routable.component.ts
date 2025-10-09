@@ -1,4 +1,4 @@
-import { OnInit, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
@@ -8,11 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
  * `BadgrRouteReuseStrategy`, but this class is kept to denote routable components and for future use.
  */
 @Injectable()
-export class BaseRoutableComponent implements OnInit {
+export class BaseRoutableComponent {
 	constructor(
 		protected router: Router,
 		protected route: ActivatedRoute,
 	) {}
-
-	ngOnInit() {}
 }

@@ -79,6 +79,4 @@ export class BgCollectionCard {
 	openShareDialog() {
 		this.share.emit();
 	}
-
-	ngOnInit() {}
 }

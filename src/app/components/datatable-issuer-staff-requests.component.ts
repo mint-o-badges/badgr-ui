@@ -35,10 +35,7 @@ import { NgIcon } from '@ng-icons/core';
 		class: 'tw-block tw-overflow-x-auto',
 	},
 	template: `
-		<table
-			hlmTable
-			oeb-table-highlight
-		>
+		<table hlmTable oeb-table-highlight>
 			<thead hlmTHead>
 				@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
 					<tr hlmTr>
@@ -63,7 +60,8 @@ import { NgIcon } from '@ng-icons/core';
 										</div>
 
 										@if (headerCell.column.getIsSorted()) {
-											@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+											@let order =
+												headerCell.column.getNextSortingOrder() === 'asc' ? 'desc' : 'asc';
 											@if (order === 'asc') {
 												<ng-icon hlm size="base" name="lucideChevronUp" />
 											} @else {
@@ -82,7 +80,7 @@ import { NgIcon } from '@ng-icons/core';
 			<tbody hlmTBody>
 				@for (row of table.getRowModel().rows; track row.id; let i = $index) {
 					<tr hlmTr>
-						@for (cell of row.getVisibleCells(); track cell.id;) {
+						@for (cell of row.getVisibleCells(); track cell.id) {
 							<td hlmTd>
 								<ng-container
 									*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
@@ -106,13 +104,15 @@ import { NgIcon } from '@ng-icons/core';
 					(click)="confirmStaffRequest.emit(context.row.original)"
 					size="sm"
 					width="full_width"
-					[text]="'General.confirm' | translate"/>
+					[text]="'General.confirm' | translate"
+				/>
 				<oeb-button
 					variant="secondary"
 					(click)="deleteStaffRequest.emit(context.row.original.entity_id)"
 					size="sm"
 					width="full_width"
-					[text]="'Issuer.deleteStaffRequest' | translate"/>
+					[text]="'Issuer.deleteStaffRequest' | translate"
+				/>
 			</div>
 		</ng-template>
 	`,

@@ -17,12 +17,14 @@ import { IssuerSlug, IssuerUrl } from '../models/issuer-api.model';
 import { AnyRefType, EntityRef } from '../../common/model/entity-ref';
 import { ManagedEntityGrouping } from '../../common/model/entity-set';
 import { MessageService } from '../../common/services/message.service';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { first, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class BadgeClassManager extends BaseHttpApiService {
+	private _networkBadgesBySlug = new Map<string, StandaloneEntitySet<BadgeClass, ApiBadgeClass>>();
+
 	badgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
 		(apiModel) => new BadgeClass(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
@@ -33,6 +35,7 @@ export class BadgeClassManager extends BaseHttpApiService {
 		(apiModel) => apiModel.json.id,
 		() => this.badgeClassApi.getAllBadgeClasses(),
 	);
+
 	badgesByIssuerUrl = new ManagedEntityGrouping<BadgeClass>(this.badgesList, (badgeClass) => badgeClass.issuerUrl);
 
 	get badgeClasses() {
@@ -57,6 +60,58 @@ export class BadgeClassManager extends BaseHttpApiService {
 
 	get loadedBadges$(): Observable<BadgeClass[]> {
 		return this.badgesList.loaded$.pipe(map((l) => l.entities));
+	}
+
+	private getNetworkBadgesEntitySet(networkSlug: string): StandaloneEntitySet<BadgeClass, ApiBadgeClass> {
+		if (!this._networkBadgesBySlug.has(networkSlug)) {
+			const entitySet = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
+				(apiModel) => new BadgeClass(this.commonEntityManager),
+				(apiModel) => apiModel.json.id,
+				() => this.badgeClassApi.getNetworkBadgeClasses(networkSlug),
+			);
+			this._networkBadgesBySlug.set(networkSlug, entitySet);
+		}
+		return this._networkBadgesBySlug.get(networkSlug)!;
+	}
+
+	getNetworkBadgeClassesByIssuerUrl(networkSlug: string): { [issuerUrl: string]: BadgeClass[] } {
+		const entitySet = this.getNetworkBadgesEntitySet(networkSlug);
+		return entitySet.entities.reduce(
+			(grouped, badge) => {
+				const issuerUrl = badge.issuerUrl;
+				if (!grouped[issuerUrl]) {
+					grouped[issuerUrl] = [];
+				}
+				grouped[issuerUrl].push(badge);
+				return grouped;
+			},
+			{} as { [issuerUrl: string]: BadgeClass[] },
+		);
+	}
+
+	getNetworkBadgesByIssuerUrl$(networkSlug: string): Observable<{ [issuerUrl: string]: BadgeClass[] }> {
+		const entitySet = this.getNetworkBadgesEntitySet(networkSlug);
+		return entitySet.loaded$.pipe(map(() => this.getNetworkBadgeClassesByIssuerUrl(networkSlug)));
+	}
+
+	private awardableBadgesCache = new Map<string, Promise<BadgeClass[]>>();
+
+	async getAwardableBadgesForIssuer(issuerSlug: string): Promise<BadgeClass[]> {
+		if (!this.awardableBadgesCache.has(issuerSlug)) {
+			const promise = this.badgeClassApi.getAwardableBadgesForIssuer(issuerSlug).then((apiBadges) =>
+				apiBadges.map((apiModel) => {
+					const badge = new BadgeClass(this.commonEntityManager);
+					badge.applyApiModel(apiModel);
+					return badge;
+				}),
+			);
+			this.awardableBadgesCache.set(issuerSlug, promise);
+		}
+		return this.awardableBadgesCache.get(issuerSlug)!;
+	}
+
+	getAwardableBadges$(issuerSlug: string): Observable<BadgeClass[]> {
+		return from(this.getAwardableBadgesForIssuer(issuerSlug));
 	}
 
 	constructor(
@@ -86,8 +141,13 @@ export class BadgeClassManager extends BaseHttpApiService {
 		});
 	}
 
-	createBadgeImage(issuerSlug: string, image: string, category: string, useIssuerImage: boolean) {
-		return this.badgeClassApi.createBadgeImage(issuerSlug, image, category, useIssuerImage);
+	createBadgeImage(issuerSlug: string, badgeSlug: string, category: string, useIssuerImage: boolean) {
+		return this.badgeClassApi.createBadgeImage(issuerSlug, badgeSlug, category, useIssuerImage);
+	}
+
+	async badgeByIssuerSlugAndSlug(issuerSlug: string, badgeSlug: string): Promise<BadgeClass | null> {
+		const badges = await this.getAwardableBadgesForIssuer(issuerSlug);
+		return badges.find((badge) => badge.slug === badgeSlug) || null;
 	}
 
 	badgeByIssuerUrlAndSlug(issuerId: IssuerUrl, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
@@ -101,14 +161,14 @@ export class BadgeClassManager extends BaseHttpApiService {
 			);
 	}
 
-	badgeByIssuerSlugAndSlug(issuerSlug: IssuerSlug, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
-		return this.allBadges$
+	badgeBySlug(badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
+		return this.allPublicBadges$
 			.pipe(first())
 			.toPromise()
 			.then(
 				(badges) =>
-					badges.find((b) => b.issuerSlug === issuerSlug && b.slug === badgeSlug) ||
-					this.throwError(`Issuer Slug '${issuerSlug}' has no badge with slug '${badgeSlug}'`),
+					badges.find((b) => b.slug === badgeSlug) ||
+					this.throwError(`Badge with ID '${badgeSlug}' not found.'`),
 			);
 	}
 

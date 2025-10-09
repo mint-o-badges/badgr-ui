@@ -12,6 +12,7 @@ import {
 	lucideLogOut,
 	lucideInfo,
 	lucideShare,
+	lucideShare2,
 	lucideSearch,
 	lucideX,
 	lucideCloudUpload,
@@ -49,6 +50,7 @@ import {
 	lucideEye,
 	lucideEyeOff,
 	lucideNetwork,
+	lucideShipWheel,
 } from '@ng-icons/lucide';
 
 export const IconsProvider = provideIcons({
@@ -64,6 +66,7 @@ export const IconsProvider = provideIcons({
 	lucideLogOut,
 	lucideInfo,
 	lucideShare,
+	lucideShare2,
 	lucideSearch,
 	lucideX,
 	lucideCloudUpload,
@@ -101,4 +104,5 @@ export const IconsProvider = provideIcons({
 	lucideEye,
 	lucideEyeOff,
 	lucideNetwork,
+	lucideShipWheel,
 });

@@ -4,7 +4,7 @@ import { IssuerUrl } from './issuer-api.model';
 
 export type BadgeInstanceSlug = string;
 export type BadgeInstanceUrl = string;
-export interface BadgeInstanceRef extends ApiEntityRef {}
+export type BadgeInstanceRef = ApiEntityRef;
 
 export interface ApiBadgeInstanceJsonld {
 	'@context': string;

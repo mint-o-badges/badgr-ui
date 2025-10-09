@@ -53,7 +53,9 @@
 						@if (collection?.badges.length) {
 							<div class="oeb-headline-container-sm">
 								<h2 class="tw-text-oebblack tw-text-[22px] tw-font-semibold tw-leading-[120%]">
-									{{ `${collection?.badges.length} Badge${collection?.badges.length === 1 ? '' : 's'}` }}
+									{{
+										`${collection?.badges.length} Badge${collection?.badges.length === 1 ? '' : 's'}`
+									}}
 								</h2>
 							</div>
 							<div class="tw-gap-6 tw-grid tw-grid-cols-badges">

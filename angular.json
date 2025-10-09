@@ -8,6 +8,12 @@
 			"root": ".",
 			"sourceRoot": "src",
 			"architect": {
+				"lint": {
+					"builder": "@angular-eslint/builder:lint",
+					"options": {
+						"lintFilePatterns": ["webcomponents/**/*.ts", "webcomponents/**/*.html"]
+					}
+				},
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser-esbuild",
 					"options": {
@@ -41,6 +47,12 @@
 			"sourceRoot": "src",
 			"projectType": "application",
 			"architect": {
+				"lint": {
+					"builder": "@angular-eslint/builder:lint",
+					"options": {
+						"lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+					}
+				},
 				"build": {
 					"builder": "@angular-devkit/build-angular:application",
 					"options": {

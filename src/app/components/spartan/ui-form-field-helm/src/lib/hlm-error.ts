@@ -3,7 +3,6 @@ import { hlm } from '@spartan-ng/brain/core';
 import { ClassValue } from 'clsx';
 
 @Directive({
-	// eslint-disable-next-line @angular-eslint/directive-selector
 	selector: 'hlm-error',
 	host: {
 		'[class]': '_computedClass()',

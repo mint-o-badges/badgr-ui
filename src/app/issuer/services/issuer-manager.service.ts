@@ -6,6 +6,7 @@ import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
 import { ManagedEntitySet, StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { catchError, first, map, withLatestFrom } from 'rxjs/operators';
+import { NetworkApiService } from './network-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class IssuerManager {
@@ -23,6 +24,7 @@ export class IssuerManager {
 
 	constructor(
 		public issuerApiService: IssuerApiService,
+		public networkApiService: NetworkApiService,
 		@Inject(forwardRef(() => CommonEntityManager))
 		public commonEntityManager: CommonEntityManager,
 	) {}
@@ -35,6 +37,10 @@ export class IssuerManager {
 
 	get myIssuers$(): Observable<Issuer[]> {
 		return this.issuersList.loaded$.pipe(map((l) => l.entities));
+	}
+
+	get allIssuers$(): Observable<Issuer[]> {
+		return this.allIssuersList.loaded$.pipe(map((l) => l.entities));
 	}
 
 	getAllIssuers(): Observable<Issuer[]> {
@@ -70,6 +76,19 @@ export class IssuerManager {
 			(issuers) =>
 				issuers.find((i) => i.slug === issuerSlug) || this.throwError(`Issuer Slug '${issuerSlug}' not found`),
 		);
+	}
+
+	issuersByUrls(issuerUrls: string[]): Promise<Issuer[]> {
+		if (!issuerUrls || issuerUrls.length === 0) {
+			return Promise.resolve([]);
+		}
+
+		const uniqueUrls = [...new Set(issuerUrls)];
+
+		return this.allIssuers$
+			.pipe(first())
+			.toPromise()
+			.then((issuers) => issuers.filter((i) => uniqueUrls.indexOf(i.issuerUrl) >= 0));
 	}
 
 	private throwError(message: string): never {

@@ -113,7 +113,9 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 				const taskId = response.body.task_id;
 				this.startTaskPolling(taskId);
 
-				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug], {
+					queryParams: { tab: 'recipients' },
+				});
 			})
 			.catch((error) => {
 				console.error('Error creating badge batch:', error);

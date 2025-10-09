@@ -1,0 +1,13 @@
+{
+	"eslint.validate": ["typescript", "typescriptreact", "javascript", "html"],
+	"editor.formatOnSave": true,
+	"files.trimTrailingWhitespace": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"i18n-ally.localesPaths": ["src/assets/i18n"],
+	"i18n-ally.keystyle": "nested",
+	"i18n-ally.sourceLanguage": "en",
+	"i18n-ally.tabStyle": "tab"
+}

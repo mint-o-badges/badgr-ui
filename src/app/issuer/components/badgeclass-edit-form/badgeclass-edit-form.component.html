@@ -49,7 +49,7 @@
 										[noTopMargin]="true"
 										[errorMessage]="{
 											required: giveBadgeTitle,
-											mustChange: changeBadgeTitle
+											mustChange: changeBadgeTitle,
 										}"
 									>
 									</oeb-input>
@@ -347,7 +347,7 @@
 														class="tw-absolute tw-bottom-1 tw-right-2 tw-pointer-events-none"
 														[ngClass]="
 															aiCompetenciesDescription.length < 70 ||
-															aiCompetenciesDescription.length == 1200
+															aiCompetenciesDescription.length === 1200
 																? 'tw-text-red'
 																: 'tw-text-gray-600'
 														"
@@ -380,7 +380,7 @@
 													/>
 												}
 											</div>
-											@if (aiCompetenciesSuggestions.length != 0) {
+											@if (aiCompetenciesSuggestions.length !== 0) {
 												<div class="tw-mt-6 md:tw-mt-8 tw-w-full">
 													<h2 class="tw-font-bold tw-text-[22px] tw-mb-2">
 														{{ 'CreateBadge.fitting' | translate }}
@@ -535,8 +535,8 @@
 										[trigger]="collapseCompetenciesTrigger"
 										[defaultOpen]="collapsedCompetenciesOpen"
 										[closeable]="
-											badgeClassForm.controls.competencies.controls.length == 0 &&
-											badgeClassForm.controls.keywordCompetencies.controls.length == 0
+											badgeClassForm.controls.competencies.controls.length === 0 &&
+											badgeClassForm.controls.keywordCompetencies.controls.length === 0
 										"
 									>
 										<ng-template #collapseCompetenciesTrigger>
@@ -597,7 +597,7 @@
 																'bottom.px': calculateDropdownBottom(
 																	keywordCompetenciesInput,
 																	100
-																)
+																),
 															}"
 														>
 															<ul>
@@ -616,7 +616,7 @@
 																	</li>
 																}
 																@if (
-																	keywordCompetenciesResult.length == 0 &&
+																	keywordCompetenciesResult.length === 0 &&
 																	!keywordCompetenciesLoading &&
 																	keywordCompetenciesLoaded
 																) {
@@ -651,7 +651,7 @@
 													</div>
 												</div>
 											</div>
-											@if (selectedKeywordCompetencies.length != 0) {
+											@if (selectedKeywordCompetencies.length !== 0) {
 												<div class="tw-mt-6 md:tw-mt-8 tw-w-full">
 													@for (
 														keywordCompetency of badgeClassForm.controls.keywordCompetencies
@@ -834,7 +834,7 @@
 															"
 															[optionMap]="competencyCategoryOptions"
 															[errorMessage]="{
-																required: competencyCategoryError
+																required: competencyCategoryError,
 															}"
 															[noTopMargin]="true"
 															[disabled]="
@@ -868,7 +868,7 @@
 																		class="tw-max-w-40"
 																		[control]="competency.rawControlMap.hours"
 																		[errorMessage]="{
-																			max: maxValue1000
+																			max: maxValue1000,
 																		}"
 																		[noTopMargin]="true"
 																	>
@@ -880,7 +880,7 @@
 																		class="tw-max-w-40"
 																		[control]="competency.rawControlMap.minutes"
 																		[errorMessage]="{
-																			max: minMaxError
+																			max: minMaxError,
 																		}"
 																		[noTopMargin]="true"
 																	>
@@ -949,9 +949,11 @@
 								<h2 hlmH2 class="tw-font-bold">4. {{ 'CreateBadge.addTags' | translate }}</h2>
 							}
 						</div>
-						<p class="tw-italic tw-text-purple tw-mt-2">
-							{{ 'CreateBadge.tagInfo' | translate }}
-						</p>
+						<p
+							class="tw-italic tw-text-purple tw-mt-2"
+							[translate]="'CreateBadge.tagInfo'"
+							[translateParams]="{ items: 'Badges', items2: 'Badges' }"
+						></p>
 						<div class="formsection-x-body tw-mt-4">
 							<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
 								<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
@@ -1015,26 +1017,28 @@
 						{{ 'CreateBadge.optionalBadgeDetails' | translate }}
 					</h2>
 
-					<div class="section tw-text-oebblack tw-mt-6">
-						<h2 hlmH2 class="!tw-text-oebblack">
-							{{ 'Badge.copyBadgeHeadline' | translate }}
-						</h2>
-						<span
-							class="tw-text-oebblack tw-italic tw-text-lg"
-							[innerHTML]="'Badge.copyBadgeDescription1' | translate"
-						></span>
-						<span
-							class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
-							[innerHTML]="'Badge.copyBadgeDescription2' | translate"
-						></span>
-						<div class="tw-mt-2 tw-mb-2">
-							<oeb-checkbox
-								[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-								[text]="'Badge.copyLabelOthers' | translate"
-							/>
+					@if (!issuer.is_network) {
+						<div class="section tw-text-oebblack tw-mt-6">
+							<h2 hlmH2 class="!tw-text-oebblack">
+								{{ 'Badge.copyBadgeHeadline' | translate }}
+							</h2>
+							<span
+								class="tw-text-oebblack tw-italic tw-text-lg"
+								[innerHTML]="'Badge.copyBadgeDescription1' | translate"
+							></span>
+							<span
+								class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
+								[innerHTML]="'Badge.copyBadgeDescription2' | translate"
+							></span>
+							<div class="tw-mt-2 tw-mb-2">
+								<oeb-checkbox
+									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
+									[text]="'Badge.copyLabelOthers' | translate"
+								/>
+							</div>
 						</div>
-					</div>
-					@if (category == 'competency') {
+					}
+					@if (category === 'competency') {
 						<div class="section tw-text-oebblack tw-mt-6">
 							<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack">
 								{{ 'Badge.awardCriteria' | translate }}
@@ -1128,7 +1132,7 @@
 									[maxchar]="4"
 									[min]="1"
 									[errorMessage]="{
-										max: maxValue1000
+										max: maxValue1000,
 									}"
 								></oeb-input>
 								<oeb-select
@@ -1181,7 +1185,9 @@
 					type="button"
 					[text]="next"
 					(click)="nextStep()"
-					[umamiEvent]="!existingBadgeClass ? `create-${category}-badge-${this.stepper?.selectedIndex + 1}` : undefined"
+					[umamiEvent]="
+						!existingBadgeClass ? `create-${category}-badge-${this.stepper?.selectedIndex + 1}` : undefined
+					"
 				/>
 			}
 
@@ -1203,7 +1209,11 @@
 							: 'General.save'
 						) | translate
 					}}"
-					[umamiEvent]="!existingBadgeClass ? `create-${category}-badge-done-${this.stepper?.selectedIndex + 1}` : undefined"
+					[umamiEvent]="
+						!existingBadgeClass
+							? `create-${category}-badge-done-${this.stepper?.selectedIndex + 1}`
+							: undefined
+					"
 				>
 				</oeb-button>
 			}
