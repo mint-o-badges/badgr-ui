@@ -208,7 +208,7 @@ export class BgBadgecard {
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: FormControl;
 	@Input() showCheckbox = false;
-	@Input() completed: Boolean = false;
+	@Input() completed: boolean = false;
 	@Output() checkboxChange = new EventEmitter<boolean>();
 	@Output() closeEmit = new EventEmitter<any>();
 	@Input() checked: boolean = false;
@@ -227,13 +227,6 @@ export class BgBadgecard {
 	@HostBinding('class') get hostClasses(): string {
 		return this.checked || this.completed ? 'tw-bg-[var(--color-lightgreen)]' : 'tw-bg-white';
 	}
-	// @HostBinding('class') get completedClass(): string {
-	// 	return this.completed
-	// 	  ? 'tw-bg-[var(--color-green)]'
-	// 	  : 'tw-bg-white';
-	//   }
-
-	ngOnInit() {}
 
 	showCompetencies = false;
 	toggleCompetencies() {

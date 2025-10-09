@@ -249,9 +249,9 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 				this.issuer()
 					.addStaffMember(formData.staffRole, this.selectedStaffRequestEmail)
 					.then((issuer) => {
-						this.issuer.set({ ...issuer } as Issuer);
+						this.issuer.set(new Issuer(issuer.commonManager, issuer.apiModel));
 					});
-				this.error = null;
+				this.error.set(null);
 				this.messageService.reportMinorSuccess(
 					`Added ${this.selectedStaffRequestEmail} as ${formData.staffRole}`,
 				);
@@ -282,10 +282,10 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			.addStaffMember(formData.staffRole, formData.staffEmail)
 			.then(
 				(issuer) => {
-					this.error = null;
+					this.error.set(null);
 					this.messageService.reportMinorSuccess(`Added ${formData.staffEmail} as ${formData.staffRole}`);
 					this.closeDialog();
-					this.issuer.set({ ...issuer } as Issuer);
+					this.issuer.set(new Issuer(issuer.commonManager, issuer.apiModel));
 				},
 				(error) => {
 					const err = BadgrApiFailure.from(error);
@@ -329,7 +329,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 		return member.remove().then(
 			(issuer) => {
-				this.issuer.set({ ...issuer } as Issuer);
+				this.issuer.set(new Issuer(issuer.commonManager, issuer.apiModel));
 				this.messageService.reportMinorSuccess(`Removed ${member.nameLabel} from ${this.issuer().name}`);
 			},
 			(error) =>

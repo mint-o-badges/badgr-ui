@@ -11,7 +11,6 @@ import {
 	PublicApiBadgeCollectionWithBadgeClassAndIssuer,
 	PublicApiIssuer,
 	PublicApiLearningPath,
-	PublicApiNetwork,
 } from '../models/public-api.model';
 import { stripQueryParamsFromUrl } from '../../common/util/url-util';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -73,14 +72,8 @@ export class PublicApiService extends BaseHttpApiService {
 		return this.get<PublicApiIssuer>(url, null, false, false).then((r) => r.body);
 	}
 
-	getNetwork(networkId: string): Promise<PublicApiNetwork> {
-		const url = networkId.startsWith('http') ? networkId : `/public/networks/${networkId}`;
-
-		return this.get<PublicApiNetwork>(url, null, false, false).then((r) => r.body);
-	}
-
-	getNetworkWithIssuers(networkId: string): Promise<{ network: PublicApiNetwork; issuers: PublicApiIssuer[] }> {
-		return Promise.all([this.getNetwork(networkId), this.getNetworkIssuers(networkId)]).then(
+	getNetworkWithIssuers(networkId: string): Promise<{ network: PublicApiIssuer; issuers: PublicApiIssuer[] }> {
+		return Promise.all([this.getIssuer(networkId), this.getNetworkIssuers(networkId)]).then(
 			([network, issuers]) => ({
 				network,
 				issuers,
@@ -104,12 +97,12 @@ export class PublicApiService extends BaseHttpApiService {
 		return this.get<PublicApiLearningPath[]>(url, null, false, false).then((r) => r.body);
 	}
 
-	getIssuerNetworks(issuerId: string): Promise<PublicApiNetwork[]> {
+	getIssuerNetworks(issuerId: string): Promise<PublicApiIssuer[]> {
 		const url = issuerId.startsWith('http')
 			? stripQueryParamsFromUrl(issuerId) + '/networks'
 			: `/public/issuers/${issuerId}/networks`;
 
-		return this.get<PublicApiNetwork[]>(url, null, false, false).then((r) => r.body);
+		return this.get<PublicApiIssuer[]>(url, null, false, false).then((r) => r.body);
 	}
 
 	getNetworkIssuers(networkId: string): Promise<PublicApiIssuer[]> {
@@ -124,18 +117,21 @@ export class PublicApiService extends BaseHttpApiService {
 		issuer: PublicApiIssuer;
 		badges: PublicApiBadgeClass[];
 		learningpaths: PublicApiLearningPath[];
-		networks: PublicApiNetwork[];
+		networks: PublicApiIssuer[];
+		partner_issuers: PublicApiIssuer[];
 	}> {
 		return Promise.all([
 			this.getIssuer(issuerId),
 			this.getIssuerBadges(issuerId),
 			this.getIssuerLearningPaths(issuerId),
 			this.getIssuerNetworks(issuerId),
-		]).then(([issuer, badges, learningpaths, networks]) => ({
+			this.getNetworkIssuers(issuerId),
+		]).then(([issuer, badges, learningpaths, networks, partner_issuers]) => ({
 			issuer,
 			badges,
 			learningpaths,
 			networks,
+			partner_issuers,
 		}));
 	}
 

@@ -112,6 +112,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 
 	ngAfterViewInit(): void {
 		const captchaElement = document.querySelector('#altcha');
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		captchaElement.addEventListener('statechange', (ev: any) => {
 			if (ev.detail.state === 'verified') {
 				this.captchaVerified = true;
@@ -127,7 +128,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		];
 
 		this.translate.get(translationKeys).subscribe((translations) => {
-			//@ts-ignore
+			//@ts-expect-error "captcha element is the special sibforms element"
 			captchaElement.configure({
 				strings: {
 					error: translations['Captcha.error'],
@@ -173,7 +174,6 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 				newsletterSubmitBtn.click();
 				// add small delay to wait if an error message appears
 				setTimeout(() => {
-					const error = document.querySelector('.entry__error.entry__error--primary');
 					const labels = document.querySelectorAll('label');
 					const errorLabel = Array.from(labels).find((label) =>
 						label.textContent.includes('Dieses Feld darf nicht leer sein.'),

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { OebSelectComponent } from './select.component';
@@ -19,7 +19,7 @@ import { OebSelectComponent } from './select.component';
 	`,
 	imports: [OebSelectComponent],
 })
-export class OebGlobalSortSelectComponent implements OnInit {
+export class OebGlobalSortSelectComponent implements OnInit, AfterViewInit {
 	@Input() control: FormControl = new FormControl('name_asc');
 	@Input() disabled: boolean = false;
 	@Input() placeholder: string | undefined;

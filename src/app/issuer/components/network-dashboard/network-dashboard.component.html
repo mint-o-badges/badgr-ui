@@ -3,10 +3,12 @@
 		<div class="oeb-breadcrumbs">
 			<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
 		</div>
-		<h1 hlmH1 class="tw-text-purple tw-font-black">{{ 'Network.welcomeDashboard' | translate }}</h1>
-		<ng-template [bgAwaitPromises]="[networkLoaded()]">
+		<h1 hlmH1 class="tw-text-purple tw-font-black tw-mt-20">{{ 'Network.welcomeDashboard' | translate }}</h1>
+		<ng-template [bgAwaitPromises]="[networkLoaded]">
 			<section class="tw-flex tw-gap-4 tw-mt-8 tw-items-center">
-				<img width="100px" [src]="network().image" alt="Network Logo" />
+				<div class="tw-bg-white tw-w-[100px] tw-h-[100px]">
+					<img width="70px" [src]="network().image" alt="Network Logo" />
+				</div>
 				<div class="tw-flex tw-flex-col">
 					<span class="tw-font-bold tw-text-3xl tw-text-oebblack">{{ network().name }}</span>
 					<span class="tw-text-oebblack tw-text-lg tw-font-semibold">
@@ -14,12 +16,20 @@
 							'Network.yourRole'
 								| translate
 									: {
-											role:
-												'Network.role.' + network().currentUserStaffMember.roleSlug | translate
+											role: 'Network.role.' + role | translate,
 									  }
 						}}</span
 					>
 				</div>
+				@if (activeTab === 'badges') {
+					<div class="tw-ml-auto">
+						<oeb-button
+							variant="secondary"
+							[text]="'Network.createBadge' | translate"
+							[routerLink]="[`/issuer/issuers/${network().slug}/badges/select/`]"
+						></oeb-button>
+					</div>
+				}
 			</section>
 			<p class="tw-text-oebblack tw-text-lg tw-mt-2 tw-pb-8">
 				{{ network().description }}
@@ -33,8 +43,13 @@
 			</oeb-tabs>
 		</ng-template>
 		<ng-template #overviewTemplate>
-			<div class="tw-my-8">
-				<oeb-button (click)="openDialog()" [text]="'Network.inviteInstitutions' | translate"> </oeb-button>
+			<div class="tw-my-12">
+				<oeb-button
+					[variant]="partnerIssuers().length ? 'secondary' : 'default'"
+					(click)="openDialog()"
+					[text]="'Network.inviteInstitutions' | translate"
+				>
+				</oeb-button>
 			</div>
 		</ng-template>
 	</div>
@@ -46,6 +61,7 @@
 		[issuers]="partnerIssuers()"
 		(removePartnerRequest)="onRemovePartner($event)"
 		[addInstitutionsTemplate]="addInstitutionsTemplate"
+		[networkInvites]="networkInvites()"
 	></network-partners>
 </ng-template>
 
@@ -54,5 +70,9 @@
 </ng-template>
 
 <ng-template #addInstitutionsTemplate>
-	<add-institution [network]="network()"> </add-institution>
+	<add-institution [network]="network()" (institutionsInvited)="onInstitutionsInvited()"> </add-institution>
+</ng-template>
+
+<ng-template #badgesTemplate>
+	<network-badges [network]="network()"></network-badges>
 </ng-template>

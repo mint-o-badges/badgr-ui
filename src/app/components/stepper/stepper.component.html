@@ -11,7 +11,7 @@
 						[ngClass]="{
 							active: selectedIndex === i,
 							error: step.hasError,
-							completed: step.completed && i < selectedIndex
+							completed: step.completed && i < selectedIndex,
 						}"
 						(click)="onClick(i)"
 					>

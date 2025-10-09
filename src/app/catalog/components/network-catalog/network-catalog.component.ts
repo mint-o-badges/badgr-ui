@@ -11,14 +11,30 @@ import { appearAnimation } from '../../../common/animations/animations';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { CountUpModule } from 'ngx-countup';
-import { NetworkManager } from '../../../issuer/services/network-manager.service';
+import { NgClass } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
+import { OebSelectComponent } from '../../../components/select.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { IssuerCardComponent } from '../../../components/issuer-card/issuer-card.component';
+import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { OebNetworkCard } from '~/common/components/oeb-networkcard.component';
 import { RouterLink } from '@angular/router';
 import { CatalogService } from '~/catalog/catalog.service';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { combineLatest, concatMap, debounceTime, distinctUntilChanged, filter, Subscription, tap } from 'rxjs';
-import { NetworkV3 } from '~/issuer/models/networkv3.model';
+import {
+	combineLatest,
+	concatMap,
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	firstValueFrom,
+	skip,
+	Subscription,
+	tap,
+} from 'rxjs';
 import { OebHeaderText } from '~/components/oeb-header-text.component';
+import { NetworkV3 } from '~/issuer/models/networkv3.model';
 
 @Component({
 	selector: 'app-network-catalog',
@@ -62,7 +78,6 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 
 	constructor(
 		protected messageService: MessageService,
-		protected networkManager: NetworkManager,
 		protected configService: AppConfigService,
 		protected catalogService: CatalogService,
 		router: Router,
@@ -106,7 +121,6 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
 		this.loggedIn = this.sessionService.isLoggedIn;
 
 		this.plural = {

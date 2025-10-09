@@ -22,6 +22,7 @@
 				<div class="tw-flex tw-justify-evenly oeb-badgeclass-select-container tw-flex-col md:tw-flex-row">
 					<a
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'participation']"
+						[state]="{ issuer: issuer }"
 						[attr.data-umami-event]="'create-participation-badge-1'"
 					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/participation.svg" />
@@ -30,6 +31,7 @@
 					</a>
 					<a
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'competency']"
+						[state]="{ issuer: issuer }"
 						[attr.data-umami-event]="'create-competency-badge-1'"
 					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/competency.svg" />
@@ -38,6 +40,7 @@
 					</a>
 					<a
 						[routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']"
+						[state]="{ issuer: issuer }"
 						[attr.data-umami-event]="'create-micro-degree-1'"
 					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/learningpath.svg" />

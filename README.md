@@ -10,14 +10,14 @@ An Angular 2 based front end for Badgr-server. Uses TypeScript with ES6 style mo
 
 ## System-wide prerequisites (OS X):
 
--   node and npm: see [Installing Node](https://docs.npmjs.com/getting-started/installing-node)
--   (optional) [nvm](https://github.com/creationix/nvm) - node version manager: In order to work with multiple projects on your development environment that have diverse dependencies, you may want to have multiple versions of node installed. NVM allows you to do this. If this applies to you, consider using nvm to manage your node environments. `nvm use` in a project directory with a `.nvmrc` file will use the recommended node version. Make sure to `nvm use [VERSION]` the correct version before any `npm install` steps.
+- node and npm: see [Installing Node](https://docs.npmjs.com/getting-started/installing-node)
+- (optional) [nvm](https://github.com/creationix/nvm) - node version manager: In order to work with multiple projects on your development environment that have diverse dependencies, you may want to have multiple versions of node installed. NVM allows you to do this. If this applies to you, consider using nvm to manage your node environments. `nvm use` in a project directory with a `.nvmrc` file will use the recommended node version. Make sure to `nvm use [VERSION]` the correct version before any `npm install` steps.
 
 ### Install and configure project
 
--   Install and run [badgr-server](https://github.com/concentricsky/badgr-server-prerelease), the API that this application connects to.
--   Install node/npm version using nvm: `nvm use && nvm install`
--   Install project-specific node dependencies. `npm install`
+- Install and run [badgr-server](https://github.com/concentricsky/badgr-server-prerelease), the API that this application connects to.
+- Install node/npm version using nvm: `nvm use && nvm install`
+- Install project-specific node dependencies. `npm install`
 
 ### Run project in your browser
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, input, Input, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
 import { HlmInput, InputVariants } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -23,7 +23,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 					} @else {
 						<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 					}
-					@if (sublabelRightTemplate) {
+					@if (sublabelRightTemplate()) {
 						<ng-container *ngTemplateOutlet="sublabelRightTemplate()" />
 					} @else if (sublabelRight) {
 						<span class="tw-pl-[3px] tw-text-oebblack"> {{ sublabelRight }}</span>
@@ -115,7 +115,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		</div>
 	</div>`,
 })
-export class OebInputComponent {
+export class OebInputComponent implements AfterViewInit {
 	@Input() error: string;
 	@Input() errorOverride?: boolean = false;
 	@Input() label: string;
@@ -249,9 +249,7 @@ export class OebInputComponent {
 
 export type CustomValidatorMessages = string | { [validatorKey: string]: string };
 
-export const defaultValidatorMessages: {
-	[validatorKey: string]: (label: string, result?: unknown) => string;
-} = {
+export const defaultValidatorMessages: { [validatorKey: string]: (label: string, result?: unknown) => string } = {
 	required: (label: string) => `Bitte ${label} eingeben`,
 	validUrl: () => `Bitte gültige URL eingeben.`,
 	invalidTelephone: () => `Bitte gültige Telefonnummer eingeben`,

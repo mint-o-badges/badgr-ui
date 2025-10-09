@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -33,7 +33,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		TranslatePipe,
 	],
 })
-export class NewPasswordComponent extends BaseRoutableComponent {
+export class NewPasswordComponent extends BaseRoutableComponent implements OnInit {
 	changePasswordForm = typedFormGroup()
 		.addControl('password', '', [
 			Validators.required,
@@ -75,8 +75,6 @@ export class NewPasswordComponent extends BaseRoutableComponent {
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		// To resolve the issue of translation bug when opening a page direclty via link. In this case sent via email.
 		this.translate.onLangChange
 			.pipe(

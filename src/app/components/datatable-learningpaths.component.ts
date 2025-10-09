@@ -59,7 +59,8 @@ import { NgIcon } from '@ng-icons/core';
 											</ng-container>
 										</div>
 										@if (headerCell.column.getIsSorted()) {
-											@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+											@let order =
+												headerCell.column.getNextSortingOrder() === 'asc' ? 'desc' : 'asc';
 											@if (order === 'asc') {
 												<ng-icon hlm size="base" name="lucideChevronUp" />
 											} @else {
@@ -146,7 +147,8 @@ export class LearningPathDatatableComponent {
 
 	private readonly tableColumnDefinition: ColumnDef<ApiLearningPath>[] = [
 		{
-			header: 'Micro Degree',
+			id: 'General.learningPath',
+			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => row.name,
 			cell: () => this.badgeCellTemplate(),
 			sortDescFirst: false,

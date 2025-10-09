@@ -81,6 +81,7 @@ export class AutosizeDirective implements AfterViewChecked {
 	}
 
 	constructor(
+		// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 		@Inject(PLATFORM_ID) private platformId: {},
 		private renderer: Renderer2,
 		public element: ElementRef,

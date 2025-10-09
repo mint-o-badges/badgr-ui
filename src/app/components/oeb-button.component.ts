@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, signal, OnInit, OnDestroy } from '@angular/core';
 import { ButtonVariants, HlmButton } from './spartan/ui-button-helm/src';
 import { NgClass } from '@angular/common';
 import { MessageService } from '../common/services/message.service';
@@ -36,7 +36,7 @@ import { map, Subscription } from 'rxjs';
 		}
 	</button>`,
 })
-export class OebButtonComponent {
+export class OebButtonComponent implements OnInit, OnDestroy {
 	readonly variant = input<ButtonVariants['variant']>('default');
 	readonly size = input<ButtonVariants['size']>('default');
 	readonly width = input<ButtonVariants['width']>('default');

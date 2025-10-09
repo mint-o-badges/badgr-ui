@@ -120,9 +120,9 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 		this.transformedImportData = transformedImportData;
 
 		// Determine if the transformed data contains any errors
-		this.transformedImportData && transformedImportData.invalidRowsTransformed.length
-			? this.updateViewState('importError')
-			: this.updateViewState('importConformation');
+		if (this.transformedImportData && transformedImportData.invalidRowsTransformed.length)
+			this.updateViewState('importError');
+		else this.updateViewState('importConformation');
 	}
 
 	updateViewState(state: ViewState) {

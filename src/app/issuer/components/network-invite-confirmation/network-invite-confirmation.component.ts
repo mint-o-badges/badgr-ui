@@ -6,7 +6,6 @@ import { SessionService } from '../../../common/services/session.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
-import { NetworkManager } from '../../../issuer/services/network-manager.service';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -31,7 +30,6 @@ export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutabl
 		route: ActivatedRoute,
 		protected title: Title,
 		protected configService: AppConfigService,
-		protected networkManager: NetworkManager,
 		protected networkApiService: NetworkApiService,
 		protected messageService: MessageService,
 	) {

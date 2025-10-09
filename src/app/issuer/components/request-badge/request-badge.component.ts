@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, OnInit } from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
@@ -34,7 +34,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 		TranslatePipe,
 	],
 })
-export class RequestBadgeComponent extends BaseRoutableComponent {
+export class RequestBadgeComponent extends BaseRoutableComponent implements OnInit {
 	constructor(
 		private translate: TranslateService,
 		private badgeRequestApiService: BadgeRequestApiService,

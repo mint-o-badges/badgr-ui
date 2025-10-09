@@ -1,5 +1,4 @@
-import { ApiIssuer } from './issuer-api.model';
-import { ApiNetwork } from './network-api.model';
+import { ApiIssuer, ApiNetwork } from './issuer-api.model';
 
 export interface ApiNetworkInvitation {
 	id?: number;

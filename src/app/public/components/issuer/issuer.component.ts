@@ -4,12 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
-import {
-	PublicApiBadgeClass,
-	PublicApiIssuer,
-	PublicApiLearningPath,
-	PublicApiNetwork,
-} from '../../models/public-api.model';
+import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
 import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/util/url-util';
 import { routerLinkForUrl } from '../public/public.component';
@@ -33,7 +28,8 @@ export class PublicIssuerComponent {
 		issuer: PublicApiIssuer;
 		badges: PublicApiBadgeClass[];
 		learningpaths: PublicApiLearningPath[];
-		networks: PublicApiNetwork[];
+		networks: PublicApiIssuer[];
+		partner_issuers: PublicApiIssuer[];
 	}>;
 	routerLinkForUrl = routerLinkForUrl;
 	plural = {
@@ -69,8 +65,12 @@ export class PublicIssuerComponent {
 		return this.issuerIdParam.value.learningpaths;
 	}
 
-	get networks(): PublicApiNetwork[] {
+	get networks(): PublicApiIssuer[] {
 		return this.issuerIdParam.value.networks;
+	}
+
+	get partner_issuers(): PublicApiIssuer[] {
+		return this.issuerIdParam.value.partner_issuers;
 	}
 
 	private get rawJsonUrl() {

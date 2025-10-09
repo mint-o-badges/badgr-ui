@@ -49,6 +49,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
+import { ApiLearningPath } from '~/common/model/learningpath-api.model';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -119,7 +120,7 @@ export class RecipientEarnedBadgeListComponent
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
 	allSkills: ApiRootSkill[] = [];
 	allLearningPaths: any[] = [];
-	collections: any[] = [];
+	collections: RecipientBadgeCollection[] = [];
 
 	badgeResults: BadgeResult[] = [];
 	learningPathResults: any[] = [];
@@ -137,7 +138,7 @@ export class RecipientEarnedBadgeListComponent
 	crumbs: LinkEntry[] = [{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] }];
 	profile: UserProfile;
 	running = false;
-	tabs: any[] = [];
+	tabs: { key: string; title: string; component: ElementRef }[] = [];
 	@ViewChild('overViewTemplate', { static: true }) overViewTemplate: ElementRef;
 	@ViewChild('profileTemplate', { static: true }) profileTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
@@ -147,11 +148,11 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('collectionInfoHeaderTemplate', { static: true }) collectionInfoHeaderTemplate: ElementRef;
 	@ViewChild('collectionInfoContentTemplate', { static: true }) collectionInfoContentTemplate: ElementRef;
 
-	dialogRef: BrnDialogRef<any> = null;
+	dialogRef: BrnDialogRef = null;
 	translatedTitles: string[] = [];
 
-	groupedUserCompetencies: Competency[] | {} = {};
-	newGroupedUserCompetencies: Competency[] | {} = {};
+	groupedUserCompetencies: Competency[] | object = {};
+	newGroupedUserCompetencies: Competency[] | object = {};
 
 	totalStudyTime = 0;
 	public objectKeys = Object.keys;
@@ -374,7 +375,7 @@ export class RecipientEarnedBadgeListComponent
 			},
 			{
 				key: 'microdegrees',
-				title: 'Micro Degrees',
+				title: 'LearningPath.learningpathsPlural',
 				component: this.learningPathTemplate,
 			},
 			{
@@ -533,8 +534,8 @@ export class RecipientEarnedBadgeListComponent
 		// this.learningPathResults.forEach((r) => r.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
 	}
 
-	trackById(index: number, item: any): any {
-		return item.id;
+	trackById(index: number, item: { id?: unknown; slug: unknown }): unknown {
+		return item.id ? item.id : item.slug;
 	}
 
 	private groupCompetencies(badges) {

@@ -1,7 +1,7 @@
 import { PublicApiBadgeAssertionWithBadgeClass } from '../app/public/models/public-api.model';
 import { generateEmbedHtml } from './generate-embed-html';
-
-const sha256 = require('tiny-sha256') as (message: string) => string;
+import sha256Module from 'tiny-sha256';
+const sha256 = sha256Module as unknown as (message: string) => string;
 
 export function setupEmbeddedBadges() {
 	function messageToSha256HexString(message) {

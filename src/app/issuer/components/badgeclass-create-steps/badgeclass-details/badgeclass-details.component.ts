@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { typedFormGroup } from '../../../../common/util/typed-forms';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
@@ -7,7 +7,7 @@ import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
 	selector: 'badgeclass-details',
 	templateUrl: './badgeclass-details.component.html',
 })
-export class BadgeClassDetailsComponent implements OnInit, AfterViewInit {
+export class BadgeClassDetailsComponent implements OnInit {
 	@Input() badgeClass: BadgeClass;
 
 	constructor(private rootFormGroup: FormGroupDirective) {}
@@ -26,6 +26,4 @@ export class BadgeClassDetailsComponent implements OnInit, AfterViewInit {
 		this.initFormFromExisting(this.badgeClass);
 		this.detailsForm = this.rootFormGroup.control;
 	}
-
-	ngAfterViewInit(): void {}
 }

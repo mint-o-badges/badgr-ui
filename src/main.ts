@@ -2,7 +2,7 @@ import { enableProdMode, importProvidersFrom, provideAppInitializer, inject } fr
 
 import { environment } from './environments/environment';
 import { RecipientBadgeApiService } from './app/recipient/services/recipient-badges-api.service';
-import { RouteReuseStrategy, provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
+import { RouteReuseStrategy, provideRouter, withInMemoryScrolling } from '@angular/router';
 import { BadgrRouteReuseStrategy } from './app/common/util/route-reuse-strategy';
 import { AppConfigService } from './app/common/app-config.service';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';

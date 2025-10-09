@@ -1,10 +1,18 @@
-import { Component, ElementRef, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import {
+	AfterContentInit,
+	Component,
+	ElementRef,
+	inject,
+	OnInit,
+	output,
+	signal,
+	TemplateRef,
+	ViewChild,
+} from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NetworkManager } from '../../../issuer/services/network-manager.service';
 import { SessionService } from '../../../common/services/session.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { Network, networkStaffRoles } from '../../../issuer/models/network.model';
 import { Title } from '@angular/platform-browser';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,7 +37,10 @@ import { NetworkPartnersComponent } from '../network-partners/network-partners.c
 import { AddInstitutionComponent } from '../add-institution/add-institution.component';
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
-
+import { NetworkBadgesComponent } from '../network-badges/network-badges.component';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { RouterLink } from '@angular/router';
+import { Network } from '~/issuer/network.model';
 @Component({
 	selector: 'network-dashboard',
 	templateUrl: './network-dashboard.component.html',
@@ -45,10 +56,12 @@ import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.
 		NetworkPartnersComponent,
 		AddInstitutionComponent,
 		BgBreadcrumbsComponent,
+		NetworkBadgesComponent,
+		RouterLink,
 	],
 })
-export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	networkLoaded = signal<Promise<unknown> | null>(null);
+export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
+	networkLoaded: Promise<unknown>;
 	networkSlug: string;
 	crumbs: LinkEntry[];
 	tabs: Tab[] = undefined;
@@ -60,7 +73,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	network = signal<Network | null>(null);
 	partnerIssuers = signal<Issuer[]>([]);
 
-	pendingInvites: ApiNetworkInvitation[];
+	networkInvites = signal<ApiNetworkInvitation[]>([]);
 
 	issuersShowResults = false;
 	issuersLoading = false;
@@ -102,15 +115,15 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 		this.networkSlug = this.route.snapshot.params['networkSlug'];
 
-		this.networkApiService.getNetworkInvites(this.networkSlug, 'pending').then((invites) => {
-			this.pendingInvites = invites;
+		this.networkApiService.getNetworkInvites(this.networkSlug).then((invites) => {
+			this.networkInvites.set(invites);
 		});
 
-		const loadPromise = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
+		this.networkLoaded = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
 			this.network.set(network);
-			this.partnerIssuers.set(network.partnerIssuers.entities);
+			this.partnerIssuers.set(network.partner_issuers.entities);
 			this.title.setTitle(
-				`Issuer - ${this.network.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
+				`Issuer - ${this.network().name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 			);
 			this.crumbs = [
 				{ title: this.translate.instant('NavItems.myInstitutions'), routerLink: ['/issuer/issuers'] },
@@ -119,11 +132,17 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 					routerLink: ['/issuer'],
 					queryParams: { tab: 'networks' },
 				},
-				{ title: this.network.name, routerLink: ['/issuer/network/' + this.network().slug] },
+				{ title: this.network().name, routerLink: ['/issuer/network/' + this.network().slug] },
 			];
 		});
+	}
 
-		this.networkLoaded.set(loadPromise);
+	ngOnInit(): void {
+		this.route.queryParams.subscribe((params) => {
+			if (params['tab']) {
+				this.activeTab = params['tab'];
+			}
+		});
 	}
 
 	ngAfterContentInit() {
@@ -181,6 +200,15 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		});
 	}
 
+	onInstitutionsInvited() {
+		this.networkApiService.getNetworkInvites(this.networkSlug).then((invites) => {
+			this.networkInvites.set(invites);
+		});
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
+	}
+
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
@@ -188,6 +216,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 				variant: 'success',
 			},
 		});
+		this.dialogRef = dialogRef;
 	}
 
 	closeDialog() {}
@@ -243,22 +272,19 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		this.rightsAndRolesExpanded = !this.rightsAndRolesExpanded;
 	}
 
-	get networkStaffRoleOptions() {
-		return (
-			this._networkStaffRoleOptions ||
-			(this._networkStaffRoleOptions = networkStaffRoles.map((r) => ({
-				label: r.label,
-				value: r.slug,
-				description: r.description,
-			})))
-		);
-	}
-
 	inviteInstitutions(issuers: Issuer[]) {
 		this.networkApiService.inviteInstitutions(this.network().slug, issuers).then((res) => {
 			if (res) {
 				this.openSuccessDialog();
 			}
 		});
+	}
+
+	get role() {
+		if (this.network().currentUserStaffMember) {
+			return this.network().currentUserStaffMember.roleSlug;
+		} else {
+			return this.network().current_user_network_role;
+		}
 	}
 }

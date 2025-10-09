@@ -131,10 +131,6 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 
 	private randomName = 'field' + Math.random();
 
-	constructor() {}
-
-	ngOnInit() {}
-
 	ngAfterViewInit() {
 		if (this.autofocus) {
 			this.focus();

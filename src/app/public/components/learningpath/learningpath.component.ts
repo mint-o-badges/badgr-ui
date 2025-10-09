@@ -97,7 +97,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	@ViewChild('openTemplate', { static: true }) openTemplate: ElementRef;
 	@ViewChild('finishedTemplate', { static: true }) finishedTemplate: ElementRef;
 
-	crumbs = [{ title: 'Micro Degrees', routerLink: ['/catalog/learningpaths'] }];
+	crumbs = [{ title: this.translate.instant('General.learningPaths'), routerLink: ['/catalog/learningpaths'] }];
 
 	constructor(
 		private injector: Injector,
@@ -214,7 +214,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				},
 			];
 			this.crumbs = [
-				{ title: 'Micro Degrees', routerLink: ['/catalog/learningpaths'] },
+				{ title: this.translate.instant('General.learningPaths'), routerLink: ['/catalog/learningpaths'] },
 				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/' + this.learningPath.slug] },
 			];
 			if (response.progress === null) {
@@ -286,8 +286,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	participate() {
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
 			(response) => {
-				//@ts-ignore
-				if (response.body.message === 'Successfully joined the learning path') {
+				if (response.body['message'] === 'Successfully joined the learning path') {
 					this.openSuccessDialog();
 				}
 				this.requestPath();
