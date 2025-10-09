@@ -26,7 +26,7 @@ import { inject, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/cor
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
-import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
@@ -543,6 +543,11 @@ export class BadgeClassDetailComponent
 		super.ngOnInit();
 		this.checkForActiveTask();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
+		this.route.queryParams.subscribe((params) => {
+			if (params['tab']) {
+				this.activeTab = params['tab'];
+			}
+		});
 	}
 
 	ngOnDestroy() {
