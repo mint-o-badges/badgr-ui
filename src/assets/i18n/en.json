@@ -87,10 +87,7 @@
 		"oneRequest": "1 request",
 		"multiRequests": "# requests",
 		"license": "License",
-		"language": {
-			"de": "German",
-			"en": "English"
-		},
+		"language": { "de": "German", "en": "English" },
 		"close": "Close",
 		"notification": "Notification",
 		"validationCompleteForm": "Please fill out completely",
@@ -422,11 +419,7 @@
 		"resendInvitation": "Resend invitation",
 		"invitedOn": "Invited on",
 		"yourRole": "Your role: {{role}}",
-		"role": {
-			"owner": "Owner",
-			"editor": "Editor",
-			"staff": "Member"
-		},
+		"role": { "owner": "Owner", "editor": "Editor", "staff": "Member" },
 		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
 		"partnerSince": "Network Partner since",
 		"partner": "Network Members",
@@ -518,7 +511,7 @@
 		"enterOwnCriteriaDesc": "You can enter explanations here (max. 300 characters)",
 		"participationBadgeInfo": "serves as confirmation of participation in an event - it contains <u>no</u> competencies.",
 		"competencyBadgeInfo": "can be filled (with the help of our AI assistant) with the skills that your learners acquire.",
-		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
+		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this <span class='tw-font-bold'>learning path</span>, they automatically receive the Micro Degree.",
 		"lastEdited": "Last edited",
 		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully.",
 		"standard": "Badge standard",
@@ -602,7 +595,7 @@
 		"addTags": "Add tags",
 		"newTag": "Enter a tag...",
 		"tagDoesNotExist": "This tag does not exist yet",
-		"tagInfo": "Tags help categorize {{items}} and help learners on OEB search for {{items}} on specific topics.",
+		"tagInfo": "Tags help categorize {{items}} and help learners on OEB search for {{items2}} on specific topics.",
 		"removeAlignment": "Remove link",
 		"removeAlignmentInfo": "Are you sure you want to remove the link(s)? ",
 		"irreversibleAction": "This action cannot be undone.",
@@ -1075,11 +1068,7 @@
 		"continue": "Continue learning",
 		"finished": "Finished",
 		"includedBadges": "Contained badges",
-		"badgeTabs": {
-			"all": "All",
-			"inprogress": "In progress",
-			"finished": "Finished"
-		},
+		"badgeTabs": { "all": "All", "inprogress": "In progress", "finished": "Finished" },
 		"chooseBadges": "Choose included badges",
 		"badgeSequenceStep": "Badge order",
 		"badgeSequence": "Order of badges in the learning path",
@@ -1101,7 +1090,7 @@
 		"lastBadgeInfo": "Learners automatically receive the <strong class='tw-text-purple'>Micro Degree</strong> badge by e-mail, as soon as they have earned all badges in the learning path.",
 		"activateMd": "Unlock learning path",
 		"activationInfo": "When you activate the learning path for use, <span class='tw-font-bold'>you can no longer edit it afterwards</span>. ",
-		"activationInfo2": "At the same time, learners who already have the badges included in the learning pathway automatically receive the Micro Degree Badge.",
+		"activationInfo2": "At the same time, learners who already have the badges included in the learning pathway automatically receive the <span class='tw-font-bold'>Micro Degree</span> Badge.",
 		"activateMdForUse": "<span class='tw-font-bold tw-text-white tw-text-lg'>Unlock learning path for use</span>",
 		"notActivatedYetStart": "The learning path is not yet",
 		"notActivatedYetLink": "unlocked",
@@ -1122,11 +1111,10 @@
 		"deleteMd": "Delete learning path"
 	},
 	"LearningPathEditor": {
-		"shortDescription": "Summary description of the learning program. This short description will be saved in the Micro Degree completion badge."
+		"shortDescriptionLine1": "Summary description of the learning program.",
+		"shortDescriptionLine2": "This short description will be saved in the Micro Degree completion badge."
 	},
-	"OEBComponents": {
-		"fieldIsRequired": "This field is required"
-	},
+	"OEBComponents": { "fieldIsRequired": "This field is required" },
 	"ErrorDialog": {
 		"title": "An error has occurred!",
 		"message": "Below you can see the error message. If you believe the error is on our side, you can copy the error message and send it to us by email, or you can create an issue on GitHub.",
@@ -1135,9 +1123,5 @@
 		"createIssue": "Go to GitHub Issues",
 		"sendEmail": "Send an email"
 	},
-	"NounProject": {
-		"searchIcon": "Search Icon",
-		"loading": "Loading...",
-		"noIconsFoundFor": "No icons found for"
-	}
+	"NounProject": { "searchIcon": "Search Icon", "loading": "Loading...", "noIconsFoundFor": "No icons found for" }
 }
