@@ -7,11 +7,11 @@ import { LanguageService } from '~/common/services/language.service';
 
 import * as translationsEn from 'src/assets/i18n/en.json';
 import * as translationsDe from 'src/assets/i18n/de.json';
-import { BadgeClassEditFormComponent } from './badgeclass-edit-form.component';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { ROUTE_CONFIG } from '~/app.routes';
+import { OebBadgeClassEditForm } from './oeb-badgeclass-edit-form.component';
 
-createWebcomponent(BadgeClassEditFormComponent, 'oeb-badgeclass-edit-form', {
+createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 	providers: [
 		provideHttpClient(),
 		importProvidersFrom(BrowserModule, TranslateModule.forRoot()),

@@ -15,7 +15,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import {
 	AbstractControl,
-	FormBuilder,
 	Validators,
 	ValidatorFn,
 	ValidationErrors,
@@ -23,7 +22,6 @@ import {
 	FormsModule,
 	ReactiveFormsModule,
 } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 import { Md5 } from 'ts-md5/dist/md5';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -36,7 +34,6 @@ import {
 	BadgeClassLevel,
 } from '../../models/badgeclass-api.model';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
-import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
 import { UrlValidator } from '../../../common/validators/url.validator';
