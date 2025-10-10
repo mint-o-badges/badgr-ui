@@ -38,7 +38,7 @@ export default [
 			'@angular-eslint/prefer-inject': 'warn',
 			'@angular-eslint/no-input-rename': 'warn',
 			'@angular-eslint/no-output-on-prefix': 'warn',
-			'@typescript-eslint/no-unused-vars': 'warn',
+			'@typescript-eslint/no-unused-vars': 'off',
 			'@typescript-eslint/no-explicit-any': 'warn',
 		},
 	},
