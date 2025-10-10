@@ -442,7 +442,8 @@
 		"partOfNetwork": "Teil vom NETZWERK",
 		"noBadgesYet": "Das Netzwerk <span class='tw-font-semibold'>{{network}}</span> hat noch keine eigenen Badges erstellt.",
 		"sharedBy": "Freigegeben von",
-		"sharedOn": "Freigegeben am"
+		"sharedOn": "Freigegeben am",
+		"website": "Netzwerk-Webseite"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
