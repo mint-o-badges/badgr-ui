@@ -14,6 +14,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Network } from '~/issuer/network.model';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'network-partners',
@@ -49,6 +50,7 @@ export class NetworkPartnersComponent {
 		private networkApiService: NetworkApiService,
 		private publicApiService: PublicApiService,
 		private messageService: MessageService,
+		private router: Router,
 	) {
 		effect(() => {
 			const invites = this.networkInvites();
@@ -113,5 +115,13 @@ export class NetworkPartnersComponent {
 
 	async onPartnerRemoved(issuer: Issuer) {
 		this.removePartnerRequest.emit(issuer);
+	}
+
+	redirectToIssuerDetail(issuer: Issuer) {
+		if (issuer.currentUserStaffMember) {
+			this.router.navigate(['/issuer/issuers/', issuer.slug]);
+		} else {
+			this.router.navigate(['/public/issuers/', issuer.slug]);
+		}
 	}
 }
