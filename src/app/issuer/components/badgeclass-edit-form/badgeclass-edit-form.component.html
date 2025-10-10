@@ -945,7 +945,9 @@
 					<div class="section tw-text-oebblack tw-mt-6">
 						<div>
 							@if (badgeCategory !== 'competency' || existingBadgeClass) {
-								<h2 hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.addTags' | translate }}</h2>
+								<h2 hlmH2 class="tw-font-bold">
+									{{ selectedStep + 1 + '.' }} {{ 'CreateBadge.addTags' | translate }}
+								</h2>
 							}
 							@if (badgeCategory === 'competency' && !existingBadgeClass) {
 								<h2 hlmH2 class="tw-font-bold">
