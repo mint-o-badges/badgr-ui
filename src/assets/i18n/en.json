@@ -415,6 +415,8 @@
 		"confirmInvitation": "Confirm invitation",
 		"networksHeadline": "All networks at a glance",
 		"noNetworks": "no networks",
+		"networkRegistered": "Network is registered on OEB",
+		"networksRegistered": "Networks are registered on OEB",
 		"partners": "Network members",
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
 		"partnerIssuers": "Partners",
