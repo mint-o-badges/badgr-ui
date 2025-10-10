@@ -529,11 +529,12 @@
 		"awardingInProgress": "Badge awarding in progress",
 		"willBeAwardedSoon": "We will have awarded the badges soon!",
 		"catalogAllLoaded": "All badges matching your search criteria loaded.",
-		"shareOnNetwork": "share on network",
+		"shareOnNetwork": "Share on network",
+		"shareOnWhichNetwork": "Which of your networks should the badge be shared on?",
 		"allNetworkMembersGetBadge": "All members of the selected network can award the badge via their institution.",
 		"networkAssertionsGetTracked": "All badge awards are included in the network's data evaluation.",
 		"cantRemoveFromNetwork": "The badge CANNOT be removed from the network.",
-		"shareBadgeOnNetwork": "share badge on network"
+		"shareBadgeOnNetwork": "Share badge on network"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
@@ -1056,7 +1057,7 @@
 		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
-		"learningpathsPlural": "learning paths",
+		"learningpathsPlural": "Learning paths",
 		"learningpathsNav": "Learning Paths A-Z",
 		"catalogHeadline": "All learning paths at a glance",
 		"participate": "Participate",
