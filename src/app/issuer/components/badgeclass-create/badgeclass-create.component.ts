@@ -64,7 +64,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 		// this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 		this.category = this.route.snapshot.params['category'];
-		const navigation = this.router.getCurrentNavigation();
+		const navigation = this.router.currentNavigation();
 		this.navigationState = navigation?.extras?.state;
 	}
 
