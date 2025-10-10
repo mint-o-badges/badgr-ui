@@ -429,6 +429,7 @@ export class BadgeClassDetailComponent
 			issuerImage: this.issuer.image,
 			awardingIssuers: this.awardingIssuers,
 			networkBadge: badgeClass.isNetworkBadge,
+			networkImage: badgeClass.networkImage,
 			sharedOnNetwork: badgeClass.sharedOnNetwork,
 			badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 			badgeFailedImageUrl: this.badgeFailedImageUrl,
