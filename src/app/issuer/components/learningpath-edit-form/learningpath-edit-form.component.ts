@@ -644,11 +644,10 @@ export class LearningPathEditFormComponent
 	fetchTags() {
 		this.existingTags = [];
 		this.existingTagsLoading = true;
-		// outerThis is needed because inside the observable, `this` is something else
-		let observable = this.learningPathManager.allLearningPaths$;
 
-		observable.subscribe({
-			next(entities: LearningPath[]) {
+		this.learningPathManager.allPublicLearningPaths$.subscribe({
+			// Use arrow function to preserve "this" context
+			next: (entities: LearningPath[]) => {
 				let tags: string[] = entities.flatMap((entity) => entity.tags);
 				let unique = [...new Set(tags)];
 				unique.sort();
