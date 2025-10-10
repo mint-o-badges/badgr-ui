@@ -408,6 +408,7 @@ export class BadgeClassDetailComponent
 			headerButton: {
 				title: 'Badge.award',
 				action: () => this.routeToBadgeAward(badgeClass, this.issuer),
+				disabled: this.issuer.is_network && !this.networkUserIssuers().length,
 			},
 			issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 			qrCodeButton: {
@@ -513,7 +514,10 @@ export class BadgeClassDetailComponent
 			async (retInstances) => {
 				this.crumbs = [
 					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
-					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuerSlug] },
+					{
+						title: this.issuer.name,
+						routerLink: [`/issuer/${this.issuer.is_network ? 'networks' : 'issuers'}/` + this.issuerSlug],
+					},
 					{
 						title: this.badgeClass.name,
 						routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug],
@@ -737,6 +741,7 @@ export class BadgeClassDetailComponent
 	}
 
 	routeToBadgeAward(badge: BadgeClass, issuer) {
+		if (this.config.headerButton.disabled) return;
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
 			if (badge.recipientCount === 0 && qrCodes.length === 0 && !this.issuer.is_network) {
 				const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
