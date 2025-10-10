@@ -41,7 +41,7 @@ import { NetworkSharedBadgesDatatableComponent } from '~/components/datatable-ne
 import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
 import { ActivatedRoute } from '@angular/router';
-import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'network-badges',
@@ -57,6 +57,7 @@ import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 		TranslateModule,
 		NetworkSharedBadgesDatatableComponent,
 		BgAwaitPromises,
+		HlmIcon,
 	],
 })
 export class NetworkBadgesComponent {
@@ -231,35 +232,52 @@ export class NetworkBadgesComponent {
 	}
 
 	routeToBadgeAward(badge: BadgeClass) {
-		console.log('badge award', badge);
-		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
-			context: {
-				headerTemplate: this.headerTemplate,
-				content: this.issuerSelection,
-			},
-		});
-		this.dialogRef.closed$.subscribe((result) => {
-			if (result === 'continue')
-				this.router.navigate(['/issuer/issuers/', this.selectedIssuer.slug, 'badges', badge.slug, 'issue']);
-		});
+		if (!this.userIssuers().length) {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					variant: 'failure',
+					text: this.translate.instant('Network.noInstitutionAddedYet'),
+				},
+			});
+		} else {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					headerTemplate: this.headerTemplate,
+					content: this.issuerSelection,
+				},
+			});
+			this.dialogRef.closed$.subscribe((result) => {
+				if (result === 'continue')
+					this.router.navigate(['/issuer/issuers/', this.selectedIssuer.slug, 'badges', badge.slug, 'issue']);
+			});
+		}
 	}
 
 	routeToQRCodeAward(badge) {
-		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
-			context: {
-				headerTemplate: this.headerTemplate,
-				content: this.issuerSelection,
-			},
-		});
-		this.dialogRef.closed$.subscribe((result) => {
-			if (result === 'continue')
-				this.router.navigate(['/issuer/issuers/', this.selectedIssuer.slug, 'badges', badge.slug, 'qr'], {
-					queryParams: {
-						partnerIssuer: this.selectedIssuer.slug,
-						isNetworkBadge: true,
-					},
-				});
-		});
+		if (!this.userIssuers().length) {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					variant: 'failure',
+					text: this.translate.instant('Network.noInstitutionAddedYet'),
+				},
+			});
+		} else {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					headerTemplate: this.headerTemplate,
+					content: this.issuerSelection,
+				},
+			});
+			this.dialogRef.closed$.subscribe((result) => {
+				if (result === 'continue')
+					this.router.navigate(['/issuer/issuers/', this.selectedIssuer.slug, 'badges', badge.slug, 'qr'], {
+						queryParams: {
+							partnerIssuer: this.selectedIssuer.slug,
+							isNetworkBadge: true,
+						},
+					});
+			});
+		}
 	}
 
 	routeToBadgeDetail(badge, issuerSlug, focusRequests: boolean = false) {
