@@ -275,9 +275,9 @@ export class LearningPathEditFormComponent
 			this.learningPathForm.controls.license.addFromTemplate();
 		}
 
-		if (this.issuer.is_network) {
-			this.learningPathForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
-		}
+		// if (this.issuer.is_network) {
+		// 	this.learningPathForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
+		// }
 
 		this.draggableList = this.selectedBadges.map((badge, index) => {
 			return {
