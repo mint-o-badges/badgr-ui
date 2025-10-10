@@ -5,6 +5,7 @@
 		"name": "Name",
 		"email": "Email",
 		"institutions": "Institutions",
+		"network": "Network",
 		"networks": "Networks",
 		"institutionsNav": "Institutions A-Z",
 		"account": "Account",
