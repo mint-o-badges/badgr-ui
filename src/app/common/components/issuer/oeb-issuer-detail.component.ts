@@ -404,13 +404,15 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 				count: this.badgeResults.length,
 				img: this.issuer.image,
 			},
-			{
+		];
+		if (this.env.networksEnabled) {
+			this.badgeTemplateTabs.push({
 				key: 'network-badges',
 				title: 'Issuer.badgesInNetworks',
 				count: this.networkBadgeInstanceResults.length,
 				icon: 'lucideShipWheel',
-			},
-		];
+			});
+		}
 	}
 
 	delete(event) {
