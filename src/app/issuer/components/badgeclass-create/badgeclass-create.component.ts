@@ -43,6 +43,8 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 	@ViewChild('badgeimage') badgeImage;
 
+	navigationState: any;
+
 	constructor(
 		sessionService: SessionService,
 		router: Router,
@@ -62,6 +64,8 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 		// this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 		this.category = this.route.snapshot.params['category'];
+		const navigation = this.router.currentNavigation();
+		this.navigationState = navigation?.extras?.state;
 	}
 
 	async ngOnInit() {
@@ -75,9 +79,8 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 			throw new Error('No valid context parameter found');
 		}
 
-		const state = this.router.currentNavigation()?.extras.state;
-		if (state?.issuer) {
-			this.issuer = state.issuer;
+		if (this.navigationState?.issuer) {
+			this.issuer = this.navigationState.issuer;
 			this.issuerLoaded = Promise.resolve(this.issuer);
 		} else {
 			this.issuerLoaded = this.issuerManager
@@ -107,8 +110,8 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		}
 
 		// Check if there is a badge ID in the state and fetch it if necessary
-		if (state && state.copybadgeid) {
-			this.badgeClassService.issuerBadgeById(state.copybadgeid).then((badge) => {
+		if (this.navigationState && this.navigationState.copybadgeid) {
+			this.badgeClassService.issuerBadgeById(this.navigationState.copybadgeid).then((badge) => {
 				this.category = badge.extension['extensions:CategoryExtension'].Category;
 				this.copiedBadgeClass = badge;
 			});

@@ -617,6 +617,7 @@ export class BadgeClassEditFormComponent
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.fetchTags();
 
 		if (this.issuer.is_network) {
 			this.badgeClassForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
@@ -719,7 +720,6 @@ export class BadgeClassEditFormComponent
 		this.customImageField.control.statusChanges.subscribe((e) => {
 			if (this.customImageField.control.value != null) this.imageField.control.reset();
 		});
-		this.fetchTags();
 
 		this.stepper.selectionChange.subscribe((event) => {
 			this.selectedStep = event.selectedIndex;
@@ -902,11 +902,10 @@ export class BadgeClassEditFormComponent
 	fetchTags() {
 		this.existingTags = [];
 		this.existingTagsLoading = true;
-		// outerThis is needed because inside the observable, `this` is something else
-		let observable = this.badgeClassManager.allBadges$;
 
-		observable.subscribe({
-			next(entities: BadgeClass[]) {
+		this.badgeClassManager.allBadges$.subscribe({
+			// Use arrow function to preserve "this" context
+			next: (entities: BadgeClass[]) => {
 				let tags: string[] = entities.flatMap((entity) => entity.tags);
 				let unique = [...new Set(tags)];
 				unique.sort();
@@ -925,8 +924,9 @@ export class BadgeClassEditFormComponent
 				// that after the first `next` call, the loading is done
 				this.existingTagsLoading = false;
 			},
-			error(err) {
+			error: (err) => {
 				console.error("Couldn't fetch labels: " + err);
+				this.existingTagsLoading = false;
 			},
 		});
 	}
