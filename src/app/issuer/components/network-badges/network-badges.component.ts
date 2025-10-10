@@ -99,8 +99,6 @@ export class NetworkBadgesComponent {
 	network = input.required<Network>();
 	userIssuers = signal<Issuer[]>([]);
 	isLoadingIssuers = signal(false);
-	badgesLoaded: Promise<unknown>;
-	sharedBadgesLoaded: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 
 	badges: BadgeClass[] = [];
@@ -154,6 +152,7 @@ export class NetworkBadgesComponent {
 		});
 		try {
 			await this.loadBadgesAndRequests();
+			await this.loadSharedBadges();
 			this.initializeTabs();
 		} catch (error) {
 			this.messageService.reportAndThrowError(
@@ -161,8 +160,6 @@ export class NetworkBadgesComponent {
 				error,
 			);
 		}
-
-		this.sharedBadgesLoaded = this.loadSharedBadges();
 	}
 
 	private async loadBadgesAndRequests() {
@@ -170,7 +167,9 @@ export class NetworkBadgesComponent {
 
 		const badgesByIssuer = await firstValueFrom(this.badgeClassService.getNetworkBadgesByIssuerUrl$(networkSlug));
 
-		this.badges = this.sortBadgesByCreatedAt(badgesByIssuer[this.network().issuerUrl] || []);
+		this.badges = this.sortBadgesByCreatedAt(badgesByIssuer[this.network().issuerUrl] || []).filter(
+			(b) => b.sharedOnNetwork == null,
+		);
 
 		const requestMap = await this.loadRequestsForBadges(this.badges);
 
