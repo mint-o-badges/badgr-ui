@@ -7,10 +7,10 @@ import { ExternalAuthProvider } from '../model/user-profile-api.model';
 import { UpdatableSubject } from '../util/updatable-subject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavigationService } from './navigation.service';
+import { AuthenticationService } from './authentication-service';
 
 export const EXPIRATION_DATE_STORAGE_KEY = 'LoginService.tokenExpirationDate';
 const IS_OIDC_LOGIN_KEY = 'LoginService.isOidcLogin';
-
 const DEFAULT_EXPIRATION_SECONDS = 24 * 60 * 60;
 
 export interface AuthorizationTokenInformation {
@@ -20,7 +20,7 @@ export interface AuthorizationTokenInformation {
 }
 
 @Injectable({ providedIn: 'root' })
-export class SessionService {
+export class SessionService implements AuthenticationService {
 	baseUrl: string;
 
 	enabledExternalAuthProviders: ExternalAuthProvider[];
