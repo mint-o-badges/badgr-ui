@@ -331,7 +331,7 @@
 		} @else {
 			<div class="tw-mt-8 tw-bg-oebgrey tw-rounded-[5px] tw-px-2 tw-py-4">
 				<div class="tw-flex tw-gap-1 tw-text-purple tw-text-lg tw-leading-[130%]">
-					<span class="tw-font-bold">1. {{ 'Issuer.networkBadges' | translate }}:</span>
+					<span class="tw-font-bold">1. {{ 'Issuer.partnerBadges' | translate }}:</span>
 					<span [innerHTML]="'Issuer.badgesApprovedForNetworks' | translate: { issuer: issuer.name }"></span>
 				</div>
 
@@ -344,7 +344,7 @@
 								[alt]="networkGroup.network.name"
 							/>
 							<div>
-								<h3 class="tw-font-bold tw-text-xl tw-text-oebblack">
+								<h3 class="tw-font-bold tw-text-xl tw-text-oebblack tw-uppercase">
 									{{ networkGroup.network.name }}
 								</h3>
 							</div>
