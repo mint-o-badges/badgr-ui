@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
@@ -12,11 +12,13 @@ import { HttpClient } from '@angular/common/http';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { RecipientBadgeInstance } from '../models/recipient-badge.model';
 import { ApiRootSkill } from '../../common/model/ai-skills.model';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class RecipientBadgeApiService extends BaseHttpApiService {
 	constructor(
-		protected loginService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected loginService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

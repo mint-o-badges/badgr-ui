@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 // import { LoginService } from "../../auth/auth.service";
 import { SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
@@ -14,6 +14,7 @@ import {
 import { timeoutPromise } from '../util/promise-util';
 import { Observable } from 'rxjs';
 import { getCookie } from '../util/cookies';
+import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 export class BadgrApiError extends Error {
 	constructor(
@@ -46,8 +47,8 @@ export abstract class BaseHttpApiService {
 	}
 
 	constructor(
-		// protected sessionService: LoginService,
-		protected sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected authService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,
@@ -78,7 +79,7 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-				withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn),
+				withCredentials: useAuth && (requireAuth || this.authService.isLoggedIn),
 			}),
 		);
 	}
@@ -105,7 +106,7 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-				withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn),
+				withCredentials: useAuth && (requireAuth || this.authService.isLoggedIn),
 			}),
 		);
 	}
@@ -173,7 +174,7 @@ export abstract class BaseHttpApiService {
 		const detectAndHandleResponseErrors = <T extends HttpResponseBase>(response: T): T | never => {
 			if ((response && response.status < 200) || response.status >= 300) {
 				if (response.status === 401 || response.status === 403) {
-					this.sessionService.handleAuthenticationError();
+					this.authService.handleAuthenticationError();
 				} else if (response.status === 0) {
 					this.messageService.reportFatalError(`Server Unavailable`);
 					// TODO: Is this going to cause trouble?

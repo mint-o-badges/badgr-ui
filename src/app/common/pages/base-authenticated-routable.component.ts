@@ -1,7 +1,7 @@
 import { BaseRoutableComponent } from './base-routable.component';
-import { OnInit, Injectable } from '@angular/core';
+import { OnInit, Injectable, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SessionService } from '../services/session.service';
+import { AUTH_PROVIDER, AuthenticationService } from '../services/authentication-service';
 
 /**
  * Base class for all routable components (pages in the applications) that require authentication.
@@ -11,14 +11,15 @@ export class BaseAuthenticatedRoutableComponent extends BaseRoutableComponent im
 	constructor(
 		protected router: Router,
 		protected route: ActivatedRoute,
-		protected sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected authService: AuthenticationService,
 	) {
 		super(router, route);
 	}
 
 	// eslint-disable-next-line @angular-eslint/contextual-lifecycle
 	ngOnInit() {
-		if (!this.sessionService.isLoggedIn) {
+		if (!this.authService.isLoggedIn) {
 			// Do a hard browser redirect to avoid any corrupted state from not being logged in
 			window.location.replace(`/auth/login?authError=${encodeURIComponent('Please log in first')}`);
 

@@ -11,6 +11,7 @@ import {
 	SimpleChanges,
 	AfterViewChecked,
 	OnChanges,
+	Inject,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -24,7 +25,6 @@ import {
 } from '@angular/forms';
 import { Md5 } from 'ts-md5/dist/md5';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import {
 	ApiBadgeClassForCreation,
@@ -66,6 +66,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -480,7 +481,8 @@ export class BadgeClassEditFormComponent
 	previous: string;
 
 	constructor(
-		sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		authService: AuthenticationService,
 		router: Router,
 		route: ActivatedRoute,
 		protected messageService: MessageService,
@@ -491,7 +493,7 @@ export class BadgeClassEditFormComponent
 		private translate: TranslateService,
 		private navService: NavigationService,
 	) {
-		super(router, route, sessionService);
+		super(router, route, authService);
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 

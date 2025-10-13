@@ -121,7 +121,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 	constructor(
 		protected router: Router,
 		route: ActivatedRoute,
-		protected sessionService: SessionService,
+		protected authService: SessionService,
 		protected title: Title,
 		protected messageService: MessageService,
 		protected profileManager: UserProfileManager,
@@ -129,7 +129,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		protected configService: AppConfigService,
 		private translate: TranslateService,
 	) {
-		super(router, route, sessionService);
+		super(router, route, authService);
 		title.setTitle(`Profile - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 
@@ -264,7 +264,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		) {
 			this.profile.delete().then(
 				() => {
-					this.sessionService.logout();
+					this.authService.logout();
 					// Not sure why I need the timeout, but
 					// otherwise the message isn't shown
 					setTimeout(() =>

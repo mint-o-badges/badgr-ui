@@ -10,6 +10,8 @@ import * as translationsDe from 'src/assets/i18n/de.json';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { ROUTE_CONFIG } from '~/app.routes';
 import { OebBadgeClassEditForm } from './oeb-badgeclass-edit-form.component';
+import { AUTH_PROVIDER } from '~/common/services/authentication-service';
+import { TokenAuthService } from '~/common/services/token-auth.service';
 
 createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 	providers: [
@@ -27,5 +29,9 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 			ROUTE_CONFIG,
 			withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
 		),
+		{
+			provide: AUTH_PROVIDER,
+			useClass: TokenAuthService,
+		},
 	],
 });

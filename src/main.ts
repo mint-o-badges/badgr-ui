@@ -16,6 +16,9 @@ import { ROUTE_CONFIG } from './app/app.routes';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { uiTimestamp } from './environments/timestamp';
+import { AUTH_PROVIDER } from '~/common/services/authentication-service';
+import { SessionService } from '~/common/services/session.service';
+import { TokenAuthService } from '~/common/services/token-auth.service';
 
 registerLocaleData(localeDe);
 
@@ -62,5 +65,6 @@ bootstrapApplication(AppComponent, {
 			withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
 		),
 		provideAnimations(),
+		{ provide: AUTH_PROVIDER, useClass: TokenAuthService },
 	],
 }).catch((err) => console.log(err));
