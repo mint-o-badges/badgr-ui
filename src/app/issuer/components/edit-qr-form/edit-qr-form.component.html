@@ -7,7 +7,7 @@
 						class="tw-flex tw-items-center tw-w-[164px] tw-h-[164px] tw-px-4 tw-bg-white tw-mx-auto md:tw-py-8 tw-py-4 tw-rounded-[20px] oeb-slight-shadow tw-grow-0 tw-shrink-0"
 					>
 						<img
-							class="tw-w-[145px] tw-h-[145px] tw-mx-auto tw-block"
+							class="tw-w-[133px] tw-h-[133px] tw-mx-auto tw-block"
 							[loaded-src]="badgeClass.image"
 							[loading-src]="badgeLoadingImageUrl"
 							[error-src]="badgeFailedImageUrl"
@@ -27,14 +27,16 @@
 					{{ 'QrCode.create' | translate }} <br />
 					<span class="tw-font-black tw-text-purple tw-uppercase">{{ badgeClass.name }}</span>
 				</h2>
-				<div class="tw-flex tw-gap-2 tw-items-center md:tw-mt-7 tw-mt-6">
-					<div class="tw-bg-white tw-w-[60px] tw-h-[60px] tw-flex tw-justify-center tw-items-center">
-						<img width="" [src]="issuer.image" alt="Issuer image" />
+				@if (environment.networksEnabled) {
+					<div class="tw-flex tw-gap-2 tw-items-center md:tw-mt-7 tw-mt-6">
+						<div class="tw-bg-white tw-w-[60px] tw-h-[60px] tw-flex tw-justify-center tw-items-center">
+							<img width="" [src]="issuer.image" alt="Issuer image" />
+						</div>
+						<span class="tw-text-oebblack tw-font-semibold tw-text-lg tw-leading-[120%]">{{
+							issuer.name
+						}}</span>
 					</div>
-					<span class="tw-text-oebblack tw-font-semibold tw-text-lg tw-leading-[120%]">{{
-						issuer.name
-					}}</span>
-				</div>
+				}
 				<oeb-input
 					[label]="'General.title' | translate"
 					[placeholder]="'QrCode.titlePlaceholder' | translate"

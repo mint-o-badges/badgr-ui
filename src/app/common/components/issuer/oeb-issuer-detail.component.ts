@@ -397,15 +397,15 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	async ngOnInit() {
 		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
 		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
-		this.badgeTemplateTabs = [
-			{
-				key: 'issuer-badges',
-				title: 'Issuer.issuerBadges',
-				count: this.badgeResults.length,
-				img: this.issuer.image,
-			},
-		];
 		if (this.env.networksEnabled) {
+			this.badgeTemplateTabs = [
+				{
+					key: 'issuer-badges',
+					title: 'Issuer.issuerBadges',
+					count: this.badgeResults.length,
+					img: this.issuer.image,
+				},
+			];
 			this.badgeTemplateTabs.push({
 				key: 'network-badges',
 				title: 'Issuer.badgesInNetworks',
