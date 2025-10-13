@@ -21,6 +21,7 @@ import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { Issuer } from '~/issuer/models/issuer.model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
 	selector: 'edit-qr-form',
@@ -42,6 +43,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() editing: boolean = false;
 
 	qrCodePromise: Promise<any> | null = null;
+
+	environment = environment;
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
