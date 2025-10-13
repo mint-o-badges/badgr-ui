@@ -6,30 +6,30 @@
 		<div class="oeb-section-sm tw-max-w-[1016px] !tw-pb-0">
 			<div class="oeb-headline-container-sm !tw-pb-0">
 				<h1 hlmH1 class="tw-text-purple tw-font-black">
-					@if (category == 'participation') {
+					@if (category === 'participation') {
 						<span>
-							@if (translate.currentLang == 'en') {
+							@if (translate.currentLang === 'en') {
 								<span>{{
 									copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
 								}}</span>
 							}
 							{{ 'Badge.participation' | translate }}-Badge
-							@if (translate.currentLang == 'de') {
+							@if (translate.currentLang === 'de') {
 								<span>{{
 									copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
 								}}</span>
 							}
 						</span>
 					}
-					@if (category == 'competency') {
+					@if (category === 'competency') {
 						<span>
-							@if (translate.currentLang == 'en') {
+							@if (translate.currentLang === 'en') {
 								<span>{{
 									copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
 								}}</span>
 							}
 							{{ 'Badge.competency' | translate }}-Badge
-							@if (translate.currentLang == 'de') {
+							@if (translate.currentLang === 'de') {
 								<span>{{
 									copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
 								}}</span>
@@ -45,7 +45,7 @@
 				<badgeclass-edit-form
 					#badgeimage
 					(save)="badgeClassCreated($event)"
-					(cancel)="creationCanceled()"
+					(cancelEdit)="creationCanceled()"
 					[scrolled]="scrolled"
 					[issuer]="issuer"
 					[category]="category"

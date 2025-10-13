@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild, TemplateRef } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, TemplateRef, SimpleChanges, AfterViewInit } from '@angular/core';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -86,7 +86,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		}
 	</div>`,
 })
-export class OebSelectComponent {
+export class OebSelectComponent implements AfterViewInit {
 	@Input() control: FormControl;
 	@Input() initialValue: string;
 	@Input() label: string;
@@ -200,6 +200,27 @@ export class OebSelectComponent {
 		if (this.autofocus) {
 			this.focus();
 		}
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+		// Unlocked by default when there is no value
+		if (!this.control.value) {
+			this.unlocked = true;
+		}
+
+		if ('initialValue' in changes) {
+			const initialValue = changes['initialValue'].currentValue;
+			if (
+				(this.value === null || this.value === undefined || this.value === '') &&
+				initialValue !== null &&
+				initialValue !== undefined &&
+				initialValue !== ''
+			) {
+				this.control.setValue(initialValue);
+			}
+		}
+
+		this.updateDisabled();
 	}
 
 	updateDisabled() {

@@ -1,9 +1,9 @@
-import { Directive } from '@angular/core';
+import { Directive, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 
 @Directive({ selector: '[sourceListener]' })
-export class SourceListenerDirective {
+export class SourceListenerDirective implements OnInit {
 	getVars = ['signup', 'source'];
 	getVarSets = ['assertion'];
 

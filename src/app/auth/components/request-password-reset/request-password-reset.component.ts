@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EmailValidator } from '../../../common/validators/email.validator';
@@ -30,7 +30,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 		TranslatePipe,
 	],
 })
-export class RequestPasswordResetComponent extends BaseRoutableComponent {
+export class RequestPasswordResetComponent extends BaseRoutableComponent implements OnInit {
 	readonly requestPasswordResetForm = typedFormGroup().addControl('username', '', [
 		Validators.required,
 		EmailValidator.validEmail,
@@ -51,8 +51,6 @@ export class RequestPasswordResetComponent extends BaseRoutableComponent {
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		if (this.sessionService.isLoggedIn) {
 			this.router.navigate(['/userProfile']);
 		}

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -21,7 +21,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
 	imports: [HlmH1, HlmP, FormsModule, OebButtonComponent, TranslatePipe],
 })
-export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
+export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent implements OnChanges {
 	@Input() importPreviewData: BulkIssueImportPreviewData;
 
 	@Output() updateStateEmitter = new EventEmitter<ViewState>();
@@ -60,7 +60,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		this.columnHeadersCount = this.importPreviewData.columnHeaders.length;
 
 		if (!this.importPreviewData.rowLongerThenHeader) {
-			this.isEmailColumnHeaderMapped() ? this.enableActionButton() : this.disableActionButton();
+			if (this.isEmailColumnHeaderMapped()) this.enableActionButton();
+			else this.disableActionButton();
 		}
 	}
 
@@ -116,7 +117,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 				}
 			});
 
-			emptyCellsAreOptional ? this.importPreviewData.validRows.push(row) : invalidRow.push(row);
+			if (emptyCellsAreOptional) this.importPreviewData.validRows.push(row);
+			else invalidRow.push(row);
 		});
 
 		this.importPreviewData.invalidRows = invalidRow;
@@ -166,7 +168,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 			}
 		});
 
-		this.isEmailColumnHeaderMapped() ? this.enableActionButton() : this.disableActionButton();
+		if (this.isEmailColumnHeaderMapped()) this.enableActionButton();
+		else this.disableActionButton();
 	}
 
 	getEmailFromRow(row) {
@@ -177,7 +180,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		return this.getCellFromRowByDestName('name', row);
 	}
 
-	getCellFromRowByDestName(destName: string, row: Object) {
+	getCellFromRowByDestName(destName: string, row: object) {
 		return row[this.destNameToColumnHeaderMap[destName]];
 	}
 

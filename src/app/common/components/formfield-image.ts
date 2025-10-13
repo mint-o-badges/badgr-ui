@@ -210,7 +210,6 @@ export class BgFormFieldImageComponent {
 
 	fileInputChanged(ev: Event) {
 		const input: HTMLInputElement = ev.target as HTMLInputElement;
-		const self = this;
 
 		this.generated = false;
 		if (input.files && input.files[0]) {

@@ -38,7 +38,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 						class="tw-py-4"
 						[control]="credentialsForm.rawControlMap.client_name"
 						[errorMessage]="{
-							required: 'Name erforderlich'
+							required: 'Name erforderlich',
 						}"
 						[autofocus]="true"
 					></bg-formfield-text>

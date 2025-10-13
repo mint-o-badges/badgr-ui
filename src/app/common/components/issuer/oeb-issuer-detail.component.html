@@ -63,7 +63,7 @@
 				</oeb-button>
 
 				<!-- Network section -->
-				@if (env.networksEnabled) {
+				@if (env.networksEnabled && networks.length) {
 					<section
 						class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
 					>
@@ -80,6 +80,32 @@
 										<img class="tw-w-[33px]" [src]="network.image" />
 										<span class="tw-text-oebblack">
 											{{ network.name }}
+										</span>
+									</li>
+								}
+							</ul>
+						</div>
+					</section>
+				}
+
+				<!-- Partner Issuers section -->
+				@if (env.networksEnabled && partner_issuers.length) {
+					<section
+						class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
+					>
+						<div>
+							<h2 class="tw-w-full tw-text-lg tw-font-boldtw-text-lg tw-text-oebblack tw-font-bold">
+								{{ 'Network.partner' | translate }}
+							</h2>
+							<ul class="tw-w-full tw-list-none tw-mt-2">
+								@for (partner of partner_issuers; track partner) {
+									<li
+										class="tw-flex tw-gap-2 tw-items-center"
+										[routerLink]="['/public/issuers', partner.slug]"
+									>
+										<img class="tw-w-[33px]" [src]="partner.image" />
+										<span class="tw-text-oebblack">
+											{{ partner.name }}
 										</span>
 									</li>
 								}
@@ -167,6 +193,78 @@
 	></oeb-tabs>
 
 	<ng-template #badgesTemplate>
+		@if (env.networksEnabled) {
+			<div class="tw-mt-12">
+				<oeb-tabs
+					[variant]="'bluebackground'"
+					(onTabChanged)="onNestedTabChange($event)"
+					[tabs]="badgeTemplateTabs"
+					[activeTab]="activeTabBadgeTemplate"
+					countStyle="parentheses"
+				>
+				</oeb-tabs>
+			</div>
+		}
+
+		@switch (activeTabBadgeTemplate) {
+			@case ('issuer-badges') {
+				<ng-container *ngTemplateOutlet="issuerBadgesTemplate"></ng-container>
+			}
+			@case ('network-badges') {
+				<ng-container *ngTemplateOutlet="networkBadgesTemplate"></ng-container>
+			}
+		}
+	</ng-template>
+	<ng-template #learningPathTemplate>
+		<div class="oeb-section-sm">
+			<ng-template [bgAwaitPromises]="learningPathsPromise">
+				<div *ngIf="!learningPaths?.length">
+					<p class="oeb-break-words" hlmP>
+						{{ issuer.name }} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }}
+					</p>
+				</div>
+				<div *ngIf="learningPaths && learningPaths.length > 0">
+					<h2
+						class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4 oeb-break-words"
+					>
+						{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Micro
+						Degree{{ learningPaths.length === 1 ? '' : 's' }}.
+					</h2>
+					<learningpaths-datatable
+						*ngIf="!public"
+						[learningPaths]="apiLearningPaths"
+						[issuer]="isFullIssuer(issuer) ? issuer : null"
+						(onDelete)="deleteLearningPath($event, issuer)"
+						(onNavigateToDetail)="redirectToLearningPathDetail($event, issuer)"
+					></learningpaths-datatable>
+
+					<ng-container *ngIf="public">
+						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-6">
+							@for (lp of learningPaths; track lp) {
+								@if (lp.activated) {
+									<bg-learningpathcard
+										[name]="lp.name"
+										[issuerTitle]="issuer.name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[completed]="false"
+										[requested]="lp.requested"
+										[progress]="lp.progress"
+										[matchOrProgress]="undefined"
+										[badgeImage]="$any(lp).image"
+									></bg-learningpathcard>
+								}
+							}
+						</div>
+					</ng-container>
+				</div>
+			</ng-template>
+		</div>
+	</ng-template>
+
+	<ng-template #issuerBadgesTemplate>
 		<section class="oeb-section-sm" *ngIf="!badges?.length">
 			<h2
 				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] oeb-break-words"
@@ -180,7 +278,7 @@
 				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4"
 			>
 				{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ badgeResults.length }} Badge{{
-					badges.length == 1 ? '' : 's'
+					badges.length === 1 ? '' : 's'
 				}}.
 			</h2>
 			<ng-template [bgAwaitPromises]="requestsLoaded">
@@ -223,52 +321,84 @@
 			</ng-container>
 		</section>
 	</ng-template>
-	<ng-template #learningPathTemplate>
-		<div class="oeb-section-sm">
-			<ng-template [bgAwaitPromises]="learningPathsPromise">
-				<div *ngIf="!learningPaths?.length">
-					<p class="oeb-break-words" hlmP>
-						{{ issuer.name }} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }}
-					</p>
-				</div>
-				<div *ngIf="learningPaths && learningPaths.length > 0">
-					<h2
-						class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4 oeb-break-words"
-					>
-						{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Micro
-						Degree{{ learningPaths.length == 1 ? '' : 's' }}.
-					</h2>
-					<learningpaths-datatable
-						*ngIf="!public"
-						[learningPaths]="apiLearningPaths"
-						[issuer]="isFullIssuer(issuer) ? issuer : null"
-						(onDelete)="deleteLearningPath($event, issuer)"
-						(onNavigateToDetail)="redirectToLearningPathDetail($event, issuer)"
-					></learningpaths-datatable>
 
-					<ng-container *ngIf="public">
-						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-6">
-							@for (lp of learningPaths; track lp) {
-								@if (lp.activated) {
-									<bg-learningpathcard
-										[name]="lp.name"
-										[issuerTitle]="issuer.name"
-										[description]="lp.description"
-										[tags]="lp.tags"
-										[slug]="lp.slug"
-										[studyLoad]="calculateStudyLoad(lp)"
-										[completed]="false"
-										[requested]="lp.requested"
-										[progress]="lp.progress"
-										[matchOrProgress]="undefined"
-										[badgeImage]="$any(lp).image"
-									></bg-learningpathcard>
-								}
-							}
-						</div>
-					</ng-container>
+	<ng-template #networkBadgesTemplate>
+		@if (!networkGroupsArray.length) {
+			<div
+				class="tw-mt-8 tw-bg-oebgrey tw-rounded-[5px] tw-px-2 tw-py-4 tw-flex tw-gap-1 tw-text-oebblack tw-text-lg tw-leading-[130%]"
+			>
+				<span class="tw-font-bold">1. {{ 'Issuer.partnerBadges' | translate }}:</span>
+				<span [innerHTML]="'Issuer.noBadgesApprovedForNetworks' | translate: { issuer: issuer.name }"></span>
+			</div>
+		} @else {
+			<div class="tw-mt-8 tw-bg-oebgrey tw-rounded-[5px] tw-px-2 tw-py-4">
+				<div class="tw-flex tw-gap-1 tw-text-purple tw-text-lg tw-leading-[130%]">
+					<span class="tw-font-bold">1. {{ 'Issuer.networkBadges' | translate }}:</span>
+					<span [innerHTML]="'Issuer.badgesApprovedForNetworks' | translate: { issuer: issuer.name }"></span>
 				</div>
-			</ng-template>
-		</div>
+
+				@for (networkGroup of networkGroupsArray; track networkGroup.network.slug) {
+					<div class="tw-mt-6">
+						<div class="tw-px-2 tw-py-3 tw-flex tw-items-center tw-gap-3 tw-border-b-2 tw-border-purple">
+							<img
+								class="tw-w-12 tw-h-12 tw-object-cover tw-rounded"
+								[src]="networkGroup.network.image"
+								[alt]="networkGroup.network.name"
+							/>
+							<div>
+								<h3 class="tw-font-bold tw-text-xl tw-text-oebblack">
+									{{ networkGroup.network.name }}
+								</h3>
+							</div>
+						</div>
+
+						<badges-datatable
+							[badges]="networkGroup.badges"
+							(directBadgeAward)="routeToBadgeAward($event, issuer)"
+							(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+							(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.focusRequests)"
+						></badges-datatable>
+					</div>
+				}
+
+				@if (networkGroupsArray.length === 0) {
+					<div class="tw-px-2 tw-py-8 tw-text-center tw-text-gray-500">
+						{{ 'Issuer.noSharedNetworkBadges' | translate }}
+					</div>
+				}
+			</div>
+		}
+		@if (networkBadgeInstanceResults.length) {
+			<div class="tw-mt-12 tw-bg-[#F8F6FC]">
+				<div class="tw-px-2 tw-py-4 tw-flex tw-gap-1 tw-text-purple tw-text-lg tw-leading-[130%]">
+					<span class="tw-font-bold">2. {{ 'Issuer.networkBadges' | translate }}:</span>
+					<span [innerHTML]="'Issuer.awardedNetworkBadges' | translate: { issuer: issuer.name }"></span>
+				</div>
+				@for (group of networkBadgeInstanceResults; track group) {
+					<div
+						class="tw-px-2 tw-py-2 tw-gap-2 tw-flex tw-items-center tw-font-semibold tw-text-lg tw-leading-[130%] tw-uppercase tw-text-oebblack"
+					>
+						<img class="tw-w-12" [src]="group.networkIssuer.image" alt="Network Logo" />
+						<span>{{ group.issuerName }}</span>
+					</div>
+
+					<badges-datatable
+						[badges]="group.badges"
+						(directBadgeAward)="routeToBadgeAward($event, issuer)"
+						(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+						(redirectToBadgeDetail)="
+							routeToBadgeDetail($event.badge, group.networkIssuer, $event.focusRequests)
+						"
+					></badges-datatable>
+				}
+			</div>
+		} @else {
+			<div
+				class="tw-mt-6 tw-bg-oebgrey tw-rounded-[5px] tw-px-2 tw-py-4 tw-flex tw-gap-1 tw-text-oebblack tw-text-lg tw-leading-[130%]"
+			>
+				<span class="tw-font-bold">2. {{ 'Issuer.networkBadges' | translate }}:</span>
+				<span [innerHTML]="'Issuer.noAwardedNetworkBadges' | translate: { issuer: issuer.name }"></span>
+			</div>
+		}
 	</ng-template>
 </div>

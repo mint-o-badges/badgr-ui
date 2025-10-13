@@ -22,7 +22,7 @@
 				class="tw-absolute tw-mt-1 tw-z-10 tw-bg-white tw-rounded-md tw-shadow-sm tw-border tw-border-solid tw-border-gray-700 tw-w-full tw-overflow-auto"
 				[ngStyle]="{
 					'max-height.px': calculateDropdownMaxHeight(issuerSearchInput, 100),
-					'bottom.px': calculateDropdownBottom(issuerSearchInput, 100)
+					'bottom.px': calculateDropdownBottom(issuerSearchInput, 100),
 				}"
 			>
 				<ul>
@@ -38,7 +38,7 @@
 							<span>{{ issuer.name }}</span>
 						</li>
 					}
-					@if (issuerSearchResults.length == 0) {
+					@if (issuerSearchResults.length === 0) {
 						<li class="tw-p-2 tw-text-gray-500 tw-cursor-default">Keine Ergebnisse</li>
 					}
 				</ul>
@@ -48,11 +48,11 @@
 			<ul>
 				@for (issuer of selectedIssuers; track issuer) {
 					<li
-						class="tw-flex tw-justify-between tw-border-purple tw-border tw-border-solid tw-rounded-[10px] tw-p-2 tw-mb-2"
+						class="tw-flex tw-justify-between tw-border-purple tw-border tw-border-solid tw-rounded-[10px] tw-p-5 tw-mb-3"
 					>
 						<div class="tw-flex tw-gap-2">
 							<img [src]="issuer.image" width="24" height="24" />
-							<span>{{ issuer.name }}</span>
+							<span class="tw-text-oebblack tw-font-bold">{{ issuer.name }}</span>
 						</div>
 						<span (click)="removeSelectedissuer(issuer)" class="tw-text-link tw-cursor-pointer">{{
 							'General.remove' | translate
@@ -61,22 +61,24 @@
 				}
 			</ul>
 		}
-		<section class="tw-mb-4">
+		<section class="tw-my-8">
 			@if (selectedIssuers.length) {
 				<p
-					class="tw-italic tw-text-purple tw-text-lg tw-mb-2"
+					class="tw-italic tw-text-purple tw-text-lg tw-leading-[130%] tw-mb-6"
 					(click)="collapseRoles()"
 					[innerHTML]="'Network.rolesAndRights' | translate"
 				></p>
 			}
 			@if (rightsAndRolesExpanded) {
-				<h2 class="tw-font-bold tw-text-[22px] tw-text-oebblack">{{ 'General.rolesAndRights' | translate }}</h2>
+				<h2 class="tw-font-bold tw-text-[22px] tw-text-oebblack tw-leading-[130%]">
+					{{ 'General.rolesAndRights' | translate }}
+				</h2>
 				<dl>
-					@for (role of networkStaffRoleOptions; track role; let last = $last) {
-						<dt class="tw-text-lg tw-font-semibold tw-text-oebblack">
+					@for (role of issuerStaffRoleOptions; track role; let last = $last) {
+						<dt class="tw-text-lg tw-font-semibold tw-text-oebblack tw-mt-2 tw-leading-[130%]">
 							{{ role.label | translate }}
 						</dt>
-						<dd class="tw-text-lg tw-text-oebblack">
+						<dd class="tw-text-lg tw-text-oebblack tw-leading-[130%]">
 							{{ role.description | translate }}
 						</dd>
 					}
@@ -93,6 +95,11 @@
 </ng-container>
 
 <ng-template #inviteSuccessContent>
-	<span class="tw-text-oebblack">{{ 'Network.notifiedIssuerOwners' | translate }}</span>
-	<span class="tw-text-oebblack"> {{ 'Network.visibleAfterConfirmation' | translate }}</span>
+	<div class="tw-text-center tw-text-lg tw-leading-[130%] tw-flex tw-flex-col">
+		<span class="tw-text-oebblack">{{ 'Network.notifiedIssuerOwners' | translate }}</span>
+		<span class="tw-text-purple tw-mt-4 tw-mb-8 tw-italic">
+			{{ 'Network.visibleAfterConfirmation' | translate }}</span
+		>
+		<oeb-button size="sm" [text]="'OK'" (click)="closeDialog()"></oeb-button>
+	</div>
 </ng-template>

@@ -25,12 +25,12 @@ export class BgIssuerLinkComponent implements OnChanges {
 		'../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 
-	@Input('bgIssuerLink')
+	@Input()
 	bgIssuerLink: Issuer;
 
 	constructor(private elemRef: ElementRef) {}
 
-	ngOnChanges(changes: {}) {
+	ngOnChanges() {
 		if (!this.bgIssuerLink || !this.bgIssuerLink.websiteUrl) {
 			this.elem.removeAttribute('href');
 		} else {

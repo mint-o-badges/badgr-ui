@@ -12,6 +12,7 @@ export abstract class BaseDialog implements AfterViewInit {
 		return this.componentElem.nativeElement.querySelector<HTMLDialogElement>('dialog');
 	}
 
+	// eslint-disable-next-line @angular-eslint/contextual-lifecycle
 	ngAfterViewInit() {
 		this.renderer.listen(this.dialogElem, 'close', () => this.onDialogClosed());
 		this.renderer.listen(this.dialogElem, 'cancel', () => this.onDialogCanceled());

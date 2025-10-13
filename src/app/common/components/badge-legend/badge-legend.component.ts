@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { SvgIconComponent } from '../svg-icon.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -8,12 +8,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 	styleUrls: ['./badge-legend.component.css'],
 	imports: [SvgIconComponent, TranslatePipe],
 })
-export class BadgeLegendComponent implements OnInit {
+export class BadgeLegendComponent {
 	@Output() closed = new EventEmitter();
-
-	constructor() {}
-
-	ngOnInit() {}
 
 	close() {
 		this.closed.emit();

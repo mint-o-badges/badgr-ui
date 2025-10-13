@@ -9,6 +9,8 @@ import {
 	Output,
 	SimpleChanges,
 	ViewChild,
+	OnChanges,
+	AfterViewInit,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
@@ -22,7 +24,7 @@ import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LearningPath } from '../../models/learningpath.model';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
 import { StepperComponent } from '../../../components/stepper/stepper.component';
@@ -56,6 +58,8 @@ import { BgImageStatusPlaceholderDirective } from '~/common/directives/bg-image-
 import { sortUnique } from '~/catalog/util/sorting';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
+import { UpperCasePipe } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
@@ -75,6 +79,7 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		AutocompleteLibModule,
 		OebButtonComponent,
 		TranslatePipe,
+		TranslateModule,
 		OebInputComponent,
 		BgFormFieldImageComponent,
 		BadgeStudioComponent,
@@ -88,9 +93,13 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		DndDropzoneDirective,
 		OebCheckboxComponent,
 		BgImageStatusPlaceholderDirective,
+		UpperCasePipe,
 	],
 })
-export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class LearningPathEditFormComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, OnChanges, AfterViewInit
+{
 	@ViewChild(StepperComponent) stepper: StepperComponent;
 
 	@ViewChild('badgeStudio')
@@ -131,7 +140,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	save = new EventEmitter<Promise<LearningPath>>();
 
 	@Output()
-	cancel = new EventEmitter<void>();
+	cancelEdit = new EventEmitter<void>();
 
 	@Input()
 	submittingText: string;
@@ -171,13 +180,13 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	issuers: string[] = [];
 	tags: string[] = [];
 
-	useOurEditor: string;
-	imageSublabel: string;
-	useOwnVisual: string;
-	uploadOwnVisual: string;
-	uploadOwnDesign: string;
-	chooseFromExistingIcons: string;
-	selectFromMyFiles: string;
+	useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
+	imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
+	useOwnVisual = this.translate.instant('CreateBadge.useOwnVisual');
+	uploadOwnDesign = this.translate.instant('CreateBadge.uploadOwnDesign');
+	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
+	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
+	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 
 	badgesLoaded: Promise<unknown>;
 	loadingPromise: Promise<unknown>;
@@ -186,8 +195,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	badgeResults: BadgeResult[] = null;
 	badgesFormArray: any;
 
-	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
-	badgeResultsByCategory: MatchingBadgeCategory[] = [];
 	selectedTag: string = null;
 	order = 'asc';
 	private _searchQuery = '';
@@ -196,15 +203,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
-		this.updateResults();
-	}
-
-	private _groupBy = '---';
-	get groupBy() {
-		return this._groupBy;
-	}
-	set groupBy(val: string) {
-		this._groupBy = val;
 		this.updateResults();
 	}
 
@@ -276,6 +274,11 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		if (!this.initialisedLearningpath) {
 			this.learningPathForm.controls.license.addFromTemplate();
 		}
+
+		// if (this.issuer.is_network) {
+		// 	this.learningPathForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
+		// }
+
 		this.draggableList = this.selectedBadges.map((badge, index) => {
 			return {
 				id: badge.slug,
@@ -286,42 +289,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				issuerName: badge.issuerName,
 				order: index,
 			};
-		});
-		this.translate.get('General.next').subscribe((next) => {
-			this.next = next;
-		});
-		this.translate.get('General.previous').subscribe((previous) => {
-			this.previous = previous;
-		});
-
-		this.translate.get('Badge.category').subscribe((translatedText: string) => {
-			this.groups[0] = translatedText;
-		});
-
-		this.translate.get('Badge.issuer').subscribe((translatedText: string) => {
-			this.groups[1] = translatedText;
-		});
-
-		this.translate.get('CreateBadge.useOurEditor').subscribe((res: string) => {
-			this.useOurEditor = res;
-		});
-		this.translate.get('CreateBadge.imageSublabel').subscribe((res: string) => {
-			this.imageSublabel = res;
-		});
-		this.translate.get('CreateBadge.useOwnVisual').subscribe((res: string) => {
-			this.useOwnVisual = res;
-		});
-		this.translate.get('RecBadge.uploadOwnVisual').subscribe((res: string) => {
-			this.uploadOwnVisual = res;
-		});
-		this.translate.get('CreateBadge.uploadOwnDesign').subscribe((res: string) => {
-			this.uploadOwnDesign = res;
-		});
-		this.translate.get('RecBadge.chooseFromExistingIcons').subscribe((res: string) => {
-			this.chooseFromExistingIcons = res;
-		});
-		this.translate.get('RecBadge.selectFromMyFiles').subscribe((res: string) => {
-			this.selectFromMyFiles = res;
 		});
 
 		if (!this.initialisedLearningpath) {
@@ -448,14 +415,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			};
 		});
 	}
-	groups: string[] = [];
-	// groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
-	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
-		competency: '',
-		participation: '',
-		learningpath: '',
-		noCategory: '',
-	};
 
 	// updateTags(tags: string[]) {
 	// 	this.lpTags = tags;
@@ -511,17 +470,11 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		if (!Array.isArray(badges)) return [];
 
 		const options = badges
-			.map((_, i) => ({
-				label: String(i + 1),
-				value: String(i + 1),
-			}))
+			.map((_, i) => ({ label: String(i + 1), value: String(i + 1) }))
 			.filter((v) => parseInt(v.value) !== badges.length && parseInt(v.value) >= 2)
 			.reverse();
 
-		options.unshift({
-			label: 'General.all',
-			value: badges.length.toString(),
-		});
+		options.unshift({ label: 'General.all', value: badges.length.toString() });
 
 		const currentValue = this.learningPathForm.controls.required_badges_count.value;
 		const currentValueExists = options.some((opt) => opt.value === currentValue);
@@ -549,10 +502,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			setTimeout(() => {
 				if (this.activationSection?.nativeElement) {
 					this.hasScrolled = true;
-					this.activationSection.nativeElement.scrollIntoView({
-						behavior: 'smooth',
-						block: 'center',
-					});
+					this.activationSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 				}
 			}, 100);
 			// 	if (this.activationSection.nativeElement.offsetTop > 0) this.hasScrolled = true;
@@ -597,82 +547,46 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	cancelClicked() {
-		this.cancel.emit();
+		this.cancelEdit.emit();
 	}
 
 	async loadBadges() {
 		this.badges = [];
 		this.badgeResults = [];
-		return new Promise(async (resolve, reject) => {
-			this.badgeClassService.badgesByIssuerUrl$.subscribe(
-				(badges) => {
-					Object.values(badges).forEach((badgeList) => {
-						this.badges.push(
-							...badgeList
-								.slice()
-								.filter(
-									(b) =>
-										b.extension['extensions:StudyLoadExtension'].StudyLoad > 0 &&
-										b.extension['extensions:CategoryExtension'].Category !== 'learningpath',
-								)
-								.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
-						);
-						this.badgesFormArray = this.learningPathForm.controls.badges.value;
-						this.tags = sortUnique(this.tags);
-						this.issuers = sortUnique(this.issuers);
-						this.updateResults();
-					});
 
-					this.badgeResults = this.badges;
-					this.badgeResults.forEach((badge) => {
-						this.badgesFormArray.push({ badge: badge, order: 0, selected: false });
-						this.tags = this.tags.concat(badge.tags);
-						this.issuers = this.issuers.concat(badge.issuer);
-					});
-					this.tags = sortUnique(this.tags);
-					this.issuers = sortUnique(this.issuers);
-					this.updateResults();
-					resolve(badges);
-				},
-				(error) => {
-					this.messageService.reportAndThrowError('Failed to load badges', error);
-				},
-			);
-		});
+		try {
+			const badgesByIssuer = await firstValueFrom(this.badgeClassService.badgesByIssuerUrl$);
+
+			const issuerBadges = badgesByIssuer[this.issuer.issuerUrl] || [];
+
+			this.badges = issuerBadges
+				.filter(
+					(b) =>
+						b.extension['extensions:StudyLoadExtension'].StudyLoad > 0 &&
+						b.extension['extensions:CategoryExtension'].Category !== 'learningpath',
+				)
+				.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+			this.badgeResults = this.badges;
+			this.badgesFormArray = this.learningPathForm.controls.badges.value;
+
+			this.badgeResults.forEach((badge) => {
+				this.badgesFormArray.push({ badge: badge, order: 0, selected: false });
+				this.tags = this.tags.concat(badge.tags);
+				this.issuers = this.issuers.concat(badge.issuer);
+			});
+
+			this.tags = sortUnique(this.tags);
+			this.issuers = sortUnique(this.issuers);
+			this.updateResults();
+
+			return badgesByIssuer;
+		} catch (error) {
+			this.messageService.reportAndThrowError('Failed to load badges', error);
+			throw error;
+		}
 	}
 
-	loadAllBadges() {
-		this.loadingPromise = this.loadAllPublicBadges();
-	}
-	async loadAllPublicBadges() {
-		return new Promise(async (resolve, reject) => {
-			this.badgeClassService.allPublicBadges$.subscribe(
-				(badges) => {
-					this.badges = badges
-						.slice()
-						.filter((b) => b.extension['extensions:StudyLoadExtension'].StudyLoad > 0)
-						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-					this.badgeResults = this.badges;
-
-					this.badgesFormArray = this.learningPathForm.controls.badges.value;
-					badges.forEach((badge) => {
-						this.badgesFormArray.push({ badge: badge, order: 0, selected: false });
-						this.tags = this.tags.concat(badge.tags);
-						this.issuers = this.issuers.concat(badge.issuer);
-					});
-
-					this.tags = sortUnique(this.tags);
-					this.issuers = sortUnique(this.issuers);
-					this.updateResults();
-					this.allBadgesLoaded = true;
-					resolve(badges);
-				},
-				(error) => {
-					this.messageService.reportAndThrowError('Failed to load badges', error);
-				},
-			);
-		});
-	}
 	private badgeMatcher(inputPattern: string): (badge) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
@@ -686,69 +600,20 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		this.order = order;
 		if (this.order === 'asc') {
 			this.badgeResults.sort((a, b) => a.name.localeCompare(b.name));
-			this.badgeResultsByIssuer
-				.sort((a, b) => a.issuerName.localeCompare(b.issuerName))
-				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
-			this.badgeResultsByCategory
-				.sort((a, b) => a.category.localeCompare(b.category))
-				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
 		} else {
 			this.badgeResults.sort((a, b) => b.name.localeCompare(a.name));
-			this.badgeResultsByIssuer
-				.sort((a, b) => b.issuerName.localeCompare(a.issuerName))
-				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
-			this.badgeResultsByCategory
-				.sort((a, b) => b.category.localeCompare(a.category))
-				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
 		}
 	}
 
 	private updateResults() {
-		let that = this;
 		// Clear Results
 		this.badgeResults = [];
-		this.badgeResultsByIssuer = [];
-		const badgeResultsByIssuerLocal = {};
-		this.badgeResultsByCategory = [];
-		const badgeResultsByCategoryLocal = {};
-		var addBadgeToResultsByIssuer = function (item) {
-			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
-			if (!issuerResults) {
-				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
-					item.issuerName,
-					'',
-				);
-				// append result to the issuerResults array bound to the view template.
-				that.badgeResultsByIssuer.push(issuerResults);
-			}
-			issuerResults.addBadge(item);
-			return true;
-		};
-		var addBadgeToResultsByCategory = function (item) {
-			let itemCategory =
-				item.extension && item.extension['extensions:CategoryExtension']
-					? item.extension['extensions:CategoryExtension'].Category
-					: 'noCategory';
-			let categoryResults = badgeResultsByCategoryLocal[itemCategory];
-			if (!categoryResults) {
-				categoryResults = badgeResultsByCategoryLocal[itemCategory] = new MatchingBadgeCategory(
-					itemCategory,
-					'',
-				);
-				// append result to the categoryResults array bound to the view template.
-				that.badgeResultsByCategory.push(categoryResults);
-			}
-			categoryResults.addBadge(item);
-			return true;
-		};
 		this.badges
 			.filter(this.badgeMatcher(this.searchQuery))
 			.filter(this.badgeTagMatcher(this.selectedTag))
 			.filter((i) => !i.apiModel.source_url)
 			.forEach((item) => {
-				that.badgeResults.push(item);
-				addBadgeToResultsByIssuer(item);
-				addBadgeToResultsByCategory(item);
+				this.badgeResults.push(item);
 			});
 	}
 
@@ -779,29 +644,20 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	fetchTags() {
 		this.existingTags = [];
 		this.existingTagsLoading = true;
-		// outerThis is needed because inside the observable, `this` is something else
-		let outerThis = this;
-		let observable = this.learningPathManager.allLearningPaths$;
 
-		observable.subscribe({
-			next(entities: LearningPath[]) {
+		this.learningPathManager.allPublicLearningPaths$.subscribe({
+			// Use arrow function to preserve "this" context
+			next: (entities: LearningPath[]) => {
 				let tags: string[] = entities.flatMap((entity) => entity.tags);
 				let unique = [...new Set(tags)];
 				unique.sort();
-				outerThis.existingTags = unique.map((tag, index) => ({
-					id: index,
-					name: tag,
-				}));
-				outerThis.tagOptions = outerThis.existingTags.map(
-					(tag) =>
-						({
-							value: tag.name,
-							label: tag.name,
-						}) as FormFieldSelectOption,
+				this.existingTags = unique.map((tag, index) => ({ id: index, name: tag }));
+				this.tagOptions = this.existingTags.map(
+					(tag) => ({ value: tag.name, label: tag.name }) as FormFieldSelectOption,
 				);
 				// The tags are loaded in one badge, so it's save to assume
 				// that after the first `next` call, the loading is done
-				outerThis.existingTagsLoading = false;
+				this.existingTagsLoading = false;
 			},
 			error(err) {
 				console.error("Couldn't fetch labels: " + err);
@@ -883,31 +739,31 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 			this.existingLpBadge.imageFrame = imageFrame;
 			this.existingLpBadge.image = !imageFrame ? formState.badge_image : null;
-			(this.existingLpBadge.name = formState.name),
-				(this.existingLpBadge.description = formState.description),
-				(this.existingLpBadge.tags = Array.from(this.lpTags)),
-				(this.existingLpBadge.criteria_text = criteriaText),
-				(this.existingLpBadge.criteria_url = ''),
-				(this.existingLpBadge.extension = {
-					'extensions:StudyLoadExtension': {
-						'@context': studyLoadExtensionContextUrl,
-						type: ['Extension', 'extensions:StudyLoadExtension'],
-						StudyLoad: this.studyLoad,
-					},
-					'extensions:CategoryExtension': {
-						'@context': categoryExtensionContextUrl,
-						type: ['Extension', 'extensions:CategoryExtension'],
-						Category: 'learningpath',
-					},
-					'extensions:LicenseExtension': {
-						'@context': licenseExtensionContextUrl,
-						type: ['Extension', 'extensions:LicenseExtension'],
-						id: this.learningPathForm.value.license[0].id,
-						name: this.learningPathForm.value.license[0].name,
-						legalCode: this.learningPathForm.value.license[0].legalCode,
-					},
-					'extensions:CompetencyExtension': [],
-				});
+			this.existingLpBadge.name = formState.name;
+			this.existingLpBadge.description = formState.description;
+			this.existingLpBadge.tags = Array.from(this.lpTags);
+			this.existingLpBadge.criteria_text = criteriaText;
+			this.existingLpBadge.criteria_url = '';
+			this.existingLpBadge.extension = {
+				'extensions:StudyLoadExtension': {
+					'@context': studyLoadExtensionContextUrl,
+					type: ['Extension', 'extensions:StudyLoadExtension'],
+					StudyLoad: this.studyLoad,
+				},
+				'extensions:CategoryExtension': {
+					'@context': categoryExtensionContextUrl,
+					type: ['Extension', 'extensions:CategoryExtension'],
+					Category: 'learningpath',
+				},
+				'extensions:LicenseExtension': {
+					'@context': licenseExtensionContextUrl,
+					type: ['Extension', 'extensions:LicenseExtension'],
+					id: this.learningPathForm.value.license[0].id,
+					name: this.learningPathForm.value.license[0].name,
+					legalCode: this.learningPathForm.value.license[0].legalCode,
+				},
+				'extensions:CompetencyExtension': [],
+			};
 
 			if (this.currentImage) {
 				this.existingLpBadge.extension = {
@@ -930,10 +786,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			this.initialisedLearningpath.required_badges_count =
 				formState.required_badges_count ?? this.selectedBadges.length;
 			this.initialisedLearningpath.badges = this.draggableList.map((item, index) => {
-				return {
-					badge: item,
-					order: item.order,
-				};
+				return { badge: item, order: item.order };
 			});
 
 			this.savePromise = this.initialisedLearningpath.save();
@@ -1010,10 +863,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						description: formState.description,
 						tags: Array.from(this.lpTags),
 						badges: this.draggableList.map((item, index) => {
-							return {
-								badge: item,
-								order: index,
-							};
+							return { badge: item, order: index };
 						}),
 						required_badges_count: formState.required_badges_count ?? this.selectedBadges.length,
 						participationBadge_id: participationBadge.slug,
@@ -1050,42 +900,5 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		return this.selectedBadges.length >= 2
 			? null
 			: { minSelectedBadges: { required: 2, actual: this.selectedBadges.length } };
-	}
-}
-
-class MatchingBadgeIssuer {
-	constructor(
-		public issuerName: string,
-		public badge,
-		public badges: BadgeClass[] = [],
-	) {}
-	async addBadge(badge) {
-		if (badge.issuerName === this.issuerName) {
-			if (this.badges.indexOf(badge) < 0) {
-				this.badges.push(badge);
-			}
-		}
-	}
-}
-class MatchingBadgeCategory {
-	constructor(
-		public category: string,
-		public badge,
-		public badges: BadgeClass[] = [],
-	) {}
-	async addBadge(badge) {
-		if (
-			badge.extension &&
-			badge.extension['extensions:CategoryExtension'] &&
-			badge.extension['extensions:CategoryExtension'].Category === this.category
-		) {
-			if (this.badges.indexOf(badge) < 0) {
-				this.badges.push(badge);
-			}
-		} else if (!badge.extension['extensions:CategoryExtension'] && this.category == 'noCategory') {
-			if (this.badges.indexOf(badge) < 0) {
-				this.badges.push(badge);
-			}
-		}
 	}
 }

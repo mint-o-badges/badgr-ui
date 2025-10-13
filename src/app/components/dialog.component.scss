@@ -4,11 +4,11 @@
 $curve: cubic-bezier(0.65, 0, 0.45, 1);
 
 .checkmark {
-	width: 56px;
-	height: 56px;
+	width: 100px;
+	height: 100px;
 	border-radius: 50%;
 	display: block;
-	background-color: var(--color-white);
+	background-color: var(--color-green);
 	stroke-width: 2;
 	stroke: var(--color-white);
 	stroke-miterlimit: 10;
@@ -23,7 +23,7 @@ $curve: cubic-bezier(0.65, 0, 0.45, 1);
 	stroke-dashoffset: 166;
 	stroke-width: 2;
 	stroke-miterlimit: 10;
-	stroke: var(--color-purple);
+	stroke: var(--color-green);
 	fill: none;
 	animation: stroke 0.6s $curve forwards;
 }
@@ -54,6 +54,6 @@ $curve: cubic-bezier(0.65, 0, 0.45, 1);
 
 @keyframes fill {
 	75% {
-		box-shadow: inset 0px 0px 0px 30px var(--color-purple);
+		box-shadow: inset 0px 0px 0px 30px var(--color-green);
 	}
 }

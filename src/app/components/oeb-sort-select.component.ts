@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { BadgeResult } from '../recipient/components/recipient-earned-badge-list/recipient-earned-badge-list.component';
@@ -20,7 +20,7 @@ import { OebSelectComponent } from './select.component';
 	`,
 	imports: [OebSelectComponent],
 })
-export class OebSortSelectComponent implements OnInit {
+export class OebSortSelectComponent implements OnInit, AfterViewInit {
 	@Input() control: FormControl = new FormControl('name_asc');
 	@Input() result: BadgeResult[] = [];
 	@Input() recipient: boolean = false;

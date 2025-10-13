@@ -4,7 +4,7 @@
 	<div class="page-padding">
 		<div class="tw-pt-[4rem] md:tw-flex tw-justify-between md:tw-gap-16">
 			<div class="oeb-standard-padding-bottom">
-				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-bold">
+				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-black">
 					{{ 'NavItems.myInstitutions' | translate }}
 				</h1>
 				<oeb-tabs
@@ -23,7 +23,7 @@
 						[disabled-when-requesting]="true"
 						[text]="'Issuer.createInstitution' | translate"
 					></oeb-button>
-				} @else if (networks()?.length && activeTab == 'networks') {
+				} @else if (networks()?.length && activeTab === 'networks') {
 					<oeb-button
 						class="md:tw-whitespace-nowrap"
 						variant="secondary"
@@ -346,7 +346,7 @@
 						class="tw-absolute tw-mt-1 tw-z-10 tw-bg-white tw-rounded-md tw-shadow-sm tw-border tw-border-solid tw-border-gray-700 tw-w-full tw-overflow-auto"
 						[ngStyle]="{
 							'max-height.px': calculateDropdownMaxHeight(issuerSearchInput, 100),
-							'bottom.px': calculateDropdownBottom(issuerSearchInput, 100)
+							'bottom.px': calculateDropdownBottom(issuerSearchInput, 100),
 						}"
 					>
 						<ul>
@@ -362,7 +362,7 @@
 									<span>{{ issuer.name }}</span>
 								</li>
 							}
-							@if (issuerSearchResults.length == 0) {
+							@if (issuerSearchResults.length === 0) {
 								<li class="tw-p-2 tw-text-gray-500 tw-cursor-default">Keine Ergebnisse</li>
 							}
 						</ul>

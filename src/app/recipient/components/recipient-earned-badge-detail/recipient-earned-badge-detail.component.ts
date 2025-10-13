@@ -95,7 +95,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
 					{ title: this.badge.badgeClass.name, routerLink: ['/earned-badge/' + this.badge.slug] },
 				];
-				// @ts-ignore
+
 				const context = this.badge.apiModel.json['@context'];
 				const assertionVersion =
 					Array.isArray(context) && context.some((c) => c.indexOf('purl.imsglobal.org/spec/ob/v3p0') != -1)

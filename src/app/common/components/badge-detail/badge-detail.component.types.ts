@@ -2,6 +2,7 @@ import { PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { ApiLearningPath } from '../../model/learningpath-api.model';
 import { LinkEntry } from '../bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCopyPermissions } from '../../../issuer/models/badgeclass-api.model';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 type MenuItemBase = {
 	title: string;
@@ -76,6 +77,9 @@ export interface PageConfig {
 	issuerName: string;
 	issuerImagePlacholderUrl: string;
 	issuerImage: string;
+	awardingIssuers?: Issuer[];
+	networkBadge?: boolean;
+	sharedOnNetwork?: { slug: string; name: string; image: string | null; description: string | null } | null;
 	badgeLoadingImageUrl: string;
 	badgeFailedImageUrl: string;
 	badgeImage: string;

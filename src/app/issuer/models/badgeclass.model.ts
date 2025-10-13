@@ -152,6 +152,14 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.issuerOwnerAcceptedTos;
 	}
 
+	get isNetworkBadge(): boolean {
+		return this.apiModel.isNetworkBadge;
+	}
+
+	get sharedOnNetwork(): { slug: string; name: string; image: string | null; description: string | null } | null {
+		return this.apiModel.sharedOnNetwork;
+	}
+
 	get alignments() {
 		return this.apiModel.alignment;
 	}

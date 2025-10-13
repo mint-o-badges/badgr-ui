@@ -218,7 +218,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		});
 
 		try {
-			// @ts-ignore
+			// @ts-expect-error umami is injected globally
 			// Start umami tracking
 			umami.track();
 		} catch (e) {}

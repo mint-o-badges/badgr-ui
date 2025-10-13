@@ -11,7 +11,7 @@
 			</div>
 			<form-message></form-message>
 
-			@if (viewState == 'import') {
+			@if (viewState === 'import') {
 				<Badgeclass-issue-bulk-award-import
 					(importPreviewDataEmitter)="onBulkIssueImportPreviewData($event)"
 					(updateStateEmitter)="updateViewState($event)"
@@ -19,7 +19,7 @@
 				</Badgeclass-issue-bulk-award-import>
 			}
 
-			@if (viewState == 'importPreview') {
+			@if (viewState === 'importPreview') {
 				<Badgeclass-issue-bulk-award-preview
 					[importPreviewData]="importPreviewData"
 					(transformedImportDataEmitter)="onTransformedImportData($event)"
@@ -28,7 +28,7 @@
 				</Badgeclass-issue-bulk-award-preview>
 			}
 
-			@if (viewState == 'importConformation') {
+			@if (viewState === 'importConformation') {
 				<badgeclass-issue-bulk-award-confirmation
 					[transformedImportData]="transformedImportData"
 					(updateStateEmitter)="updateViewState($event)"
@@ -38,7 +38,7 @@
 				</badgeclass-issue-bulk-award-confirmation>
 			}
 
-			@if (viewState == 'importError') {
+			@if (viewState === 'importError') {
 				<badgeclass-issue-bulk-award-error
 					[transformedImportData]="transformedImportData"
 					(updateStateEmitter)="updateViewState($event)"

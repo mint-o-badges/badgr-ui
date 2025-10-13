@@ -52,7 +52,7 @@ export class BgImageStatusPlaceholderDirective implements OnChanges {
 		this.image.onerror = () => this.imageErrored();
 	}
 
-	ngOnChanges(changes: {}) {
+	ngOnChanges() {
 		this.updateState();
 	}
 

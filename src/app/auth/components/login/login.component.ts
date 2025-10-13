@@ -97,8 +97,6 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
-
 		this.initVerifiedData();
 
 		if (this.verifiedEmail) {

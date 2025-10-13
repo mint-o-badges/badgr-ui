@@ -40,7 +40,7 @@
 										| translate
 											: {
 													count_required: learningPath.required_badges_count,
-													count_total: learningPath.badges.length
+													count_total: learningPath.badges.length,
 											  }
 								"
 							></p>
@@ -77,7 +77,9 @@
 										<span>{{ 'LearningPath.notActivatedYetStart' | translate }}</span>
 										<a
 											class="tw-underline tw-text-link"
-											[routerLink]="[`/issuer/issuers/${issuer.slug}/learningpaths/${learningPath.slug}/edit`]"
+											[routerLink]="[
+												`/issuer/issuers/${issuer.slug}/learningpaths/${learningPath.slug}/edit`,
+											]"
 											[queryParams]="{ focusActivation: true }"
 										>
 											{{ 'LearningPath.notActivatedYetLink' | translate }}</a
@@ -110,7 +112,9 @@
 									<span>{{ 'LearningPath.notActivatedYetStart' | translate }}</span>
 									<a
 										class="tw-underline tw-text-link"
-										[routerLink]="[`/issuer/issuers/${issuer.slug}/learningpaths/${learningPath.slug}/edit`]"
+										[routerLink]="[
+											`/issuer/issuers/${issuer.slug}/learningpaths/${learningPath.slug}/edit`,
+										]"
 										[queryParams]="{ focusActivation: true }"
 									>
 										{{ 'LearningPath.notActivatedYetLink' | translate }}</a

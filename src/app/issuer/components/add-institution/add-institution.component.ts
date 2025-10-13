@@ -1,12 +1,11 @@
-import { AfterViewInit, Component, inject, input, Input, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, input, Input, output, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Network, networkStaffRoles } from '../../../issuer/models/network.model';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { NgIcon } from '@ng-icons/core';
 import { NgModel, FormsModule } from '@angular/forms';
-import { Issuer } from '../../../issuer/models/issuer.model';
+import { Issuer, issuerStaffRoles } from '../../../issuer/models/issuer.model';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { NgStyle } from '@angular/common';
@@ -14,6 +13,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { HlmIcon } from '@spartan-ng/helm/icon';
+import { MemoizedProperty } from '~/common/util/memoized-property-decorator';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 
 @Component({
 	selector: 'add-institution',
@@ -27,7 +28,9 @@ export class AddInstitutionComponent implements AfterViewInit {
 		private networkApiService: NetworkApiService,
 	) {}
 
-	network = input.required<Network>();
+	network = input.required<any>();
+
+	institutionsInvited = output();
 
 	@ViewChild('inviteSuccessContent')
 	inviteSuccessContent: TemplateRef<void>;
@@ -35,6 +38,8 @@ export class AddInstitutionComponent implements AfterViewInit {
 	@ViewChild('issuerSearchInputModel') issuerSearchInputModel: NgModel;
 
 	private _networkStaffRoleOptions: FormFieldSelectOption[];
+
+	dialogRef: BrnDialogRef<any> = null;
 
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
@@ -106,15 +111,13 @@ export class AddInstitutionComponent implements AfterViewInit {
 		this.rightsAndRolesExpanded = !this.rightsAndRolesExpanded;
 	}
 
-	get networkStaffRoleOptions() {
-		return (
-			this._networkStaffRoleOptions ||
-			(this._networkStaffRoleOptions = networkStaffRoles.map((r) => ({
-				label: r.label,
-				value: r.slug,
-				description: r.description,
-			})))
-		);
+	@MemoizedProperty()
+	get issuerStaffRoleOptions() {
+		return issuerStaffRoles.map((r) => ({
+			label: r.label,
+			value: r.slug,
+			description: r.description,
+		}));
 	}
 
 	inviteInstitutions(issuers: Issuer[]) {
@@ -122,6 +125,7 @@ export class AddInstitutionComponent implements AfterViewInit {
 		this.networkApiService.inviteInstitutions(this.network().slug, issuers).then((res) => {
 			if (res) {
 				this.openSuccessDialog();
+				this.institutionsInvited.emit();
 			}
 		});
 	}
@@ -135,5 +139,11 @@ export class AddInstitutionComponent implements AfterViewInit {
 				variant: 'success',
 			},
 		});
+
+		this.dialogRef = dialogRef;
+	}
+
+	closeDialog() {
+		this.dialogRef.close();
 	}
 }

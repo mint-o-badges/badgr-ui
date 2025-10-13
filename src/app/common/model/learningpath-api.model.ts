@@ -4,7 +4,7 @@ import { ApiUserProfile } from './user-profile-api.model';
 
 export type LearningPathUrl = string;
 
-export interface LearningPathRef extends ApiEntityRef {}
+export type LearningPathRef = ApiEntityRef;
 
 export interface ApiLearningPathForCreation {
 	slug?: string;
@@ -50,5 +50,3 @@ export interface ApiLearningPathParticipant {
 	completed_at: Date | null;
 	participationBadgeAssertion?: BadgeInstance;
 }
-
-export interface LearningPathRef extends ApiEntityRef {}

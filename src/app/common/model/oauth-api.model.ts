@@ -23,7 +23,7 @@ export interface ApiOAuth2ClientAuthorized {
 	success_url: string;
 }
 
-export interface OAuth2AppAuthorizationRef extends ApiEntityRef {}
+export type OAuth2AppAuthorizationRef = ApiEntityRef;
 export interface ApiOAuth2AppAuthorization {
 	entityType: 'AccessToken';
 	entityId: string;

@@ -10,6 +10,8 @@ import {
 	ViewChild,
 	isDevMode,
 	SimpleChanges,
+	AfterViewChecked,
+	OnChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -46,7 +48,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { ApiSkill } from '../../../common/model/ai-skills.model';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { NavigationService } from '../../../common/services/navigation.service';
 import { base64ByteSize } from '../../../common/util/file-util';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -68,6 +70,7 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
+import { Network } from '~/issuer/network.model';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -100,9 +103,13 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		AutocompleteLibModule,
 		DecimalPipe,
 		TranslatePipe,
+		TranslateModule,
 	],
 })
-export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
+export class BadgeClassEditFormComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, AfterViewInit, AfterViewChecked, OnChanges
+{
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	baseUrl: string;
@@ -412,10 +419,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	save = new EventEmitter<Promise<BadgeClass>>();
 
 	@Output()
-	cancel = new EventEmitter<void>();
+	cancelEdit = new EventEmitter<void>();
 
 	@Input()
-	issuer: Issuer;
+	issuer: Issuer | Network;
 
 	@Input()
 	category: string;
@@ -446,7 +453,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
 		participation: this.translate.instant('Badge.participation'),
-		// learningpath: this.translate.instant('Badge.learningpath'),
 	};
 
 	competencyCategoryOptions = {
@@ -611,6 +617,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.fetchTags();
+
+		if (this.issuer.is_network) {
+			this.badgeClassForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
+		}
 
 		this.criteriaOptions.forEach((option) => {
 			const selectionGroup = typedFormGroup()
@@ -640,9 +651,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.previous = previous;
 		});
 
-		let that = this;
-
-		if (!that.existing) {
+		if (!this.existing) {
 			this.badgeClassForm.controls.license.addFromTemplate();
 		}
 
@@ -682,7 +691,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			}
 			// restore values from sessionStorage
 			const saveableSessionValues = ['badge_name', 'badge_description', 'badge_hours', 'badge_minutes'];
-			const filterSessionValues = (values: Object) => {
+			const filterSessionValues = (values: object) => {
 				const filteredValues = {};
 				for (const [k, v] of Object.entries(values)) {
 					if (saveableSessionValues.includes(k)) {
@@ -711,7 +720,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.customImageField.control.statusChanges.subscribe((e) => {
 			if (this.customImageField.control.value != null) this.imageField.control.reset();
 		});
-		this.fetchTags();
 
 		this.stepper.selectionChange.subscribe((event) => {
 			this.selectedStep = event.selectedIndex;
@@ -894,20 +902,18 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	fetchTags() {
 		this.existingTags = [];
 		this.existingTagsLoading = true;
-		// outerThis is needed because inside the observable, `this` is something else
-		let outerThis = this;
-		let observable = this.badgeClassManager.allBadges$;
 
-		observable.subscribe({
-			next(entities: BadgeClass[]) {
+		this.badgeClassManager.allBadges$.subscribe({
+			// Use arrow function to preserve "this" context
+			next: (entities: BadgeClass[]) => {
 				let tags: string[] = entities.flatMap((entity) => entity.tags);
 				let unique = [...new Set(tags)];
 				unique.sort();
-				outerThis.existingTags = unique.map((tag, index) => ({
+				this.existingTags = unique.map((tag, index) => ({
 					id: index,
 					name: tag,
 				}));
-				outerThis.tagOptions = outerThis.existingTags.map(
+				this.tagOptions = this.existingTags.map(
 					(tag) =>
 						({
 							value: tag.name,
@@ -916,10 +922,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				);
 				// The tags are loaded in one badge, so it's save to assume
 				// that after the first `next` call, the loading is done
-				outerThis.existingTagsLoading = false;
+				this.existingTagsLoading = false;
 			},
-			error(err) {
+			error: (err) => {
 				console.error("Couldn't fetch labels: " + err);
+				this.existingTagsLoading = false;
 			},
 		});
 	}
@@ -1370,9 +1377,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			const aiCompetenciesSuggestions = this.aiCompetenciesSuggestions;
 			const keywordCompetenciesResults = this.selectedKeywordCompetencies;
 
-			const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
-			if (formState.copy_permissions_allow_others) {
-				copy_permissions.push('others');
+			let copy_permissions: BadgeClassCopyPermissions[];
+			if (this.issuer.is_network) {
+				copy_permissions = ['none'];
+			} else {
+				copy_permissions = ['issuer'];
+				if (formState.copy_permissions_allow_others) {
+					copy_permissions.push('others');
+				}
 			}
 
 			if (this.existingBadgeClass) {
@@ -1382,39 +1394,39 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.existingBadgeClass.imageFrame = imageFrame;
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);
-				(this.existingBadgeClass.criteria = formState.criteria),
-					(this.existingBadgeClass.criteria_text = ''),
-					(this.existingBadgeClass.extension = {
-						...this.existingBadgeClass.extension,
-						'extensions:StudyLoadExtension': {
-							'@context': studyLoadExtensionContextUrl,
-							type: ['Extension', 'extensions:StudyLoadExtension'],
-							StudyLoad: Number(formState.badge_hours) * 60 + Number(formState.badge_minutes),
-						},
-						'extensions:CategoryExtension': {
-							'@context': categoryExtensionContextUrl,
-							type: ['Extension', 'extensions:CategoryExtension'],
-							Category: String(formState.badge_category),
-						},
-						'extensions:LevelExtension': {
-							'@context': levelExtensionContextUrl,
-							type: ['Extension', 'extensions:LevelExtension'],
-							Level: String(formState.badge_level),
-						},
-						'extensions:LicenseExtension': {
-							'@context': licenseExtensionContextUrl,
-							type: ['Extension', 'extensions:LicenseExtension'],
-							id: formState.license[0].id,
-							name: formState.license[0].name,
-							legalCode: formState.license[0].legalCode,
-						},
-						'extensions:CompetencyExtension': this.getCompetencyExtensions(
-							aiCompetenciesSuggestions,
-							keywordCompetenciesResults,
-							formState,
-							competencyExtensionContextUrl,
-						),
-					});
+				this.existingBadgeClass.criteria = formState.criteria;
+				this.existingBadgeClass.criteria_text = '';
+				this.existingBadgeClass.extension = {
+					...this.existingBadgeClass.extension,
+					'extensions:StudyLoadExtension': {
+						'@context': studyLoadExtensionContextUrl,
+						type: ['Extension', 'extensions:StudyLoadExtension'],
+						StudyLoad: Number(formState.badge_hours) * 60 + Number(formState.badge_minutes),
+					},
+					'extensions:CategoryExtension': {
+						'@context': categoryExtensionContextUrl,
+						type: ['Extension', 'extensions:CategoryExtension'],
+						Category: String(formState.badge_category),
+					},
+					'extensions:LevelExtension': {
+						'@context': levelExtensionContextUrl,
+						type: ['Extension', 'extensions:LevelExtension'],
+						Level: String(formState.badge_level),
+					},
+					'extensions:LicenseExtension': {
+						'@context': licenseExtensionContextUrl,
+						type: ['Extension', 'extensions:LicenseExtension'],
+						id: formState.license[0].id,
+						name: formState.license[0].name,
+						legalCode: formState.license[0].legalCode,
+					},
+					'extensions:CompetencyExtension': this.getCompetencyExtensions(
+						aiCompetenciesSuggestions,
+						keywordCompetenciesResults,
+						formState,
+						competencyExtensionContextUrl,
+					),
+				};
 				if (this.currentImage) {
 					this.existingBadgeClass.extension = {
 						...this.existingBadgeClass.extension,
@@ -1579,7 +1591,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	cancelClicked() {
-		this.cancel.emit();
+		this.cancelEdit.emit();
 	}
 
 	generateRandomImage() {

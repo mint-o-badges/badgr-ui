@@ -1,13 +1,6 @@
-import { Component, OnInit, Input, viewChild, ElementRef, TemplateRef } from '@angular/core';
-import { typedFormGroup } from '../../../common/util/typed-forms';
-import {
-	FormBuilder,
-	Validators,
-	FormsModule,
-	ReactiveFormsModule,
-	ValidatorFn,
-	AbstractControl,
-} from '@angular/forms';
+import { Component, OnInit, Input, input, ElementRef, viewChild, TemplateRef } from '@angular/core';
+import { TypedFormGroup, typedFormGroup } from '../../../common/util/typed-forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
@@ -30,6 +23,10 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { countries } from 'countries-list';
+import * as states from '../../../../assets/data/german-states.json';
+import type { TCountries, ICountry, ICountryData } from 'countries-list';
 import { HlmDialogService } from '@spartan-ng/helm/dialog';
 import { DialogComponent } from '~/components/dialog.component';
 
@@ -55,36 +52,18 @@ export class IssuerEditFormComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
-	issuerForm = typedFormGroup()
-		.addControl('issuer_name', '', [
-			Validators.required,
-			Validators.maxLength(90),
-			IssuerNameValidator.validIssuerName,
-		])
-		.addControl('issuer_description', '', [
-			Validators.required,
-			Validators.minLength(200),
-			Validators.maxLength(300),
-		])
-		.addControl('issuer_email', '', [
-			Validators.required,
-			/*Validators.maxLength(75),
-                EmailValidator.validEmail*/
-		])
-		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
-		.addControl('issuer_linkedin_id', '', this.positiveIntegerString())
-		.addControl('issuer_category', '', [Validators.required])
-		.addControl('issuer_image', '', Validators.required)
-		.addControl('issuer_street', '', Validators.required)
-		.addControl('issuer_streetnumber', '', Validators.required)
-		.addControl('issuer_zip', '', Validators.required)
-		.addControl('issuer_city', '', Validators.required)
-		.addControl('verify_intended_use', false, Validators.requiredTrue);
+	issuerForm: any;
 
 	emails: UserProfileEmail[];
+	primaryEmail: UserProfileEmail;
 	emailsOptions: FormFieldSelectOption[];
 	addIssuerFinished: Promise<unknown>;
 	editIssuerFinished: Promise<unknown>;
+
+	addNetworkFinished: Promise<unknown>;
+
+	_countriesOptions: FormFieldSelectOption[];
+	_germanStateOptions: FormFieldSelectOption[];
 
 	emailsLoaded: Promise<unknown>;
 
@@ -101,6 +80,8 @@ export class IssuerEditFormComponent implements OnInit {
 	noMisuse: string;
 
 	existingIssuer: Issuer | null = null;
+
+	networkForm = input<boolean>(false);
 
 	@Input() issuerSlug: string;
 
@@ -128,6 +109,7 @@ export class IssuerEditFormComponent implements OnInit {
 		protected messageService: MessageService,
 		protected translate: TranslateService,
 		protected issuerManager: IssuerManager,
+		protected networkManager: NetworkManager,
 		protected dialogService: HlmDialogService,
 	) {
 		title.setTitle(`Create Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -143,6 +125,7 @@ export class IssuerEditFormComponent implements OnInit {
 			.then((profile) => profile.emails.loadedPromise)
 			.then((emails) => {
 				this.emails = emails.entities.filter((e) => e.verified);
+				this.primaryEmail = emails.entities.find((e) => e.primary);
 				this.emailsOptions = this.emails.map((e) => {
 					return {
 						label: e.email,
@@ -150,9 +133,21 @@ export class IssuerEditFormComponent implements OnInit {
 					};
 				});
 			});
+
+		this._countriesOptions = Object.values(countries).map((r) => ({
+			label: r.native,
+			value: r.name,
+		}));
+
+		this._germanStateOptions = Object.values(states).map((r) => ({
+			label: r.de,
+			value: r.iso,
+		}));
 	}
 
 	ngOnInit() {
+		this.buildForm();
+
 		this.translate.get('Issuer.enterDescription').subscribe((translatedText: string) => {
 			this.enterDescription = translatedText;
 		});
@@ -179,21 +174,71 @@ export class IssuerEditFormComponent implements OnInit {
 		});
 	}
 
+	private buildForm() {
+		this.issuerForm = typedFormGroup()
+			.addControl('issuer_name', '', [
+				Validators.required,
+				Validators.maxLength(90),
+				IssuerNameValidator.validIssuerName,
+			])
+			.addControl('issuer_description', '', [
+				Validators.required,
+				Validators.minLength(200),
+				Validators.maxLength(300),
+			])
+			.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
+			.addControl('issuer_image', '', Validators.required)
+			.addControl('country', 'Germany', Validators.required)
+			.addControl('state', '')
+			.addControl('issuer_linkedin_id', '');
+
+		if (!this.networkForm()) {
+			this.issuerForm
+				.addControl('issuer_email', '', [Validators.required])
+				.addControl('issuer_category', '', [Validators.required])
+				.addControl('issuer_street', '', Validators.required)
+				.addControl('issuer_streetnumber', '', Validators.required)
+				.addControl('issuer_zip', '', Validators.required)
+				.addControl('issuer_city', '', Validators.required)
+				.addControl('verify_intended_use', false, Validators.requiredTrue);
+		}
+
+		if (this.configService.theme.dataProcessorTermsLink) {
+			this.issuerForm.addControl('agreedTerms', '', Validators.requiredTrue);
+		}
+	}
+
 	initFormFromExisting(issuer: Issuer) {
 		if (!issuer) return;
-		this.issuerForm.setValue({
+
+		const commonValues = {
 			issuer_name: issuer.name,
 			issuer_description: issuer.description,
 			issuer_image: issuer.image,
-			issuer_category: issuer.category,
-			issuer_email: issuer.email,
-			issuer_city: issuer.city,
-			issuer_street: issuer.street,
-			issuer_streetnumber: issuer.streetnumber,
-			issuer_zip: issuer.zip,
 			issuer_url: issuer.websiteUrl,
+			country: issuer.country,
+			state: issuer.state,
 			issuer_linkedin_id: issuer.linkedinId,
-			verify_intended_use: issuer.intendedUseVerified,
+		};
+
+		const issuerSpecificValues = !this.networkForm()
+			? {
+					issuer_category: issuer.category,
+					issuer_email: issuer.email,
+					issuer_city: issuer.city,
+					issuer_street: issuer.street,
+					issuer_streetnumber: issuer.streetnumber,
+					issuer_zip: issuer.zip,
+					country: issuer.country,
+					state: issuer.state,
+					issuer_linkedin_id: issuer.linkedinId,
+					verify_intended_use: issuer.intendedUseVerified,
+				}
+			: {};
+
+		this.issuerForm.setValue({
+			...commonValues,
+			...issuerSpecificValues,
 		});
 	}
 
@@ -221,7 +266,7 @@ export class IssuerEditFormComponent implements OnInit {
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			// try scrolling to the first invalid form field
 			const firstInvalidControl: HTMLElement =
-				this.imageError.length > 0
+				this.imageError && this.imageError.length > 0
 					? this.imageField().nativeElement
 					: (document.querySelector('.ng-invalid') as HTMLElement);
 			if (firstInvalidControl) {
@@ -233,21 +278,35 @@ export class IssuerEditFormComponent implements OnInit {
 
 		const formState = this.issuerForm.value;
 
+		if (this.networkForm()) {
+			this.handleNetworkSubmit(formState);
+		} else {
+			this.handleIssuerSubmit(formState);
+		}
+	}
+
+	private handleIssuerSubmit(formState: any) {
+		const issuer: ApiIssuerForCreation | ApiIssuerForEditing = {
+			name: formState.issuer_name,
+			description: formState.issuer_description,
+			email: formState.issuer_email,
+			url: formState.issuer_url,
+			category: formState.issuer_category,
+			street: formState.issuer_street,
+			streetnumber: formState.issuer_streetnumber,
+			zip: formState.issuer_zip,
+			city: formState.issuer_city,
+			country: formState.country,
+			state: formState.state,
+			intendedUseVerified: formState.verify_intended_use,
+			linkedinId: formState.issuer_linkedin_id,
+		};
+
+		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
+			issuer.image = formState.issuer_image;
+		}
+
 		if (this.existingIssuer) {
-			const issuer: ApiIssuerForEditing = {
-				name: formState.issuer_name,
-				description: formState.issuer_description,
-				image: formState.issuer_image,
-				email: formState.issuer_email,
-				url: formState.issuer_url,
-				linkedinId: formState.issuer_linkedin_id,
-				category: formState.issuer_category,
-				street: formState.issuer_street,
-				streetnumber: formState.issuer_streetnumber,
-				zip: formState.issuer_zip,
-				city: formState.issuer_city,
-				intendedUseVerified: formState.verify_intended_use,
-			};
 			this.editIssuerFinished = this.issuerManager
 				.editIssuer(this.issuerSlug, issuer)
 				.then(
@@ -261,24 +320,6 @@ export class IssuerEditFormComponent implements OnInit {
 				)
 				.then(() => (this.editIssuerFinished = null));
 		} else {
-			const issuer: ApiIssuerForCreation = {
-				name: formState.issuer_name,
-				description: formState.issuer_description,
-				email: formState.issuer_email,
-				url: formState.issuer_url,
-				linkedinId: formState.issuer_linkedin_id,
-				category: formState.issuer_category,
-				street: formState.issuer_street,
-				streetnumber: formState.issuer_streetnumber,
-				zip: formState.issuer_zip,
-				city: formState.issuer_city,
-				intendedUseVerified: formState.verify_intended_use,
-			};
-
-			if (formState.issuer_image && String(formState.issuer_image).length > 0) {
-				issuer.image = formState.issuer_image;
-			}
-
 			this.addIssuerFinished = this.issuerManager
 				.createIssuer(issuer)
 				.then(
@@ -293,6 +334,102 @@ export class IssuerEditFormComponent implements OnInit {
 				.then(() => (this.addIssuerFinished = null));
 		}
 	}
+
+	private handleNetworkSubmit(formState: any) {
+		const network = {
+			name: formState.issuer_name,
+			description: formState.issuer_description,
+			url: formState.issuer_url,
+			country: formState.country,
+			state: formState.state,
+			image: formState.issuer_image,
+			linkedinId: formState.issuer_linkedin_id,
+		};
+
+		this.addIssuerFinished = this.networkManager
+			.createNetwork(network)
+			.then((network) => {
+				this.router.navigate(['issuer/networks', network.slug]);
+				this.messageService.setMessage('Network created successfully.', 'success');
+			})
+			.then(() => (this.addIssuerFinished = null));
+	}
+
+	// onSubmit() {
+	// 	if (this.issuerForm.controls.issuer_image.rawControl.hasError('required')) {
+	// 		this.imageError = this.translate.instant('Issuer.imageRequiredError');
+	// 	}
+
+	// 	if (!this.issuerForm.markTreeDirtyAndValidate()) {
+	// 		return;
+	// 	}
+
+	// 	const formState = this.issuerForm.value;
+
+	// 	const issuerFormState = this.issuerOnlyForm.value;
+
+	// 	if (this.existingIssuer) {
+	// 		const issuer: ApiIssuerForEditing = {
+	// 			name: formState.issuer_name,
+	// 			description: formState.issuer_description,
+	// 			image: formState.issuer_image,
+	// 			email: issuerFormState.issuer_email,
+	// 			url: formState.issuer_url,
+	// 			category: issuerFormState.issuer_category,
+	// 			street: issuerFormState.issuer_street,
+	// 			streetnumber: issuerFormState.issuer_streetnumber,
+	// 			zip: issuerFormState.issuer_zip,
+	// 			city: issuerFormState.issuer_city,
+	// 			country: formState.country,
+	// 			state: formState.state,
+	// 			intendedUseVerified: issuerFormState.verify_intended_use,
+	// 		};
+	// 		this.editIssuerFinished = this.issuerManager
+	// 			.editIssuer(this.issuerSlug, issuer)
+	// 			.then(
+	// 				(newIssuer) => {
+	// 					this.router.navigate(['issuer/issuers', newIssuer.slug]);
+	// 					this.messageService.setMessage('Issuer created successfully.', 'success');
+	// 				},
+	// 				(error) => {
+	// 					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+	// 				},
+	// 			)
+	// 			.then(() => (this.editIssuerFinished = null));
+	// 	} else {
+	// 		const issuer: ApiIssuerForCreation = {
+	// 			name: formState.issuer_name,
+	// 			description: formState.issuer_description,
+	// 			email: issuerFormState.issuer_email,
+	// 			url: formState.issuer_url,
+	// 			category: issuerFormState.issuer_category,
+	// 			street: issuerFormState.issuer_street,
+	// 			streetnumber: issuerFormState.issuer_streetnumber,
+	// 			zip: issuerFormState.issuer_zip,
+	// 			city: issuerFormState.issuer_city,
+	// 			country: formState.country,
+	// 			state: formState.state,
+	// 			intendedUseVerified: issuerFormState.verify_intended_use,
+	// 		};
+
+	// 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
+	// 			issuer.image = formState.issuer_image;
+	// 		}
+
+	// 		this.addIssuerFinished = this.issuerManager
+	// 			.createIssuer(issuer)
+	// 			.then(
+	// 				(newIssuer) => {
+	// 					this.router.navigate(['issuer/issuers', newIssuer.slug]);
+	// 					this.messageService.setMessage('Issuer created successfully.', 'success');
+	// 				},
+	// 				(error) => {
+	// 					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+	// 				},
+	// 			)
+	// 			.then(() => (this.addIssuerFinished = null));
+	// 	}
+	// }
 
 	public openLinkedInInfoDialog() {
 		this.dialogService.open(DialogComponent, {

@@ -77,7 +77,7 @@ export class CmsPageComponent implements OnInit, OnChanges, OnDestroy {
 			slug = this.route.snapshot.params['slug'];
 			if (slug) {
 				this.onSlug(slug);
-				this.languageSubscription && this.languageSubscription.unsubscribe();
+				if (this.languageSubscription) this.languageSubscription.unsubscribe();
 				this.languageSubscription = this.translate.onLangChange.subscribe(() => {
 					if (this.apidata && this.apidata.languages[this.translate.currentLang]) {
 						this.route.data.subscribe(async (data) => {
@@ -96,11 +96,11 @@ export class CmsPageComponent implements OnInit, OnChanges, OnDestroy {
 		if (slug && slug != changes['slug']?.previousValue) {
 			this.onSlug(slug);
 			// destroy language susbcription, parent component sets slug
-			this.languageSubscription && this.languageSubscription.unsubscribe();
+			if (this.languageSubscription) this.languageSubscription.unsubscribe();
 		}
 	}
 
 	ngOnDestroy(): void {
-		this.languageSubscription && this.languageSubscription.unsubscribe();
+		if (this.languageSubscription) this.languageSubscription.unsubscribe();
 	}
 }
