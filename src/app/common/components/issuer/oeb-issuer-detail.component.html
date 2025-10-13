@@ -193,16 +193,18 @@
 	></oeb-tabs>
 
 	<ng-template #badgesTemplate>
-		<div class="tw-mt-12">
-			<oeb-tabs
-				[variant]="'bluebackground'"
-				(onTabChanged)="onNestedTabChange($event)"
-				[tabs]="badgeTemplateTabs"
-				[activeTab]="activeTabBadgeTemplate"
-				countStyle="parentheses"
-			>
-			</oeb-tabs>
-		</div>
+		@if (env.networksEnabled) {
+			<div class="tw-mt-12">
+				<oeb-tabs
+					[variant]="'bluebackground'"
+					(onTabChanged)="onNestedTabChange($event)"
+					[tabs]="badgeTemplateTabs"
+					[activeTab]="activeTabBadgeTemplate"
+					countStyle="parentheses"
+				>
+				</oeb-tabs>
+			</div>
+		}
 
 		@switch (activeTabBadgeTemplate) {
 			@case ('issuer-badges') {
