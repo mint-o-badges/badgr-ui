@@ -25,7 +25,7 @@ import {
 	ReactiveFormsModule,
 } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Md5 } from 'ts-md5/dist/md5';
+import { Md5 } from 'ts-md5';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -521,7 +521,12 @@ export class BadgeClassEditFormComponent
 			// Store the "old" name and image (hash) to later verify that it changed
 			this.forbiddenName = badgeClass.name;
 			this.forbiddenImage = badgeClass.extension['extensions:OrgImageExtension']?.OrgImage
-				? new Md5().appendStr(badgeClass.extension['extensions:OrgImageExtension'].OrgImage).end()
+				? (() => {
+						const hash = new Md5()
+							.appendStr(badgeClass.extension['extensions:OrgImageExtension'].OrgImage)
+							.end();
+						return typeof hash === 'string' ? hash : hash.join('');
+					})()
 				: null;
 		} else {
 			this.forbiddenName = null;
