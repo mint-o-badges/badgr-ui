@@ -514,7 +514,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 
 	async getPublicLearningPaths(issuerSlug: string) {
 		const lps = await this.publicApiService.getIssuerLearningPaths(issuerSlug);
-		this.learningPaths = lps;
+		this.learningPaths = lps.filter((l) => l.activated);
 	}
 
 	getLearningPathsForIssuerApi(issuerSlug) {
@@ -522,9 +522,9 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 			.getLearningPathsForIssuer(issuerSlug)
 			.then(
 				(learningPaths) =>
-					(this.learningPaths = learningPaths.sort(
-						(a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-					)),
+					(this.learningPaths = learningPaths
+						.filter((l) => l.activated)
+						.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())),
 			);
 	}
 
