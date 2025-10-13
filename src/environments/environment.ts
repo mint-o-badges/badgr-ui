@@ -7,7 +7,7 @@ import { BadgrEnvironment } from './badgr-environment';
 
 export const environment: BadgrEnvironment = {
 	production: false,
-	networksEnabled: false,
+	networksEnabled: true,
 	enableErrorInterceptor: true,
 	config: {
 		theme: {
