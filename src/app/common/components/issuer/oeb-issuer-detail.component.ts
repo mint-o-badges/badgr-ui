@@ -46,6 +46,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { NetworkApiService } from '~/issuer/services/network-api.service';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 import { IssuerApiService } from '~/issuer/services/issuer-api.service';
+import { PublicApiService } from '~/public/services/public-api.service';
 
 interface NetworkBadgeGroup {
 	issuerName: string;
@@ -114,6 +115,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		private sessionService: SessionService,
 		private networkApiService: NetworkApiService,
 		private issuerApiService: IssuerApiService,
+		private publicApiService: PublicApiService,
 	) {
 		if (this.sessionService.isLoggedIn) {
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
@@ -395,8 +397,13 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	}
 
 	async ngOnInit() {
+		if (this.sessionService.isLoggedIn) {
+			await this.getLearningPathsForIssuerApi(this.issuer.slug);
+		} else {
+			const lps = await this.publicApiService.getIssuerLearningPaths(this.issuer.slug);
+			this.learningPaths = lps;
+		}
 		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
-		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
 		this.badgeTemplateTabs = [
 			{
 				key: 'issuer-badges',
@@ -541,9 +548,9 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		this.activeTabBadgeTemplate = tab;
 	}
 
-	calculateStudyLoad(lp: any): number {
+	calculateStudyLoad(lp: ApiLearningPath | PublicApiLearningPath): number {
 		const totalStudyLoad = lp.badges.reduce(
-			(acc, b) => acc + b.badge['extensions:StudyLoadExtension'].StudyLoad,
+			(acc, b) => acc + b.badge?.['extensions:StudyLoadExtension'].StudyLoad,
 			0,
 		);
 		return totalStudyLoad;
