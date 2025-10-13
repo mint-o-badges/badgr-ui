@@ -89,13 +89,13 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
-	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
 	@Input() networks: PublicApiIssuer[];
 	@Input() partner_issuers: PublicApiIssuer[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 
 	learningPathsPromise: Promise<unknown>;
+	learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	networkRequestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	userIsMember = false;
@@ -400,8 +400,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		if (this.sessionService.isLoggedIn) {
 			await this.getLearningPathsForIssuerApi(this.issuer.slug);
 		} else {
-			const lps = await this.publicApiService.getIssuerLearningPaths(this.issuer.slug);
-			this.learningPaths = lps;
+			await this.getPublicLearningPaths(this.issuer.slug);
 		}
 		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
 		this.badgeTemplateTabs = [
@@ -513,6 +512,11 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 			.then(() => (this.learningPaths = this.learningPaths.filter((value) => value.slug != learningPathSlug)));
 	}
 
+	async getPublicLearningPaths(issuerSlug: string) {
+		const lps = await this.publicApiService.getIssuerLearningPaths(issuerSlug);
+		this.learningPaths = lps;
+	}
+
 	getLearningPathsForIssuerApi(issuerSlug) {
 		this.learningPathsPromise = this.learningPathApiService
 			.getLearningPathsForIssuer(issuerSlug)
@@ -549,11 +553,12 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	}
 
 	calculateStudyLoad(lp: ApiLearningPath | PublicApiLearningPath): number {
-		const totalStudyLoad = lp.badges.reduce(
-			(acc, b) => acc + b.badge?.['extensions:StudyLoadExtension'].StudyLoad,
-			0,
-		);
-		return totalStudyLoad;
+		if (!lp?.badges) return 0;
+
+		return lp.badges.reduce((acc, b) => {
+			const studyLoad = b?.badge?.['extensions:StudyLoadExtension']?.StudyLoad ?? 0;
+			return acc + studyLoad;
+		}, 0);
 	}
 }
 
