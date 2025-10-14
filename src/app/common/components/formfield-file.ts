@@ -74,8 +74,6 @@ export class BgFormFieldFileComponent {
 	}
 
 	static uniqueNameCounter = 0;
-	readonly imageLoadingSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-loading.svg');
-	readonly imageFailedSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-failed.svg');
 
 	uniqueIdSuffix = BgFormFieldFileComponent.uniqueNameCounter++;
 
