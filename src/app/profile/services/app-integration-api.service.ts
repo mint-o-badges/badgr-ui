@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import { SessionService } from '../../common/services/session.service';
+import { Inject, Injectable } from '@angular/core';
 import { AppConfigService } from '../../common/app-config.service';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { ApiAppIntegration } from '../models/app-integration-api.model';
 import { flatten } from '../../common/util/array-reducers';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class AppIntegrationApiService extends BaseHttpApiService {
 	constructor(
-		protected loginService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected loginService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

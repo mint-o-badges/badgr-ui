@@ -1,17 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { BaseHttpApiService } from './base-http-api.service';
-import { SessionService } from './session.service';
 import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
 import { ApiStaffRequest } from '../../issuer/models/staffrequest-api.model';
+import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class UserProfileApiService extends BaseHttpApiService {
 	constructor(
-		protected sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected sessionService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

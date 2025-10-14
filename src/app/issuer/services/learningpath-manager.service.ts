@@ -1,6 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
-import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
@@ -11,6 +10,7 @@ import { first, map } from 'rxjs/operators';
 import { LearningPath } from '../models/learningpath.model';
 import { ApiLearningPath, ApiLearningPathForCreation } from '../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../common/services/learningpath-api.service';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class LearningPathManager extends BaseHttpApiService {
@@ -35,7 +35,8 @@ export class LearningPathManager extends BaseHttpApiService {
 	}
 
 	constructor(
-		protected loginService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected loginService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		@Inject(forwardRef(() => CommonEntityManager))

@@ -1,17 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BaseHttpApiService } from './base-http-api.service';
-import { SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CmsApiMenu, CmsApiPage, CmsApiPost } from '../model/cms-api.model';
 import { lastValueFrom } from 'rxjs';
 import { LanguageService } from './language.service';
+import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class CmsApiService extends BaseHttpApiService {
 	constructor(
-		protected loginService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected loginService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

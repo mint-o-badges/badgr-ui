@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
-import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { IssuerSlug } from '../models/issuer-api.model';
 import { BadgeClassSlug } from '../models/badgeclass-api.model';
@@ -11,6 +10,7 @@ import {
 } from '../models/badgeinstance-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 export class PaginationResults {
 	private _links = {};
@@ -52,7 +52,8 @@ export class BadgeInstanceResultSet {
 @Injectable({ providedIn: 'root' })
 export class BadgeInstanceApiService extends BaseHttpApiService {
 	constructor(
-		protected loginService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected loginService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

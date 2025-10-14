@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, SecurityContext } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
-import { SessionService } from './session.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map } from 'rxjs';
 
@@ -13,7 +12,6 @@ export class PdfService {
 	baseUrl: string;
 
 	constructor(
-		protected loginService: SessionService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

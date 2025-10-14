@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { OAuthApiService } from './oauth-api.service';
-import { SessionService } from './session.service';
 import {
 	ApiOAuth2AppAuthorization,
 	ApiOAuth2AppInfo,
@@ -12,6 +11,7 @@ import { StandaloneEntitySet } from '../model/managed-entity-set';
 import { OAuth2AppAuthorization } from '../model/oauth.model';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { CommonDialogsService } from './common-dialogs.service';
+import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 const OAUTH_STATE_STORAGE_NAME = 'oauthState';
 
@@ -60,7 +60,8 @@ export class OAuthManager {
 
 	constructor(
 		public oauthApi: OAuthApiService,
-		private sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		private sessionService: AuthenticationService,
 		private commonEntityManager: CommonEntityManager,
 		private commonDialogsService: CommonDialogsService,
 	) {

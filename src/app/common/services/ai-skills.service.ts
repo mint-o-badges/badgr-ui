@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { AiSkillsResult, ApiSkill } from '../model/ai-skills.model';
 import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
-import { SessionService } from './session.service';
+import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class AiSkillsService extends BaseHttpApiService {
 	constructor(
-		protected loginService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected loginService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

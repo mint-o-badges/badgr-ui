@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { SessionService } from '../services/session.service';
 import { OAuthManager } from '../services/oauth-manager.service';
 import { UserProfileApiService } from '../services/user-profile-api.service';
+import { AUTH_PROVIDER, AuthenticationService } from '../services/authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard {
 	constructor(
-		private sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		private sessionService: AuthenticationService,
 		private router: Router,
 		private oAuthManager: OAuthManager,
 		private userProfileApiService: UserProfileApiService,

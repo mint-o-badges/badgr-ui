@@ -37,7 +37,6 @@ export const useWebComponentLanguageSetting = (lang: LanguageService) => {
 @Injectable()
 export class WebComponentRouter extends Router {
 	navigate(commands: any[], extras?: NavigationExtras): Promise<boolean> {
-		console.log(commands);
-		return Promise.resolve(true);
+		return super.navigate(commands, extras);
 	}
 }

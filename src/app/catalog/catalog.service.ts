@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AppConfigService } from '~/common/app-config.service';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
-import { SessionService } from '~/common/services/session.service';
 import { BadgeClassV3, IBadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 import { INetworkV3, NetworkV3 } from '~/issuer/models/networkv3.model';
 
@@ -14,7 +14,8 @@ const ENDPOINT = 'v3/issuer';
 })
 export class CatalogService extends BaseHttpApiService {
 	constructor(
-		protected sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected sessionService: AuthenticationService,
 		protected httpClient: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

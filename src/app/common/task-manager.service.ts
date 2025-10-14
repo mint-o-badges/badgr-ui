@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, timer, BehaviorSubject, EMPTY } from 'rxjs';
-import { switchMap, takeWhile, catchError, shareReplay, finalize, tap } from 'rxjs/operators';
+import { switchMap, takeWhile, catchError, shareReplay } from 'rxjs/operators';
 import { BaseHttpApiService } from './services/base-http-api.service';
-import { SessionService } from './services/session.service';
 import { AppConfigService } from './app-config.service';
 import { MessageService } from './services/message.service';
+import { AUTH_PROVIDER, AuthenticationService } from './services/authentication-service';
 
 export enum TaskStatus {
 	PENDING = 'PENDING',
@@ -41,7 +41,8 @@ export class TaskPollingManagerService extends BaseHttpApiService {
 	public taskUpdates$ = this.taskUpdatesSource.asObservable();
 
 	constructor(
-		protected loginService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected loginService: AuthenticationService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,

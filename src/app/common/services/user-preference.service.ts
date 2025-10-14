@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BadgrApiError, BaseHttpApiService } from './base-http-api.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
-import { SessionService } from './session.service';
+import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 const ENDPOINT = 'v3/user/preferences';
 
@@ -12,7 +12,8 @@ const ENDPOINT = 'v3/user/preferences';
 })
 export class UserPreferenceService extends BaseHttpApiService {
 	constructor(
-		protected sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected sessionService: AuthenticationService,
 		protected httpClient: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,
