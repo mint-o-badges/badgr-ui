@@ -41,7 +41,7 @@ export interface BulkIssueData {
 
 export type DestSelectOptions = 'email' | 'name' | 'NA';
 
-export type ViewState = 'import' | 'importPreview' | 'importError' | 'importConformation' | 'cancel' | 'exit';
+export type ViewState = 'import' | 'importPreview' | 'importError' | 'importConfirmation' | 'cancel' | 'exit';
 
 export interface ColumnHeaders {
 	destColumn: DestSelectOptions;
@@ -122,7 +122,7 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 		// Determine if the transformed data contains any errors
 		if (this.transformedImportData && transformedImportData.invalidRowsTransformed.length)
 			this.updateViewState('importError');
-		else this.updateViewState('importConformation');
+		else this.updateViewState('importConfirmation');
 	}
 
 	updateViewState(state: ViewState) {
