@@ -78,7 +78,6 @@ import { environment } from 'src/environments/environment';
 		TranslatePipe,
 		CmsMenuItemsPipe,
 	],
-	providers: [IconsProvider],
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	aboutBadgesMenuItems: MenuItem[] = [
