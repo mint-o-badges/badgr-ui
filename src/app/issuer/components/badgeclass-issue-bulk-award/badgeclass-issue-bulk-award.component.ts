@@ -20,6 +20,11 @@ import { BadgeClassIssueBulkAwardPreviewComponent } from '../badgeclass-issue-bu
 import { BadgeclassIssueBulkAwardConformation } from '../badgeclass-issue-bulk-award-confirmation/badgeclass-issue-bulk-award-confirmation.component';
 import { BadgeclassIssueBulkAwardError } from '../badgeclass-issue-bulk-award-error/badgeclass-issue-bulk-award-error.component';
 
+export interface ParsedRow {
+	cells: string[];
+	emailInvalid?: boolean;
+}
+
 export interface TransformedImportData {
 	duplicateRecords: BulkIssueData[];
 	validRowsTransformed: Set<BulkIssueData>;
@@ -28,15 +33,17 @@ export interface TransformedImportData {
 
 export interface BulkIssueImportPreviewData {
 	columnHeaders: ColumnHeaders[];
-	invalidRows: string[][];
+	invalidRows: ParsedRow[];
 	rowLongerThenHeader: boolean;
-	rows: string[];
-	validRows: string[][];
+	rows: ParsedRow[];
+	validRows: ParsedRow[];
 }
 
 export interface BulkIssueData {
 	email: string;
 	name: string;
+	emailInvalid?: boolean;
+	isEditing?: boolean;
 }
 
 export type DestSelectOptions = 'email' | 'name' | 'NA';
