@@ -386,7 +386,10 @@
 		"badgesApprovedForNetworks": " Diese Badges hat {{ issuer }} für die Nutzung im jeweiligen Netzwerk <span class='tw-underline'>freigegeben</span>:",
 		"noBadgesApprovedForNetworks": "{{ issuer }} hat noch keine Badges für die Nutzung im Netzwerk <span class='tw-underline'>freigegeben</span>.",
 		"badgeAwards": "Badge-Vergaben",
-		"partnerBadges": "Partner-Badges"
+		"partnerBadges": "Partner-Badges",
+		"bulkInvalidEmail": "1 ungültige E-Mail-Adresse gefunden. Bitte korrigiere oder entferne die rot markierte E-Mail-Adresse.",
+		"bulkInvalidEmailsPlural": "{{count}} ungültige E-Mail-Adressen gefunden. Bitte korrigiere oder entferne die rot markierten E-Mail-Adressen.",
+		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
