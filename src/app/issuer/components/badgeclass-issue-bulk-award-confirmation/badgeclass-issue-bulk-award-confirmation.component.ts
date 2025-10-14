@@ -1,11 +1,26 @@
-import { Component, EventEmitter, Input, Output, inject, OnDestroy } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	inject,
+	OnDestroy,
+	AfterViewChecked,
+	ViewChildren,
+	QueryList,
+	ElementRef,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { TransformedImportData, ViewState } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
+import {
+	BulkIssueData,
+	TransformedImportData,
+	ViewState,
+} from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgeInstanceBatchAssertion } from '../../models/badgeinstance-api.model';
 import striptags from 'striptags';
@@ -19,17 +34,25 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { HlmH1, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { NgClass } from '@angular/common';
+import tlds from '../../../../assets/data/tld-list.json';
+import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-	imports: [HlmH1, HlmP, OebButtonComponent, HlmH3, OebCheckboxComponent, TranslatePipe],
+	imports: [HlmH1, HlmP, OebButtonComponent, HlmH3, OebCheckboxComponent, TranslatePipe, NgClass, FormsModule],
 })
-export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent implements OnDestroy {
+export class BadgeclassIssueBulkAwardConformation
+	extends BaseAuthenticatedRoutableComponent
+	implements OnDestroy, AfterViewChecked
+{
 	@Input() transformedImportData: TransformedImportData;
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
 	@Output() updateStateEmitter = new EventEmitter<ViewState>();
+
+	@ViewChildren('emailInput') emailInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
 	buttonDisabledClass = true;
 	buttonDisabledAttribute = true;
@@ -39,6 +62,8 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 	private taskSubscription: Subscription | null = null;
 	currentTaskStatus: TaskResult | null = null;
+
+	private focusedRow: BulkIssueData | null = null;
 
 	constructor(
 		protected badgeInstanceManager: BadgeInstanceManager,
@@ -62,16 +87,60 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		}
 	}
 
-	issueForm = typedFormGroup().addControl('notify_earner', true);
-
 	enableActionButton() {
-		this.buttonDisabledClass = false;
+		this.buttonDisabledClass = this.hasInvalidEmails;
 		this.buttonDisabledAttribute = null;
 	}
 
 	disableActionButton() {
 		this.buttonDisabledClass = true;
 		this.buttonDisabledAttribute = true;
+	}
+
+	get hasInvalidEmails(): boolean {
+		if (!this.transformedImportData?.validRowsTransformed) return false;
+
+		return Array.from(this.transformedImportData.validRowsTransformed).some((row) => row.emailInvalid);
+	}
+
+	get invalidEmailCount(): number {
+		if (!this.transformedImportData?.validRowsTransformed) return 0;
+		return Array.from(this.transformedImportData.validRowsTransformed).filter((row) => row.emailInvalid).length;
+	}
+
+	startEditing(row: BulkIssueData) {
+		row.isEditing = true;
+		this.focusedRow = row;
+	}
+
+	cancelEditing(row: BulkIssueData) {
+		row.isEditing = false;
+	}
+
+	saveEdit(row: BulkIssueData) {
+		row.isEditing = false;
+
+		const tld = row.email.split('.').pop()?.toLowerCase();
+		const validTlds = new Set((tlds as any[]).map((t) => t.extension.replace('.', '').toLowerCase()));
+		row.emailInvalid = !tld || !validTlds.has(tld);
+
+		this.buttonDisabledClass = this.hasInvalidEmails;
+	}
+
+	onEditFocus(row: BulkIssueData) {
+		this.focusedRow = row;
+	}
+
+	ngAfterViewChecked() {
+		if (this.focusedRow) {
+			const input = this.emailInputs.find(
+				(ref) => ref.nativeElement && ref.nativeElement.value === this.focusedRow.email,
+			);
+			if (input) {
+				input.nativeElement.focus();
+				this.focusedRow = null;
+			}
+		}
 	}
 
 	dataConfirmed() {
@@ -106,7 +175,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
-				create_notification: this.issueForm.rawControlMap.notify_earner.value,
+				create_notification: true,
 				assertions,
 			})
 			.then((response) => {
