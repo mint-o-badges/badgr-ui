@@ -1,4 +1,8 @@
-import { useWebComponentLanguageSetting, createWebcomponent } from 'webcomponents/create-webcomponent';
+import {
+	useWebComponentLanguageSetting,
+	createWebcomponent,
+	WebComponentRouter,
+} from 'webcomponents/create-webcomponent';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -7,7 +11,7 @@ import { LanguageService } from '~/common/services/language.service';
 
 import * as translationsEn from 'src/assets/i18n/en.json';
 import * as translationsDe from 'src/assets/i18n/de.json';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, Router, withInMemoryScrolling } from '@angular/router';
 import { ROUTE_CONFIG } from '~/app.routes';
 import { OebBadgeClassEditForm } from './oeb-badgeclass-edit-form.component';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
@@ -30,6 +34,10 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 			ROUTE_CONFIG,
 			withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
 		),
+		{
+			provide: Router,
+			useClass: WebComponentRouter,
+		},
 		{
 			provide: AUTH_PROVIDER,
 			useClass: TokenAuthService,

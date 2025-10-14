@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -12,8 +12,10 @@ import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmP, HlmH2 } from '@spartan-ng/helm/typography';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 @Component({
+	selector: 'badgeclass-select-type',
 	templateUrl: 'badgeclass-select-type.component.html',
 	styleUrls: ['./badgeclass-select-type.component.scss'],
 	imports: [BgBreadcrumbsComponent, HlmH1, HlmP, HlmH2, RouterLink, TranslatePipe],
@@ -36,7 +38,8 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 	@ViewChild('badgeimage') badgeImage;
 
 	constructor(
-		sessionService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		sessionService: AuthenticationService,
 		router: Router,
 		route: ActivatedRoute,
 		protected title: Title,

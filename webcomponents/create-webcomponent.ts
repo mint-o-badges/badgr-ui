@@ -1,6 +1,7 @@
-import { ApplicationConfig, enableProdMode, Type } from '@angular/core';
+import { ApplicationConfig, enableProdMode, Injectable, signal, Type } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { createApplication } from '@angular/platform-browser';
+import { NavigationExtras, Router } from '@angular/router';
 import { LanguageService, lngs } from '~/common/services/language.service';
 
 /**
@@ -32,3 +33,11 @@ export const useWebComponentLanguageSetting = (lang: LanguageService) => {
 	if (lngs.indexOf(configuredLanguage) >= 0) lang.setLanguage(configuredLanguage);
 	else lang.setInitialAppLanguage();
 };
+
+@Injectable()
+export class WebComponentRouter extends Router {
+	navigate(commands: any[], extras?: NavigationExtras): Promise<boolean> {
+		console.log(commands);
+		return Promise.resolve(true);
+	}
+}
