@@ -11,4 +11,5 @@ export interface AuthenticationService {
 	handleAuthenticationError(): void;
 	get isLoggedIn(): boolean;
 	get isLoggedIn$(): Observable<boolean>;
+	get baseUrl(): string;
 }

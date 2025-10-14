@@ -1,8 +1,16 @@
 import { inject, Injectable } from '@angular/core';
-import { AuthenticationService } from './authentication-service';
+import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 import { UserCredential } from '../model/user-credential.type';
 import { AuthorizationTokenInformation } from './session.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+	HttpClient,
+	HttpEvent,
+	HttpHandler,
+	HttpHandlerFn,
+	HttpHeaders,
+	HttpInterceptor,
+	HttpRequest,
+} from '@angular/common/http';
 import { AppConfigService } from '../app-config.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { UserProfile } from '../model/user-profile.model';
@@ -14,23 +22,25 @@ import { UserProfile } from '../model/user-profile.model';
  */
 @Injectable({ providedIn: 'root' })
 export class TokenAuthService implements AuthenticationService {
-	private readonly httpClient = inject(HttpClient);
-	private readonly configService = inject(AppConfigService);
-	private readonly baseUrl: string;
-	private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+	private readonly _httpClient = inject(HttpClient);
+	private readonly _configService = inject(AppConfigService);
+	private readonly _baseUrl: string;
+	private _token: string;
+	private _isLoggedInSubject = new BehaviorSubject<boolean>(false);
 
 	constructor() {
-		this.baseUrl = this.configService.apiConfig.baseUrl;
+		this._baseUrl = this._configService.apiConfig.baseUrl;
 	}
 	handleAuthenticationError(): void {
 		console.error('Authentication Error occured!');
 	}
 
 	async validateToken(token?: string): Promise<void> {
-		const endpoint = this.baseUrl + '/v1/user/profile';
+		this._token = token ?? '';
+		const endpoint = this._baseUrl + '/v1/user/profile';
 		const headers = new HttpHeaders().append('Authorization', `Bearer ${token}`);
 		return lastValueFrom(
-			this.httpClient.get<UserProfile>(endpoint, {
+			this._httpClient.get<UserProfile>(endpoint, {
 				observe: 'response',
 				responseType: 'json',
 				headers,
@@ -38,10 +48,10 @@ export class TokenAuthService implements AuthenticationService {
 			}),
 		).then((r) => {
 			if (r.status < 200 || r.status >= 300) {
-				this.isLoggedInSubject.next(false);
+				this._isLoggedInSubject.next(false);
 				throw new Error('Login Failed: ' + r.status);
 			}
-			this.isLoggedInSubject.next(true);
+			this._isLoggedInSubject.next(true);
 		});
 	}
 	login(credential: UserCredential, sessionOnlyStorage?: boolean): Promise<void> {
@@ -51,9 +61,34 @@ export class TokenAuthService implements AuthenticationService {
 		throw new Error('Method not implemented.');
 	}
 	get isLoggedIn(): boolean {
-		return this.isLoggedInSubject.value;
+		return this._isLoggedInSubject.value;
 	}
 	get isLoggedIn$(): Observable<boolean> {
-		return this.isLoggedInSubject;
+		return this._isLoggedInSubject;
 	}
+	get baseUrl(): string {
+		return this._baseUrl;
+	}
+	get token(): string {
+		return this._token;
+	}
+}
+
+export function authTokenInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+	const authService = inject(AUTH_PROVIDER);
+	if (
+		!req.url.startsWith(authService.baseUrl) ||
+		req.headers.has('Authorization') ||
+		!authService.isLoggedIn ||
+		!(authService instanceof TokenAuthService)
+	)
+		return next(req);
+
+	const authReq = req.clone({
+		setHeaders: {
+			Authorization: `Bearer ${(authService as TokenAuthService).token}`,
+		},
+	});
+
+	return next(authReq);
 }

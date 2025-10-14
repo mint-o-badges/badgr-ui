@@ -1,5 +1,5 @@
 import { useWebComponentLanguageSetting, createWebcomponent } from 'webcomponents/create-webcomponent';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,11 +11,11 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { ROUTE_CONFIG } from '~/app.routes';
 import { OebBadgeClassEditForm } from './oeb-badgeclass-edit-form.component';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
-import { TokenAuthService } from '~/common/services/token-auth.service';
+import { authTokenInterceptor, TokenAuthService } from '~/common/services/token-auth.service';
 
 createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 	providers: [
-		provideHttpClient(),
+		provideHttpClient(withInterceptors([authTokenInterceptor])),
 		importProvidersFrom(BrowserModule, TranslateModule.forRoot()),
 		provideAppInitializer(() => {
 			const translate = inject(TranslateService);
