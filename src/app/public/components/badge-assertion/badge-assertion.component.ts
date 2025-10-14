@@ -242,7 +242,7 @@ export class PublicBadgeAssertionComponent {
 					issuerImage: assertion.badge.issuer.image,
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
-					badgeImage: assertion.badge.image,
+					badgeImage: assertion.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
 					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
 					learningPaths: lps,
