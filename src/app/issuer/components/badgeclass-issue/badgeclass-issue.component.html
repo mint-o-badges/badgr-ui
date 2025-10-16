@@ -370,7 +370,11 @@
 					</oeb-button>
 					<oeb-button
 						type="submit"
-						[disabled]="!!issueBadgeFinished"
+						[disabled]="
+							!!issueBadgeFinished ||
+							issueForm.rawControlMap.recipient_identifier?.hasError('invalidEmail') ||
+							issueForm.rawControlMap.recipient_identifier?.hasError('required')
+						"
 						[loading-promises]="[issueBadgeFinished]"
 						[loading-message]="'Issuer.badgeAwardInProgress' | translate"
 						[text]="'Issuer.giveBadge' | translate"
