@@ -4,7 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { Network } from '~/issuer/network.model';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { BadgeClassSelectTypeComponent } from '../badgeclass-select-type/badgeclass-select-type.component';
 import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
 import { CommonDialogsService } from '~/common/services/common-dialogs.service';
@@ -35,7 +35,11 @@ import { NounprojectDialog } from '~/common/dialogs/nounproject-dialog/nounproje
 				}
 				@case ('create-lp') {
 					@if (issuer()) {
-						<learningpath-edit-form />
+						<learningpath-edit-form
+							(save)="onBadgeClassCreated()"
+							(cancelEdit)="onCancel()"
+							[issuer]="issuer()"
+						/>
 					}
 				}
 				@case ('finished') {
@@ -68,20 +72,33 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly confirmDialog = viewChild.required<ConfirmDialog>('confirmDialog');
 	readonly nounprojectDialog = viewChild.required<NounprojectDialog>('nounprojectDialog');
 	readonly router = inject(Router);
-	readonly currentRoute = signal<'select' | 'create' | 'create-lp' | 'finished' | 'unknown'>('select');
+	readonly activatedRoute = inject(ActivatedRoute);
+	readonly currentRoute = signal<'initial' | 'select' | 'create' | 'create-lp' | 'finished' | 'unknown'>('select');
+
 	private signInEffect = effect(() => {
 		const t = this.token();
 		(async () => {
 			await this.handleSignInWithToken(t);
 		})();
 	});
+	private initialRouteEffect = effect(
+		() => {
+			if (this.issuer()) {
+				this.activatedRoute.snapshot.params['issuerSlug'] = this.issuer().slug;
+
+				// Run the initial routing only once -> destroy it here and use manualCleanup
+				this.initialRouteEffect.destroy();
+			}
+		},
+		{ manualCleanup: true },
+	);
 
 	constructor() {
 		this.router.events.subscribe((event) => {
 			if (event instanceof NavigationEnd) {
 				const url = event.url;
 				const routeForUrl = (url) => {
-					if (url === undefined) return 'select'; // initial routing state -> select category
+					if (url === undefined) return 'initial';
 					if (url.toString().indexOf('/badges/select') >= 0) return 'select';
 					if (url.toString().indexOf('/badges/create') >= 0) return 'create';
 					if (url.toString().indexOf('/learningpaths/create') >= 0) return 'create-lp';
@@ -95,6 +112,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 			}
 		});
 	}
+
 	ngAfterViewInit(): void {
 		this.commonDialogsService.init(this.confirmDialog(), undefined, undefined, this.nounprojectDialog());
 	}

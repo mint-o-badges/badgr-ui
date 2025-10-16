@@ -2,6 +2,7 @@ import {
 	useWebComponentLanguageSetting,
 	createWebcomponent,
 	WebComponentRouter,
+	WebComponentActivatedRoute,
 } from 'webcomponents/create-webcomponent';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
@@ -11,7 +12,7 @@ import { LanguageService } from '~/common/services/language.service';
 
 import * as translationsEn from 'src/assets/i18n/en.json';
 import * as translationsDe from 'src/assets/i18n/de.json';
-import { provideRouter, Router, Routes } from '@angular/router';
+import { ActivatedRoute, provideRouter, Router, Routes } from '@angular/router';
 import { OebBadgeClassEditForm } from './oeb-badgeclass-edit-form.component';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { authTokenInterceptor, TokenAuthService } from '~/common/services/token-auth.service';
@@ -33,6 +34,10 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 		{
 			provide: Router,
 			useClass: WebComponentRouter,
+		},
+		{
+			provide: ActivatedRoute,
+			useClass: WebComponentActivatedRoute,
 		},
 		{
 			provide: AUTH_PROVIDER,

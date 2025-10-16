@@ -1,7 +1,17 @@
 import { ApplicationConfig, enableProdMode, Injectable, Type } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { createApplication } from '@angular/platform-browser';
-import { Event, NavigationBehaviorOptions, NavigationEnd, NavigationExtras, Router, UrlTree } from '@angular/router';
+import {
+	ActivatedRoute,
+	ActivatedRouteSnapshot,
+	convertToParamMap,
+	Event,
+	NavigationBehaviorOptions,
+	NavigationEnd,
+	NavigationExtras,
+	Router,
+	UrlTree,
+} from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { LanguageService, lngs } from '~/common/services/language.service';
 
@@ -52,5 +62,15 @@ export class WebComponentRouter extends Router {
 	navigateByUrl(url: string | UrlTree, extras?: NavigationBehaviorOptions): Promise<boolean> {
 		this._eventsSubject.next(new NavigationEnd(Math.random(), url.toString(), url.toString()));
 		return Promise.resolve(true);
+	}
+}
+
+@Injectable()
+export class WebComponentActivatedRoute extends ActivatedRoute {
+	override snapshot: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+
+	constructor() {
+		super();
+		this.snapshot.params = convertToParamMap({});
 	}
 }
