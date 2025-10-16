@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, inject, input, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, input, output, signal, viewChild } from '@angular/core';
 import { BadgeClassEditFormComponent } from './badgeclass-edit-form.component';
 import { AsyncPipe } from '@angular/common';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
@@ -22,14 +22,24 @@ import { NounprojectDialog } from '~/common/dialogs/nounproject-dialog/nounproje
 					<badgeclass-select-type />
 				}
 				@case ('create') {
-					@if (issuer()) {
-						<badgeclass-edit-form [issuer]="issuer()" (cancelEdit)="onCancel()" />
+					@if (issuer() && category()) {
+						<badgeclass-edit-form
+							(save)="onBadgeClassCreated()"
+							(cancelEdit)="onCancel()"
+							[issuer]="issuer()"
+							[category]="category()"
+							[isForked]="false"
+							[initBadgeClass]="null"
+						/>
 					}
 				}
 				@case ('create-lp') {
 					@if (issuer()) {
 						<learningpath-edit-form />
 					}
+				}
+				@case ('finished') {
+					<p>Finished creating the badge</p>
 				}
 				@case ('unknown') {
 					<p>Unknown Operation</p>
@@ -49,14 +59,16 @@ import { NounprojectDialog } from '~/common/dialogs/nounproject-dialog/nounproje
 	],
 })
 export class OebBadgeClassEditForm implements AfterViewInit {
+	readonly finished = output<boolean>();
 	readonly token = input.required<string>();
 	readonly issuer = input<Issuer | Network>();
+	readonly category = signal<string>('participation');
 	readonly authService = inject(AUTH_PROVIDER);
 	readonly commonDialogsService = inject(CommonDialogsService);
 	readonly confirmDialog = viewChild.required<ConfirmDialog>('confirmDialog');
 	readonly nounprojectDialog = viewChild.required<NounprojectDialog>('nounprojectDialog');
 	readonly router = inject(Router);
-	readonly currentRoute = signal<'select' | 'create' | 'create-lp' | 'unknown'>('select');
+	readonly currentRoute = signal<'select' | 'create' | 'create-lp' | 'finished' | 'unknown'>('select');
 	private signInEffect = effect(() => {
 		const t = this.token();
 		(async () => {
@@ -75,6 +87,10 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 					if (url.toString().indexOf('/learningpaths/create') >= 0) return 'create-lp';
 					return 'unknown';
 				};
+
+				if (url.toString().indexOf('create/participation') >= 0) this.category.set('participation');
+				if (url.toString().indexOf('create/competency') >= 0) this.category.set('competency');
+
 				this.currentRoute.set(routeForUrl(url));
 			}
 		});
@@ -84,10 +100,19 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	}
 
 	async handleSignInWithToken(token: string) {
-		await this.authService.validateToken(token);
+		try {
+			await this.authService.validateToken(token);
+		} catch {
+			this.finished.emit(false);
+		}
 	}
 
 	onCancel() {
 		this.currentRoute.set('select');
+	}
+
+	onBadgeClassCreated() {
+		this.currentRoute.set('finished');
+		this.finished.emit(true);
 	}
 }
