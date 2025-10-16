@@ -11,8 +11,7 @@ import { LanguageService } from '~/common/services/language.service';
 
 import * as translationsEn from 'src/assets/i18n/en.json';
 import * as translationsDe from 'src/assets/i18n/de.json';
-import { provideRouter, Router, withInMemoryScrolling } from '@angular/router';
-import { ROUTE_CONFIG } from '~/app.routes';
+import { provideRouter, Router, Routes } from '@angular/router';
 import { OebBadgeClassEditForm } from './oeb-badgeclass-edit-form.component';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { authTokenInterceptor, TokenAuthService } from '~/common/services/token-auth.service';
@@ -30,10 +29,7 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 			const lang = inject(LanguageService);
 			useWebComponentLanguageSetting(lang);
 		}),
-		provideRouter(
-			ROUTE_CONFIG,
-			withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
-		),
+		provideRouter([] as Routes),
 		{
 			provide: Router,
 			useClass: WebComponentRouter,
@@ -42,6 +38,7 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 			provide: AUTH_PROVIDER,
 			useClass: TokenAuthService,
 		},
+
 		IconsProvider,
 	],
 });

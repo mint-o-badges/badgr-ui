@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';

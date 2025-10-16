@@ -1,11 +1,12 @@
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { BadgeClassEditFormComponent } from './badgeclass-edit-form.component';
 import { AsyncPipe } from '@angular/common';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { Network } from '~/issuer/network.model';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { BadgeClassSelectTypeComponent } from '../badgeclass-select-type/badgeclass-select-type.component';
+import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
 
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
@@ -17,31 +18,30 @@ import { BadgeClassSelectTypeComponent } from '../badgeclass-select-type/badgecl
 				}
 				@case ('create') {
 					@if (issuer()) {
-						<badgeclass-edit-form [issuer]="issuer()" />
+						<badgeclass-edit-form [issuer]="issuer()" (cancelEdit)="onCancel()" />
 					}
+				}
+				@case ('create-lp') {
+					@if (issuer()) {
+						<learningpath-edit-form />
+					}
+				}
+				@case ('unknown') {
+					<p>Unknown Operation</p>
 				}
 			}
 		} @else {
 			<p>Handling authentication, please wait.</p>
 		}
 	`,
-	imports: [BadgeClassEditFormComponent, AsyncPipe, BadgeClassSelectTypeComponent],
+	imports: [BadgeClassEditFormComponent, AsyncPipe, BadgeClassSelectTypeComponent, LearningPathEditFormComponent],
 })
 export class OebBadgeClassEditForm {
 	readonly token = input.required<string>();
 	readonly issuer = input<Issuer | Network>();
 	readonly authService = inject(AUTH_PROVIDER);
 	readonly router = inject(Router);
-	readonly currentRoute = computed(() => {
-		const url = this.router.currentNavigation()?.finalUrl;
-		console.log(url);
-		if (url === undefined) return 'select'; // initial routing state -> select category
-		if (url.toString().indexOf('/badges/select')) return 'select';
-		if (url.toString().indexOf('/badges/create')) return 'create';
-		if (url.toString().indexOf('/learningpaths/create')) return 'create-lp';
-
-		return 'unknown';
-	});
+	readonly currentRoute = signal<'select' | 'create' | 'create-lp' | 'unknown'>('select');
 	private signInEffect = effect(() => {
 		const t = this.token();
 		(async () => {
@@ -49,7 +49,27 @@ export class OebBadgeClassEditForm {
 		})();
 	});
 
+	constructor() {
+		this.router.events.subscribe((event) => {
+			if (event instanceof NavigationEnd) {
+				const url = event.url;
+				const routeForUrl = (url) => {
+					if (url === undefined) return 'select'; // initial routing state -> select category
+					if (url.toString().indexOf('/badges/select') >= 0) return 'select';
+					if (url.toString().indexOf('/badges/create') >= 0) return 'create';
+					if (url.toString().indexOf('/learningpaths/create') >= 0) return 'create-lp';
+					return 'unknown';
+				};
+				this.currentRoute.set(routeForUrl(url));
+			}
+		});
+	}
+
 	async handleSignInWithToken(token: string) {
 		await this.authService.validateToken(token);
+	}
+
+	onCancel() {
+		this.currentRoute.set('select');
 	}
 }

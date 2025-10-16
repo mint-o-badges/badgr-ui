@@ -1,7 +1,8 @@
-import { ApplicationConfig, enableProdMode, Injectable, signal, Type } from '@angular/core';
+import { ApplicationConfig, enableProdMode, Injectable, Type } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { createApplication } from '@angular/platform-browser';
-import { NavigationExtras, Router } from '@angular/router';
+import { Event, NavigationBehaviorOptions, NavigationEnd, NavigationExtras, Router, UrlTree } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 import { LanguageService, lngs } from '~/common/services/language.service';
 
 /**
@@ -36,7 +37,20 @@ export const useWebComponentLanguageSetting = (lang: LanguageService) => {
 
 @Injectable()
 export class WebComponentRouter extends Router {
+	private readonly _eventsSubject = new Subject<Event>();
+
+	override get events(): Observable<Event> {
+		return this._eventsSubject;
+	}
+
 	navigate(commands: any[], extras?: NavigationExtras): Promise<boolean> {
-		return super.navigate(commands, extras);
+		const urlTree = super.createUrlTree(commands, extras);
+		this._eventsSubject.next(new NavigationEnd(Math.random(), urlTree.toString(), urlTree.toString()));
+		return Promise.resolve(true);
+	}
+
+	navigateByUrl(url: string | UrlTree, extras?: NavigationBehaviorOptions): Promise<boolean> {
+		this._eventsSubject.next(new NavigationEnd(Math.random(), url.toString(), url.toString()));
+		return Promise.resolve(true);
 	}
 }
