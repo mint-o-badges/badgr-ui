@@ -16,6 +16,7 @@ import { BgFormFieldFileComponent } from '../../../common/components/formfield-f
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmH3, HlmP } from '@spartan-ng/helm/typography';
+import { isValidEmail } from '~/common/util/is-valid-email';
 import tlds from '../../../../assets/data/tld-list.json';
 
 @Component({
@@ -112,7 +113,6 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 		this.columnHeadersCount = columnHeaders.length;
 
 		const emailColIndex = columnHeaders.findIndex((c) => c.destColumn === 'email');
-		const validTlds = new Set((tlds as any[]).map((tld) => tld.extension.replace('.', '').toLowerCase()));
 
 		for (const row of rows) {
 			if (row.cells.length < this.columnHeadersCount) {
@@ -124,18 +124,16 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 
 			if (emailColIndex >= 0) {
 				const email = row.cells[emailColIndex];
-				if (email) {
-					const tld = email.split('.').pop()?.toLowerCase();
-					if (!tld || !validTlds.has(tld)) {
-						emailInvalid = true;
-					}
-				}
+				emailInvalid = !isValidEmail(email);
 			}
 
 			row.emailInvalid = emailInvalid;
 
-			if (!rowIsValid || emailInvalid) invalidRows.push(row);
-			else validRows.push(row);
+			if (!rowIsValid || emailInvalid) {
+				invalidRows.push(row);
+			} else {
+				validRows.push(row);
+			}
 		}
 
 		this.importPreviewData = {

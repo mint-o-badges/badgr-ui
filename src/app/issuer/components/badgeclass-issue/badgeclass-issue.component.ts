@@ -101,6 +101,24 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		}
 	}
 
+	idValidator: (control: FormControl) => ValidationResult = (control) => {
+		if (this.issueForm) {
+			switch (this.issueForm.controls.recipient_type.value) {
+				case 'email':
+					return EmailValidator.validEmail(control);
+				case 'openBadgeId':
+					return null;
+				case 'telephone':
+					return TelephoneValidator.validTelephone(control);
+				//case 'url': return UrlValidator.validUrl(control);
+				default:
+					return null;
+			}
+		} else {
+			return null;
+		}
+	};
+
 	expirationDateEditable = false;
 	idError: string | boolean = false;
 	dateError = false;
@@ -114,7 +132,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				this.issueForm.controls.recipient_identifier.rawControl.updateValueAndValidity();
 			});
 		})
-		.addControl('recipient_identifier', '', [Validators.required, this['idValidator']])
+		.addControl('recipient_identifier', '', [Validators.required, this.idValidator])
 		.addControl('narrative', '', [MdImgValidator.imageTest, Validators.maxLength(160)])
 		.addControl('notify_earner', true)
 		.addArray(
@@ -139,23 +157,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	evidenceEnabled = false;
 	narrativeEnabled = false;
 	expirationEnabled = false;
-	idValidator: (control: FormControl) => ValidationResult = (control) => {
-		if (this.issueForm) {
-			switch (this.issueForm.controls.recipient_type.value) {
-				case 'email':
-					return EmailValidator.validEmail(control);
-				case 'openBadgeId':
-					return null;
-				case 'telephone':
-					return TelephoneValidator.validTelephone(control);
-				//case 'url': return UrlValidator.validUrl(control);
-				default:
-					return null;
-			}
-		} else {
-			return null;
-		}
-	};
 	expirationValidator: (control: FormControl) => ValidationResult = (control) => {
 		if (this.expirationEnabled) {
 			return Validators.compose([Validators.required, DateValidator.validDate])(control);

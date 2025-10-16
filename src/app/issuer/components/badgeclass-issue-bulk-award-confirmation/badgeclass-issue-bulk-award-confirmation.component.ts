@@ -37,6 +37,7 @@ import { HlmH1, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 import { NgClass } from '@angular/common';
 import tlds from '../../../../assets/data/tld-list.json';
 import { FormsModule } from '@angular/forms';
+import { isValidEmail } from '~/common/util/is-valid-email';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -120,11 +121,10 @@ export class BadgeclassIssueBulkAwardConformation
 	saveEdit(row: BulkIssueData) {
 		row.isEditing = false;
 
-		const tld = row.email.split('.').pop()?.toLowerCase();
-		const validTlds = new Set((tlds as any[]).map((t) => t.extension.replace('.', '').toLowerCase()));
-		row.emailInvalid = !tld || !validTlds.has(tld);
+		row.emailInvalid = !isValidEmail(row.email);
 
 		this.buttonDisabledClass = this.hasInvalidEmails;
+		this.buttonDisabledAttribute = this.hasInvalidEmails;
 	}
 
 	onEditFocus(row: BulkIssueData) {
