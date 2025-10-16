@@ -11,10 +11,10 @@ import {
 	ViewChild,
 	OnChanges,
 	AfterViewInit,
+	Inject,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
-import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
@@ -39,7 +39,7 @@ import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { StringMatchingUtil } from '~/common/util/string-matching-util';
-import { ApiBadgeClassForCreation, BadgeClassCategory } from '~/issuer/models/badgeclass-api.model';
+import { ApiBadgeClassForCreation } from '~/issuer/models/badgeclass-api.model';
 import { base64ByteSize } from '~/common/util/file-util';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '~/common/components/formfield-image';
@@ -60,6 +60,7 @@ import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { UpperCasePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
@@ -215,7 +216,8 @@ export class LearningPathEditFormComponent
 	selectMinBadgesOptions: FormFieldSelectOption[] = [];
 
 	constructor(
-		protected loginService: SessionService,
+		@Inject(AUTH_PROVIDER)
+		protected loginService: AuthenticationService,
 		protected messageService: MessageService,
 		protected learningPathApiService: LearningPathApiService,
 		protected issuerManager: IssuerManager,

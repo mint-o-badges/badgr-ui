@@ -38,7 +38,6 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 			provide: AUTH_PROVIDER,
 			useClass: TokenAuthService,
 		},
-
 		IconsProvider,
 	],
 });

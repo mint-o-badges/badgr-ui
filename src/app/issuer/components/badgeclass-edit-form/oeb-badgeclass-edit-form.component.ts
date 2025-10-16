@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, input, signal, viewChild } from '@angular/core';
 import { BadgeClassEditFormComponent } from './badgeclass-edit-form.component';
 import { AsyncPipe } from '@angular/common';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
@@ -7,10 +7,15 @@ import { Network } from '~/issuer/network.model';
 import { NavigationEnd, Router } from '@angular/router';
 import { BadgeClassSelectTypeComponent } from '../badgeclass-select-type/badgeclass-select-type.component';
 import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
+import { CommonDialogsService } from '~/common/services/common-dialogs.service';
+import { ConfirmDialog } from '~/common/dialogs/confirm-dialog.component';
+import { NounprojectDialog } from '~/common/dialogs/nounproject-dialog/nounproject-dialog.component';
 
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
 	template: `
+		<confirm-dialog #confirmDialog></confirm-dialog>
+		<nounproject-dialog #nounprojectDialog></nounproject-dialog>
 		@if (authService.isLoggedIn$ | async) {
 			@switch (currentRoute()) {
 				@case ('select') {
@@ -34,12 +39,22 @@ import { LearningPathEditFormComponent } from '../learningpath-edit-form/learnin
 			<p>Handling authentication, please wait.</p>
 		}
 	`,
-	imports: [BadgeClassEditFormComponent, AsyncPipe, BadgeClassSelectTypeComponent, LearningPathEditFormComponent],
+	imports: [
+		BadgeClassEditFormComponent,
+		AsyncPipe,
+		BadgeClassSelectTypeComponent,
+		LearningPathEditFormComponent,
+		ConfirmDialog,
+		NounprojectDialog,
+	],
 })
-export class OebBadgeClassEditForm {
+export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly token = input.required<string>();
 	readonly issuer = input<Issuer | Network>();
 	readonly authService = inject(AUTH_PROVIDER);
+	readonly commonDialogsService = inject(CommonDialogsService);
+	readonly confirmDialog = viewChild.required<ConfirmDialog>('confirmDialog');
+	readonly nounprojectDialog = viewChild.required<NounprojectDialog>('nounprojectDialog');
 	readonly router = inject(Router);
 	readonly currentRoute = signal<'select' | 'create' | 'create-lp' | 'unknown'>('select');
 	private signInEffect = effect(() => {
@@ -63,6 +78,9 @@ export class OebBadgeClassEditForm {
 				this.currentRoute.set(routeForUrl(url));
 			}
 		});
+	}
+	ngAfterViewInit(): void {
+		this.commonDialogsService.init(this.confirmDialog(), undefined, undefined, this.nounprojectDialog());
 	}
 
 	async handleSignInWithToken(token: string) {
