@@ -15,7 +15,7 @@ import { PrivacyComponent } from './components/privacy/privacy.component';
 import { RequestBadgeComponent } from '../issuer/components/request-badge/request-badge.component';
 import { PdfDownloadComponent } from './components/pdf-download/pdf-download.component';
 import { PublicLearningPathComponent } from './components/learningpath/learningpath.component';
-import { PublicNotFoundBadgeCollectionComponent } from './components/not-found-badge-collection/not-found-badge-collection.component';
+import { PublicNotFoundComponent } from './components/not-found/not-found-component';
 import { PublicNetworkComponent } from './components/network/network.component';
 
 export const routes: Routes = [
@@ -126,7 +126,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'collections/not-found',
-		component: PublicNotFoundBadgeCollectionComponent,
+		component: PublicNotFoundComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
@@ -138,7 +138,6 @@ export const routes: Routes = [
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
-
 	{
 		path: '**',
 		component: PublicComponent,
