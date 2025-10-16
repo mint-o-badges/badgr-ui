@@ -8,7 +8,7 @@ import { AppConfigService } from './app/common/app-config.service';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { initializeTheme } from './theming/theme-setup';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -16,8 +16,9 @@ import { ROUTE_CONFIG } from './app/app.routes';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { uiTimestamp } from './environments/timestamp';
-import { authTokenInterceptor } from '~/common/services/token-auth.service';
 import { IconsProvider } from '~/icons-provider';
+import { SessionService } from '~/common/services/session.service';
+import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 
 registerLocaleData(localeDe);
 
@@ -32,7 +33,8 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
 	providers: [
-		provideHttpClient(withInterceptors([authTokenInterceptor])),
+		{ provide: AUTH_PROVIDER, useClass: SessionService },
+		provideHttpClient(),
 		importProvidersFrom(
 			BrowserModule,
 			TranslateModule.forRoot({
