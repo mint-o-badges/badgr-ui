@@ -61,6 +61,7 @@ import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { UpperCasePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
+import { Network } from '~/issuer/network.model';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
@@ -172,8 +173,8 @@ export class LearningPathEditFormComponent
 	focusActivation = false;
 	hasScrolled = false;
 
-	issuer: Issuer;
-	issuerLoaded: Promise<unknown>;
+	@Input()
+	issuer: Issuer | Network;
 
 	isCustomImageLarge = false;
 	maxCustomImageSize = 1024 * 250;
@@ -234,9 +235,10 @@ export class LearningPathEditFormComponent
 		// protected title: Title,
 		super(router, route, loginService);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
-		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
-			this.issuer = issuer;
-		});
+		if (!this.issuer)
+			this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+				this.issuer = issuer;
+			});
 		this.badgesLoaded = this.loadBadges();
 	}
 	next: string;
