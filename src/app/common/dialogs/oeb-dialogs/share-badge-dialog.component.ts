@@ -57,7 +57,7 @@ const COPY_NOTIF_TIMEOUT_MS: number = 3000;
 					(click)="shareOnLinkedIn()"
 				/>
 			</div>
-			@if (noLinkedInIdForInstitution) {
+			@if (hasLinkedInIdForInstitution()) {
 				<p hlmP [size]="'sm'" class="oeb tw-text-xs tw-italic tw-pt-2">
 					{{ 'RecBadge.shareWithoutLinkedInId' | translate }}
 				</p>
@@ -67,7 +67,7 @@ const COPY_NOTIF_TIMEOUT_MS: number = 3000;
 })
 export class ShareBadgeDialogComponent implements AfterViewInit {
 	copied: WritableSignal<boolean> = signal(false);
-	noLinkedInIdForInstitution: WritableSignal<boolean> = signal(true);
+	hasLinkedInIdForInstitution: WritableSignal<boolean> = signal(false);
 	private readonly _dialogContext = injectBrnDialogContext<ShareBadgeDialogContext>();
 	private readonly dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 	private issuer: Issuer = undefined;
@@ -78,7 +78,7 @@ export class ShareBadgeDialogComponent implements AfterViewInit {
 	ngAfterViewInit(): void {
 		this.context.badge.issuerManager.issuerBySlug(this.context.badge.badgeClass.issuer.slug).then((i) => {
 			this.issuer = i;
-			this.noLinkedInIdForInstitution.set((this.issuer.linkedinId?.length ?? 0) === 0);
+			this.hasLinkedInIdForInstitution.set((this.issuer.linkedinId?.length ?? 0) === 0);
 		});
 	}
 

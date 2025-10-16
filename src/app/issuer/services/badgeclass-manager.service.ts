@@ -94,20 +94,15 @@ export class BadgeClassManager extends BaseHttpApiService {
 		return entitySet.loaded$.pipe(map(() => this.getNetworkBadgeClassesByIssuerUrl(networkSlug)));
 	}
 
-	private awardableBadgesCache = new Map<string, Promise<BadgeClass[]>>();
-
 	async getAwardableBadgesForIssuer(issuerSlug: string): Promise<BadgeClass[]> {
-		if (!this.awardableBadgesCache.has(issuerSlug)) {
-			const promise = this.badgeClassApi.getAwardableBadgesForIssuer(issuerSlug).then((apiBadges) =>
-				apiBadges.map((apiModel) => {
-					const badge = new BadgeClass(this.commonEntityManager);
-					badge.applyApiModel(apiModel);
-					return badge;
-				}),
-			);
-			this.awardableBadgesCache.set(issuerSlug, promise);
-		}
-		return this.awardableBadgesCache.get(issuerSlug)!;
+		const promise = this.badgeClassApi.getAwardableBadgesForIssuer(issuerSlug).then((apiBadges) =>
+			apiBadges.map((apiModel) => {
+				const badge = new BadgeClass(this.commonEntityManager);
+				badge.applyApiModel(apiModel);
+				return badge;
+			}),
+		);
+		return promise;
 	}
 
 	getAwardableBadges$(issuerSlug: string): Observable<BadgeClass[]> {
