@@ -17,7 +17,8 @@ import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
-
+import { ApiQRCode } from '~/issuer/models/qrcode-api.model';
+import { PublicNotFoundComponent } from '~/public/components/not-found/not-found-component';
 @Component({
 	selector: 'request-badge',
 	templateUrl: './request-badge.component.html',
@@ -32,6 +33,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 		OebCheckboxComponent,
 		OebButtonComponent,
 		TranslatePipe,
+		PublicNotFoundComponent,
 	],
 })
 export class RequestBadgeComponent extends BaseRoutableComponent implements OnInit {
@@ -76,15 +78,59 @@ export class RequestBadgeComponent extends BaseRoutableComponent implements OnIn
 	badgeClassLoaded: Promise<unknown>;
 	badgeClass: PublicApiBadgeClassWithIssuer;
 
+	qrCodeValid = false;
+	qrCodeExpiredMessage: string;
+	qrCodeData: ApiQRCode;
+
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
 	}
 
 	ngOnInit(): void {
+		this.checkQrCodeValidity();
 		this.requestForm.setValue({
 			...this.requestForm.value,
 			qrCodeId: this.qrSlug,
 		});
+	}
+
+	private checkQrCodeValidity(): void {
+		if (!this.qrSlug) {
+			this.qrCodeValid = false;
+			return;
+		}
+
+		this.publicApiService
+			.getQrCode(this.qrSlug)
+			.then((qrCode: ApiQRCode) => {
+				this.qrCodeData = qrCode;
+				this.qrCodeValid = this.isQrCodeValid(qrCode);
+
+				if (!this.qrCodeValid) {
+					this.qrCodeExpiredMessage = this.translate.instant('QrCode.expired');
+				}
+			})
+			.catch((error) => {
+				console.error('Error fetching QR code:', error);
+				this.qrCodeValid = false;
+				this.qrCodeExpiredMessage = "this.translate.instant('General.notFound')";
+			});
+	}
+
+	private isQrCodeValid(qrCode: ApiQRCode): boolean {
+		// If no validity dates set, consider it always valid
+		if (!qrCode.valid_from || !qrCode.expires_at) {
+			return true;
+		}
+
+		const now = new Date();
+		const validFrom = new Date(qrCode.valid_from);
+		const expiresAt = new Date(qrCode.expires_at);
+
+		const todayStart = new Date(now);
+		todayStart.setHours(0, 0, 0, 0);
+
+		return validFrom <= now && expiresAt >= todayStart;
 	}
 
 	requestBadge = this.translate.instant('RequestBadge.requestBadge');
