@@ -8,14 +8,18 @@
 				<ng-template [showLoader]="false" [bgAwaitPromises]="[pageReadyPromise]">
 					<span [countUp]="totalBadgeCount()">{{ totalBadgeCount() }}</span>
 					<span>
-						{{ badgesPluralWord() }}
+						{{ badgesPluralWord() }} in
+						@if (issuers().length > 1) {
+							<span [countUp]="issuers().length">{{ issuers().length }}</span>
+						}
+						{{ issuersPluralWord() }}
 					</span>
 				</ng-template>
 			</ng-template>
 		</header>
 	</div>
 
-	<ng-template [showLoader]="false" [bgAwaitPromises]="pageReadyPromise">
+	<ng-template [showLoader]="true" [bgAwaitPromises]="pageReadyPromise">
 		@if (showLegend()) {
 			<app-badge-legend (closed)="closeLegend()"></app-badge-legend>
 		}
@@ -107,31 +111,23 @@
 		</div>
 	</ng-template>
 	<div #loadMore class="oeb-section-sm">
-		@if (hasNext()) {
-			@if (!observeScrolling()) {
-				<loading-dots />
+		<ng-template [showLoader]="false" [bgAwaitPromises]="pageReadyPromise">
+			@if (hasNext()) {
+				@if (!observeScrolling()) {
+					<loading-dots />
+				} @else {
+					<oeb-button
+						variant="secondary"
+						size="sm"
+						type="button"
+						text="{{ 'General.loadMore' | translate }}"
+						(click)="onLoadMoreClicked()"
+						class="tw-mx-auto tw-block tw-w-max"
+					/>
+				}
 			} @else {
-				<oeb-button
-					variant="secondary"
-					size="sm"
-					type="button"
-					text="{{ 'General.loadMore' | translate }}"
-					(click)="onLoadMoreClicked()"
-					class="tw-mx-auto tw-block tw-w-max"
-				/>
+				<h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
 			}
-		} @else {
-			<h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
-			<h4 hlmH4 class="tw-font-black tw-text-purple tw-text-center">
-				@if (badges().length > 1) {
-					<span [countUp]="badges().length">{{ badges().length }}</span>
-				}
-				{{ badgesPluralWord() }} in
-				@if (issuers().length > 1) {
-					<span [countUp]="issuers().length">{{ issuers().length }}</span>
-				}
-				{{ issuersPluralWord() }}
-			</h4>
-		}
+		</ng-template>
 	</div>
 </div>
