@@ -191,6 +191,9 @@ export class BgLearningPathCard {
 		if (this.completed) {
 			return 100;
 		}
-		return Math.floor((this.progress / this.studyLoad) * 100);
+		if (!this.studyLoad || this.studyLoad === 0) {
+			return 0;
+		}
+		return Math.floor(((this.progress ?? 0) / this.studyLoad) * 100);
 	}
 }
