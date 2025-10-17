@@ -23,20 +23,65 @@
 			</thead>
 			<tbody class="datatable-x-body">
 				@for (row of transformedImportData.validRowsTransformed; track row) {
-					<tr class="datatable-x-row">
+					<tr
+						class="datatable-x-row"
+						[ngClass]="{
+							'tw-border-red tw-border-solid tw-border-[3px]': row.emailInvalid,
+						}"
+					>
 						<td class="datatable-x-cell">
-							{{ row.email }}
+							@if (!row.isEditing) {
+								<span>{{ row.email }}</span>
+							} @else {
+								<input
+									#emailInput
+									type="text"
+									[(ngModel)]="row.email"
+									class="tw-border tw-rounded px-1 py-0.5 tw-w-full"
+									[ngClass]="{
+										'tw-border-purple-500 tw-ring-2 tw-ring-purple-300 tw-outline-none':
+											row.isEditing,
+										'tw-border-gray-300': !row.isEditing,
+									}"
+									(focus)="onEditFocus(row)"
+								/>
+							}
 						</td>
+
 						<td class="datatable-x-cell">
 							{{ row.name }}
 						</td>
 						<td class="datatable-x-cell">
-							<oeb-button
-								variant="secondary"
-								size="xs"
-								text="Entfernen"
-								(click)="removeValidRowsTransformed(row)"
-							></oeb-button>
+							<div class="tw-flex tw-gap-4 tw-items-center">
+								<oeb-button
+									variant="secondary"
+									size="xs"
+									[text]="'General.remove' | translate"
+									(click)="removeValidRowsTransformed(row)"
+								></oeb-button>
+								@if (!row.isEditing) {
+									<oeb-button
+										variant="secondary"
+										size="iconSm"
+										icon="lucidePencil"
+										iconSize="20px"
+										(click)="startEditing(row)"
+									></oeb-button>
+								} @else {
+									<oeb-button
+										variant="secondary"
+										size="xs"
+										[text]="'General.save' | translate"
+										(click)="saveEdit(row)"
+									></oeb-button>
+									<oeb-button
+										variant="secondary"
+										size="xs"
+										[text]="'General.cancel' | translate"
+										(click)="cancelEditing(row)"
+									></oeb-button>
+								}
+							</div>
 						</td>
 					</tr>
 				}
@@ -45,16 +90,18 @@
 			<tbody></tbody>
 		</table>
 	</div>
-	<div class="oeb-standard-padding-bottom">
-		<h3 hlmH3 class="tw-text-purple">{{ 'General.notification' | translate }}</h3>
-		<oeb-checkbox
-			name="notify_earner"
-			id="notify_earner"
-			type="checkbox"
-			[control]="issueForm.rawControlMap.notify_earner"
-			[text]="'Issuer.sendEmail' | translate"
-			[disabled]="buttonDisabledAttribute"
-		></oeb-checkbox>
+	<div class="oeb-standard-padding-bottom tw-flex tw-flex-col tw-text-end tw-gap-6">
+		@if (invalidEmailCount === 1) {
+			<span class="tw-text-red tw-text-lg">
+				{{ 'Issuer.bulkInvalidEmail' | translate }}
+			</span>
+		}
+		@if (invalidEmailCount > 1) {
+			<span class="tw-text-red tw-text-lg">
+				{{ 'Issuer.bulkInvalidEmailsPlural' | translate: { count: invalidEmailCount } }}
+			</span>
+		}
+		<span class="tw-text-lg tw-text-oebblack">{{ 'Issuer.bulkReceiveByEmail' | translate }}</span>
 	</div>
 
 	<!-- BUTTONS -->
@@ -68,7 +115,7 @@
 
 		<oeb-button
 			[class.button-is-disabled]="buttonDisabledClass"
-			[disabled]="buttonDisabledAttribute"
+			[disabled]="buttonDisabledAttribute || hasInvalidEmails"
 			(click)="dataConfirmed()"
 			text="{{ 'Issuer.giveBadges' | translate }}"
 		>
