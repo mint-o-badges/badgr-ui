@@ -301,8 +301,8 @@
 		"csvError": "The CSV file contains rows longer than its header. Please fix this error and try again.",
 		"useImageFormat": "Please use an image in a square 1:1 format so that it can be displayed optimally on our platform.",
 		"pdfCertificate": "PDF certificate",
-		"institutionIssued": "Institution awards badges via OEB",
-		"institutionsIssued": "Institutions are registered on OEB",
+		"institutionIssued": "institution awards badges via OEB",
+		"institutionsIssued": "institutions are registered on OEB",
 		"categories": {
 			"allCategories": "All categories",
 			"schule": "School",
