@@ -434,7 +434,9 @@
 		"partOfNetwork": "Part of the NETWORK",
 		"noBadgesYet": "The network <span class='tw-font-semibold'>{{network}}</span> has not created any badges yet.",
 		"sharedBy": "Shared by",
-		"sharedOn": "Shared on"
+		"sharedOn": "Shared on",
+		"networkRegistered": "Network is registered on OEB",
+		"networksRegistered": "Networks are registered on OEB"
 	},
 	"Badge": {
 		"groupBy": "Group by",

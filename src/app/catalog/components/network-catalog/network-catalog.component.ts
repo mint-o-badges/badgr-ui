@@ -75,6 +75,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	pageReadyPromise: Promise<unknown>;
 	public loggedIn = false;
 	plural: any;
+	totalNetworkCount = signal<number>(0);
 
 	constructor(
 		protected messageService: MessageService,
@@ -154,6 +155,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 					concatMap((i) => this.loadRangeOfNetworks(i.page, i.searchQuery, i.sortOption)),
 				)
 				.subscribe((paginatedNetworks) => {
+					this.totalNetworkCount.set(paginatedNetworks.total_count);
 					if (!paginatedNetworks) {
 						this.observeScrolling.set(true);
 						return;
