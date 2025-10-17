@@ -18,6 +18,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { NgClass } from '@angular/common';
 import tlds from '../../../../assets/data/tld-list.json';
+import { isValidEmail } from '~/common/util/is-valid-email';
 
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-preview',
@@ -142,10 +143,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 				const email = this.getEmailFromRow(row);
 				const name = this.getNameFromRow(row);
 
-				const tld = email.split('.').pop()?.toLowerCase();
-				const validTlds = new Set((tlds as any[]).map((tld) => tld.extension.replace('.', '').toLowerCase()));
-
-				const emailInvalid = !tld || !validTlds.has(tld);
+				const emailInvalid = !isValidEmail(email);
 
 				return { email, name, emailInvalid };
 			}),
