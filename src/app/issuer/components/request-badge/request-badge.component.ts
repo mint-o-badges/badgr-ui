@@ -19,6 +19,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { ApiQRCode } from '~/issuer/models/qrcode-api.model';
 import { PublicNotFoundComponent } from '~/public/components/not-found/not-found-component';
+import { OebSpinnerComponent } from '~/components/oeb-spinner.component';
 @Component({
 	selector: 'request-badge',
 	templateUrl: './request-badge.component.html',
@@ -34,6 +35,7 @@ import { PublicNotFoundComponent } from '~/public/components/not-found/not-found
 		OebButtonComponent,
 		TranslatePipe,
 		PublicNotFoundComponent,
+		OebSpinnerComponent,
 	],
 })
 export class RequestBadgeComponent extends BaseRoutableComponent implements OnInit {
@@ -78,6 +80,7 @@ export class RequestBadgeComponent extends BaseRoutableComponent implements OnIn
 	badgeClassLoaded: Promise<unknown>;
 	badgeClass: PublicApiBadgeClassWithIssuer;
 
+	qrCodeLoading = true;
 	qrCodeValid = false;
 	qrCodeExpiredMessage: string;
 	qrCodeData: ApiQRCode;
@@ -100,6 +103,8 @@ export class RequestBadgeComponent extends BaseRoutableComponent implements OnIn
 			return;
 		}
 
+		this.qrCodeLoading = true;
+
 		this.publicApiService
 			.getQrCode(this.qrSlug)
 			.then((qrCode: ApiQRCode) => {
@@ -114,6 +119,9 @@ export class RequestBadgeComponent extends BaseRoutableComponent implements OnIn
 				console.error('Error fetching QR code:', error);
 				this.qrCodeValid = false;
 				this.qrCodeExpiredMessage = "this.translate.instant('General.notFound')";
+			})
+			.finally(() => {
+				this.qrCodeLoading = false;
 			});
 	}
 

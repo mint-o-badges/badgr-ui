@@ -1,5 +1,11 @@
 <ng-template [bgAwaitPromises]="badgeClassLoaded">
-	@if (qrCodeValid) {
+	@if (qrCodeLoading) {
+		<main>
+			<div class="page-padding oeb tw-flex tw-justify-center tw-items-center tw-min-h-screen">
+				<oeb-spinner [text]="'General.loading' | translate" size="lg"></oeb-spinner>
+			</div>
+		</main>
+	} @else if (qrCodeValid) {
 		<div class="page-padding oeb">
 			<div class="oeb-headline-container-sm">
 				<h1 hlmH1 class="tw-text tw-text-oebblack">{{ 'RequestBadge.requestBadge' | translate }}:</h1>
