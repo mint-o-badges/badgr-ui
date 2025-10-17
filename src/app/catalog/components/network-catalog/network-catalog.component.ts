@@ -4,20 +4,13 @@ import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { FormsModule } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { CountUpModule } from 'ngx-countup';
-import { NgClass } from '@angular/common';
-import { NgIcon } from '@ng-icons/core';
-import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
-import { OebSelectComponent } from '../../../components/select.component';
-import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { IssuerCardComponent } from '../../../components/issuer-card/issuer-card.component';
-import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { OebNetworkCard } from '~/common/components/oeb-networkcard.component';
 import { RouterLink } from '@angular/router';
 import { CatalogService } from '~/catalog/catalog.service';
@@ -35,6 +28,8 @@ import {
 } from 'rxjs';
 import { OebHeaderText } from '~/components/oeb-header-text.component';
 import { NetworkV3 } from '~/issuer/models/networkv3.model';
+import { LoadingDotsComponent } from '~/common/components/loading-dots.component';
+import { OebButtonComponent } from '~/components/oeb-button.component';
 
 @Component({
 	selector: 'app-network-catalog',
@@ -42,25 +37,21 @@ import { NetworkV3 } from '~/issuer/models/networkv3.model';
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		BgAwaitPromises,
 		CountUpModule,
 		FormsModule,
 		OebNetworkCard,
 		RouterLink,
 		OebHeaderText,
+		LoadingDotsComponent,
+		OebButtonComponent,
+		TranslatePipe,
 	],
 })
 export class NetworkCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
 	readonly NETWORKS_PER_PAGE = 20;
 	readonly INPUT_DEBOUNCE_TIME = 400;
 	@ViewChild('loadMore') loadMore: ElementRef | undefined;
-
-	Array = Array;
 	networks = signal<NetworkV3[]>([]);
-	networksPerPage = 30;
-	totalPages: number;
-	nextLink: string;
-	previousLink: string;
 	intersectionObserver: IntersectionObserver | undefined;
 	pageSubscriptions: Subscription[] = [];
 	sortOption = signal<'name_asc' | 'name_desc'>('name_asc');
@@ -72,9 +63,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	searchQuery = signal<string>('');
 	searchQuery$ = toObservable(this.searchQuery);
 	hasNext = signal<boolean>(true);
-	pageReadyPromise: Promise<unknown>;
 	public loggedIn = false;
-	plural: any;
 	totalNetworkCount = signal<number>(0);
 
 	constructor(
@@ -123,16 +112,6 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 
 	ngOnInit() {
 		this.loggedIn = this.sessionService.isLoggedIn;
-
-		this.plural = {
-			network: {
-				'=0': this.translate.instant('Network.noNetworks'),
-				'=1': '1 ' + this.translate.instant('Network.networkRegistered'),
-				other: '# ' + this.translate.instant('Network.networksRegistered'),
-			},
-		};
-
-		this.pageReadyPromise = Promise.resolve();
 
 		this.pageSubscriptions.push(
 			this.observeScrolling$.pipe(filter((_) => this.intersectionObserver !== undefined)).subscribe((observe) => {
@@ -196,24 +175,13 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 		}
 	}
 
-	onSearchChange(searchTerm: string) {
-		this.searchQuery.set(searchTerm);
-		if (this.currentPage() > 0) {
-			this.currentPage.set(0);
-		}
-	}
-
-	onSortChange(sortOption: 'name_asc' | 'name_desc') {
-		this.sortOption.set(sortOption);
-		if (this.currentPage() > 0) {
-			this.currentPage.set(0);
-		}
-	}
-
 	get networksPluralWord(): string {
-		const count = this.networks().length;
-		if (count === 0) return this.translate.instant('Network.noNetworks');
+		const count = this.totalNetworkCount();
 		if (count === 1) return this.translate.instant('Network.networkRegistered');
 		return this.translate.instant('Network.networksRegistered');
+	}
+
+	onLoadMoreClicked() {
+		if (this.hasNext()) this.currentPage.update((p) => p + 1);
 	}
 }
