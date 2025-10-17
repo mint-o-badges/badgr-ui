@@ -83,7 +83,7 @@
 
 	@if (!embedService.isEmbedded && !collection) {
 		<main>
-			<bg-not-found-collection />
+			<bg-not-found [messageKey]="'BadgeCollection.collectionNotPublic'" />
 		</main>
 	}
 </ng-template>

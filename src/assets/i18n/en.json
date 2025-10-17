@@ -114,7 +114,8 @@
 		"rolesAndRights": "Roles and rights",
 		"website": "Website",
 		"organization": "Organization",
-		"notNow": "Not Now"
+		"notNow": "Not Now",
+		"notFound": "Not found"
 	},
 	"NavItems": {
 		"register": "Register",
