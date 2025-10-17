@@ -39,6 +39,7 @@ import { firstValueFrom } from 'rxjs';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1 } from '@spartan-ng/helm/typography';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -62,6 +63,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		LoadingDotsComponent,
 		OebButtonComponent,
 		BgAwaitPromises,
+		OebHeaderText,
 	],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -97,6 +99,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	 * {@link searchQuery}, {@link selectedTags} and {@link sortOption}
 	 */
 	badges = signal<BadgeClassV3[]>([]);
+
+	totalBadgeCount = signal<number>(0);
 
 	/** Whether or not a next page of badge classes can be exists to be loaded. */
 	hasNext = signal<boolean>(true);
@@ -198,6 +202,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					concatMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
 				)
 				.subscribe((paginatedBadges) => {
+					this.totalBadgeCount.set(paginatedBadges.total_count);
 					this.hasNext.set(paginatedBadges?.next !== null);
 					if (!paginatedBadges?.previous)
 						// on the first page, set the whole array to make sure to not append anything
