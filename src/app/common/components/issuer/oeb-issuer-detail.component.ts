@@ -46,6 +46,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { NetworkApiService } from '~/issuer/services/network-api.service';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 import { IssuerApiService } from '~/issuer/services/issuer-api.service';
+import { PublicApiService } from '~/public/services/public-api.service';
 
 interface NetworkBadgeGroup {
 	issuerName: string;
@@ -88,13 +89,13 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
-	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
 	@Input() networks: PublicApiIssuer[];
 	@Input() partner_issuers: PublicApiIssuer[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 
 	learningPathsPromise: Promise<unknown>;
+	learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	networkRequestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 	userIsMember = false;
@@ -114,6 +115,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		private sessionService: SessionService,
 		private networkApiService: NetworkApiService,
 		private issuerApiService: IssuerApiService,
+		private publicApiService: PublicApiService,
 	) {
 		if (this.sessionService.isLoggedIn) {
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
@@ -395,17 +397,21 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	}
 
 	async ngOnInit() {
+		if (this.sessionService.isLoggedIn) {
+			await this.getLearningPathsForIssuerApi(this.issuer.slug);
+		} else {
+			await this.getPublicLearningPaths(this.issuer.slug);
+		}
 		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
-		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
+		this.badgeTemplateTabs = [
+			{
+				key: 'issuer-badges',
+				title: 'Issuer.issuerBadges',
+				count: this.badgeResults.length,
+				img: this.issuer.image,
+			},
+		];
 		if (this.env.networksEnabled) {
-			this.badgeTemplateTabs = [
-				{
-					key: 'issuer-badges',
-					title: 'Issuer.issuerBadges',
-					count: this.badgeResults.length,
-					img: this.issuer.image,
-				},
-			];
 			this.badgeTemplateTabs.push({
 				key: 'network-badges',
 				title: 'Issuer.badgesInNetworks',
@@ -506,14 +512,19 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 			.then(() => (this.learningPaths = this.learningPaths.filter((value) => value.slug != learningPathSlug)));
 	}
 
+	async getPublicLearningPaths(issuerSlug: string) {
+		const lps = await this.publicApiService.getIssuerLearningPaths(issuerSlug);
+		this.learningPaths = lps.filter((l) => l.activated);
+	}
+
 	getLearningPathsForIssuerApi(issuerSlug) {
 		this.learningPathsPromise = this.learningPathApiService
 			.getLearningPathsForIssuer(issuerSlug)
 			.then(
 				(learningPaths) =>
-					(this.learningPaths = learningPaths.sort(
-						(a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-					)),
+					(this.learningPaths = learningPaths
+						.filter((l) => l.activated)
+						.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())),
 			);
 	}
 
@@ -541,12 +552,13 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		this.activeTabBadgeTemplate = tab;
 	}
 
-	calculateStudyLoad(lp: any): number {
-		const totalStudyLoad = lp.badges.reduce(
-			(acc, b) => acc + b.badge['extensions:StudyLoadExtension'].StudyLoad,
-			0,
-		);
-		return totalStudyLoad;
+	calculateStudyLoad(lp: ApiLearningPath | PublicApiLearningPath): number {
+		if (!lp?.badges) return 0;
+
+		return lp.badges.reduce((acc, b) => {
+			const studyLoad = b?.badge?.['extensions:StudyLoadExtension']?.StudyLoad ?? 0;
+			return acc + studyLoad;
+		}, 0);
 	}
 }
 

@@ -5,7 +5,7 @@
 			<oeb-header-text [text1]="'Network.networksHeadline'" [text2Template]="text2Template" />
 			<ng-template #text2Template>
 				<ng-template [showLoader]="false" [bgAwaitPromises]="[pageReadyPromise]">
-					<span [countUp]="networks().length">{{ networks().length }}</span>
+					<span [countUp]="totalNetworkCount()">{{ totalNetworkCount() }}</span>
 					<span>
 						{{ networksPluralWord }}
 					</span>

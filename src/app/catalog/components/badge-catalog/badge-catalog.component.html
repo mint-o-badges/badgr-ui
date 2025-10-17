@@ -2,9 +2,17 @@
 
 <div class="oeb page-padding">
 	<div class="oeb-section-sm">
-		<div class="tw-z-10 tw-relative">
-			<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
-		</div>
+		<header class="oeb-headline-container tw-relative tw-flex tw-flex-col">
+			<oeb-header-text [text1]="'Badge.catalogHeadline'" [text2Template]="text2Template" />
+			<ng-template #text2Template>
+				<ng-template [showLoader]="false" [bgAwaitPromises]="[pageReadyPromise]">
+					<span [countUp]="totalBadgeCount()">{{ totalBadgeCount() }}</span>
+					<span>
+						{{ badgesPluralWord() }}
+					</span>
+				</ng-template>
+			</ng-template>
+		</header>
 	</div>
 
 	<ng-template [showLoader]="false" [bgAwaitPromises]="pageReadyPromise">
