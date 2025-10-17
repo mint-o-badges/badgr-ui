@@ -507,9 +507,9 @@ export class OebIssuerDetailComponent implements OnInit {
 			.getLearningPathsForIssuer(issuerSlug)
 			.then(
 				(learningPaths) =>
-					(this.learningPaths = learningPaths
-						.filter((l) => l.activated)
-						.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())),
+					(this.learningPaths = learningPaths.sort(
+						(a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+					)),
 			);
 	}
 
