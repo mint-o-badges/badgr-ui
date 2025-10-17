@@ -139,7 +139,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 				</div>
 			</div>
 		</div>
-		<div [@showCompetencies]="showCompetencies">
+		<div [@showCompetencies]="showCompetencies" [class.competencies-hidden]="!showCompetencies">
 			<div class="tw-pt-8">
 				@if (showCompetencies) {
 					@for (competency of competencies; track competency) {
@@ -161,6 +161,11 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	`,
 	styles: [
 		`
+			.competencies-hidden {
+				height: 0 !important;
+				visibility: hidden !important;
+				overflow: hidden !important;
+			}
 			.text-clamp {
 				-webkit-line-clamp: 3;
 				-webkit-box-orient: vertical;
