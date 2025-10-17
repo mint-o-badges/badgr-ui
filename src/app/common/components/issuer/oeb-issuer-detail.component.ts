@@ -1,14 +1,4 @@
-import {
-	Component,
-	Input,
-	OnInit,
-	Output,
-	EventEmitter,
-	ViewChild,
-	inject,
-	TemplateRef,
-	AfterViewInit,
-} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild, inject, TemplateRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -84,7 +74,7 @@ import { environment } from 'src/environments/environment';
 		NgTemplateOutlet,
 	],
 })
-export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
+export class OebIssuerDetailComponent implements OnInit {
 	@Input() issuer: Issuer | PublicApiIssuer;
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
@@ -116,13 +106,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		private networkApiService: NetworkApiService,
 		private issuerApiService: IssuerApiService,
 		private publicApiService: PublicApiService,
-	) {
-		if (this.sessionService.isLoggedIn) {
-			this.issuerManager.myIssuers$.subscribe((issuers) => {
-				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
-			});
-		}
-	}
+	) {}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
@@ -171,21 +155,6 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	@ViewChild('learningPathTemplate', { static: false }) learningPathTemplate: TemplateRef<any>;
 	@ViewChild('issuerBadgesTemplate', { static: false }) issuerBadgesTemplate: TemplateRef<any>;
 	@ViewChild('networkBadgesTemplate', { static: false }) networkBadgesTemplate: TemplateRef<any>;
-
-	ngAfterViewInit() {
-		this.tabs = [
-			{
-				key: 'badges',
-				title: 'Badges',
-				component: this.badgesTemplate,
-			},
-			{
-				key: 'micro-degrees',
-				title: 'LearningPath.learningpathsPlural',
-				component: this.learningPathTemplate,
-			},
-		];
-	}
 
 	badgeResults: BadgeResult[] = [];
 	networkBadgeInstanceResults: NetworkBadgeGroup[] = [];
@@ -399,6 +368,9 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	async ngOnInit() {
 		if (this.sessionService.isLoggedIn) {
 			await this.getLearningPathsForIssuerApi(this.issuer.slug);
+			this.issuerManager.myIssuers$.subscribe((issuers) => {
+				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
+			});
 		} else {
 			await this.getPublicLearningPaths(this.issuer.slug);
 		}
@@ -419,6 +391,19 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 				icon: 'lucideShipWheel',
 			});
 		}
+
+		this.tabs = [
+			{
+				key: 'badges',
+				title: 'Badges',
+				component: this.badgesTemplate,
+			},
+			{
+				key: 'micro-degrees',
+				title: 'LearningPath.learningpathsPlural',
+				component: this.learningPathTemplate,
+			},
+		];
 	}
 
 	delete(event) {
