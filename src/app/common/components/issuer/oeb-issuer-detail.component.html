@@ -193,16 +193,18 @@
 	></oeb-tabs>
 
 	<ng-template #badgesTemplate>
-		<div class="tw-mt-12">
-			<oeb-tabs
-				[variant]="'bluebackground'"
-				(onTabChanged)="onNestedTabChange($event)"
-				[tabs]="badgeTemplateTabs"
-				[activeTab]="activeTabBadgeTemplate"
-				countStyle="parentheses"
-			>
-			</oeb-tabs>
-		</div>
+		@if (env.networksEnabled) {
+			<div class="tw-mt-12">
+				<oeb-tabs
+					[variant]="'bluebackground'"
+					(onTabChanged)="onNestedTabChange($event)"
+					[tabs]="badgeTemplateTabs"
+					[activeTab]="activeTabBadgeTemplate"
+					countStyle="parentheses"
+				>
+				</oeb-tabs>
+			</div>
+		}
 
 		@switch (activeTabBadgeTemplate) {
 			@case ('issuer-badges') {
@@ -225,9 +227,14 @@
 					<h2
 						class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4 oeb-break-words"
 					>
-						{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Micro
-						Degree{{ learningPaths.length === 1 ? '' : 's' }}.
+						{{ issuer.name }}
+						{{ 'Issuer.issuerHasBadges' | translate }}
+						{{ learningPaths.length }}
+						{{
+							(learningPaths.length === 1 ? 'General.learningPath' : 'General.learningPaths') | translate
+						}}.
 					</h2>
+
 					<learningpaths-datatable
 						*ngIf="!public"
 						[learningPaths]="apiLearningPaths"

@@ -25,14 +25,14 @@ import { map, Subscription } from 'rxjs';
 		[attr.data-umami-event]="umamiEvent()"
 	>
 		@if (icon() && iconLeft()) {
-			<ng-icon hlm size="lg" [name]="icon()" />
+			<ng-icon hlm [size]="iconSize()" [name]="icon()" />
 		}
 		@if (img()) {
 			<img class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img()" />
 		}
 		<span [ngClass]="{ 'tw-ml-4': iconLeft() }" [innerHTML]="computedText()"></span>
 		@if (icon() && !iconLeft()) {
-			<ng-icon hlm size="lg" [name]="icon()" />
+			<ng-icon hlm [size]="iconSize()" [name]="icon()" />
 		}
 	</button>`,
 })
@@ -44,6 +44,7 @@ export class OebButtonComponent implements OnInit, OnDestroy {
 	readonly text = input<string>();
 	readonly img = input<string>();
 	readonly icon = input<string>();
+	readonly iconSize = input<string>('lg');
 	readonly type = input<'submit' | 'reset' | 'button'>('submit');
 	readonly id = input<string>();
 	readonly iconLeft = input<boolean>(false);

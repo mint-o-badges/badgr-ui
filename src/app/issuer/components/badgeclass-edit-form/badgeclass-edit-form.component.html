@@ -36,7 +36,9 @@
 				>
 					<div class="section tw-text-oebblack tw-mt-6">
 						<div>
-							<h2 hlmH2 class="tw-font-bold">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
+							<h2 hlmH2 class="tw-font-bold">
+								{{ selectedStep + 1 + '.' }} {{ 'CreateBadge.enterDetails' | translate }}
+							</h2>
 						</div>
 						<div class="tw-flex tw-flex-col md:tw-mx-10 tw-justify-center tw-gap-7">
 							<div class="tw-mt-6">
@@ -278,7 +280,7 @@
 						@if (badgeCategory === 'competency') {
 							<div class="section tw-text-oebblack tw-px-1 tw-mt-6">
 								<h2 id="fillWithCompetencies" hlmH2 class="tw-font-bold">
-									3. {{ 'CreateBadge.fillWithCompetencies' | translate }}
+									{{ selectedStep + 1 + '.' }} {{ 'CreateBadge.fillWithCompetencies' | translate }}
 								</h2>
 								<p class="tw-font-normal md:tw-mx-10 tw-mx-4 u-text-error" hlmP size="sm">
 									@if (badgeClassForm.hasError('competenceHoursMinutesZero')) {
@@ -943,16 +945,20 @@
 					<div class="section tw-text-oebblack tw-mt-6">
 						<div>
 							@if (badgeCategory !== 'competency' || existingBadgeClass) {
-								<h2 hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.addTags' | translate }}</h2>
+								<h2 hlmH2 class="tw-font-bold">
+									{{ selectedStep + 1 + '.' }} {{ 'CreateBadge.addTags' | translate }}
+								</h2>
 							}
 							@if (badgeCategory === 'competency' && !existingBadgeClass) {
-								<h2 hlmH2 class="tw-font-bold">4. {{ 'CreateBadge.addTags' | translate }}</h2>
+								<h2 hlmH2 class="tw-font-bold">
+									{{ selectedStep + 1 + '.' }} {{ 'CreateBadge.addTags' | translate }}
+								</h2>
 							}
 						</div>
 						<p
 							class="tw-italic tw-text-purple tw-mt-2"
 							[translate]="'CreateBadge.tagInfo'"
-							[translateParams]="{ items: 'Badges' }"
+							[translateParams]="{ items: 'Badges', items2: 'Badges' }"
 						></p>
 						<div class="formsection-x-body tw-mt-4">
 							<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">

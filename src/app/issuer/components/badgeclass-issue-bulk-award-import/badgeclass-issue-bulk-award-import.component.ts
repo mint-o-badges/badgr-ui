@@ -10,11 +10,14 @@ import {
 	ColumnHeaders,
 	DestSelectOptions,
 	ViewState,
+	ParsedRow,
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 import { BgFormFieldFileComponent } from '../../../common/components/formfield-file';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmH3, HlmP } from '@spartan-ng/helm/typography';
+import { isValidEmail } from '~/common/util/is-valid-email';
+import tlds from '../../../../assets/data/tld-list.json';
 
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-import',
@@ -82,67 +85,63 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 
 	//////// Parsing ////////
 	parseCsv(rawCSV: string) {
-		const parseRow = (rawRow: string) => {
-			rows.push(rawRow.split(/[,;]/).map((r) => r.trim()));
-		};
+		const rows: ParsedRow[] = [];
+		const validRows: ParsedRow[] = [];
+		const invalidRows: ParsedRow[] = [];
 
-		const padRowWithMissingCells = (row: string[]) =>
-			row.concat(this.createRange(this.columnHeadersCount - row.length));
+		const parseRow = (rawRow: string): ParsedRow => ({
+			cells: rawRow.split(/[,;]/).map((r) => r.trim()),
+		});
 
-		const generateColumnHeaders = (): ColumnHeaders[] => {
-			const theseColumnHeaders = [];
-			const inferredColumnHeaders = new Set<string>();
+		rawCSV.match(/[^\r\n]+/g)?.forEach((rowString) => {
+			rows.push(parseRow(rowString));
+		});
 
-			rows.shift().forEach((columnHeaderName: string) => {
-				const tempColumnHeaderName: string = columnHeaderName.toLowerCase();
-				let destinationColumn: DestSelectOptions;
+		const headerRow = rows.shift();
+		if (!headerRow) return;
 
-				if (tempColumnHeaderName === 'email' || tempColumnHeaderName === 'e-mail-adresse') {
-					inferredColumnHeaders.add('email');
-					destinationColumn = 'email';
-				}
+		const columnHeaders: ColumnHeaders[] = headerRow.cells.map((columnHeaderName) => {
+			const lower = columnHeaderName.toLowerCase();
+			let destColumn: DestSelectOptions;
 
-				if (tempColumnHeaderName === 'name' || tempColumnHeaderName === 'vor- / nachname') {
-					inferredColumnHeaders.add('name');
-					destinationColumn = 'name';
-				}
+			if (lower === 'email' || lower === 'e-mail-adresse') destColumn = 'email';
+			if (lower === 'name' || lower === 'vor- / nachname') destColumn = 'name';
 
-				theseColumnHeaders.push({
-					destColumn: destinationColumn ? destinationColumn : 'NA',
-					sourceName: columnHeaderName,
-				});
-			});
+			return { destColumn: destColumn ?? 'NA', sourceName: columnHeaderName };
+		});
 
-			return theseColumnHeaders;
-		};
-
-		const rows = [];
-		const validRows: string[][] = [];
-		const invalidRows: string[][] = [];
-
-		rawCSV.match(/[^\r\n]+/g).forEach((row) => parseRow(row));
-
-		const columnHeaders: ColumnHeaders[] = generateColumnHeaders();
 		this.columnHeadersCount = columnHeaders.length;
 
-		for (let row of rows) {
-			// Valid if all the cells in a row are not empty.
-			const rowIsValid: boolean = row.every((cell, i) => cell.length > 0);
+		const emailColIndex = columnHeaders.findIndex((c) => c.destColumn === 'email');
 
-			if (row.length < this.columnHeadersCount) {
-				invalidRows.push(padRowWithMissingCells(row));
+		for (const row of rows) {
+			if (row.cells.length < this.columnHeadersCount) {
+				row.cells = row.cells.concat(this.createRange(this.columnHeadersCount - row.cells.length));
+			}
+
+			const rowIsValid = row.cells.every((cell) => cell.length > 0);
+			let emailInvalid = false;
+
+			if (emailColIndex >= 0) {
+				const email = row.cells[emailColIndex];
+				emailInvalid = !isValidEmail(email);
+			}
+
+			row.emailInvalid = emailInvalid;
+
+			if (!rowIsValid || emailInvalid) {
+				invalidRows.push(row);
 			} else {
-				if (rowIsValid) validRows.push(row);
-				else invalidRows.push(row);
+				validRows.push(row);
 			}
 		}
 
 		this.importPreviewData = {
 			columnHeaders,
 			invalidRows,
-			rowLongerThenHeader: rows.some((row) => row.length > this.columnHeadersCount),
-			rows,
 			validRows,
+			rows,
+			rowLongerThenHeader: rows.some((r) => r.cells.length > this.columnHeadersCount),
 		} as BulkIssueImportPreviewData;
 	}
 

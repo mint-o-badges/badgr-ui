@@ -249,9 +249,7 @@ export class OebInputComponent implements AfterViewInit {
 
 export type CustomValidatorMessages = string | { [validatorKey: string]: string };
 
-export const defaultValidatorMessages: {
-	[validatorKey: string]: (label: string, result?: unknown) => string;
-} = {
+export const defaultValidatorMessages: { [validatorKey: string]: (label: string, result?: unknown) => string } = {
 	required: (label: string) => `Bitte ${label} eingeben`,
 	validUrl: () => `Bitte gültige URL eingeben.`,
 	invalidTelephone: () => `Bitte gültige Telefonnummer eingeben`,
