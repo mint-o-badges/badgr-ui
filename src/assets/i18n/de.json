@@ -212,7 +212,9 @@
 		"nichtVerified": "Dieser Issuer wurde noch nicht verifiziert",
 		"createBadge": "Badge erstellen",
 		"createParticipationBadge": "Teilnahme-Badge erstellen",
+		"copyParticipationBadge": "Teilnahme-Badge kopieren",
 		"createCompetencyBadge": "Kompetenz-Badge erstellen",
+		"copyCompetencyBadge": "Kompetenz-Badge kopieren",
 		"contactInstitution": "Institution kontaktieren",
 		"jsonView": "JSON ansehen",
 		"viewOriginal": "Original ansehen",
@@ -439,7 +441,8 @@
 		"partOfNetwork": "Teil vom NETZWERK",
 		"noBadgesYet": "Das Netzwerk <span class='tw-font-semibold'>{{network}}</span> hat noch keine eigenen Badges erstellt.",
 		"sharedBy": "Freigegeben von",
-		"sharedOn": "Freigegeben am"
+		"sharedOn": "Freigegeben am",
+		"website": "Netzwerk-Webseite"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

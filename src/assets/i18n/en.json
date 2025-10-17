@@ -5,6 +5,7 @@
 		"name": "Name",
 		"email": "Email",
 		"institutions": "Institutions",
+		"network": "Network",
 		"networks": "Networks",
 		"institutionsNav": "Institutions A-Z",
 		"account": "Account",
@@ -211,7 +212,9 @@
 		"nichtVerified": "This issuer has not yet been verified",
 		"createBadge": "Create badge",
 		"createParticipationBadge": "Create participation badge",
+		"copyParticipationBadge": "Copy participation badge",
 		"createCompetencyBadge": "Create competency badge",
+		"copyCompetencyBadge": "Copy competency badge",
 		"contactInstitution": "Contact institution",
 		"jsonView": "View JSON",
 		"viewOriginal": "View original",
@@ -397,8 +400,8 @@
 		"networksUseBadgesTogether": "Networks can share badges.",
 		"networkLogoOnBadge": "The network logo is also displayed on the corresponding badge images.",
 		"youCanAddInstitutions": "You can create your own network and add your partner institutions:",
-		"create": "create network",
-		"name": "name of the network",
+		"create": "Create network",
+		"name": "Name of the network",
 		"addPartnerNext": "You can add your partner institutions in the next step.",
 		"welcomeDashboard": "Welcome to the dashboard of the network",
 		"inviteInstitutions": "Invite institutions to network",
@@ -415,6 +418,8 @@
 		"confirmInvitation": "Confirm invitation",
 		"networksHeadline": "All networks at a glance",
 		"noNetworks": "no networks",
+		"networkRegistered": "Network is registered on OEB",
+		"networksRegistered": "Networks are registered on OEB",
 		"partners": "Network members",
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
 		"partnerIssuers": "Partners",
@@ -438,8 +443,7 @@
 		"noBadgesYet": "The network <span class='tw-font-semibold'>{{network}}</span> has not created any badges yet.",
 		"sharedBy": "Shared by",
 		"sharedOn": "Shared on",
-		"networkRegistered": "Network is registered on OEB",
-		"networksRegistered": "Networks are registered on OEB"
+		"website": "Network website"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -528,11 +532,12 @@
 		"awardingInProgress": "Badge awarding in progress",
 		"willBeAwardedSoon": "We will have awarded the badges soon!",
 		"catalogAllLoaded": "All badges matching your search criteria loaded.",
-		"shareOnNetwork": "share on network",
+		"shareOnNetwork": "Share on network",
+		"shareOnWhichNetwork": "Which of your networks should the badge be shared on?",
 		"allNetworkMembersGetBadge": "All members of the selected network can award the badge via their institution.",
 		"networkAssertionsGetTracked": "All badge awards are included in the network's data evaluation.",
 		"cantRemoveFromNetwork": "The badge CANNOT be removed from the network.",
-		"shareBadgeOnNetwork": "share badge on network"
+		"shareBadgeOnNetwork": "Share badge on network"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
@@ -1055,7 +1060,7 @@
 		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
-		"learningpathsPlural": "learning paths",
+		"learningpathsPlural": "Learning paths",
 		"learningpathsNav": "Learning Paths A-Z",
 		"catalogHeadline": "All learning paths at a glance",
 		"participate": "Participate",

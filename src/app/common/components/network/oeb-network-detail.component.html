@@ -45,10 +45,11 @@
 							width="full_width"
 							class="tw-whitespace-nowrap"
 							(click)="routeToUrl(network.url)"
-							text="Website"
+							[text]="'Network.website' | translate"
 						>
 						</oeb-button>
 						<oeb-button
+							(click)="routeToMemberView()"
 							class="tw-whitespace-nowrap"
 							[text]="'Issuer.memberView' | translate"
 							variant="secondary"

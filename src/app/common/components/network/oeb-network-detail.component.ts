@@ -21,6 +21,7 @@ import { firstValueFrom } from 'rxjs';
 import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 import { BadgeClassManager } from '~/issuer/services/badgeclass-manager.service';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'oeb-network-detail',
@@ -68,6 +69,7 @@ export class OebNetworkDetailComponent {
 		protected profileManager: UserProfileManager,
 		protected networkApiService: NetworkApiService,
 		protected badgeClassManager: BadgeClassManager,
+		protected router: Router,
 	) {}
 
 	async ngOnInit() {
@@ -113,7 +115,7 @@ export class OebNetworkDetailComponent {
 			},
 			{
 				key: 'partner',
-				title: 'Partner-Badges',
+				title: 'Issuer.partnerBadges',
 				icon: 'lucideHexagon',
 				component: this.partnerTemplate,
 				count: this.partnerBadges.length,
@@ -129,5 +131,9 @@ export class OebNetworkDetailComponent {
 			this.networkBadges = Object.values(badgesByIssuer).flat();
 			res(this.networkBadges);
 		});
+	}
+
+	routeToMemberView() {
+		this.router.navigate(['/issuer/networks/', this.network.slug]);
 	}
 }
