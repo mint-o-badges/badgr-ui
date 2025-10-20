@@ -687,7 +687,8 @@
 		"newsletterEmail": "We have also sent you an email to confirm your newsletter subscription.",
 		"confirmNewsletter": "Click on <span class ='tw-font-bold'> “Confirm newsletter subscription” </span> in the newsletter email <br> to complete the newsletter registration.",
 		"newsletterEmailNotReceived": "You did not receive a newsletter email? Please submit your data via <br> our <a class='tw-underline tw-text-purple' href='public/about/newsletter'>newsletter registration form</a> or <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>write to us.</a>",
-		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Yes</span>, I would like to stay up to date and subscribe to the OEB newsletter."
+		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Yes</span>, I would like to stay up to date and subscribe to the OEB newsletter.",
+		"signingUp": "Signing up..."
 	},
 	"Captcha": {
 		"error": "Verification failed. Please try again.",
@@ -719,7 +720,8 @@
 		"newPassword": "New password",
 		"areYouNew": "No account yet?",
 		"yourEmail": "Your email address",
-		"yourPassword": "Your password"
+		"yourPassword": "Your password",
+		"loggingIn": "Logging in..."
 	},
 	"Legend": {
 		"legendTitle": "Legend",
