@@ -79,6 +79,7 @@ export interface PageConfig {
 	issuerImage: string;
 	awardingIssuers?: Issuer[];
 	networkBadge?: boolean;
+	networkImage?: string;
 	sharedOnNetwork?: { slug: string; name: string; image: string | null; description: string | null } | null;
 	badgeLoadingImageUrl: string;
 	badgeFailedImageUrl: string;

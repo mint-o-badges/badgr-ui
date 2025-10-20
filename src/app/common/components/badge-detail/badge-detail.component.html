@@ -32,6 +32,7 @@
 											width="full_width"
 											(click)="config.headerButton.action()"
 											[disabled-when-requesting]="true"
+											[disabled]="config.headerButton.disabled"
 											[text]="config.headerButton.title | translate"
 										></oeb-button>
 									}
@@ -97,7 +98,7 @@
 											class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image tw-aspect-square"
 											[loaded-src]="
 												config.networkBadge
-													? config.issuerImage
+													? config.networkImage
 													: config.sharedOnNetwork
 														? config.sharedOnNetwork.image
 														: config.issuerImage
@@ -273,7 +274,7 @@
 											{{ 'General.category' | translate }}
 										</dt>
 										<dd class="tw-text-sm tw-text-oebblack tw-font-medium md:tw-ml-2">
-											{{ config.category }}
+											{{ 'Badge.categories.' + config.category | translate }}
 										</dd>
 									</div>
 								}

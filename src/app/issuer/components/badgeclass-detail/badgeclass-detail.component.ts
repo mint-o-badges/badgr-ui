@@ -257,12 +257,14 @@ export class BadgeClassDetailComponent
 		);
 
 		try {
-			this.issuerLoaded = issuerManager.issuerBySlug(this.issuerSlug).then(
+			this.issuerLoaded = issuerManager.issuerOrNetworkBySlug(this.issuerSlug).then(
 				(issuer) => {
 					this.issuer = issuer;
-					this.issuerNetworks = this.issuer.networks.map((n) => {
-						return new Network(this.commonManager, n);
-					});
+					if (this.issuer instanceof Issuer) {
+						this.issuerNetworks = this.issuer.networks.map((n) => {
+							return new Network(this.commonManager, n);
+						});
+					}
 				},
 				(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 			);
@@ -406,6 +408,7 @@ export class BadgeClassDetailComponent
 			headerButton: {
 				title: 'Badge.award',
 				action: () => this.routeToBadgeAward(badgeClass, this.issuer),
+				disabled: this.issuer.is_network && !this.networkUserIssuers().length,
 			},
 			issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 			qrCodeButton: {
@@ -419,15 +422,14 @@ export class BadgeClassDetailComponent
 			createdAt: badgeClass.createdAt,
 			updatedAt: badgeClass.updatedAt,
 			duration: badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
-			category: this.translate.instant(
-				`Badge.categories.${badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
-			),
+			category: badgeClass.extension['extensions:CategoryExtension']?.Category,
 			tags: badgeClass.tags,
 			issuerName: badgeClass.issuerName,
 			issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
 			issuerImage: this.issuer.image,
 			awardingIssuers: this.awardingIssuers,
 			networkBadge: badgeClass.isNetworkBadge,
+			networkImage: badgeClass.networkImage,
 			sharedOnNetwork: badgeClass.sharedOnNetwork,
 			badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 			badgeFailedImageUrl: this.badgeFailedImageUrl,
@@ -513,7 +515,10 @@ export class BadgeClassDetailComponent
 			async (retInstances) => {
 				this.crumbs = [
 					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
-					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuerSlug] },
+					{
+						title: this.issuer.name,
+						routerLink: [`/issuer/${this.issuer.is_network ? 'networks' : 'issuers'}/` + this.issuerSlug],
+					},
 					{
 						title: this.badgeClass.name,
 						routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug],
@@ -742,6 +747,7 @@ export class BadgeClassDetailComponent
 	}
 
 	routeToBadgeAward(badge: BadgeClass, issuer) {
+		if (this.config.headerButton.disabled) return;
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
 			if (badge.recipientCount === 0 && qrCodes.length === 0 && !this.issuer.is_network) {
 				const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {

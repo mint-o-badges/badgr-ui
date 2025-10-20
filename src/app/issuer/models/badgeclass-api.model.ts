@@ -75,6 +75,7 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 	issuerVerified: boolean;
 	issuerOwnerAcceptedTos: boolean;
 	isNetworkBadge: boolean;
+	networkImage: string;
 	sharedOnNetwork: {
 		slug: string;
 		name: string;

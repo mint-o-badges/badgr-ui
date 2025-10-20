@@ -115,7 +115,8 @@
 		"rolesAndRights": "Rollen und Rechte",
 		"website": "Webseite",
 		"organization": "Organisation",
-		"notNow": "Jetzt nicht"
+		"notNow": "Jetzt nicht",
+		"notFound": "Nicht gefunden"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -211,7 +212,9 @@
 		"nichtVerified": "Dieser Issuer wurde noch nicht verifiziert",
 		"createBadge": "Badge erstellen",
 		"createParticipationBadge": "Teilnahme-Badge erstellen",
+		"copyParticipationBadge": "Teilnahme-Badge kopieren",
 		"createCompetencyBadge": "Kompetenz-Badge erstellen",
+		"copyCompetencyBadge": "Kompetenz-Badge kopieren",
 		"contactInstitution": "Institution kontaktieren",
 		"jsonView": "JSON ansehen",
 		"viewOriginal": "Original ansehen",
@@ -386,7 +389,10 @@
 		"badgesApprovedForNetworks": " Diese Badges hat {{ issuer }} für die Nutzung im jeweiligen Netzwerk <span class='tw-underline'>freigegeben</span>:",
 		"noBadgesApprovedForNetworks": "{{ issuer }} hat noch keine Badges für die Nutzung im Netzwerk <span class='tw-underline'>freigegeben</span>.",
 		"badgeAwards": "Badge-Vergaben",
-		"partnerBadges": "Partner-Badges"
+		"partnerBadges": "Partner-Badges",
+		"bulkInvalidEmail": "1 ungültige E-Mail-Adresse gefunden. Bitte korrigiere oder entferne die rot markierte E-Mail-Adresse.",
+		"bulkInvalidEmailsPlural": "{{count}} ungültige E-Mail-Adressen gefunden. Bitte korrigiere oder entferne die rot markierten E-Mail-Adressen.",
+		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
@@ -435,7 +441,8 @@
 		"partOfNetwork": "Teil vom NETZWERK",
 		"noBadgesYet": "Das Netzwerk <span class='tw-font-semibold'>{{network}}</span> hat noch keine eigenen Badges erstellt.",
 		"sharedBy": "Freigegeben von",
-		"sharedOn": "Freigegeben am"
+		"sharedOn": "Freigegeben am",
+		"website": "Netzwerk-Webseite"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -1049,7 +1056,7 @@
 		"invalidDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
 		"invalidDate": "Bitte gib ein Datum in der Form YYYY/mm/dd an",
 		"missingStartDate": "Bitte gib ein Start-Datum für die Gültigkeit an",
-		"expired": "Die Gültigkeit dieses Qr Codes ist abgelaufen."
+		"expired": "QR-Code ist nicht mehr gültig."
 	},
 	"LearningPath": {
 		"learningpathsPlural": "Lernpfade",

@@ -15,7 +15,7 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { SlicePipe } from '@angular/common';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
-import { PublicNotFoundBadgeCollectionComponent } from '../not-found-badge-collection/not-found-badge-collection.component';
+import { PublicNotFoundComponent } from '../not-found/not-found-component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HlmH1 } from '@spartan-ng/helm/typography';
 
@@ -26,7 +26,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		BgImageStatusPlaceholderDirective,
 		HlmH1,
 		BgBadgecard,
-		PublicNotFoundBadgeCollectionComponent,
+		PublicNotFoundComponent,
 		SlicePipe,
 		TranslatePipe,
 	],
