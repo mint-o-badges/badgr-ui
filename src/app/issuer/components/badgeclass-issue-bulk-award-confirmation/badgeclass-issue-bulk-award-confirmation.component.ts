@@ -9,6 +9,7 @@ import {
 	ViewChildren,
 	QueryList,
 	ElementRef,
+	OnInit,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -46,7 +47,7 @@ import { isValidEmail } from '~/common/util/is-valid-email';
 })
 export class BadgeclassIssueBulkAwardConformation
 	extends BaseAuthenticatedRoutableComponent
-	implements OnDestroy, AfterViewChecked
+	implements OnDestroy, AfterViewChecked, OnInit
 {
 	@Input() transformedImportData: TransformedImportData;
 	@Input() badgeSlug: string;
@@ -79,6 +80,9 @@ export class BadgeclassIssueBulkAwardConformation
 		protected translate: TranslateService,
 	) {
 		super(router, route, sessionService);
+	}
+
+	ngOnInit(): void {
 		this.enableActionButton();
 	}
 
