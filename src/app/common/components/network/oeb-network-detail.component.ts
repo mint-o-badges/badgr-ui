@@ -128,7 +128,9 @@ export class OebNetworkDetailComponent {
 			const badgesByIssuer = await firstValueFrom(
 				this.badgeClassManager.getNetworkBadgesByIssuerUrl$(this.network.slug),
 			);
-			this.networkBadges = Object.values(badgesByIssuer).flat();
+			this.networkBadges = Object.values(badgesByIssuer)
+				.flat()
+				.filter((b) => !b.sharedOnNetwork);
 			res(this.networkBadges);
 		});
 	}

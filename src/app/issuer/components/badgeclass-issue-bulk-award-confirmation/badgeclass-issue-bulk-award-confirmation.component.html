@@ -116,7 +116,7 @@
 		<oeb-button
 			[class.button-is-disabled]="buttonDisabledClass"
 			[disabled]="buttonDisabledAttribute || hasInvalidEmails"
-			(click)="dataConfirmed()"
+			(click)="!hasInvalidEmails && dataConfirmed()"
 			text="{{ 'Issuer.giveBadges' | translate }}"
 		>
 		</oeb-button>
