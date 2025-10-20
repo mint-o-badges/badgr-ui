@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
-import { LearningPathApiService } from '../services/learningpath-api.service';
 import { RouterLink } from '@angular/router';
 import { SlicePipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
@@ -142,7 +141,7 @@ export class BgLearningPathCard {
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	private _matchOrProgress: MatchOrProgressType;
 
-	constructor(private learningPathApiService: LearningPathApiService) {}
+	constructor() {}
 
 	@Input() slug: string;
 	@Input() issuerSlug: string;
@@ -173,7 +172,7 @@ export class BgLearningPathCard {
 	}
 
 	@Input() set matchOrProgress(value: MatchOrProgressType) {
-		if ('match' in value && 'progress' in value) {
+		if (value && 'match' in value && 'progress' in value) {
 			throw new Error('Only one of "match" or "progress" can be set.');
 		}
 		this._matchOrProgress = value;

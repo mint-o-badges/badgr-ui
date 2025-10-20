@@ -145,7 +145,7 @@ export interface PublicApiBadgeCollectionEntryWithBadgeClassAndIssuer {
 export interface PublicApiLearningPath {
 	name: string;
 	description: string;
-	image?: string;
+	participationBadge_image?: string;
 	badges: PublicApiBadgeClass[];
 	slug: string;
 	tags: string[];

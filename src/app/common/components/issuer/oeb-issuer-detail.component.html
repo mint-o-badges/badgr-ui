@@ -256,9 +256,8 @@
 										[studyLoad]="calculateStudyLoad(lp)"
 										[completed]="false"
 										[requested]="lp.requested"
-										[progress]="lp.progress"
 										[matchOrProgress]="undefined"
-										[badgeImage]="$any(lp).image"
+										[badgeImage]="lp.participationBadge_image"
 									></bg-learningpathcard>
 								}
 							}
