@@ -142,7 +142,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	}
 
 	onCancel() {
-		this.currentRoute.set('select');
+		this.currentRoute.set(this.config()?.badge ? 'create' : 'select');
 	}
 
 	onBadgeClassCreated() {

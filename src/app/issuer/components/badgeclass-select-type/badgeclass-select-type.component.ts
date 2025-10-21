@@ -13,12 +13,13 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmP, HlmH2 } from '@spartan-ng/helm/typography';
 import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 import { Network } from '~/issuer/network.model';
+import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 
 @Component({
 	selector: 'badgeclass-select-type',
 	templateUrl: 'badgeclass-select-type.component.html',
 	styleUrls: ['./badgeclass-select-type.component.scss'],
-	imports: [BgBreadcrumbsComponent, HlmH1, HlmP, HlmH2, RouterLink, TranslatePipe],
+	imports: [BgBreadcrumbsComponent, HlmH1, HlmP, HlmH2, RouterLink, TranslatePipe, BgAwaitPromises],
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
