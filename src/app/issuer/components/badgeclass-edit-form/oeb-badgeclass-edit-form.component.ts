@@ -4,13 +4,15 @@ import { AsyncPipe } from '@angular/common';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { Network } from '~/issuer/network.model';
-import { ActivatedRoute, NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BadgeClassSelectTypeComponent } from '../badgeclass-select-type/badgeclass-select-type.component';
 import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
 import { CommonDialogsService } from '~/common/services/common-dialogs.service';
 import { ConfirmDialog } from '~/common/dialogs/confirm-dialog.component';
 import { NounprojectDialog } from '~/common/dialogs/nounproject-dialog/nounproject-dialog.component';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
+import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
+import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
@@ -18,21 +20,27 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 		<confirm-dialog #confirmDialog></confirm-dialog>
 		<nounproject-dialog #nounprojectDialog></nounproject-dialog>
 		@if (authService.isLoggedIn$ | async) {
-			@if (issuer()) {
+			@if (config()?.issuer) {
 				@switch (currentRoute()) {
 					@case ('select') {
 						<badgeclass-select-type />
 					}
 					@case ('create') {
-						@if (category()) {
+						@if (config().badge) {
 							<badgeclass-edit-form
 								(save)="onBadgeClassCreated()"
 								(cancelEdit)="onCancel()"
-								[issuer]="issuer()"
+								[issuer]="config().issuer"
+								[badgeClass]="badge()"
+								isForked="false"
+							/>
+						} @else if (category()) {
+							<badgeclass-edit-form
+								(save)="onBadgeClassCreated()"
+								(cancelEdit)="onCancel()"
+								[issuer]="config().issuer"
 								[badgeClass]="badge()"
 								[category]="category()"
-								[isForked]="false"
-								[initBadgeClass]="null"
 							/>
 						}
 					}
@@ -40,7 +48,7 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 						<learningpath-edit-form
 							(save)="onBadgeClassCreated()"
 							(cancelEdit)="onCancel()"
-							[issuer]="issuer()"
+							[issuer]="config().issuer"
 						/>
 					}
 					@case ('finished') {
@@ -67,8 +75,11 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly finished = output<boolean>();
 	readonly token = input.required<string>();
-	readonly issuer = input<Issuer | Network>();
-	readonly badge = input<BadgeClass>();
+	readonly config = input<{ issuer: Issuer | Network; badge: ApiBadgeClass | undefined }>();
+	readonly badge = computed(() => {
+		if (this.config()?.badge) return new BadgeClass(this.entityManager, this.config().badge);
+		else return undefined;
+	});
 	readonly category = signal<string>('participation');
 	readonly authService = inject(AUTH_PROVIDER);
 	readonly commonDialogsService = inject(CommonDialogsService);
@@ -76,7 +87,8 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly nounprojectDialog = viewChild.required<NounprojectDialog>('nounprojectDialog');
 	readonly router = inject(Router);
 	readonly activatedRoute = inject(ActivatedRoute);
-	readonly currentRoute = signal<'initial' | 'select' | 'create' | 'create-lp' | 'finished' | 'unknown'>('select');
+	readonly entityManager = inject(CommonEntityManager);
+	readonly currentRoute = signal<'initial' | 'select' | 'create' | 'create-lp' | 'finished' | 'unknown'>('initial');
 
 	private signInEffect = effect(() => {
 		const t = this.token();
@@ -84,11 +96,12 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 			await this.handleSignInWithToken(t);
 		})();
 	});
+
 	private initialRouteEffect = effect(
 		() => {
-			if (this.badge() || this.issuer()) {
-				this.activatedRoute.snapshot.params['issuerSlug'] = this.issuer().slug;
-
+			if (this.config()) {
+				this.activatedRoute.snapshot.params['issuerSlug'] = this.config().issuer.slug;
+				this.currentRoute.set(this.config().badge ? 'create' : 'select');
 				// Run the initial routing only once -> destroy it here and use manualCleanup
 				this.initialRouteEffect.destroy();
 			}
@@ -100,7 +113,6 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 		this.router.events.subscribe((event) => {
 			if (event instanceof NavigationEnd) {
 				const url = event.url;
-				console.log(url);
 				const routeForUrl = (url) => {
 					if (url === undefined) return 'initial';
 					if (url.toString().indexOf('/badges/select') >= 0) return 'select';
