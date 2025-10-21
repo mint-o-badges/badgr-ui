@@ -40,6 +40,7 @@ import { SvgIconComponent } from '../../../common/components/svg-icon.component'
 import { FormFieldMarkdown } from '../../../common/components/formfield-markdown';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { OebCollapsibleComponent } from '~/components/oeb-collapsible.component';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -64,6 +65,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 		OebButtonComponent,
 		DatePipe,
 		TranslatePipe,
+		OebCollapsibleComponent,
 	],
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -134,6 +136,8 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		})
 		.addControl('recipient_identifier', '', [Validators.required, this.idValidator])
 		.addControl('narrative', '', [MdImgValidator.imageTest, Validators.maxLength(160)])
+		.addControl('activity_start_date', '')
+		.addControl('activity_end_date', '')
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',
@@ -290,6 +294,13 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		const expires =
 			this.expirationEnabled && formState.expires ? new Date(formState.expires).toISOString() : undefined;
 
+		const activityStartDate = formState.activity_start_date
+			? new Date(formState.activity_start_date).toISOString()
+			: null;
+		const activityEndDate = formState.activity_end_date
+			? new Date(formState.activity_end_date).toISOString()
+			: null;
+
 		this.issueBadgeFinished = this.badgeInstanceManager
 			.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
@@ -301,6 +312,8 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				evidence_items: this.evidenceEnabled ? cleanedEvidence : [],
 				extensions,
 				expires,
+				activity_start_date: activityStartDate,
+				activity_end_date: activityEndDate,
 			})
 			.then(() => this.badgeClass.update())
 			.then(
