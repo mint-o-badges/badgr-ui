@@ -50,6 +50,7 @@ export interface PublicApiBadgeAssertionWithBadgeClass extends PublicApiBadgeAss
 export interface PublicApiBadgeClass {
 	'@context': string | Array<string>;
 	description: string;
+	created_at: Date;
 	type: 'BadgeClass';
 	id: string;
 	hostedUrl: string;

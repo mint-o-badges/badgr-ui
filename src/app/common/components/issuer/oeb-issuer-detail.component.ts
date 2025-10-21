@@ -44,7 +44,7 @@ interface NetworkBadgeGroup {
 	networkIssuer?: any;
 }
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
-import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
+import { ApiBadgeClass, ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -197,25 +197,34 @@ export class OebIssuerDetailComponent implements OnInit {
 		}
 		const requestMap = await this.requestsLoaded;
 
-		const addBadgeToResults = async (badge: BadgeClass) => {
+		const addBadgeToResults = async (badge: BadgeClass | PublicApiBadgeClass) => {
 			if (this.badgeResults.length > this.maxDisplayedResults) {
 				return false;
 			}
-			if (badge.extension && badge.extension['extensions:CategoryExtension'].Category === 'learningpath') {
-				return false;
+
+			if (badge instanceof BadgeClass) {
+				if (badge.extension && badge.extension['extensions:CategoryExtension'].Category === 'learningpath') {
+					return false;
+				}
+
+				if (badge.isNetworkBadge || badge.sharedOnNetwork) {
+					return false;
+				}
 			}
 
-			if (badge.isNetworkBadge || badge.sharedOnNetwork) {
-				return false;
-			}
-
-			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, this.getRequestCount(badge, requestMap)));
+			this.badgeResults.push(
+				new BadgeResult(
+					badge,
+					this.issuer.name,
+					badge instanceof BadgeClass ? this.getRequestCount(badge, requestMap) : 0,
+				),
+			);
 
 			return true;
 		};
 
 		this.badges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
+		this.badgeResults.sort(this.sortBadgeResult);
 	}
 
 	private async updateNetworkResults() {
@@ -267,7 +276,7 @@ export class OebIssuerDetailComponent implements OnInit {
 					groupBadges.push(badgeResult);
 				}
 
-				groupBadges.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
+				groupBadges.sort(this.sortBadgeResult);
 
 				this.networkBadgeInstanceResults.push({
 					issuerName: group.network_issuer.name,
@@ -277,9 +286,9 @@ export class OebIssuerDetailComponent implements OnInit {
 			}
 
 			this.networkBadgeInstanceResults.sort((a, b) => {
-				const aTime = a.badges[0]?.badge.createdAt.getTime() ?? 0;
-				const bTime = b.badges[0]?.badge.createdAt.getTime() ?? 0;
-				return bTime - aTime;
+				const aBadge = a.badges[0];
+				const bBadge = b.badges[0];
+				return this.sortBadgeResult(aBadge, bBadge);
 			});
 		} catch (error) {
 			console.error('Error loading network badge groups:', error);
@@ -363,6 +372,14 @@ export class OebIssuerDetailComponent implements OnInit {
 				return new Date(b.sharedAt || 0).getTime() - new Date(a.sharedAt || 0).getTime();
 			});
 		}
+	}
+
+	private sortBadgeResult(a: BadgeResult, b: BadgeResult) {
+		const aTime =
+			a.badge instanceof BadgeClass ? a.badge.createdAt.getTime() : new Date(a.badge.created_at).getTime();
+		const bTime =
+			b.badge instanceof BadgeClass ? b.badge.createdAt.getTime() : new Date(b.badge.created_at).getTime();
+		return bTime - aTime;
 	}
 
 	async ngOnInit() {
@@ -549,7 +566,7 @@ export class OebIssuerDetailComponent implements OnInit {
 
 export class BadgeResult {
 	constructor(
-		public badge: BadgeClass,
+		public badge: BadgeClass | PublicApiBadgeClass,
 		public issuerName: string,
 		public requestCount: number,
 	) {}
