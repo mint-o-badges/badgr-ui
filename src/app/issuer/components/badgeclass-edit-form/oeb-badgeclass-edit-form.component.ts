@@ -18,37 +18,37 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 		<confirm-dialog #confirmDialog></confirm-dialog>
 		<nounproject-dialog #nounprojectDialog></nounproject-dialog>
 		@if (authService.isLoggedIn$ | async) {
-			@switch (currentRoute()) {
-				@case ('select') {
-					<badgeclass-select-type />
-				}
-				@case ('create') {
-					@if (issuer() && category()) {
-						<badgeclass-edit-form
-							(save)="onBadgeClassCreated()"
-							(cancelEdit)="onCancel()"
-							[issuer]="issuer()"
-							[badgeClass]="badge()"
-							[category]="category()"
-							[isForked]="false"
-							[initBadgeClass]="null"
-						/>
+			@if (issuer()) {
+				@switch (currentRoute()) {
+					@case ('select') {
+						<badgeclass-select-type />
 					}
-				}
-				@case ('create-lp') {
-					@if (issuer()) {
+					@case ('create') {
+						@if (category()) {
+							<badgeclass-edit-form
+								(save)="onBadgeClassCreated()"
+								(cancelEdit)="onCancel()"
+								[issuer]="issuer()"
+								[badgeClass]="badge()"
+								[category]="category()"
+								[isForked]="false"
+								[initBadgeClass]="null"
+							/>
+						}
+					}
+					@case ('create-lp') {
 						<learningpath-edit-form
 							(save)="onBadgeClassCreated()"
 							(cancelEdit)="onCancel()"
 							[issuer]="issuer()"
 						/>
 					}
-				}
-				@case ('finished') {
-					<p>Finished creating the badge</p>
-				}
-				@case ('unknown') {
-					<p>Unknown Operation</p>
+					@case ('finished') {
+						<p>Finished creating the badge</p>
+					}
+					@case ('unknown') {
+						<p>Unknown Operation</p>
+					}
 				}
 			}
 		} @else {
