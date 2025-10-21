@@ -44,7 +44,7 @@ interface NetworkBadgeGroup {
 	networkIssuer?: any;
 }
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
-import { ApiBadgeClass, ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
+import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
