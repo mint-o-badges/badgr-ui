@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, inject, input, output, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, inject, input, output, signal, viewChild } from '@angular/core';
 import { BadgeClassEditFormComponent } from './badgeclass-edit-form.component';
 import { AsyncPipe } from '@angular/common';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
@@ -10,6 +10,7 @@ import { LearningPathEditFormComponent } from '../learningpath-edit-form/learnin
 import { CommonDialogsService } from '~/common/services/common-dialogs.service';
 import { ConfirmDialog } from '~/common/dialogs/confirm-dialog.component';
 import { NounprojectDialog } from '~/common/dialogs/nounproject-dialog/nounproject-dialog.component';
+import { BadgeClass } from '~/issuer/models/badgeclass.model';
 
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
@@ -27,6 +28,7 @@ import { NounprojectDialog } from '~/common/dialogs/nounproject-dialog/nounproje
 							(save)="onBadgeClassCreated()"
 							(cancelEdit)="onCancel()"
 							[issuer]="issuer()"
+							[badgeClass]="badge()"
 							[category]="category()"
 							[isForked]="false"
 							[initBadgeClass]="null"
@@ -66,6 +68,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly finished = output<boolean>();
 	readonly token = input.required<string>();
 	readonly issuer = input<Issuer | Network>();
+	readonly badge = input<BadgeClass>();
 	readonly category = signal<string>('participation');
 	readonly authService = inject(AUTH_PROVIDER);
 	readonly commonDialogsService = inject(CommonDialogsService);
@@ -83,7 +86,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	});
 	private initialRouteEffect = effect(
 		() => {
-			if (this.issuer()) {
+			if (this.badge() || this.issuer()) {
 				this.activatedRoute.snapshot.params['issuerSlug'] = this.issuer().slug;
 
 				// Run the initial routing only once -> destroy it here and use manualCleanup
@@ -97,6 +100,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 		this.router.events.subscribe((event) => {
 			if (event instanceof NavigationEnd) {
 				const url = event.url;
+				console.log(url);
 				const routeForUrl = (url) => {
 					if (url === undefined) return 'initial';
 					if (url.toString().indexOf('/badges/select') >= 0) return 'select';
