@@ -78,4 +78,6 @@ export interface BadgeInstanceBatchAssertion {
 	recipient_identifier: string;
 	evidence_items?: ApiBadgeInstanceEvidenceItem[];
 	extensions?: object;
+	activity_start_date?: string;
+	activity_end_date?: string;
 }

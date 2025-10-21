@@ -146,6 +146,8 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
+					activity_start_date: new Date(this.badge.apiModel.json.credentialSubject.activityStartDate),
+					activity_end_date: new Date(this.badge.apiModel.json.credentialSubject.activityEndDate),
 					category: this.translate.instant(
 						`Badge.categories.${this.category['Category'] || 'participation'}`,
 					),

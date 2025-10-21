@@ -116,7 +116,9 @@
 		"website": "Webseite",
 		"organization": "Organisation",
 		"notNow": "Jetzt nicht",
-		"notFound": "Nicht gefunden"
+		"notFound": "Nicht gefunden",
+		"start": "Start",
+		"end": "Ende"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -834,7 +836,9 @@
 		"shareViaLink": "Per Link:",
 		"addToLinkedInProfile": "Badge zu LinkedIn-Profil hinzufügen",
 		"shareViaLinkedIn": "Auf LinkedIn:",
-		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden."
+		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden.",
+		"courseDate": "Datum der Veranstaltung",
+		"courseDateShort": "Veranstaltungs-Datum"
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
@@ -1036,7 +1040,7 @@
 		"description": "Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.",
 		"howItWorks": "So funktioniert's:",
 		"create": "QR-Code-Vergabe erstellen für",
-		"titlePlaceholder": "Badge Vergabe Juni 2024",
+		"titlePlaceholder": "Badge Vergabe Juni 2025 in Berlin",
 		"creatorName": "Name Ersteller:in",
 		"creatorNamePlaceholder": "Mein Vorname und Nachname",
 		"expiration": "Gültigkeit des QR-Codes",
@@ -1054,7 +1058,8 @@
 		"downloadPoster": "Download QR-Code-Plakat",
 		"badgeDetailPage": "Badge Detail Seite",
 		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben",
-		"invalidDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
+		"invalidExpirationDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
+		"invalidDateRange": "Das End-Datum muss nach dem Start-Datum liegen",
 		"invalidDate": "Bitte gib ein Datum in der Form YYYY/mm/dd an",
 		"missingStartDate": "Bitte gib ein Start-Datum für die Gültigkeit an",
 		"expired": "QR-Code ist nicht mehr gültig."
