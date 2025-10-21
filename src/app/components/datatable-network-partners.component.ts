@@ -105,14 +105,33 @@ import { Network } from '~/issuer/network.model';
 			{{ context.header.id | translate }}
 		</ng-template>
 
+		<ng-template #issuerCellTemplate let-context>
+			<div
+				class="tw-flex tw-flex-row tw-items-center tw-leading-7 tw-gap-2 tw-cursor-pointer"
+				(click)="redirectToIssuerDetail.emit(context.row.original)"
+			>
+				<div>
+					<img
+						class=""
+						src="{{ context.row.original.image }}"
+						alt="{{ context.row.original.name }}"
+						width="40"
+					/>
+				</div>
+				<p>{{ context.getValue() }}</p>
+			</div>
+		</ng-template>
+
 		<ng-template #issuerActionsCellTemplate let-context>
-			<oeb-button
-				class="tw-float-right"
-				size="xs"
-				variant="secondary"
-				(click)="removePartner(context.row.original)"
-				text="{{ 'General.remove' | translate }}"
-			/>
+			@if (network().current_user_network_role === 'owner') {
+				<oeb-button
+					class="tw-float-right"
+					size="xs"
+					variant="secondary"
+					(click)="removePartner(context.row.original)"
+					text="{{ 'General.remove' | translate }}"
+				/>
+			}
 		</ng-template>
 	`,
 })
@@ -122,9 +141,12 @@ export class NetworkPartnersDatatableComponent {
 	approvedInvites = input.required<ApiNetworkInvitation[]>();
 	actionElement = output<Issuer>();
 
+	redirectToIssuerDetail = output<Issuer>();
+
 	removePartnerRequest = output<Issuer>();
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	issuerCellTemplate = viewChild.required<TemplateRef<any>>('issuerCellTemplate');
 	issuerActionsTemplate = viewChild.required<TemplateRef<any>>('issuerActionsCellTemplate');
 
 	readonly tableSorting = signal<SortingState>([
@@ -139,7 +161,7 @@ export class NetworkPartnersDatatableComponent {
 			id: 'General.name',
 			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => row.name,
-			cell: (ctx) => ctx.getValue(),
+			cell: () => this.issuerCellTemplate(),
 			sortDescFirst: false,
 		},
 		{

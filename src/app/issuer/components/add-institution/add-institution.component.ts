@@ -72,7 +72,9 @@ export class AddInstitutionComponent implements AfterViewInit {
 			this.issuersLoading = true;
 			try {
 				this.issuerSearchResults = [];
-				this.issuerSearchResults = await this.publicApiService.searchIssuers(this.issuerSearchQuery);
+				this.issuerSearchResults = (await this.publicApiService.searchIssuers(this.issuerSearchQuery)).filter(
+					(i) => !i.is_network,
+				);
 			} catch (error) {
 				this.messageService.reportAndThrowError(`Failed to issuers: ${error.message}`, error);
 			}

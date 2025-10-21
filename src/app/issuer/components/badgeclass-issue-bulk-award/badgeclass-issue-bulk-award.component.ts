@@ -20,6 +20,11 @@ import { BadgeClassIssueBulkAwardPreviewComponent } from '../badgeclass-issue-bu
 import { BadgeclassIssueBulkAwardConformation } from '../badgeclass-issue-bulk-award-confirmation/badgeclass-issue-bulk-award-confirmation.component';
 import { BadgeclassIssueBulkAwardError } from '../badgeclass-issue-bulk-award-error/badgeclass-issue-bulk-award-error.component';
 
+export interface ParsedRow {
+	cells: string[];
+	emailInvalid?: boolean;
+}
+
 export interface TransformedImportData {
 	duplicateRecords: BulkIssueData[];
 	validRowsTransformed: Set<BulkIssueData>;
@@ -28,20 +33,22 @@ export interface TransformedImportData {
 
 export interface BulkIssueImportPreviewData {
 	columnHeaders: ColumnHeaders[];
-	invalidRows: string[][];
+	invalidRows: ParsedRow[];
 	rowLongerThenHeader: boolean;
-	rows: string[];
-	validRows: string[][];
+	rows: ParsedRow[];
+	validRows: ParsedRow[];
 }
 
 export interface BulkIssueData {
 	email: string;
 	name: string;
+	emailInvalid?: boolean;
+	isEditing?: boolean;
 }
 
 export type DestSelectOptions = 'email' | 'name' | 'NA';
 
-export type ViewState = 'import' | 'importPreview' | 'importError' | 'importConformation' | 'cancel' | 'exit';
+export type ViewState = 'import' | 'importPreview' | 'importError' | 'importConfirmation' | 'cancel' | 'exit';
 
 export interface ColumnHeaders {
 	destColumn: DestSelectOptions;
@@ -122,7 +129,7 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 		// Determine if the transformed data contains any errors
 		if (this.transformedImportData && transformedImportData.invalidRowsTransformed.length)
 			this.updateViewState('importError');
-		else this.updateViewState('importConformation');
+		else this.updateViewState('importConfirmation');
 	}
 
 	updateViewState(state: ViewState) {

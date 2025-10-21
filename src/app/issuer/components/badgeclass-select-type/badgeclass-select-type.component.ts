@@ -12,6 +12,7 @@ import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmP, HlmH2 } from '@spartan-ng/helm/typography';
 import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'badgeclass-select-type',
@@ -21,7 +22,7 @@ import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authenti
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
-	issuer: Issuer;
+	issuer: Issuer | Network;
 	issuerLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	scrolled = false;
@@ -55,7 +56,7 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 		});
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 
-		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+		this.issuerLoaded = this.issuerManager.issuerOrNetworkBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
 			this.breadcrumbLinkEntries = [
 				{ title: 'Issuers', routerLink: ['/issuer'] },

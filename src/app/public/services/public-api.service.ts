@@ -170,6 +170,10 @@ export class PublicApiService extends BaseHttpApiService {
 		return this.get<PublicApiLearningPath[]>(url, null, false, true).then((r) => r.body);
 	}
 
+	getQrCode(qrCodeSlug: string) {
+		return this.get(`/public/qrcode/${qrCodeSlug}`).then((response) => response.body);
+	}
+
 	searchIssuers(searchterm: string) {
 		return this.get<Issuer[]>(`/public/issuers/search/${searchterm}`).then((response) => response.body);
 	}

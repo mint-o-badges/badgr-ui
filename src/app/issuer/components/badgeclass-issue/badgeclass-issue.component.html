@@ -82,8 +82,15 @@
 							[ariaLabel]="'Issuer.recipientEmail' | translate"
 							[fieldType]="recipientIdentifierFieldType"
 							[noTopMargin]="true"
+							[errorMessage]="{ invalidEmail: 'Issuer.enterValidEmail' | translate }"
 						></oeb-input>
-						<p class="tw-text-purple tw-italic tw-mt-2 tw-text-sm">
+						<p
+							class="tw-text-purple tw-italic tw-mt-2 tw-text-sm"
+							[class.tw-mt-6]="
+								issueForm.rawControlMap.recipient_identifier?.hasError('invalidEmail') ||
+								issueForm.rawControlMap.recipient_identifier?.hasError('required')
+							"
+						>
 							{{ 'Issuer.emailIsIdentifier' | translate }}
 						</p>
 					</div>
@@ -363,7 +370,11 @@
 					</oeb-button>
 					<oeb-button
 						type="submit"
-						[disabled]="!!issueBadgeFinished"
+						[disabled]="
+							!!issueBadgeFinished ||
+							issueForm.rawControlMap.recipient_identifier?.hasError('invalidEmail') ||
+							issueForm.rawControlMap.recipient_identifier?.hasError('required')
+						"
 						[loading-promises]="[issueBadgeFinished]"
 						[loading-message]="'Issuer.badgeAwardInProgress' | translate"
 						[text]="'Issuer.giveBadge' | translate"

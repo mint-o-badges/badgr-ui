@@ -158,6 +158,7 @@ export interface PaginatedBadgeClass {
 	count: number;
 	next: string | null;
 	previous: string | null;
+	total_count: number;
 	results: BadgeClassV3[];
 }
 
@@ -165,5 +166,6 @@ export interface PaginatedNetwork {
 	count: number;
 	next: string | null;
 	previous: string | null;
+	total_count: number;
 	results: NetworkV3[];
 }

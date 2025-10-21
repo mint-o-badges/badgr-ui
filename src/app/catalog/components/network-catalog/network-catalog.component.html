@@ -4,29 +4,45 @@
 		<header class="oeb-headline-container tw-relative tw-flex tw-flex-col">
 			<oeb-header-text [text1]="'Network.networksHeadline'" [text2Template]="text2Template" />
 			<ng-template #text2Template>
-				<ng-template [showLoader]="false" [bgAwaitPromises]="[pageReadyPromise]">
-					<span [countUp]="networks().length">{{ networks().length }}</span>
-					<span>
-						{{ networksPluralWord }}
-					</span>
-				</ng-template>
+				<span [countUp]="totalNetworkCount()">{{ totalNetworkCount() }}</span>
+				<span>
+					{{ networksPluralWord }}
+				</span>
 			</ng-template>
 		</header>
 	</div>
 
-	<div>
-		<ng-template [showLoader]="true" [bgAwaitPromises]="[pageReadyPromise]">
-			<section>
-				<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
-					@for (network of networks(); track network) {
-						<oeb-networkcard
-							@appearAnimation
-							[network]="network"
-							[routerLink]="['/public/networks', network.slug]"
-						></oeb-networkcard>
-					}
-				</div>
-			</section>
-		</ng-template>
+	<section>
+		@if (networks().length > 0) {
+			<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
+				@for (network of networks(); track network) {
+					<oeb-networkcard
+						@appearAnimation
+						[network]="network"
+						[routerLink]="
+							network.current_user_network_role
+								? ['/issuer/networks', network.slug]
+								: ['/public/networks', network.slug]
+						"
+					></oeb-networkcard>
+				}
+			</div>
+		}
+	</section>
+	<div #loadMore class="oeb-section-sm">
+		@if (hasNext()) {
+			@if (!observeScrolling()) {
+				<loading-dots />
+			} @else {
+				<oeb-button
+					variant="secondary"
+					size="sm"
+					type="button"
+					text="{{ 'General.loadMore' | translate }}"
+					(click)="onLoadMoreClicked()"
+					class="tw-mx-auto tw-block tw-w-max"
+				/>
+			}
+		}
 	</div>
 </div>

@@ -154,34 +154,14 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 				this.valid_from = qrCode.valid_from;
 				this.expires_at = qrCode.expires_at;
 
-				if (
-					qrCode.expires_at &&
-					qrCode.valid_from &&
-					!isNaN(new Date(this.expires_at).getTime()) &&
-					!isNaN(new Date(this.valid_from).getTime())
-				) {
-					if (
-						new Date(this.valid_from) < new Date() &&
-						new Date(this.expires_at) >= new Date(new Date().setHours(0, 0, 0, 0))
-					) {
-						this.valid = true;
-					} else {
-						this.valid = false;
-					}
-
+				if (this.valid_from && this.expires_at) {
 					this.validity =
 						BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.valid_from), 'dd.MM.yyyy') +
 						' - ' +
 						BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.expires_at), 'dd.MM.yyyy');
-				} else {
-					this.validity = undefined;
 				}
 
-				if (this.valid) {
-					this.qrData = `${this.baseUrl}/public/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
-				} else {
-					this.qrData = this.translate.instant('QrCode.expired');
-				}
+				this.qrData = `${this.baseUrl}/public/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
 			});
 		}
 	}

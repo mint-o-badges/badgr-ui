@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, input, output, TemplateRef, ViewChild } from '@angular/core';
+import { OnInit, AfterViewInit, Component, input, OnDestroy, output, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';
@@ -17,13 +17,14 @@ import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { PublicApiIssuer } from '~/public/models/public-api.model';
 
 @Component({
 	selector: 'select-network',
 	templateUrl: './select-network.component.html',
 	imports: [TranslatePipe, OebButtonComponent, NgIcon, HlmIcon, FormsModule, NgStyle],
 })
-export class SelectNetworkComponent implements AfterViewInit {
+export class SelectNetworkComponent implements AfterViewInit, OnInit, OnDestroy {
 	constructor(
 		private publicApiService: PublicApiService,
 		private messageService: MessageService,
@@ -58,7 +59,15 @@ export class SelectNetworkComponent implements AfterViewInit {
 	networkSearchLoaded = false;
 	networkSearchResults = [];
 
+	issuerNetworks: PublicApiIssuer[];
+
 	rightsAndRolesExpanded = false;
+
+	ngOnInit() {
+		this.publicApiService.getIssuerNetworks(this.issuer().slug).then((networks) => {
+			this.issuerNetworks = networks;
+		});
+	}
 
 	ngAfterViewInit() {
 		this.networkSearchInputModel.valueChanges
@@ -84,7 +93,7 @@ export class SelectNetworkComponent implements AfterViewInit {
 			try {
 				this.networkSearchResults = [];
 				this.networkSearchResults = (await this.publicApiService.searchIssuers(this.networkSearchQuery)).filter(
-					(i) => i.is_network,
+					(i) => i.is_network && this.issuerNetworks.some((n) => n.slug == i.slug),
 				);
 			} catch (error) {
 				this.messageService.reportAndThrowError(`Failed to networks: ${error.message}`, error);

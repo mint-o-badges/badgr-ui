@@ -12,6 +12,7 @@
 			[partners]="issuers()"
 			[approvedInvites]="approvedInvites()"
 			(removePartnerRequest)="onPartnerRemoved($any($event))"
+			(redirectToIssuerDetail)="redirectToIssuerDetail($event)"
 		></network-partners-datatable>
 	}
 	@if (pendingInvites().length) {

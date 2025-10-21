@@ -59,13 +59,13 @@
 				</tr>
 				@for (row of importPreviewData?.rows.slice(0, MAX_ROWS_TO_DISPLAY); track row) {
 					<tr class="datatable-x-row">
-						@for (cell of row; track cell) {
-							<td class="datatable-x-cell">
+						@for (cell of row.cells; track cell) {
+							<td class="datatable-x-cell" [ngClass]="{ 'invalid-email-row': row.emailInvalid }">
 								{{ cell }}
 							</td>
 						}
-						@if (row.length < columnHeadersCount) {
-							@for (spacer of createRange(columnHeadersCount - row.length); track spacer) {
+						@if (row.cells.length < columnHeadersCount) {
+							@for (spacer of createRange(columnHeadersCount - row.cells.length); track spacer) {
 								<td class="datatable-x-cell"></td>
 							}
 						}

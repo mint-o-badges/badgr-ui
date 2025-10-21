@@ -96,6 +96,9 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
 				this.issuer = issuer;
+				if (issuer.is_network) {
+					this.router.navigate(['/issuer/networks/' + this.issuerSlug]);
+				}
 				this.title.setTitle(
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
