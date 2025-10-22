@@ -169,6 +169,17 @@
 								}
 							}
 
+							@if (config.activity_start_date) {
+								<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+									<dt class="tw-text-sm tw-text-darkgray">
+										{{ 'RecBadge.courseDateShort' | translate }}
+									</dt>
+									<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+										<time [date]="config.activity_start_date" format="dd.MM.y"></time>
+									</dd>
+								</div>
+							}
+
 							@if (config.copy_permissions && !config.copy_permissions.includes('none')) {
 								<div
 									class="tw-flex tw-flex-row tw-gap-1"

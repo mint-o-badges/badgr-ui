@@ -87,6 +87,7 @@ export interface ApiRecipientBadgeInstanceJson {
 	evidence?: string;
 	narrative?: string;
 	expires?: string;
+	credentialSubject?: ApiCredentialSubject;
 }
 
 export interface ApiRecipientBadgeIssuer {
@@ -151,4 +152,28 @@ interface ApiImportedBadgeInstanceBadge {
 		url: string;
 	};
 	name: string;
+}
+
+export interface ApiCredentialSubject {
+	type: string[];
+	identifier: Array<{
+		type: string;
+		identityHash: string;
+		identityType: string;
+		hashed: boolean;
+		salt: string;
+		identity?: string;
+	}>;
+	achievement: {
+		id: string;
+		type: string[];
+		name: string;
+		description: string;
+		achievementType: string;
+		criteria: { narrative: string };
+		image: { id: string; type: string };
+		evidence?: unknown[];
+	};
+	activityStartDate?: string;
+	activityEndDate?: string;
 }

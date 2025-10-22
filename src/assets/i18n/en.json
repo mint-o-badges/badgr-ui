@@ -116,7 +116,9 @@
 		"website": "Website",
 		"organization": "Organization",
 		"notNow": "Not Now",
-		"notFound": "Not found"
+		"notFound": "Not found",
+		"start": "Start",
+		"end": "End"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -392,7 +394,12 @@
 		"partnerBadges": "Partner badges",
 		"bulkInvalidEmail": "1 invalid email address found. Please correct or remove the email address marked in red.",
 		"bulkInvalidEmailsPlural": "{{count}} invalid email addresses found. Please correct or remove the email addresses marked in red.",
-		"bulkReceiveByEmail": "Recipients will receive the badge by email."
+		"bulkReceiveByEmail": "Recipients will receive the badge by email.",
+		"addOptionalDetails": "Add optional details",
+		"evidence": "Proof of successful participation",
+		"addNewEvidence": "Add another evidence",
+		"evidenceUrl": "Evidence URL",
+		"evidenceNarrative": "Textual narrative"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -834,7 +841,9 @@
 		"shareViaLink": "Via Link:",
 		"addToLinkedInProfile": "Add badge to LinkedIn profile",
 		"shareViaLinkedIn": "On LinkedIn:",
-		"shareWithoutLinkedInId": "Info: The institution that awarded you the badge has not provided us with a LinkedIn ID. Therefore, the corresponding logo image cannot be displayed on LinkedIn."
+		"shareWithoutLinkedInId": "Info: The institution that awarded you the badge has not provided us with a LinkedIn ID. Therefore, the corresponding logo image cannot be displayed on LinkedIn.",
+		"courseDate": "Course date",
+		"courseDateShort": "Course date"
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
@@ -1036,7 +1045,7 @@
 		"description": "If you create a QR code here, your learners can scan the generated QR code and collect the badge themselves.",
 		"howItWorks": "How it works:",
 		"create": "Create QR Code for",
-		"titlePlaceholder": "Badge Award June 2024",
+		"titlePlaceholder": "Badge Award June 2025 in Berlin",
 		"creatorName": "Creator name",
 		"creatorNamePlaceholder": "My first and last name",
 		"expiration": "QR Code expiration date",
@@ -1054,7 +1063,8 @@
 		"downloadPoster": "Download QR-Code-Poster",
 		"badgeDetailPage": "badge detail page",
 		"badgesAwardedSuccessfully": "badges awarded successfully",
-		"invalidDateRange": "The expiration date must be after the start date",
+		"invalidExpirationDateRange": "The expiration date must be after the start date",
+		"invalidDateRange": "The end date must be after the start date",
 		"invalidDate": "Please enter a date in the format YYYY/mm/dd",
 		"missingStartDate": "Please enter a start date for validity",
 		"expired": "This QR code has expired."

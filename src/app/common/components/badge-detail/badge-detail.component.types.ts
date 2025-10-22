@@ -71,6 +71,8 @@ export interface PageConfig {
 	updatedAt?: Date;
 	issuedOn?: Date;
 	issuedTo?: string;
+	activity_start_date?: Date;
+	activity_end_date?: Date;
 	duration?: string;
 	category: string;
 	tags: string[];

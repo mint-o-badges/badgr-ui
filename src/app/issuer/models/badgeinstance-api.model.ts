@@ -36,6 +36,8 @@ export interface ApiBadgeInstanceForCreation {
 	evidence_items?: ApiBadgeInstanceEvidenceItem[];
 	extensions?: object;
 	expires?: string;
+	activity_start_date?: string;
+	activity_end_date?: string;
 	name?: string;
 }
 
@@ -57,6 +59,9 @@ export interface ApiBadgeInstance {
 
 	evidence_items?: ApiBadgeInstanceEvidenceItem[];
 
+	activity_start_date?: string;
+	activity_end_date?: string;
+
 	issuer: IssuerUrl;
 	badge_class: BadgeClassUrl;
 
@@ -73,4 +78,6 @@ export interface BadgeInstanceBatchAssertion {
 	recipient_identifier: string;
 	evidence_items?: ApiBadgeInstanceEvidenceItem[];
 	extensions?: object;
+	activity_start_date?: string;
+	activity_end_date?: string;
 }

@@ -55,6 +55,12 @@
 						<span class="tw-font-bold">{{ 'QrCode.creator' | translate }}</span>
 						<span>{{ creator }}</span>
 					</div>
+					@if (course_date) {
+						<div class="tw-flex tw-flex-col">
+							<span class="tw-font-bold">{{ 'RecBadge.courseDate' | translate }}</span>
+							<span>{{ course_date }}</span>
+						</div>
+					}
 					@if (validity) {
 						<div class="tw-flex tw-flex-col">
 							<span class="tw-font-bold">{{ 'QrCode.validity' | translate }}</span>
