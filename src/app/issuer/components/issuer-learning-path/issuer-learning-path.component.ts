@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -27,6 +27,15 @@ import { OebLearningPathDetailComponent } from '../../../common/components/learn
 	imports: [FormMessageComponent, BgAwaitPromises, BgBreadcrumbsComponent, OebLearningPathDetailComponent],
 })
 export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected messageService = inject(MessageService);
+	protected title = inject(Title);
+	protected issuerManager = inject(IssuerManager);
+	protected badgeClassService = inject(BadgeClassManager);
+	protected profileManager = inject(UserProfileManager);
+	private configService = inject(AppConfigService);
+	private dialogService = inject(CommonDialogsService);
+	private learningPathApiService = inject(LearningPathApiService);
+
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -50,20 +59,17 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 	crumbs: LinkEntry[];
 	menuitems: MenuItem[] = [];
 
-	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected messageService: MessageService,
-		protected title: Title,
-		protected issuerManager: IssuerManager,
-		protected badgeClassService: BadgeClassManager,
-		protected profileManager: UserProfileManager,
-		private configService: AppConfigService,
-		private dialogService: CommonDialogsService,
-		private learningPathApiService: LearningPathApiService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+		const title = this.title;
+
 
 		title.setTitle(`Issuer Detail - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 

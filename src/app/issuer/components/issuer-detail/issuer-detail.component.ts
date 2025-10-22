@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -30,6 +30,16 @@ import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-
 	imports: [FormMessageComponent, BgAwaitPromises, BgBreadcrumbsComponent, OebIssuerDetailComponent],
 })
 export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected messageService = inject(MessageService);
+	protected title = inject(Title);
+	protected issuerManager = inject(IssuerManager);
+	protected badgeClassService = inject(BadgeClassManager);
+	protected learningPathsService = inject(LearningPathApiService);
+	protected profileManager = inject(UserProfileManager);
+	private configService = inject(AppConfigService);
+	private dialogService = inject(CommonDialogsService);
+	private translate = inject(TranslateService);
+
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -55,21 +65,17 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 
 	myInstitutions = 'Meine Institutionen';
 
-	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected messageService: MessageService,
-		protected title: Title,
-		protected issuerManager: IssuerManager,
-		protected badgeClassService: BadgeClassManager,
-		protected learningPathsService: LearningPathApiService,
-		protected profileManager: UserProfileManager,
-		private configService: AppConfigService,
-		private dialogService: CommonDialogsService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+		const title = this.title;
+
 
 		title.setTitle(`Issuer Detail - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 

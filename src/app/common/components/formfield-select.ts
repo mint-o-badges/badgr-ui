@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -59,6 +59,8 @@ import { CustomValidatorMessages, messagesForValidationError } from './formfield
 	imports: [FormsModule, ReactiveFormsModule],
 })
 export class FormFieldSelect implements OnChanges, AfterViewInit {
+	private dialogService = inject(CommonDialogsService);
+
 	@Input() control: FormControl;
 	@Input() initialValue: string;
 	@Input() label: string;
@@ -163,7 +165,10 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 		return (this.label || this.placeholder || this.randomName).replace(/[^\w]+/g, '_').toLowerCase();
 	}
 
-	constructor(private dialogService: CommonDialogsService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngAfterViewInit() {
 		if (this.autofocus) {

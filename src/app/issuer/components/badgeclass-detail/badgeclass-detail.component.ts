@@ -71,6 +71,25 @@ export class BadgeClassDetailComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, AfterViewChecked, AfterViewInit, OnDestroy
 {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected badgeManager = inject(BadgeClassManager);
+	protected issuerManager = inject(IssuerManager);
+	protected commonManager = inject(CommonEntityManager);
+	protected networkManager = inject(NetworkManager);
+	protected badgeInstanceManager = inject(BadgeInstanceManager);
+	protected qrCodeApiService = inject(QrCodeApiService);
+	protected publicApiService = inject(PublicApiService);
+	protected dialogService = inject(CommonDialogsService);
+	protected configService = inject(AppConfigService);
+	protected pdfService = inject(PdfService);
+	private sanitizer = inject(DomSanitizer);
+	private translate = inject(TranslateService);
+	private learningPathApiService = inject(LearningPathApiService);
+	private taskService = inject(TaskPollingManagerService);
+	protected userProfileManager = inject(UserProfileManager);
+	protected badgeInstanceApiService = inject(BadgeInstanceApiService);
+
 	@ViewChild('qrAwards') qrAwards!: ElementRef;
 	@ViewChild('batchAwards') batchAwards!: ElementRef;
 
@@ -209,30 +228,19 @@ export class BadgeClassDetailComponent
 		c2: 'C2 Vorreiter*in',
 	};
 
-	constructor(
-		protected title: Title,
-		protected messageService: MessageService,
-		protected badgeManager: BadgeClassManager,
-		protected issuerManager: IssuerManager,
-		protected commonManager: CommonEntityManager,
-		protected networkManager: NetworkManager,
-		protected badgeInstanceManager: BadgeInstanceManager,
-		protected qrCodeApiService: QrCodeApiService,
-		protected publicApiService: PublicApiService,
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected dialogService: CommonDialogsService,
-		protected configService: AppConfigService,
-		protected pdfService: PdfService,
-		private sanitizer: DomSanitizer,
-		private translate: TranslateService,
-		private learningPathApiService: LearningPathApiService,
-		private taskService: TaskPollingManagerService,
-		protected userProfileManager: UserProfileManager,
-		protected badgeInstanceApiService: BadgeInstanceApiService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const badgeManager = this.badgeManager;
+		const issuerManager = this.issuerManager;
+		const networkManager = this.networkManager;
+
 
 		this.badgeClassLoaded = badgeManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then(
 			(badge) => {

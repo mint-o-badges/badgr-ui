@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -23,6 +23,14 @@ import { Network } from '~/issuer/network.model';
 	imports: [BgBreadcrumbsComponent, HlmH1, BgAwaitPromises, BadgeClassEditFormComponent, TranslatePipe],
 })
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected issuerManager = inject(IssuerManager);
+	protected networkManager = inject(NetworkManager);
+	protected badgeClassService = inject(BadgeClassManager);
+	private configService = inject(AppConfigService);
+	translate = inject(TranslateService);
+
 	issuerSlug: string;
 	category: string;
 	issuer: Issuer | Network;
@@ -42,19 +50,17 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 	navigationState: any;
 
-	constructor(
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected networkManager: NetworkManager,
-		protected badgeClassService: BadgeClassManager,
-		private configService: AppConfigService,
-		public translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const title = this.title;
+
 		this.translate.get('Issuer.createBadge').subscribe((str) => {
 			title.setTitle(`${str} - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		});

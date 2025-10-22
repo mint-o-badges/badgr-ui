@@ -38,6 +38,12 @@ import { environment } from '../../../../environments/environment';
 	],
 })
 export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
+	protected translate = inject(TranslateService);
+	protected qrCodeApiService = inject(QrCodeApiService);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected issuerManager = inject(IssuerManager);
+	protected _location = inject(Location);
+
 	static datePipe = new DatePipe('de');
 
 	@Input() editing: boolean = false;
@@ -85,16 +91,14 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		.addControl('issuer_id', '', Validators.required)
 		.addControl('notifications', false);
 
-	constructor(
-		route: ActivatedRoute,
-		router: Router,
-		sessionService: SessionService,
-		protected translate: TranslateService,
-		protected qrCodeApiService: QrCodeApiService,
-		protected badgeClassManager: BadgeClassManager,
-		protected issuerManager: IssuerManager,
-		protected _location: Location,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+		const sessionService = inject(SessionService);
+
 		super(router, route, sessionService);
 
 		if (this.isNetworkBadge) {

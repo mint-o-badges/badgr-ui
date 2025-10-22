@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class QueryParametersService {
-	constructor(private route: ActivatedRoute) {}
+	private route = inject(ActivatedRoute);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	/**
 	 * Looks up a query parameter in the current route, then the current window location query string, and then finally

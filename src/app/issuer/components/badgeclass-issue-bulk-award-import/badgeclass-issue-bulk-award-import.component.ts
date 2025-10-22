@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -34,6 +34,13 @@ import tlds from '../../../../assets/data/tld-list.json';
 	],
 })
 export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRoutableComponent {
+	protected formBuilder = inject(FormBuilder);
+	protected loginService: SessionService;
+	protected messageService = inject(MessageService);
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected title = inject(Title);
+
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';
 
 	@Output() importPreviewDataEmitter = new EventEmitter<BulkIssueImportPreviewData>();
@@ -46,15 +53,20 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 	rawCsv: string = null;
 	viewState: ViewState;
 
-	constructor(
-		protected formBuilder: FormBuilder,
-		protected loginService: SessionService,
-		protected messageService: MessageService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+		const formBuilder = this.formBuilder;
+		this.loginService = loginService;
+		this.router = router;
+		this.route = route;
+
 
 		this.csvForm = formBuilder.group({
 			file: [],

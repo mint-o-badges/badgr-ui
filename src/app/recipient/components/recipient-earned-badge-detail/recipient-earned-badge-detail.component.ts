@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MessageService } from '../../../common/services/message.service';
@@ -31,6 +31,16 @@ import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-det
 	imports: [BgBadgeDetail],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	private recipientBadgeManager = inject(RecipientBadgeManager);
+	private learningPathApiService = inject(LearningPathApiService);
+	private title = inject(Title);
+	private messageService = inject(MessageService);
+	private eventService = inject(EventsService);
+	private dialogService = inject(CommonDialogsService);
+	private configService = inject(AppConfigService);
+	queryParametersService = inject(QueryParametersService);
+	private translate = inject(TranslateService);
+
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -70,20 +80,14 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		return this.recipientBadgeManager.recipientBadgeList;
 	}
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		loginService: SessionService,
-		private recipientBadgeManager: RecipientBadgeManager,
-		private learningPathApiService: LearningPathApiService,
-		private title: Title,
-		private messageService: MessageService,
-		private eventService: EventsService,
-		private dialogService: CommonDialogsService,
-		private configService: AppConfigService,
-		public queryParametersService: QueryParametersService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+		const loginService = inject(SessionService);
+
 		super(router, route, loginService);
 
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise

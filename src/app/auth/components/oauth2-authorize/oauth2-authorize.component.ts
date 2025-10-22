@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
@@ -23,6 +23,14 @@ import { PatternLibraryIconName } from '../../../common/components/svg-icon.comp
 	imports: [BgAwaitPromises, FormMessageComponent, SvgIconComponent, FormsModule],
 })
 export class OAuth2AuthorizeComponent extends BaseRoutableComponent implements OnInit {
+	private title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected loginService = inject(SessionService);
+	protected oAuthManager = inject(OAuthManager);
+	protected queryParams = inject(QueryParametersService);
+	private configService = inject(AppConfigService);
+	protected initialLoadingIndicatorService = inject(InitialLoadingIndicatorService);
+
 	readonly authLinkLogoSrc = this.theme.logoImg.small;
 
 	_loadingPromise: Promise<unknown> | null = null;
@@ -46,18 +54,16 @@ export class OAuth2AuthorizeComponent extends BaseRoutableComponent implements O
 		return 'icon_checkmark';
 	}
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		private title: Title,
-		protected messageService: MessageService,
-		protected loginService: SessionService,
-		protected oAuthManager: OAuthManager,
-		protected queryParams: QueryParametersService,
-		private configService: AppConfigService,
-		protected initialLoadingIndicatorService: InitialLoadingIndicatorService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+		const title = this.title;
+
 		title.setTitle(`Authorize - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 

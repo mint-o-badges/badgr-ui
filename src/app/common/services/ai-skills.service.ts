@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { AiSkillsResult, ApiSkill } from '../model/ai-skills.model';
 import { BaseHttpApiService } from './base-http-api.service';
@@ -8,13 +8,26 @@ import { SessionService } from './session.service';
 
 @Injectable({ providedIn: 'root' })
 export class AiSkillsService extends BaseHttpApiService {
-	constructor(
-		protected loginService: SessionService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-	) {
+	protected loginService: SessionService;
+	protected http: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const http = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(loginService, http, configService, messageService);
+	
+		this.loginService = loginService;
+		this.http = http;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	getAiSkillsResult(textToAnalyze: string): Promise<AiSkillsResult> {

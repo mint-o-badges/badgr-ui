@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -222,6 +222,11 @@ export interface BadgeSelectionDialogSettings {
 	imports: [FormsModule, SvgIconComponent, BgAwaitPromises],
 })
 export class BadgeSelectionDialog extends BaseDialog {
+	private badgeManager = inject(BadgeClassManager);
+	private issuerManager = inject(IssuerManager);
+	private messageService = inject(MessageService);
+	private settingsService = inject(SettingsService);
+
 	get searchQuery() {
 		return this._searchQuery;
 	}
@@ -286,14 +291,13 @@ export class BadgeSelectionDialog extends BaseDialog {
 
 	private loadedData = false;
 
-	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
-		private badgeManager: BadgeClassManager,
-		private issuerManager: IssuerManager,
-		private messageService: MessageService,
-		private settingsService: SettingsService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 

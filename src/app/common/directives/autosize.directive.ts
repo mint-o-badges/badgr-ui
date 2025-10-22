@@ -1,13 +1,4 @@
-import {
-	AfterViewChecked,
-	Directive,
-	ElementRef,
-	HostListener,
-	Inject,
-	Input,
-	PLATFORM_ID,
-	Renderer2,
-} from '@angular/core';
+import { AfterViewChecked, Directive, ElementRef, HostListener, Input, PLATFORM_ID, Renderer2, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 /**
@@ -41,6 +32,10 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Directive({ selector: 'textarea[autosize]' })
 export class AutosizeDirective implements AfterViewChecked {
+	private platformId = inject<{}>(PLATFORM_ID);
+	private renderer = inject(Renderer2);
+	element = inject(ElementRef);
+
 	private el: HTMLElement;
 	private _minHeight: string;
 	private _maxHeight: string;
@@ -80,12 +75,12 @@ export class AutosizeDirective implements AfterViewChecked {
 		this.adjust();
 	}
 
-	constructor(
-		// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-		@Inject(PLATFORM_ID) private platformId: {},
-		private renderer: Renderer2,
-		public element: ElementRef,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const element = this.element;
+
 		this.el = element.nativeElement;
 		this._clientWidth = this.el.clientWidth;
 	}

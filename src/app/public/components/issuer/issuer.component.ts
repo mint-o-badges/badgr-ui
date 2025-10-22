@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
@@ -18,6 +18,11 @@ import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-
 	imports: [BgAwaitPromises, OebIssuerDetailComponent],
 })
 export class PublicIssuerComponent {
+	private injector = inject(Injector);
+	embedService = inject(EmbedService);
+	configService = inject(AppConfigService);
+	private title = inject(Title);
+
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -40,12 +45,13 @@ export class PublicIssuerComponent {
 		},
 	};
 
-	constructor(
-		private injector: Injector,
-		public embedService: EmbedService,
-		public configService: AppConfigService,
-		private title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const injector = this.injector;
+		const title = this.title;
+
 		title.setTitle(`Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'issuerId', (paramValue) => {

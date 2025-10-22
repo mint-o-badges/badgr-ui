@@ -109,6 +109,19 @@ export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, AfterContentInit
 {
+	private title = inject(Title);
+	private dialogService = inject(CommonDialogsService);
+	private messageService = inject(MessageService);
+	private recipientBadgeManager = inject(RecipientBadgeManager);
+	private learningPathApi = inject(LearningPathApiService);
+	configService = inject(AppConfigService);
+	private profileManager = inject(UserProfileManager);
+	private translate = inject(TranslateService);
+	recipientBadgeCollectionApiService = inject(RecipientBadgeCollectionApiService);
+	private recipientBadgeCollectionManager = inject(RecipientBadgeCollectionManager);
+	private recipientBadgeApiService = inject(RecipientBadgeApiService);
+	private breakpointService = inject(BreakpointService);
+
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -207,25 +220,20 @@ export class RecipientEarnedBadgeListComponent
 		this.updateResults();
 	}
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		sessionService: SessionService,
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
 
-		private title: Title,
-		private dialogService: CommonDialogsService,
-		private messageService: MessageService,
-		private recipientBadgeManager: RecipientBadgeManager,
-		private learningPathApi: LearningPathApiService,
-		public configService: AppConfigService,
-		private profileManager: UserProfileManager,
-		private translate: TranslateService,
-		public recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService,
-		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
-		private recipientBadgeApiService: RecipientBadgeApiService,
-		private breakpointService: BreakpointService,
-	) {
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+		const sessionService = inject(SessionService);
+
 		super(router, route, sessionService);
+		const title = this.title;
+		const dialogService = this.dialogService;
+		const profileManager = this.profileManager;
+		const translate = this.translate;
+
 
 		title.setTitle(`Backpack - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 

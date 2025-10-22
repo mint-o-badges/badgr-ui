@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, SecurityContext } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, SecurityContext, inject } from '@angular/core';
 
 import { BaseDialog } from '../base-dialog';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
@@ -25,6 +25,11 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	imports: [LoadingDotsComponent, SvgIconComponent, OebButtonComponent],
 })
 export class ExportPdfDialog extends BaseDialog {
+	protected profileManager = inject(UserProfileManager);
+	protected messageService = inject(MessageService);
+	protected pdfService = inject(PdfService);
+	private sanitizer = inject(DomSanitizer);
+
 	badge: RecipientBadgeInstance | PublicApiBadgeAssertionWithBadgeClass | null = null;
 	collection: RecipientBadgeCollection | null = null;
 	badgeResults: BadgeResult[] | null = null;
@@ -45,14 +50,13 @@ export class ExportPdfDialog extends BaseDialog {
 	resolveFunc: () => void;
 	rejectFunc: () => void;
 
-	constructor(
-		componentElem: ElementRef<HTMLElement>,
-		renderer: Renderer2,
-		protected profileManager: UserProfileManager,
-		protected messageService: MessageService,
-		protected pdfService: PdfService,
-		private sanitizer: DomSanitizer,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject<ElementRef<HTMLElement>>(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 		var r = document.querySelector(':root');
 		var rs = getComputedStyle(r);

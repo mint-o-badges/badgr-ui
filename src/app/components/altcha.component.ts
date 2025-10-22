@@ -1,12 +1,4 @@
-import {
-	CUSTOM_ELEMENTS_SCHEMA,
-	Component,
-	ElementRef,
-	ViewChild,
-	forwardRef,
-	output,
-	AfterViewInit,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, ViewChild, forwardRef, output, AfterViewInit, inject } from '@angular/core';
 import {
 	ControlValueAccessor,
 	NG_VALUE_ACCESSOR,
@@ -42,9 +34,14 @@ import 'altcha';
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AltchaComponent implements ControlValueAccessor, Validator, AfterViewInit {
+	protected configService = inject(AppConfigService);
+
 	@ViewChild('altchaWidget', { static: true }) altchaWidget!: ElementRef;
 
-	constructor(protected configService: AppConfigService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	value: string = '';
 	onChange: any = () => {};

@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, Injector, NgZone } from '@angular/core';
+import { Injectable, InjectionToken, Injector, NgZone, inject } from '@angular/core';
 import { ApiConfig, BadgrConfig, FeaturesConfig, HelpConfig } from '../../environments/badgr-config';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,10 @@ import { initializeTheme } from '../../theming/theme-setup';
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
+	private injector = inject(Injector);
+	private http = inject(HttpClient);
+	private ngZone = inject(NgZone);
+
 	get apiConfig(): ApiConfig {
 		return this.config.api;
 	}
@@ -31,11 +35,12 @@ export class AppConfigService {
 	}
 	private config: BadgrConfig = defaultConfig;
 
-	constructor(
-		private injector: Injector,
-		private http: HttpClient,
-		private ngZone: NgZone,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const ngZone = this.ngZone;
+
 		window['initializeBadgrConfig'] = (...args) => ngZone.run(() => this.initializeConfig.apply(this, args));
 	}
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -32,6 +32,13 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	],
 })
 export class ResetPasswordComponent extends BaseRoutableComponent implements OnInit {
+	private fb = inject(FormBuilder);
+	private title = inject(Title);
+	private sessionService = inject(SessionService);
+	private configService = inject(AppConfigService);
+	private _messageService = inject(MessageService);
+	translate = inject(TranslateService);
+
 	changePasswordForm = typedFormGroup()
 		.addControl('password1', '', [
 			Validators.required,
@@ -52,17 +59,16 @@ export class ResetPasswordComponent extends BaseRoutableComponent implements OnI
 	passwordInsecure;
 	pleaseTryAgain;
 
-	constructor(
-		private fb: FormBuilder,
-		private title: Title,
-		private sessionService: SessionService,
-		route: ActivatedRoute,
-		router: Router,
-		private configService: AppConfigService,
-		private _messageService: MessageService,
-		public translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+
 		super(router, route);
+		const title = this.title;
+
 
 		title.setTitle(`Reset Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 

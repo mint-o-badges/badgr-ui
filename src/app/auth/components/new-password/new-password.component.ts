@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -34,6 +34,14 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	],
 })
 export class NewPasswordComponent extends BaseRoutableComponent implements OnInit {
+	private fb = inject(FormBuilder);
+	private title = inject(Title);
+	private sessionService = inject(SessionService);
+	private configService = inject(AppConfigService);
+	private _messageService = inject(MessageService);
+	translate = inject(TranslateService);
+	private profileManager = inject(UserProfileManager);
+
 	changePasswordForm = typedFormGroup()
 		.addControl('password', '', [
 			Validators.required,
@@ -56,18 +64,16 @@ export class NewPasswordComponent extends BaseRoutableComponent implements OnIni
 	passwordInsecure;
 	pleaseTryAgain;
 
-	constructor(
-		private fb: FormBuilder,
-		private title: Title,
-		private sessionService: SessionService,
-		route: ActivatedRoute,
-		router: Router,
-		private configService: AppConfigService,
-		private _messageService: MessageService,
-		public translate: TranslateService,
-		private profileManager: UserProfileManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+
 		super(router, route);
+		const title = this.title;
+
 
 		title.setTitle(`New Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 

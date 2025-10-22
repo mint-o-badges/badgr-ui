@@ -1,15 +1,4 @@
-import {
-	AfterViewInit,
-	Component,
-	ElementRef,
-	EventEmitter,
-	Input,
-	OnChanges,
-	Output,
-	SimpleChanges,
-	ViewChild,
-	OnInit,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, OnInit, inject } from '@angular/core';
 
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -108,6 +97,8 @@ import { OebButtonComponent } from '../../components/oeb-button.component';
 	imports: [FormsModule, ReactiveFormsModule, OebButtonComponent],
 })
 export class FormFieldText implements OnChanges, AfterViewInit, OnInit {
+	private dialogService = inject(CommonDialogsService);
+
 	@Input()
 	set unlocked(unlocked: boolean) {
 		this._unlocked = unlocked;
@@ -230,7 +221,10 @@ export class FormFieldText implements OnChanges, AfterViewInit, OnInit {
 
 	private randomName = 'field' + Math.random();
 
-	constructor(private dialogService: CommonDialogsService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngOnInit() {
 		if (this.maxchar) {

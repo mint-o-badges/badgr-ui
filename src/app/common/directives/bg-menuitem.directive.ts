@@ -1,4 +1,4 @@
-import { Directive, ElementRef, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, OnDestroy, inject } from '@angular/core';
 import { EventsService } from '../services/events.service';
 import { Subscription } from 'rxjs';
 
@@ -15,15 +15,20 @@ import { Subscription } from 'rxjs';
 	},
 })
 export class MenuItemDirective implements OnDestroy {
+	protected elemRef = inject(ElementRef);
+	protected eventService = inject(EventsService);
+
 	menuItem: boolean;
 
 	isOpen = false;
 	private clickSubscription: Subscription;
 
-	constructor(
-		protected elemRef: ElementRef,
-		protected eventService: EventsService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const eventService = this.eventService;
+
 		this.clickSubscription = eventService.documentClicked.subscribe((e) => this.onDocumentClick(e));
 	}
 	ngOnDestroy(): void {

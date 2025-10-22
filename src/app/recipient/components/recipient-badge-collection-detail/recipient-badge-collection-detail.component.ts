@@ -53,6 +53,14 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	],
 })
 export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	private title = inject(Title);
+	private messageService = inject(MessageService);
+	private recipientBadgeManager = inject(RecipientBadgeManager);
+	private recipientBadgeCollectionManager = inject(RecipientBadgeCollectionManager);
+	private configService = inject(AppConfigService);
+	private translate = inject(TranslateService);
+	private pdfService = inject(PdfService);
+
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
@@ -79,19 +87,17 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 	dialogRef: BrnDialogRef<any> = null;
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		loginService: SessionService,
-		private title: Title,
-		private messageService: MessageService,
-		private recipientBadgeManager: RecipientBadgeManager,
-		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
-		private configService: AppConfigService,
-		private translate: TranslateService,
-		private pdfService: PdfService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+		const loginService = inject(SessionService);
+
 		super(router, route, loginService);
+		const title = this.title;
+
 
 		title.setTitle(`Collections - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
