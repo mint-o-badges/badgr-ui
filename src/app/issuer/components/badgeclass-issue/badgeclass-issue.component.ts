@@ -41,10 +41,20 @@ import { FormFieldMarkdown } from '../../../common/components/formfield-markdown
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { OebCollapsibleComponent } from '~/components/oeb-collapsible.component';
+import { DateRangeValidator } from '~/common/validators/date-range.validator';
 
 @Component({
 	selector: 'badgeclass-issue',
 	templateUrl: './badgeclass-issue.component.html',
+	styles: [
+		`
+			:host ::ng-deep {
+				brn-collapsible[data-state='open'] button span {
+					font-weight: bold !important;
+				}
+			}
+		`,
+	],
 	imports: [
 		BgAwaitPromises,
 		FormMessageComponent,
@@ -123,11 +133,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	expirationDateEditable = false;
 	idError: string | boolean = false;
-	dateError = false;
 
 	issuer: Issuer;
 	issueForm = typedFormGroup()
-		.addControl('expires', '', this['expirationValidator'])
 		.addControl('recipientprofile_name', '', [Validators.required, Validators.maxLength(35)])
 		.addControl('recipient_type', 'email' as RecipientIdentifierType, [Validators.required], (control) => {
 			control.rawControl.valueChanges.subscribe(() => {
@@ -135,13 +143,18 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			});
 		})
 		.addControl('recipient_identifier', '', [Validators.required, this.idValidator])
-		.addControl('narrative', '', [MdImgValidator.imageTest, Validators.maxLength(160)])
 		.addControl('activity_start_date', '')
-		.addControl('activity_end_date', '')
+		.addControl('activity_end_date', '', [
+			DateValidator.validDate,
+			DateRangeValidator.endDateAfterStartDate('activity_start_date', 'activityEndBeforeStart'),
+		])
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',
-			typedFormGroup().addControl('narrative', '').addControl('evidence_url', '').addControl('expiration', ''),
+			typedFormGroup()
+				.addControl('narrative', '')
+				.addControl('evidence_url', '', UrlValidator.validUrl)
+				.addControl('expiration', ''),
 		);
 
 	badgeClass: BadgeClass;
@@ -156,17 +169,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		email: this.translate.instant('General.emailAddress'),
 		url: 'URL',
 		// telephone: "Telephone",
-	};
-
-	evidenceEnabled = false;
-	narrativeEnabled = false;
-	expirationEnabled = false;
-	expirationValidator: (control: FormControl) => ValidationResult = (control) => {
-		if (this.expirationEnabled) {
-			return Validators.compose([Validators.required, DateValidator.validDate])(control);
-		} else {
-			return null;
-		}
 	};
 
 	constructor(
@@ -219,11 +221,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 						{ title: 'Award Badge' },
 					];
 
-					if (badgeClass.expiresDuration && badgeClass.expiresAmount) {
-						this.expirationEnabled = true;
-					}
-					this.issueForm.rawControlMap.expires.setValue(this.defaultExpiration);
-
 					this.title.setTitle(
 						`Award Badge - ${badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 					);
@@ -233,18 +230,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	ngOnInit() {
 		super.ngOnInit();
-	}
-
-	enableEvidence() {
-		this.evidenceEnabled = true;
-
-		if (this.issueForm.controls.evidence_items.length < 1) {
-			this.addEvidence();
-		}
-	}
-
-	toggleExpiration() {
-		this.expirationEnabled = !this.expirationEnabled;
 	}
 
 	addEvidence() {
@@ -274,13 +259,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 		// const extensions = studyLoadExtension;
 
-		if (this.expirationEnabled && DateValidator.validDate(this.issueForm.controls.expires.rawControl)) {
-			this.dateError = true;
-			return false;
-		} else {
-			this.dateError = false;
-		}
-
 		const isIDValid = this.idValidator(this.issueForm.controls.recipient_identifier.rawControl);
 		if (isIDValid) {
 			Object.keys(isIDValid).forEach((key) => {
@@ -290,9 +268,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		} else {
 			this.idError = false;
 		}
-
-		const expires =
-			this.expirationEnabled && formState.expires ? new Date(formState.expires).toISOString() : undefined;
 
 		const activityStartDate = formState.activity_start_date
 			? new Date(formState.activity_start_date).toISOString()
@@ -307,11 +282,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				badge_class: this.badgeSlug,
 				recipient_type: formState.recipient_type,
 				recipient_identifier: formState.recipient_identifier,
-				narrative: this.narrativeEnabled ? formState.narrative : '',
 				create_notification: formState.notify_earner,
-				evidence_items: this.evidenceEnabled ? cleanedEvidence : [],
+				evidence_items: cleanedEvidence,
 				extensions,
-				expires,
 				activity_start_date: activityStartDate,
 				activity_end_date: activityEndDate,
 			})

@@ -397,7 +397,9 @@
 		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail.",
 		"addOptionalDetails": "Optionale Details hinzufügen",
 		"evidence": "Nachweis für erfolgreiche Teilnahme",
-		"addNewEvidence": "Weiteren Nachweis hinzufügen"
+		"addNewEvidence": "Weiteren Nachweis hinzufügen",
+		"evidenceUrl": "URL zum Nachweis",
+		"evidenceNarrative": "Textliches Narrativ"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",

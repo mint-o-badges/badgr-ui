@@ -397,7 +397,9 @@
 		"bulkReceiveByEmail": "Recipients will receive the badge by email.",
 		"addOptionalDetails": "Add optional details",
 		"evidence": "Proof of successful participation",
-		"addNewEvidence": "Add another evidence"
+		"addNewEvidence": "Add another evidence",
+		"evidenceUrl": "Evidence URL",
+		"evidenceNarrative": "Textual narrative"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",

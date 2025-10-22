@@ -145,11 +145,16 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 
 		if (this.qrSlug) {
 			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+				console.log('qrcode', qrCode);
 				this.qrForm.setValue({
 					title: qrCode.title,
 					createdBy: qrCode.createdBy,
-					activity_start_date: qrCode.activity_start_date,
-					activity_end_date: qrCode.activity_end_date,
+					activity_start_date: qrCode.activity_start_date
+						? EditQrFormComponent.datePipe.transform(new Date(qrCode.activity_start_date), 'yyyy-MM-dd')
+						: '',
+					activity_end_date: qrCode.activity_end_date
+						? EditQrFormComponent.datePipe.transform(new Date(qrCode.activity_end_date), 'yyyy-MM-dd')
+						: '',
 					valid_from: qrCode.valid_from
 						? EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd')
 						: undefined,
