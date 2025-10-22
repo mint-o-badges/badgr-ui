@@ -395,7 +395,9 @@
 		"bulkInvalidEmail": "1 invalid email address found. Please correct or remove the email address marked in red.",
 		"bulkInvalidEmailsPlural": "{{count}} invalid email addresses found. Please correct or remove the email addresses marked in red.",
 		"bulkReceiveByEmail": "Recipients will receive the badge by email.",
-		"addOptionalDetails": "Add optional details"
+		"addOptionalDetails": "Add optional details",
+		"evidence": "Proof of successful participation",
+		"addNewEvidence": "Add another evidence"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",

@@ -395,7 +395,9 @@
 		"bulkInvalidEmail": "1 ungültige E-Mail-Adresse gefunden. Bitte korrigiere oder entferne die rot markierte E-Mail-Adresse.",
 		"bulkInvalidEmailsPlural": "{{count}} ungültige E-Mail-Adressen gefunden. Bitte korrigiere oder entferne die rot markierten E-Mail-Adressen.",
 		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail.",
-		"addOptionalDetails": "Optional Details hinzufügen"
+		"addOptionalDetails": "Optionale Details hinzufügen",
+		"evidence": "Nachweis für erfolgreiche Teilnahme",
+		"addNewEvidence": "Weiteren Nachweis hinzufügen"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
