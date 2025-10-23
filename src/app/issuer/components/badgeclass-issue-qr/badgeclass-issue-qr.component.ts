@@ -22,6 +22,10 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 	imports: [BgAwaitPromises, BgBreadcrumbsComponent, HlmH1, HlmP, EditQrFormComponent, TranslatePipe],
 })
 export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableComponent {
+	protected translate = inject(TranslateService);
+	protected qrCodeApiService = inject(QrCodeApiService);
+	protected badgeClassManager = inject(BadgeClassManager);
+
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
 	}
@@ -48,14 +52,14 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 		.addControl('badgeclass_id', '', Validators.required)
 		.addControl('issuer_id', '', Validators.required);
 
-	constructor(
-		route: ActivatedRoute,
-		router: Router,
-		sessionService: SessionService,
-		protected translate: TranslateService,
-		protected qrCodeApiService: QrCodeApiService,
-		protected badgeClassManager: BadgeClassManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+		const sessionService = inject(SessionService);
+
 		super(router, route, sessionService);
 
 		this.badgeClassLoaded = this.badgeClassManager

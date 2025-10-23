@@ -75,6 +75,21 @@ import { environment } from 'src/environments/environment';
 	],
 })
 export class OebIssuerDetailComponent implements OnInit {
+	private router = inject(Router);
+	translate = inject(TranslateService);
+	protected messageService = inject(MessageService);
+	protected title = inject(Title);
+	protected issuerManager = inject(IssuerManager);
+	protected profileManager = inject(UserProfileManager);
+	protected entityManager = inject(CommonEntityManager);
+	private configService = inject(AppConfigService);
+	private learningPathApiService = inject(LearningPathApiService);
+	private qrCodeApiService = inject(QrCodeApiService);
+	private sessionService = inject(SessionService);
+	private networkApiService = inject(NetworkApiService);
+	private issuerApiService = inject(IssuerApiService);
+	private publicApiService = inject(PublicApiService);
+
 	@Input() issuer: Issuer | PublicApiIssuer;
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
@@ -91,22 +106,16 @@ export class OebIssuerDetailComponent implements OnInit {
 	userIsMember = false;
 	env = environment;
 
-	constructor(
-		private router: Router,
-		public translate: TranslateService,
-		protected messageService: MessageService,
-		protected title: Title,
-		protected issuerManager: IssuerManager,
-		protected profileManager: UserProfileManager,
-		protected entityManager: CommonEntityManager,
-		private configService: AppConfigService,
-		private learningPathApiService: LearningPathApiService,
-		private qrCodeApiService: QrCodeApiService,
-		private sessionService: SessionService,
-		private networkApiService: NetworkApiService,
-		private issuerApiService: IssuerApiService,
-		private publicApiService: PublicApiService,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		if (this.sessionService.isLoggedIn) {
+			this.issuerManager.myIssuers$.subscribe((issuers) => {
+				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
+			});
+		}
+	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 

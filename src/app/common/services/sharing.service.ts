@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RecipientBadgeApiService } from '../../recipient/services/recipient-badges-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class SharingService {
-	constructor(private recipientBadgeApiService: RecipientBadgeApiService) {}
+	private recipientBadgeApiService = inject(RecipientBadgeApiService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	shareWithProvider(
 		$event: Event,

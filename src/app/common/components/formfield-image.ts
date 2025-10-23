@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { base64ByteSize, loadImageURL, preloadImageURL, readFileAsDataURL } from '../util/file-util';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -128,6 +128,11 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 	imports: [NgIcon, HlmIcon, TranslatePipe],
 })
 export class BgFormFieldImageComponent {
+	private elemRef = inject<ElementRef<HTMLElement>>(ElementRef);
+	private domSanitizer = inject(DomSanitizer);
+	protected dialogService = inject(CommonDialogsService);
+	protected messageService = inject(MessageService);
+
 	@Input() set imageLoaderName(name: string) {
 		this.loaderName = name;
 		this.imageLoader = namedImageLoaders[name] || throwExpr(new Error(`Invalid image loader name ${name}`));
@@ -192,12 +197,10 @@ export class BgFormFieldImageComponent {
 
 	imageName: string;
 
-	constructor(
-		private elemRef: ElementRef<HTMLElement>,
-		private domSanitizer: DomSanitizer,
-		protected dialogService: CommonDialogsService,
-		protected messageService: MessageService,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	cancelFileSelection(event: Event) {
 		// Stop the propagation so that the form isn't aborted

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
@@ -28,6 +28,11 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 	],
 })
 export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected profileManager = inject(UserProfileManager);
+	protected configService = inject(AppConfigService);
+
 	profile: UserProfile;
 	profileEditForm = typedFormGroup()
 		.addControl('firstName', '', Validators.required)
@@ -39,16 +44,18 @@ export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent imp
 		{ title: 'Edit Profile', routerLink: ['/profile/edit'] },
 	];
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		sessionService: SessionService,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected profileManager: UserProfileManager,
-		protected configService: AppConfigService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+		const sessionService = inject(SessionService);
+
 		super(router, route, sessionService);
+		const title = this.title;
+		const profileManager = this.profileManager;
+
 		title.setTitle(`Profile - Edit - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.profileLoaded = profileManager.userProfilePromise.then(

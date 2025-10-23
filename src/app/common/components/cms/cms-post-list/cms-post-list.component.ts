@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CmsApiService } from '../../../services/cms-api.service';
 import { CmsApiPost } from '../../../model/cms-api.model';
 import { LanguageService } from '../../../services/language.service';
@@ -13,12 +13,15 @@ import { NgIcon } from '@ng-icons/core';
 	imports: [TranslateModule, NgIcon],
 })
 export class CmsPostListComponent implements OnInit {
+	protected cmsApiService = inject(CmsApiService);
+	languageService = inject(LanguageService);
+
 	posts: CmsApiPost[] = [];
 
-	constructor(
-		protected cmsApiService: CmsApiService,
-		public languageService: LanguageService,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	async ngOnInit() {
 		this.languageService.getSelectedLngObs().subscribe(async (lang: string) => {

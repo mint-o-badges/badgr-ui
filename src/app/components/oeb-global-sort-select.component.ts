@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, AfterViewInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { OebSelectComponent } from './select.component';
@@ -20,6 +20,8 @@ import { OebSelectComponent } from './select.component';
 	imports: [OebSelectComponent],
 })
 export class OebGlobalSortSelectComponent implements OnInit, AfterViewInit {
+	private translate = inject(TranslateService);
+
 	@Input() control: FormControl = new FormControl('name_asc');
 	@Input() disabled: boolean = false;
 	@Input() placeholder: string | undefined;
@@ -33,7 +35,10 @@ export class OebGlobalSortSelectComponent implements OnInit, AfterViewInit {
 		{ value: 'date_desc', label: this.translate.instant('General.dateDescending') },
 	];
 
-	constructor(private translate: TranslateService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngOnInit(): void {
 		this.control.valueChanges.subscribe((value) => {

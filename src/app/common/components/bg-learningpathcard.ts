@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
+import { Component, EventEmitter, Input, HostBinding, Output, inject } from '@angular/core';
+import { LearningPathApiService } from '../services/learningpath-api.service';
 import { RouterLink } from '@angular/router';
 import { SlicePipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
@@ -137,9 +138,14 @@ type MatchOrProgressType = { match?: string; progress?: number };
 	],
 })
 export class BgLearningPathCard {
+	private learningPathApiService = inject(LearningPathApiService);
+
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	private _matchOrProgress: MatchOrProgressType;
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
 
 	constructor() {}
 

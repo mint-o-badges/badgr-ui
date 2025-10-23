@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import type { PageConfig } from './badge-detail.component.types';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
@@ -59,15 +59,18 @@ import {
 	],
 })
 export class BgBadgeDetail {
+	private dialogService = inject(HlmDialogService);
+	private translate = inject(TranslateService);
+	private recipientManager = inject(RecipientBadgeManager);
+
 	@Input() config: PageConfig;
 	@Input() awaitPromises?: Promise<any>[];
 	@Input() badge?: RecipientBadgeInstance | BadgeInstance | ApiImportedBadgeInstance;
 
-	constructor(
-		private dialogService: HlmDialogService,
-		private translate: TranslateService,
-		private recipientManager: RecipientBadgeManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this.translate.get('Badge.categories.competency').subscribe((str) => {
 			this.competencyBadge = str;
 		});

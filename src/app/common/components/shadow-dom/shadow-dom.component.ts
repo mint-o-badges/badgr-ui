@@ -1,4 +1,4 @@
-import { Component, input, ViewChild, ViewEncapsulation, OnChanges } from '@angular/core';
+import { Component, input, ViewChild, ViewEncapsulation, OnChanges, inject } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { DynamicHooksComponent } from 'ngx-dynamic-hooks';
 import { Router } from '@angular/router';
@@ -32,6 +32,8 @@ import { VersionComponent } from '~/public/components/version.component';
 	imports: [DynamicHooksComponent, LoadingDotsComponent, AiAssistantComponent, VersionComponent],
 })
 export class ShadowDomComponent implements OnChanges {
+	private router = inject(Router);
+
 	content = input<string>();
 	_content: SafeHtml = '';
 
@@ -46,7 +48,10 @@ export class ShadowDomComponent implements OnChanges {
 
 	@ViewChild('contentWrap') contentWrap;
 
-	constructor(private router: Router) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngOnChanges() {
 		if (this.assetWrap) {

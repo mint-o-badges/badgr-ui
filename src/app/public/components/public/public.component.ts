@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
@@ -22,13 +22,19 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 	imports: [FormMessageComponent],
 })
 export class PublicComponent extends BaseRoutableComponent {
-	constructor(
-		private title: Title,
-		router: Router,
-		private configService: AppConfigService,
-		route: ActivatedRoute,
-	) {
+	private title = inject(Title);
+	private configService = inject(AppConfigService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+		const title = this.title;
+
 		title.setTitle(`Public - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 }

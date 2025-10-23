@@ -15,14 +15,18 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	imports: [RouterLink, OebCheckboxComponent, FormsModule, OebButtonComponent, TranslatePipe],
 })
 export class NewTermsComponent extends BaseRoutableComponent {
+	private translate = inject(TranslateService);
+	private profileManager = inject(UserProfileManager);
+
 	confirmed = false;
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-		private profileManager: UserProfileManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
 	}
 

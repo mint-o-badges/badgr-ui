@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -37,6 +37,16 @@ import { TranslatePipe } from '@ngx-translate/core';
 	],
 })
 export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected formBuilder = inject(FormBuilder);
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected eventsService = inject(EventsService);
+	protected badgeManager = inject(BadgeClassManager);
+	protected issuerManager = inject(IssuerManager);
+	protected badgeInstanceManager = inject(BadgeInstanceManager);
+	protected configService = inject(AppConfigService);
+	protected badgeClassManager = inject(BadgeClassManager);
+
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
 	}
@@ -74,21 +84,19 @@ export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent 
 	private allBadgeInstances: BadgeClassInstances;
 	private instanceResults: BadgeInstance[] = [];
 
-	constructor(
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected formBuilder: FormBuilder,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected eventsService: EventsService,
-		protected badgeManager: BadgeClassManager,
-		protected issuerManager: IssuerManager,
-		protected badgeInstanceManager: BadgeInstanceManager,
-		protected configService: AppConfigService,
-		protected badgeClassManager: BadgeClassManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const title = this.title;
+		const badgeManager = this.badgeManager;
+		const issuerManager = this.issuerManager;
+
 		title.setTitle(`Edit Badge Class - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.badgeClassLoaded = badgeManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then(
