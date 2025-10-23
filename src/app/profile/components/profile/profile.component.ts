@@ -64,7 +64,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	protected router: Router;
-	protected sessionService: SessionService;
+	protected authService: SessionService;
 	protected title = inject(Title);
 	protected messageService = inject(MessageService);
 	protected profileManager = inject(UserProfileManager);
@@ -137,7 +137,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 
 		super(router, route, sessionService);
 		this.router = router;
-		this.sessionService = sessionService;
+		this.authService = sessionService;
 		const title = this.title;
 
 		title.setTitle(`Profile - ${this.configService.theme['serviceName'] || 'Badgr'}`);

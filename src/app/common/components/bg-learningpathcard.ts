@@ -12,7 +12,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 type MatchOrProgressType = { match?: string; progress?: number };
 
 @Component({
-	selector: 'bg-card',
+	selector: 'bg-learningpathcard',
 	host: {
 		class: 'tw-rounded-[10px] tw-h-full tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
 	},
@@ -175,7 +175,7 @@ export class BgLearningPathCard {
 	}
 
 	@Input() set matchOrProgress(value: MatchOrProgressType) {
-		if ('match' in value && 'progress' in value) {
+		if (value && 'match' in value && 'progress' in value) {
 			throw new Error('Only one of "match" or "progress" can be set.');
 		}
 		this._matchOrProgress = value;

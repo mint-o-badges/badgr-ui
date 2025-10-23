@@ -110,7 +110,6 @@ export class BadgeClassEditFormComponent
 	private configService = inject(AppConfigService);
 	protected badgeClassManager = inject(BadgeClassManager);
 	protected dialogService = inject(CommonDialogsService);
-	protected componentElem = inject<ElementRef<HTMLElement>>(ElementRef);
 	protected aiSkillsService = inject(AiSkillsService);
 	private translate = inject(TranslateService);
 	private navService = inject(NavigationService);

@@ -26,7 +26,7 @@ export class BadgrApiError extends Error {
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseHttpApiService {
-	protected sessionService = inject(AUTH_PROVIDER);
+	protected authService = inject(AUTH_PROVIDER);
 	protected http = inject(HttpClient);
 	protected configService = inject(AppConfigService);
 	protected messageService = inject(MessageService);

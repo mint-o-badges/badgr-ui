@@ -10,7 +10,7 @@ import { AUTH_PROVIDER } from '../services/authentication-service';
 export class BaseAuthenticatedRoutableComponent extends BaseRoutableComponent implements OnInit {
 	protected router: Router;
 	protected route: ActivatedRoute;
-	protected sessionService = inject(AUTH_PROVIDER);
+	protected authService = inject(AUTH_PROVIDER);
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
