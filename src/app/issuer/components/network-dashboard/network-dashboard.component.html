@@ -35,6 +35,7 @@
 				{{ network().description }}
 			</p>
 			<oeb-tabs
+				[width]="'minlg'"
 				[variant]="'lightpurple'"
 				(onTabChanged)="onTabChange($event)"
 				[activeTab]="activeTab"
@@ -71,7 +72,8 @@
 </ng-template>
 
 <ng-template #addInstitutionsTemplate>
-	<add-institution [network]="network()" (institutionsInvited)="onInstitutionsInvited()"> </add-institution>
+	<add-institution [network]="network()" [invites]="networkInvites()" (institutionsInvited)="onInstitutionsInvited()">
+	</add-institution>
 </ng-template>
 
 <ng-template #badgesTemplate>
