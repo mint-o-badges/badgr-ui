@@ -67,7 +67,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		const route = inject(ActivatedRoute);
 
 		super(router, route);
-	
+
 		this.router = router;
 	}
 	private readonly _hlmDialogService = inject(HlmDialogService);

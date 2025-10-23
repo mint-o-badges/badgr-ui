@@ -98,7 +98,6 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		super(router, route, loginService);
 		const title = this.title;
 
-
 		title.setTitle(`Collections - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.menuItems = [

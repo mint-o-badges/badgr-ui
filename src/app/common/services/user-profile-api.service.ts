@@ -26,7 +26,7 @@ export class UserProfileApiService extends BaseHttpApiService {
 		const messageService = inject(MessageService);
 
 		super(sessionService, http, configService, messageService);
-	
+
 		this.sessionService = sessionService;
 		this.http = http;
 		this.configService = configService;

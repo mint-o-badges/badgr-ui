@@ -509,7 +509,6 @@ export class BadgeClassEditFormComponent
 		super(router, route, sessionService);
 		const translate = this.translate;
 
-
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 
 		this.keywordCompetenciesLanguage = translate.currentLang;

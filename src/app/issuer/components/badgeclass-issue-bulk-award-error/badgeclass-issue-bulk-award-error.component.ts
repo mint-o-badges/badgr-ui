@@ -39,7 +39,7 @@ export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComp
 		const route = inject(ActivatedRoute);
 
 		super(router, route, sessionService);
-	
+
 		this.sessionService = sessionService;
 		this.router = router;
 		this.route = route;

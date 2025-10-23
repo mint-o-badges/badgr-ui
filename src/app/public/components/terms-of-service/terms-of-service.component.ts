@@ -8,7 +8,6 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 	styleUrls: ['./terms-of-service.component.css'],
 })
 export class TermsComponent extends BaseRoutableComponent implements OnInit {
-
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
 

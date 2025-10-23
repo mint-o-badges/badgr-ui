@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	Input,
+	OnChanges,
+	SimpleChanges,
+	ViewChild,
+	ViewEncapsulation,
+	inject,
+} from '@angular/core';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 
 import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';

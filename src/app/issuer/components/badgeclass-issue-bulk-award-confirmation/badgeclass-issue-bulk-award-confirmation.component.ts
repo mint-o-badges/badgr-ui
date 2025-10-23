@@ -87,7 +87,7 @@ export class BadgeclassIssueBulkAwardConformation
 		const route = inject(ActivatedRoute);
 
 		super(router, route, sessionService);
-	
+
 		this.sessionService = sessionService;
 		this.router = router;
 		this.route = route;

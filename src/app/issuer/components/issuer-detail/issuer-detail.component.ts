@@ -76,7 +76,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		super(router, route, loginService);
 		const title = this.title;
 
-
 		title.setTitle(`Issuer Detail - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];

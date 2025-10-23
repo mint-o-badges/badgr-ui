@@ -234,7 +234,6 @@ export class RecipientEarnedBadgeListComponent
 		const profileManager = this.profileManager;
 		const translate = this.translate;
 
-
 		title.setTitle(`Backpack - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>

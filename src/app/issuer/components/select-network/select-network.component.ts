@@ -1,4 +1,14 @@
-import { OnInit, AfterViewInit, Component, input, OnDestroy, output, TemplateRef, ViewChild, inject } from '@angular/core';
+import {
+	OnInit,
+	AfterViewInit,
+	Component,
+	input,
+	OnDestroy,
+	output,
+	TemplateRef,
+	ViewChild,
+	inject,
+} from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';

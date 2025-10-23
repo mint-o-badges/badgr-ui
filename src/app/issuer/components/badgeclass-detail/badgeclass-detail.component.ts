@@ -241,7 +241,6 @@ export class BadgeClassDetailComponent
 		const issuerManager = this.issuerManager;
 		const networkManager = this.networkManager;
 
-
 		this.badgeClassLoaded = badgeManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then(
 			(badge) => {
 				this.badgeClass = badge;

@@ -69,7 +69,6 @@ export class ResetPasswordComponent extends BaseRoutableComponent implements OnI
 		super(router, route);
 		const title = this.title;
 
-
 		title.setTitle(`Reset Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		if (!this.resetToken) {

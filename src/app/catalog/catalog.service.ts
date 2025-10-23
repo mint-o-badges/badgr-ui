@@ -28,7 +28,7 @@ export class CatalogService extends BaseHttpApiService {
 		const messageService = inject(MessageService);
 
 		super(sessionService, httpClient, configService, messageService);
-	
+
 		this.sessionService = sessionService;
 		this.httpClient = httpClient;
 		this.configService = configService;

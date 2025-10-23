@@ -1,4 +1,19 @@
-import { Component, OnInit, Input, ContentChildren, QueryList, AfterContentChecked, AfterContentInit, AfterViewInit, SimpleChanges, isDevMode, ChangeDetectorRef, ElementRef, OnChanges, inject } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	ContentChildren,
+	QueryList,
+	AfterContentChecked,
+	AfterContentInit,
+	AfterViewInit,
+	SimpleChanges,
+	isDevMode,
+	ChangeDetectorRef,
+	ElementRef,
+	OnChanges,
+	inject,
+} from '@angular/core';
 import { CdkStepper, STEPPER_GLOBAL_OPTIONS, CdkStep } from '@angular/cdk/stepper';
 import { StepComponent } from './step.component';
 import { Router } from '@angular/router';
