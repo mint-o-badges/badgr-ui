@@ -17,6 +17,7 @@ import { CommonEntityManager } from '~/entity-manager/services/common-entity-man
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
 	template: `
+		<base href="http://127.0.0.1:5500/oeb-badgeclass-edit-form/" />
 		<confirm-dialog #confirmDialog></confirm-dialog>
 		<nounproject-dialog #nounprojectDialog></nounproject-dialog>
 		@if (authService.isLoggedIn$ | async) {
@@ -74,6 +75,7 @@ import { CommonEntityManager } from '~/entity-manager/services/common-entity-man
 })
 export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly finished = output<boolean>();
+	readonly baseurl = input.required<string>();
 	readonly token = input.required<string>();
 	readonly config = input<{ issuer: Issuer | Network; badge: ApiBadgeClass | undefined }>();
 	readonly badge = computed(() => {
@@ -92,6 +94,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 
 	private signInEffect = effect(() => {
 		const t = this.token();
+		if (t === undefined) return;
 		(async () => {
 			await this.handleSignInWithToken(t);
 		})();

@@ -51,12 +51,14 @@
 							],
 							"assets": [
 								"src/favicon.ico",
-								"src/assets/@concentricsky/badgr-style/dist/images/icons.svg",
+								"src/assets/oeb/images/badge/icon-ai-skills.svg",
+								"src/assets/oeb/images/badge/loading.svg",
 								"src/breakdown/static/images/square.svg",
 								"src/breakdown/static/badgestudio/shapes/participation.svg",
 								"src/breakdown/static/badgestudio/shapes/competency.svg",
 								"src/breakdown/static/badgestudio/shapes/learningpath.svg",
-								"src/breakdown/static/images/badge-loading.svg"
+								"src/breakdown/static/images/badge-loading.svg",
+								"src/breakdown/static/images/badge-failed.svg"
 							]
 						}
 					}
