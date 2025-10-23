@@ -182,6 +182,12 @@ export type RequestedBadge = {
 	`,
 })
 export class QrCodeDatatableComponent implements OnInit {
+	private badgeRequestApiService = inject(BadgeRequestApiService);
+	private badgeInstanceApiService = inject(BadgeInstanceApiService);
+	private taskService = inject(TaskPollingManagerService);
+	private messageService = inject(MessageService);
+	private translate = inject(TranslateService);
+
 	qrCodeId = input.required<string>();
 	badgeSlug = input.required<string>();
 	issuerSlug = input.required<string>();
@@ -256,13 +262,10 @@ export class QrCodeDatatableComponent implements OnInit {
 	];
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
-	constructor(
-		private badgeRequestApiService: BadgeRequestApiService,
-		private badgeInstanceApiService: BadgeInstanceApiService,
-		private taskService: TaskPollingManagerService,
-		private messageService: MessageService,
-		private translate: TranslateService,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngOnInit(): void {
 		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId()).then((response: any) => {

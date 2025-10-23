@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, timer, BehaviorSubject, EMPTY } from 'rxjs';
 import { switchMap, takeWhile, catchError, shareReplay } from 'rxjs/operators';
@@ -34,20 +34,32 @@ export interface BadgeTaskInfo {
 	providedIn: 'root',
 })
 export class TaskPollingManagerService extends BaseHttpApiService {
+	protected loginService: AuthenticationService;
+	protected http: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+
 	// Map of badge identifiers to their task info
 	private activeTasks = new Map<string, BadgeTaskInfo>();
 
 	private taskUpdatesSource = new BehaviorSubject<{ badgeSlug: string; taskResult: TaskResult } | null>(null);
 	public taskUpdates$ = this.taskUpdatesSource.asObservable();
 
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		protected loginService: AuthenticationService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(AUTH_PROVIDER);
+		const http = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(loginService, http, configService, messageService);
+
+		this.loginService = loginService;
+		this.http = http;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	private checkTaskStatus(taskId: string, issuerSlug: string, badgeSlug: string): Promise<TaskResult> {

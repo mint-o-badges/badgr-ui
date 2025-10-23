@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export const lngs = ['de', 'en'];
@@ -8,9 +8,14 @@ export const lngs = ['de', 'en'];
 	providedIn: 'root',
 })
 export class LanguageService {
+	private translate = inject(TranslateService);
+
 	private selected_lng$: BehaviorSubject<string>;
 
-	constructor(private translate: TranslateService) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this.selected_lng$ = new BehaviorSubject(null);
 	}
 

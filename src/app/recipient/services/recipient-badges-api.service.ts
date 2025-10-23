@@ -1,5 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
-import { SessionService } from '../../common/services/session.service';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '../../common/app-config.service';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import {
@@ -16,15 +15,27 @@ import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authenti
 
 @Injectable({ providedIn: 'root' })
 export class RecipientBadgeApiService extends BaseHttpApiService {
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		protected loginService: AuthenticationService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-		protected commonEntityManager: CommonEntityManager,
-	) {
+	protected loginService: AuthenticationService;
+	protected http: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+	protected commonEntityManager = inject(CommonEntityManager);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(AUTH_PROVIDER);
+		const http = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(loginService, http, configService, messageService);
+
+		this.loginService = loginService;
+		this.http = http;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	listRecipientBadges() {

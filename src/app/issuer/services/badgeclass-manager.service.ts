@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { BadgeClass } from '../models/badgeclass.model';
@@ -23,6 +23,13 @@ import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authenti
 
 @Injectable({ providedIn: 'root' })
 export class BadgeClassManager extends BaseHttpApiService {
+	protected loginService: AuthenticationService;
+	protected http: HttpClient;
+	protected configService: AppConfigService;
+	protected commonEntityManager = inject(CommonEntityManager);
+	badgeClassApi = inject(BadgeClassApiService);
+	protected messageService: MessageService;
+
 	private _networkBadgesBySlug = new Map<string, StandaloneEntitySet<BadgeClass, ApiBadgeClass>>();
 
 	badgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
@@ -109,17 +116,21 @@ export class BadgeClassManager extends BaseHttpApiService {
 		return from(this.getAwardableBadgesForIssuer(issuerSlug));
 	}
 
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		protected loginService: AuthenticationService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		@Inject(forwardRef(() => CommonEntityManager))
-		protected commonEntityManager: CommonEntityManager,
-		public badgeClassApi: BadgeClassApiService,
-		protected messageService: MessageService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(AUTH_PROVIDER);
+		const http = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(loginService, http, configService, messageService);
+
+		this.loginService = loginService;
+		this.http = http;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	removeBadgeClass(badge: BadgeClass) {

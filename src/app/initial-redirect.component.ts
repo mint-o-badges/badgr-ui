@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from './common/services/session.service';
 
@@ -13,10 +13,15 @@ import '../thirdparty/scopedQuerySelectorShim';
 	template: ``,
 })
 export class InitialRedirectComponent {
-	constructor(
-		private sessionService: SessionService,
-		private router: Router,
-	) {
+	private sessionService = inject(SessionService);
+	private router = inject(Router);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = this.router;
+
 		// if (sessionService.isLoggedIn) {
 		// 	router.navigate(['/recipient/badges'], { replaceUrl: true });
 		// } else {

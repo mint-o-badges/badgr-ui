@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, Output, EventEmitter, Input } from '@angular/core';
+import { Component, ElementRef, Renderer2, Output, EventEmitter, Input, inject } from '@angular/core';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
@@ -62,7 +62,13 @@ export class AppIntegrationDetailsDialog extends BaseDialog {
 	@Output() tokenDeleted = new EventEmitter();
 	public credentials;
 
-	constructor(componentElem: ElementRef, renderer: Renderer2, translate: TranslateService) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 

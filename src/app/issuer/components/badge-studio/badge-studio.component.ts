@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
 // import "font-awesome/css/font-awesome.css";
 import FontFaceObserver from 'fontfaceobserver';
 import { canvasVisualCenter } from '../../../common/util/visual-center';
@@ -14,6 +14,8 @@ import { HttpClient } from '@angular/common/http';
 	styleUrls: ['../../../../../node_modules/font-awesome/css/font-awesome.css'],
 })
 export class BadgeStudioComponent implements OnInit {
+	protected http = inject(HttpClient);
+
 	get canvas() {
 		return this.canvasElem.nativeElement as HTMLCanvasElement;
 	}
@@ -34,7 +36,10 @@ export class BadgeStudioComponent implements OnInit {
 	private fontPromise: Promise<unknown>;
 	private imageToShow;
 
-	constructor(protected http: HttpClient) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngOnInit() {
 		this.fontPromise = new FontFaceObserver('FontAwesome').load('').catch((e) => console.error(e));

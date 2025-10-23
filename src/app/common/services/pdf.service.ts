@@ -1,22 +1,27 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, SecurityContext } from '@angular/core';
+import { Injectable, SecurityContext, inject } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map } from 'rxjs';
+import { AUTH_PROVIDER } from './authentication-service';
 
 export type PdfResourceType = 'badges' | 'collections';
 
 @Injectable({ providedIn: 'root' })
 export class PdfService {
+	protected loginService = inject(AUTH_PROVIDER);
+	protected http = inject(HttpClient);
+	protected configService = inject(AppConfigService);
+	protected messageService = inject(MessageService);
+	private sanitizer = inject(DomSanitizer);
+
 	baseUrl: string;
 
-	constructor(
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-		private sanitizer: DomSanitizer,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 

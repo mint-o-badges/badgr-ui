@@ -1,20 +1,28 @@
 import { BaseRoutableComponent } from './base-routable.component';
-import { OnInit, Injectable, Inject } from '@angular/core';
+import { OnInit, Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AUTH_PROVIDER, AuthenticationService } from '../services/authentication-service';
+import { AUTH_PROVIDER } from '../services/authentication-service';
 
 /**
  * Base class for all routable components (pages in the applications) that require authentication.
  */
 @Injectable()
 export class BaseAuthenticatedRoutableComponent extends BaseRoutableComponent implements OnInit {
-	constructor(
-		protected router: Router,
-		protected route: ActivatedRoute,
-		@Inject(AUTH_PROVIDER)
-		protected authService: AuthenticationService,
-	) {
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected sessionService = inject(AUTH_PROVIDER);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+
+		this.router = router;
+		this.route = route;
 	}
 
 	// eslint-disable-next-line @angular-eslint/contextual-lifecycle

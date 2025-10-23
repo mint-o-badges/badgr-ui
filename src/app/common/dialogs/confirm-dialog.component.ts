@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { BaseDialog } from './base-dialog';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIcon } from '@spartan-ng/helm/icon';
@@ -61,7 +61,13 @@ export class ConfirmDialog extends BaseDialog {
 	resolveFunc: () => void;
 	rejectFunc: () => void;
 
-	constructor(componentElem: ElementRef, renderer: Renderer2) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 

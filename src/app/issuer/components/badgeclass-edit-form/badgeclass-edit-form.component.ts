@@ -11,7 +11,7 @@ import {
 	SimpleChanges,
 	AfterViewChecked,
 	OnChanges,
-	Inject,
+	inject,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -66,7 +66,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
-import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
+import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -106,6 +106,15 @@ export class BadgeClassEditFormComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, AfterViewInit, AfterViewChecked, OnChanges
 {
+	protected messageService = inject(MessageService);
+	private configService = inject(AppConfigService);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected dialogService = inject(CommonDialogsService);
+	protected componentElem = inject<ElementRef<HTMLElement>>(ElementRef);
+	protected aiSkillsService = inject(AiSkillsService);
+	private translate = inject(TranslateService);
+	private navService = inject(NavigationService);
+
 	baseUrl: string;
 	badgeCategory: string;
 
@@ -480,20 +489,16 @@ export class BadgeClassEditFormComponent
 	next: string;
 	previous: string;
 
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		authService: AuthenticationService,
-		router: Router,
-		route: ActivatedRoute,
-		protected messageService: MessageService,
-		private configService: AppConfigService,
-		protected badgeClassManager: BadgeClassManager,
-		protected dialogService: CommonDialogsService,
-		protected aiSkillsService: AiSkillsService,
-		private translate: TranslateService,
-		private navService: NavigationService,
-	) {
-		super(router, route, authService);
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(AUTH_PROVIDER);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
+		super(router, route, sessionService);
+		const translate = this.translate;
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 

@@ -39,6 +39,12 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	],
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected badgeRequestApiService = inject(BadgeRequestApiService);
+	protected translate = inject(TranslateService);
+	protected qrCodeApiService = inject(QrCodeApiService);
+	protected sanitizer = inject(DomSanitizer);
+
 	static datePipe = new DatePipe('de');
 
 	get issuerSlug() {
@@ -94,16 +100,14 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		},
 	];
 
-	constructor(
-		route: ActivatedRoute,
-		router: Router,
-		sessionService: SessionService,
-		protected badgeClassManager: BadgeClassManager,
-		protected badgeRequestApiService: BadgeRequestApiService,
-		protected translate: TranslateService,
-		protected qrCodeApiService: QrCodeApiService,
-		protected sanitizer: DomSanitizer,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+		const sessionService = inject(SessionService);
+
 		super(router, route, sessionService);
 
 		this.badgeClassLoaded = this.badgeClassManager

@@ -1,4 +1,4 @@
-import { OnInit, Injectable } from '@angular/core';
+import { OnInit, Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { SessionService } from '../../../common/services/session.service';
@@ -14,21 +14,27 @@ export abstract class AppIntegrationDetailComponent<T extends AppIntegration<Api
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit
 {
+	private title = inject(Title);
+	private messageService = inject(MessageService);
+	private appIntegrationManager = inject(AppIntegrationManager);
+	private configService = inject(AppConfigService);
+
 	integration: T;
 	integrationPromise: Promise<unknown>;
 	abstract integrationSlug: string;
 
-	constructor(
-		loginService: SessionService,
-		route: ActivatedRoute,
-		router: Router,
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
 
-		private title: Title,
-		private messageService: MessageService,
-		private appIntegrationManager: AppIntegrationManager,
-		private configService: AppConfigService,
-	) {
+	constructor() {
+		const loginService = inject(SessionService);
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+
 		super(router, route, loginService);
+		const title = this.title;
+		const appIntegrationManager = this.appIntegrationManager;
+
 		title.setTitle(`App Integrations - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.integrationPromise = appIntegrationManager.appIntegrations.loadedPromise.then((list) => {

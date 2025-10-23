@@ -4,10 +4,10 @@ import {
 	OnInit,
 	Renderer2,
 	ViewChild,
-	Inject,
 	signal,
 	computed,
 	DOCUMENT,
+	inject,
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
@@ -80,6 +80,25 @@ import { environment } from 'src/environments/environment';
 	],
 })
 export class AppComponent implements OnInit, AfterViewInit {
+	private sessionService = inject(SessionService);
+	private profileManager = inject(UserProfileManager);
+	private router = inject(Router);
+	private messageService = inject(MessageService);
+	private configService = inject(AppConfigService);
+	private commonDialogsService = inject(CommonDialogsService);
+	private eventService = inject(EventsService);
+	private oAuthManager = inject(OAuthManager);
+	private embedService = inject(EmbedService);
+	private renderer = inject(Renderer2);
+	private queryParams = inject(QueryParametersService);
+	private initialLoadingIndicatorService = inject(InitialLoadingIndicatorService);
+	private titleService = inject(Title);
+	protected issuerManager = inject(IssuerManager);
+	private languageService = inject(LanguageService);
+	protected translate = inject(TranslateService);
+	private document = inject<Document>(DOCUMENT);
+	private cmsManager = inject(CmsManager);
+
 	aboutBadgesMenuItems: MenuItem[] = [
 		{
 			title: 'Badges A-Z',
@@ -188,26 +207,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	initFinished: Promise<unknown> = new Promise(() => {});
 
-	constructor(
-		private sessionService: SessionService,
-		private profileManager: UserProfileManager,
-		private router: Router,
-		private messageService: MessageService,
-		private configService: AppConfigService,
-		private commonDialogsService: CommonDialogsService,
-		private eventService: EventsService,
-		private oAuthManager: OAuthManager,
-		private embedService: EmbedService,
-		private renderer: Renderer2,
-		private queryParams: QueryParametersService,
-		private initialLoadingIndicatorService: InitialLoadingIndicatorService,
-		private titleService: Title,
-		protected issuerManager: IssuerManager,
-		private languageService: LanguageService, // Translation
-		protected translate: TranslateService,
-		@Inject(DOCUMENT) private document: Document,
-		private cmsManager: CmsManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = this.sessionService;
+		const router = this.router;
+		const messageService = this.messageService;
+		const renderer = this.renderer;
+		const titleService = this.titleService;
+		const document = this.document;
+		const cmsManager = this.cmsManager;
+
 		// Initialize App language
 		this.languageService.setInitialAppLanguage();
 		this.lngObserver.subscribe((lng) => {

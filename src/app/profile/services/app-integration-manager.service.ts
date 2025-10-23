@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ApiAppIntegration } from '../models/app-integration-api.model';
 import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { AppIntegration } from '../models/app-integration.model';
@@ -7,15 +7,17 @@ import { AppIntegrationApiService } from './app-integration-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AppIntegrationManager {
+	protected commonManager = inject(CommonEntityManager);
+	protected appIntegrationService = inject(AppIntegrationApiService);
+
 	appIntegrations = new StandaloneEntitySet<AppIntegration<ApiAppIntegration>, ApiAppIntegration>(
 		(apiEntity) => AppIntegration.integrationFor(this.commonManager, apiEntity),
 		AppIntegration.idForApiModel,
 		() => this.appIntegrationService.listIntegratedApps(),
 	);
 
-	constructor(
-		@Inject(forwardRef(() => CommonEntityManager))
-		protected commonManager: CommonEntityManager,
-		protected appIntegrationService: AppIntegrationApiService,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 }

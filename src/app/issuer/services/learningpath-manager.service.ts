@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
@@ -14,6 +14,13 @@ import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authenti
 
 @Injectable({ providedIn: 'root' })
 export class LearningPathManager extends BaseHttpApiService {
+	protected loginService: AuthenticationService;
+	protected http: HttpClient;
+	protected configService: AppConfigService;
+	protected commonEntityManager = inject(CommonEntityManager);
+	learningPathApi = inject(LearningPathApiService);
+	protected messageService: MessageService;
+
 	learningPathList = new StandaloneEntitySet<LearningPath, ApiLearningPath>(
 		(apiModel) => new LearningPath(this.commonEntityManager),
 		(apiModel) => apiModel.slug,
@@ -34,17 +41,21 @@ export class LearningPathManager extends BaseHttpApiService {
 		return this.allLearningPathsList.loaded$.pipe(map((l) => l.entities));
 	}
 
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		protected loginService: AuthenticationService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		@Inject(forwardRef(() => CommonEntityManager))
-		protected commonEntityManager: CommonEntityManager,
-		public learningPathApi: LearningPathApiService,
-		protected messageService: MessageService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(AUTH_PROVIDER);
+		const http = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(loginService, http, configService, messageService);
+
+		this.loginService = loginService;
+		this.http = http;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	createLearningPath(issuerSlug: string, newLp: ApiLearningPathForCreation): Promise<LearningPath> {

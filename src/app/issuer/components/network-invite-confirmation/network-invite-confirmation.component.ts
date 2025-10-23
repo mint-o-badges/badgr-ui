@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -19,21 +19,27 @@ import { FormMessageComponent } from '~/common/components/form-message.component
 	imports: [OebButtonComponent, TranslatePipe, BgAwaitPromises, FormMessageComponent, RouterLink],
 })
 export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutableComponent {
+	protected title = inject(Title);
+	protected configService = inject(AppConfigService);
+	protected networkApiService = inject(NetworkApiService);
+	protected messageService = inject(MessageService);
+
 	inviteSlug: string;
 	inviteLoaded: Promise<unknown>;
 	invite: ApiNetworkInvitation;
 	alreadyConfirmed = false;
 
-	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected title: Title,
-		protected configService: AppConfigService,
-		protected networkApiService: NetworkApiService,
-		protected messageService: MessageService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+		const title = this.title;
+
 		title.setTitle(`Confirm network invitation - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.inviteSlug = this.route.snapshot.params['inviteSlug'];
 		this.networkApiService.getNetworkInvite(this.inviteSlug).then((invite) => {

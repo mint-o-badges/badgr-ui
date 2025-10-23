@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, Input, TemplateRef, ViewContainerRef, inject } from '@angular/core';
 import { LoadingDotsComponent } from '../components/loading-dots.component';
 import { LoadingErrorComponent } from '../components/loading-error.component';
 
@@ -23,14 +23,17 @@ import { LoadingErrorComponent } from '../components/loading-error.component';
 
 @Directive({ selector: '[bgAwaitPromises]' })
 export class BgAwaitPromises {
+	private viewContainer = inject(ViewContainerRef);
+	private template = inject<TemplateRef<unknown>>(TemplateRef);
+	private componentResolver = inject(ComponentFactoryResolver);
+
 	currentPromise: Promise<unknown>;
 	indicatorClassName: string;
 
-	constructor(
-		private viewContainer: ViewContainerRef,
-		private template: TemplateRef<unknown>,
-		private componentResolver: ComponentFactoryResolver,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	@Input() showLoader = true;
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
@@ -9,8 +9,11 @@ import { ActivatedRoute, Router } from '@angular/router';
  */
 @Injectable()
 export class BaseRoutableComponent {
-	constructor(
-		protected router: Router,
-		protected route: ActivatedRoute,
-	) {}
+	protected router = inject(Router);
+	protected route = inject(ActivatedRoute);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 }

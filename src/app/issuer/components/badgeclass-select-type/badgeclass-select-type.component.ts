@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -22,6 +22,13 @@ import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 	imports: [BgBreadcrumbsComponent, HlmH1, HlmP, HlmH2, RouterLink, TranslatePipe, BgAwaitPromises],
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected issuerManager = inject(IssuerManager);
+	protected badgeClassService = inject(BadgeClassManager);
+	private configService = inject(AppConfigService);
+	private translate = inject(TranslateService);
+
 	issuerSlug: string;
 	issuer: Issuer | Network;
 	issuerLoaded: Promise<unknown>;
@@ -38,19 +45,16 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 
 	@ViewChild('badgeimage') badgeImage;
 
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		sessionService: AuthenticationService,
-		router: Router,
-		route: ActivatedRoute,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected badgeClassService: BadgeClassManager,
-		private configService: AppConfigService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(AUTH_PROVIDER);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const title = this.title;
 
 		this.translate.get('Issuer.createBadge').subscribe((str) => {
 			title.setTitle(`${str} - ${this.configService.theme['serviceName'] || 'Badgr'}`);

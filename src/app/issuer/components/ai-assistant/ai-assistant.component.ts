@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { AbstractControl, FormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService, TranslatePipe } from '@ngx-translate/core';
@@ -31,6 +31,11 @@ import { OebCheckboxComponent } from '~/components/oeb-checkbox.component';
 	],
 })
 export class AiAssistantComponent implements AfterViewInit {
+	protected aiSkillsService = inject(AiSkillsService);
+	private translate = inject(TranslateService);
+	private messageService = inject(MessageService);
+	private changeDetectorRef = inject(ChangeDetectorRef);
+
 	aiCompetenciesLoading = false;
 	aiCompetenciesDescription: string = '';
 	aiCompetenciesSuggestions: ApiSkill[] = [];
@@ -64,12 +69,10 @@ export class AiAssistantComponent implements AfterViewInit {
 
 	requiredError = this.translate.instant('CreateBadge.requiredError');
 
-	constructor(
-		protected aiSkillsService: AiSkillsService,
-		private translate: TranslateService,
-		private messageService: MessageService,
-		private changeDetectorRef: ChangeDetectorRef,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngAfterViewInit(): void {
 		this.altcha.valueEvent.subscribe((value) => {

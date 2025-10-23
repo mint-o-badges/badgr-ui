@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Renderer2, Output, EventEmitter, inject } from '@angular/core';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
 import { typedFormGroup } from '../../../common/util/typed-forms';
@@ -56,17 +56,21 @@ import { TranslatePipe } from '@ngx-translate/core';
 	imports: [SvgIconComponent, FormsModule, ReactiveFormsModule, FormFieldText, TranslatePipe],
 })
 export class AddCredentialsDialog extends BaseDialog {
+	private applicationCredentialsService = inject(ApplicationCredentialsService);
+
 	@Output() newTokenAdded = new EventEmitter();
 
 	hasSubmitted = false;
 
 	credentialsForm = typedFormGroup().addControl('client_name', '', Validators.required);
 
-	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
-		private applicationCredentialsService: ApplicationCredentialsService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 

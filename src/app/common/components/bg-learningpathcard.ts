@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
-import { LearningPathApiService } from '../services/learningpath-api.service';
 import { RouterLink } from '@angular/router';
 import { SlicePipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
@@ -13,7 +12,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 type MatchOrProgressType = { match?: string; progress?: number };
 
 @Component({
-	selector: 'bg-learningpathcard',
+	selector: 'bg-card',
 	host: {
 		class: 'tw-rounded-[10px] tw-h-full tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
 	},
@@ -142,7 +141,10 @@ export class BgLearningPathCard {
 	readonly badgeFailedImageUrl = 'breakdown/static/images/badge-failed.svg';
 	private _matchOrProgress: MatchOrProgressType;
 
-	constructor(private learningPathApiService: LearningPathApiService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	@Input() slug: string;
 	@Input() issuerSlug: string;

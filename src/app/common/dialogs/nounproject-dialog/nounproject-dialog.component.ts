@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, inject } from '@angular/core';
 import { MessageService } from '../../services/message.service';
 import { AppConfigService } from '../../app-config.service';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
@@ -31,6 +31,11 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 	],
 })
 export class NounprojectDialog extends BaseDialog implements AfterViewInit {
+	protected messageService = inject(MessageService);
+	protected configService = inject(AppConfigService);
+	protected nounprojectService = inject(NounprojectService);
+	translate = inject(TranslateService);
+
 	Array = Array;
 	resolveFunc: (BadgeClass) => void;
 	rejectFunc: () => void;
@@ -60,14 +65,13 @@ export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 
 	@ViewChild('nounprojectSearch') searchbar: ElementRef;
 
-	constructor(
-		protected messageService: MessageService,
-		protected configService: AppConfigService,
-		componentElem: ElementRef<HTMLElement>,
-		protected nounprojectService: NounprojectService,
-		renderer: Renderer2,
-		public translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject<ElementRef<HTMLElement>>(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { MessageService } from '../../../common/services/message.service';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { SettingsService } from '../../../common/services/settings.service';
@@ -35,6 +35,10 @@ export interface RecipientBadgeSelectionDialogSettings {
 	imports: [SvgIconComponent, FormsModule, BgAwaitPromises, NgStyle, DatePipe],
 })
 export class RecipientBadgeSelectionDialog extends BaseDialog {
+	private badgeManager = inject(RecipientBadgeManager);
+	private messageService = inject(MessageService);
+	private settingsService = inject(SettingsService);
+
 	get searchQuery() {
 		return this._searchQuery;
 	}
@@ -98,13 +102,13 @@ export class RecipientBadgeSelectionDialog extends BaseDialog {
 
 	private loadedData = false;
 
-	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
-		private badgeManager: RecipientBadgeManager,
-		private messageService: MessageService,
-		private settingsService: SettingsService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 

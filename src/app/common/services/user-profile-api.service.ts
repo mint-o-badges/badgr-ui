@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
@@ -10,15 +10,27 @@ import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class UserProfileApiService extends BaseHttpApiService {
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		protected sessionService: AuthenticationService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-		protected eventsService: EventsService,
-	) {
+	protected sessionService: AuthenticationService;
+	protected http: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+	protected eventsService = inject(EventsService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(AUTH_PROVIDER);
+		const http = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(sessionService, http, configService, messageService);
+
+		this.sessionService = sessionService;
+		this.http = http;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	getProfile() {

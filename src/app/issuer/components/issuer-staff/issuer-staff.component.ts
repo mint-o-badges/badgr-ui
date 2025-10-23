@@ -87,6 +87,15 @@ import { UserProfile } from '~/common/model/user-profile.model';
 	],
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected issuerManager = inject(IssuerManager);
+	protected profileManager = inject(UserProfileManager);
+	protected configService = inject(AppConfigService);
+	protected dialogService = inject(CommonDialogsService);
+	protected translate = inject(TranslateService);
+	protected issuerStaffRequestApiService = inject(IssuerStaffRequestApiService);
+
 	issuer = signal<Issuer | null>(null);
 	userProfile = signal<UserProfile | null>(null);
 
@@ -196,20 +205,17 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	dialogRef: BrnDialogRef<any> = null;
 	selectedStaffRequestEmail: string | null = null;
 
-	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected profileManager: UserProfileManager,
-		protected configService: AppConfigService,
-		protected dialogService: CommonDialogsService,
-		protected translate: TranslateService,
-		protected issuerStaffRequestApiService: IssuerStaffRequestApiService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+		const title = this.title;
+
 		title.setTitle(`Manage Issuer Staff - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 	}

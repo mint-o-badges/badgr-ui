@@ -1,7 +1,7 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, viewChild, inject } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
@@ -151,6 +151,8 @@ import { NgIcon } from '@ng-icons/core';
 		</ng-template>`,
 })
 export class DatatableComponent {
+	private translate = inject(TranslateService);
+
 	badges = input.required<DatatableBadgeResult[]>();
 	directBadgeAward = output<BadgeClass>();
 	qrCodeAward = output<BadgeClass>();
@@ -205,7 +207,10 @@ export class DatatableComponent {
 		enableSortingRemoval: false, // ensures at least one column is sorted
 	}));
 
-	constructor(private translate: TranslateService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 }
 
 export interface DatatableBadgeResult {

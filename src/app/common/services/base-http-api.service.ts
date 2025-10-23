@@ -1,6 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 // import { LoginService } from "../../auth/auth.service";
-import { SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
 import {
@@ -14,7 +13,7 @@ import {
 import { timeoutPromise } from '../util/promise-util';
 import { Observable } from 'rxjs';
 import { getCookie } from '../util/cookies';
-import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
+import { AUTH_PROVIDER } from './authentication-service';
 
 export class BadgrApiError extends Error {
 	constructor(
@@ -27,6 +26,11 @@ export class BadgrApiError extends Error {
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseHttpApiService {
+	protected sessionService = inject(AUTH_PROVIDER);
+	protected http = inject(HttpClient);
+	protected configService = inject(AppConfigService);
+	protected messageService = inject(MessageService);
+
 	baseUrl: string;
 	altcha: string | null = null;
 
@@ -46,13 +50,10 @@ export abstract class BaseHttpApiService {
 		}
 	}
 
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		protected authService: AuthenticationService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 

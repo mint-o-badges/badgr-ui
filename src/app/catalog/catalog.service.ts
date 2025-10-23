@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '~/common/app-config.service';
 import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 import { BaseHttpApiService } from '~/common/services/base-http-api.service';
@@ -13,14 +13,26 @@ const ENDPOINT = 'v3/issuer';
 	providedIn: 'root',
 })
 export class CatalogService extends BaseHttpApiService {
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		protected sessionService: AuthenticationService,
-		protected httpClient: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-	) {
+	protected sessionService: AuthenticationService;
+	protected httpClient: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(AUTH_PROVIDER);
+		const httpClient = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(sessionService, httpClient, configService, messageService);
+
+		this.sessionService = sessionService;
+		this.httpClient = httpClient;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	/**

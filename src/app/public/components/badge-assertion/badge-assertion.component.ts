@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
@@ -27,18 +27,23 @@ import { SessionService } from '~/common/services/session.service';
 	imports: [BgBadgeDetail],
 })
 export class PublicBadgeAssertionComponent {
-	constructor(
-		private injector: Injector,
-		public embedService: EmbedService,
-		public messageService: MessageService,
-		public configService: AppConfigService,
-		public queryParametersService: QueryParametersService,
-		private title: Title,
-		private translate: TranslateService,
-		private pdfService: PdfService,
-		private sessionService: SessionService,
-		protected route: ActivatedRoute,
-	) {
+	private injector = inject(Injector);
+	embedService = inject(EmbedService);
+	messageService = inject(MessageService);
+	configService = inject(AppConfigService);
+	queryParametersService = inject(QueryParametersService);
+	private title = inject(Title);
+	private translate = inject(TranslateService);
+	private pdfService = inject(PdfService);
+	private sessionService = inject(SessionService);
+	protected route = inject(ActivatedRoute);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const title = this.title;
+
 		title.setTitle(`Assertion - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.assertionIdParam = this.createLoadedRouteParam();
 	}

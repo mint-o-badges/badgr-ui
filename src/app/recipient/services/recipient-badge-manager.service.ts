@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RecipientBadgeApiService } from './recipient-badges-api.service';
 import { RecipientBadgeInstance } from '../models/recipient-badge.model';
 import { ApiRecipientBadgeInstance, RecipientBadgeInstanceCreationInfo } from '../models/recipient-badge-api.model';
@@ -8,18 +8,22 @@ import { EventsService } from '../../common/services/events.service';
 
 @Injectable({ providedIn: 'root' })
 export class RecipientBadgeManager {
+	recipientBadgeApiService = inject(RecipientBadgeApiService);
+	eventsService = inject(EventsService);
+	commonEntityManager = inject(CommonEntityManager);
+
 	recipientBadgeList = new StandaloneEntitySet<RecipientBadgeInstance, ApiRecipientBadgeInstance>(
 		(apiModel) => new RecipientBadgeInstance(this.commonEntityManager),
 		(apiModel) => String(apiModel.id),
 		() => this.recipientBadgeApiService.listRecipientBadges(),
 	);
 
-	constructor(
-		public recipientBadgeApiService: RecipientBadgeApiService,
-		public eventsService: EventsService,
-		@Inject(forwardRef(() => CommonEntityManager))
-		public commonEntityManager: CommonEntityManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const eventsService = this.eventsService;
+
 		eventsService.profileEmailsChanged.subscribe(() => {
 			this.updateIfLoaded();
 		});

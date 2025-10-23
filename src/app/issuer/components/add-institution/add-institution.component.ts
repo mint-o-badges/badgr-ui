@@ -22,11 +22,14 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 	imports: [TranslatePipe, OebButtonComponent, NgIcon, HlmIcon, FormsModule, NgStyle],
 })
 export class AddInstitutionComponent implements AfterViewInit {
-	constructor(
-		private publicApiService: PublicApiService,
-		private messageService: MessageService,
-		private networkApiService: NetworkApiService,
-	) {}
+	private publicApiService = inject(PublicApiService);
+	private messageService = inject(MessageService);
+	private networkApiService = inject(NetworkApiService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	network = input.required<any>();
 

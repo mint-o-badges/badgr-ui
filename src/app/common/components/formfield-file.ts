@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { preloadImageURL, readFileAsText } from '../util/file-util';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -69,6 +69,9 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	imports: [SvgIconComponent, HlmP, TranslatePipe],
 })
 export class BgFormFieldFileComponent {
+	private elemRef = inject<ElementRef<HTMLElement>>(ElementRef);
+	private domSanitizer = inject(DomSanitizer);
+
 	private get element(): HTMLElement {
 		return this.elemRef.nativeElement;
 	}
@@ -96,10 +99,10 @@ export class BgFormFieldFileComponent {
 	// new
 	fileName = '';
 
-	constructor(
-		private elemRef: ElementRef<HTMLElement>,
-		private domSanitizer: DomSanitizer,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	clearFileInput() {
 		(this.element.querySelector("input[type='file']") as HTMLInputElement).value = null;

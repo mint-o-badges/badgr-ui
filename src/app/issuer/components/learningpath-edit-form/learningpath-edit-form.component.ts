@@ -102,6 +102,20 @@ export class LearningPathEditFormComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, OnChanges, AfterViewInit
 {
+	protected loginService: AuthenticationService;
+	protected messageService = inject(MessageService);
+	protected learningPathApiService = inject(LearningPathApiService);
+	protected issuerManager = inject(IssuerManager);
+	protected issuerApiService = inject(IssuerApiService);
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected badgeClassService = inject(BadgeClassManager);
+	protected badgeClassApiService = inject(BadgeClassApiService);
+	private translate = inject(TranslateService);
+	protected badgeInstanceManager = inject(BadgeInstanceManager);
+	protected learningPathManager = inject(LearningPathManager);
+	protected configService = inject(AppConfigService);
+
 	@ViewChild(StepperComponent) stepper: StepperComponent;
 
 	@ViewChild('badgeStudio')
@@ -216,24 +230,20 @@ export class LearningPathEditFormComponent
 
 	selectMinBadgesOptions: FormFieldSelectOption[] = [];
 
-	constructor(
-		@Inject(AUTH_PROVIDER)
-		protected loginService: AuthenticationService,
-		protected messageService: MessageService,
-		protected learningPathApiService: LearningPathApiService,
-		protected issuerManager: IssuerManager,
-		protected issuerApiService: IssuerApiService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected badgeClassService: BadgeClassManager,
-		protected badgeClassApiService: BadgeClassApiService,
-		private translate: TranslateService,
-		protected badgeInstanceManager: BadgeInstanceManager,
-		protected learningPathManager: LearningPathManager,
-		protected configService: AppConfigService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(AUTH_PROVIDER);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		// protected title: Title,
 		super(router, route, loginService);
+		this.loginService = loginService;
+		this.router = router;
+		this.route = route;
+
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		if (!this.issuer)
 			this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {

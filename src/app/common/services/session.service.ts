@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { UserCredential } from '../model/user-credential.type';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
@@ -21,6 +21,11 @@ export interface AuthorizationTokenInformation {
 
 @Injectable({ providedIn: 'root' })
 export class SessionService implements AuthenticationService {
+	private http = inject(HttpClient);
+	private configService = inject(AppConfigService);
+	private messageService = inject(MessageService);
+	private navService = inject(NavigationService);
+
 	baseUrl: string;
 
 	enabledExternalAuthProviders: ExternalAuthProvider[];
@@ -33,12 +38,12 @@ export class SessionService implements AuthenticationService {
 		return this.loggedInSubject.asObservable();
 	}
 
-	constructor(
-		private http: HttpClient,
-		private configService: AppConfigService,
-		private messageService: MessageService,
-		private navService: NavigationService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const configService = this.configService;
+
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		this.enabledExternalAuthProviders = configService.featuresConfig.externalAuthProviders || [];
 	}
