@@ -88,7 +88,10 @@
 		"oneRequest": "1 Anfrage",
 		"multiRequests": "# Anfragen",
 		"license": "Lizenz",
-		"language": { "de": "Deutsch", "en": "Englisch" },
+		"language": {
+			"de": "Deutsch",
+			"en": "Englisch"
+		},
 		"close": "Schliessen",
 		"notification": "Benachrichtigung",
 		"validationCompleteForm": "Bitte vollständig ausfüllen",
@@ -428,7 +431,11 @@
 		"resendInvitation": "Einladung erneut senden",
 		"invitedOn": "Eingeladen am",
 		"yourRole": "Deine Rolle: {{role}}",
-		"role": { "owner": "Eigentümer:in", "editor": "Editor:in", "staff": "Mitarbeiter:in" },
+		"role": {
+			"owner": "Eigentümer:in",
+			"editor": "Editor:in",
+			"staff": "Mitarbeiter:in"
+		},
 		"confirmNetworkInvitation": "Bestätige die <span class='tw-font-bold'>Netzwerk-Einladung von {{networkName}}</span> für deine Institution <span class='tw-italic'>{{issuerName}}</span> mit Klick auf den Button:",
 		"partnerSince": "Netzwerk-Partner:in seit",
 		"alreadyConfirmed": "Ein anderes Mitglied von <span class='tw-italic'> {{issuerName}} hat die Netzwerk-Einladung von <span class='tw-font-bold'> {{networkName}}</span> bereits bestätigt.",
@@ -646,7 +653,8 @@
 		"subjectMatter": "Schreibe, was dein Lernangebot <u>fachlich</u> vermittelt.",
 		"howLearningWorks": "Beschreibe auch, <u>wie</u> das Lernen stattfindet.",
 		"inAddition": "Oft können neben fachlichen Kompetenzen auch <u>Soft Skills</u> wie soziale, kommunikative oder Problemlösungs-Fähigkeiten erworben werden – bei Teamarbeit, Experimentieren, Planung, ...",
-		"aiAssistantNote": "Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>E-Mail</a>. <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Datenschutz bei OEB.</a>"
+		"aiAssistantNote": "Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>E-Mail</a>. <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Datenschutz bei OEB.</a>",
+		"successfullyCreated": "Badge erfolgreich erstellt!"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -993,7 +1001,8 @@
 		"pleaseRenewPassword": "Deshalb bitten wir dich, dein Passwort zu erneuern.",
 		"pleaseRenewPasswordInfo": "Dauert nur kurz und sorgt für mehr Schutz.",
 		"dontPanic": "Keine Panik – alles ist in Ordnung!",
-		"repeatNewpassword": "Passwort wiederholen"
+		"repeatNewpassword": "Passwort wiederholen",
+		"loggingIn": "Einloggen ..."
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
@@ -1078,7 +1087,11 @@
 		"continue": "Weiterlernen",
 		"finished": "Abgeschlossen",
 		"includedBadges": "Enthaltene Badges",
-		"badgeTabs": { "all": "Alle", "inprogress": "Offen", "finished": "Abgeschlossen" },
+		"badgeTabs": {
+			"all": "Alle",
+			"inprogress": "Offen",
+			"finished": "Abgeschlossen"
+		},
 		"chooseBadges": "Enthaltene Badges wählen",
 		"badgeSequenceStep": "Badge-Reihenfolge",
 		"badgeSequence": "Reihenfolge der Badges im Lernpfad",
@@ -1124,7 +1137,9 @@
 		"shortDescriptionLine1": "Zusammenfassende Beschreibung des Lernangebots.",
 		"shortDescriptionLine2": "Diese Kurz-Beschreibung wird im Abschluss-Badge Micro Degree gespeichert."
 	},
-	"OEBComponents": { "fieldIsRequired": "Dieses Feld ist erforderlich" },
+	"OEBComponents": {
+		"fieldIsRequired": "Dieses Feld ist erforderlich"
+	},
 	"ErrorDialog": {
 		"title": "Es ist ein Fehler passiert!",
 		"message": "Unten siehst du die Fehlermeldung. Wenn du glaubst, der Fehler liegt bei uns, kannst du die Fehlermeldung kopieren und uns per Mail schicken, oder du erstellst ein Issue auf GitHub.",
@@ -1133,5 +1148,9 @@
 		"createIssue": "Zu den GitHub Issues",
 		"sendEmail": "Sende eine Mail"
 	},
-	"NounProject": { "searchIcon": "Icon suchen", "loading": "Lädt...", "noIconsFoundFor": "Kein Icon gefunden für" }
+	"NounProject": {
+		"searchIcon": "Icon suchen",
+		"loading": "Lädt...",
+		"noIconsFoundFor": "Kein Icon gefunden für"
+	}
 }

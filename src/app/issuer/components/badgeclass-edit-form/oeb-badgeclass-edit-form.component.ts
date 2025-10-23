@@ -14,6 +14,9 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
@@ -54,15 +57,64 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 						/>
 					}
 					@case ('finished') {
-						<p>Finished creating the badge</p>
+						<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
+							<div class="oeb-icon-circle tw-my-6 tw-bg-green tw-w-[60px] tw-h-[60px]">
+								<ng-icon hlm class="tw-text-purple tw-font-bold" size="xl" name="lucideCheck" />
+							</div>
+
+							<p
+								[innerHTML]="
+									config().badge
+										? ('LearningPath.savedSuccessfully' | translate)
+										: ('CreateBadge.successfullyCreated' | translate)
+								"
+								class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-[16.8px] tw-leading-[px] tw-text-oebblack"
+							></p>
+						</div>
+					}
+					@case ('error') {
+						<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
+							<div class="oeb-icon-circle tw-my-6 tw-bg-green tw-w-[60px] tw-h-[60px]">
+								<ng-icon hlm class="tw-text-purple tw-font-bold" size="xl" name="lucideAlert" />
+							</div>
+
+							<p
+								[innerHTML]="'ErrorDialog.title' | translate"
+								class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-[16.8px] tw-leading-[px] tw-text-oebblack"
+							></p>
+							<p
+								[innerHTML]="errorContextInfo()"
+								class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-[16.8px] tw-leading-[px] tw-text-oebblack"
+							></p>
+						</div>
 					}
 					@case ('unknown') {
-						<p>Unknown Operation</p>
+						<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
+							<div class="oeb-icon-circle tw-my-6 tw-bg-green tw-w-[60px] tw-h-[60px]">
+								<ng-icon hlm class="tw-text-purple tw-font-bold" size="xl" name="lucideCircleAlert" />
+							</div>
+
+							<p
+								class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-[16.8px] tw-leading-[px] tw-text-oebblack"
+							>
+								Uh oh! This is not supposed to happen. Something unknown has happened, please report
+								this back to us.
+							</p>
+						</div>
 					}
 				}
 			}
 		} @else {
-			<p>Handling authentication, please wait.</p>
+			<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
+				<div class="oeb-icon-circle tw-my-6 tw-bg-green tw-w-[60px] tw-h-[60px]">
+					<ng-icon hlm class="tw-text-purple tw-font-bold" size="xl" name="lucideLock" />
+				</div>
+
+				<p
+					[innerHTML]="'Profile.loggingIn' | translate"
+					class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-[16.8px] tw-leading-[px] tw-text-oebblack"
+				></p>
+			</div>
 		}
 	`,
 	imports: [
@@ -72,6 +124,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 		LearningPathEditFormComponent,
 		ConfirmDialog,
 		NounprojectDialog,
+		NgIcon,
+		HlmIcon,
+		TranslatePipe,
 	],
 })
 export class OebBadgeClassEditForm implements AfterViewInit {
@@ -87,6 +142,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 		else return undefined;
 	});
 	readonly category = signal<string>('participation');
+	readonly errorContextInfo = signal<string>('');
 	readonly domSanitizer = inject(DomSanitizer);
 	readonly authService = inject(AUTH_PROVIDER);
 	readonly commonDialogsService = inject(CommonDialogsService);
@@ -95,7 +151,9 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly router = inject(Router);
 	readonly activatedRoute = inject(ActivatedRoute);
 	readonly entityManager = inject(CommonEntityManager);
-	readonly currentRoute = signal<'initial' | 'select' | 'create' | 'create-lp' | 'finished' | 'unknown'>('initial');
+	readonly currentRoute = signal<'initial' | 'select' | 'create' | 'create-lp' | 'finished' | 'error' | 'unknown'>(
+		'initial',
+	);
 
 	private signInEffect = effect(() => {
 		const t = this.token();
@@ -128,10 +186,8 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 					if (url.toString().indexOf('/learningpaths/create') >= 0) return 'create-lp';
 					return 'unknown';
 				};
-
 				if (url.toString().indexOf('create/participation') >= 0) this.category.set('participation');
 				if (url.toString().indexOf('create/competency') >= 0) this.category.set('competency');
-
 				this.currentRoute.set(routeForUrl(url));
 			}
 		});
@@ -145,6 +201,8 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 		try {
 			await this.authService.validateToken(token);
 		} catch {
+			this.currentRoute.set('error');
+			this.errorContextInfo.set('AUTH_FAILED');
 			this.finished.emit(false);
 		}
 	}
