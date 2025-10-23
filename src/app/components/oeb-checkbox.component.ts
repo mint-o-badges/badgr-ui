@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, computed, input, Input, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, computed, input, Input, Output, inject } from '@angular/core';
 import { HlmCheckbox } from './spartan/ui-checkbox-helm/src';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { ClassValue } from 'clsx';
@@ -46,6 +46,8 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	},
 })
 export class OebCheckboxComponent implements ControlValueAccessor {
+	private translate = inject(TranslateService);
+
 	@Input() text: string;
 	@Input() control: FormControl = new FormControl();
 	@Input() name: string;
@@ -64,7 +66,10 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 
 	@Output() ngModelChange = new EventEmitter<boolean>();
 
-	constructor(private translate: TranslateService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	onChange(event) {
 		this.ngModelChange.emit(event);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -70,6 +70,16 @@ export interface ColumnHeaders {
 	],
 })
 export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutableComponent {
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected formBuilder = inject(FormBuilder);
+	protected issuerManager = inject(IssuerManager);
+	protected sessionService: SessionService;
+	protected messageService = inject(MessageService);
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected configService = inject(AppConfigService);
+	protected title = inject(Title);
+
 	importPreviewData: BulkIssueImportPreviewData;
 	transformedImportData: TransformedImportData;
 	viewState: ViewState;
@@ -81,18 +91,18 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
-	constructor(
-		protected badgeClassManager: BadgeClassManager,
-		protected formBuilder: FormBuilder,
-		protected issuerManager: IssuerManager,
-		protected sessionService: SessionService,
-		protected messageService: MessageService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected configService: AppConfigService,
-		protected title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		this.sessionService = sessionService;
+		this.router = router;
+		this.route = route;
 
 		this.updateViewState('import');
 

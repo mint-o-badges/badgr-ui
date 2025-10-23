@@ -43,6 +43,13 @@ import { ApiLearningPathParticipant } from '~/common/model/learningpath-api.mode
 	],
 })
 export class OebLearningPathDetailComponent extends BaseRoutableComponent implements OnInit {
+	private learningPathApiService = inject(LearningPathApiService);
+	private dialogService = inject(CommonDialogsService);
+	private badgeInstanceApiservice = inject(BadgeInstanceApiService);
+	private pdfService = inject(PdfService);
+	router: Router;
+	private translate = inject(TranslateService);
+
 	@Input() learningPath;
 	@Input() issuer;
 	@Input() badges;
@@ -52,16 +59,16 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 
 	learningPathEditLink;
 
-	constructor(
-		private learningPathApiService: LearningPathApiService,
-		private dialogService: CommonDialogsService,
-		private badgeInstanceApiservice: BadgeInstanceApiService,
-		private pdfService: PdfService,
-		public router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+
+		this.router = router;
 	}
 	private readonly _hlmDialogService = inject(HlmDialogService);
 

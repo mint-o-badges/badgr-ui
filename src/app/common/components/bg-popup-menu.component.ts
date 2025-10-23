@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Directive, ElementRef, Input, NgZone, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, Directive, ElementRef, Input, NgZone, Renderer2, inject } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import Popper, { Placement } from 'popper.js';
 
@@ -14,6 +14,10 @@ import Popper, { Placement } from 'popper.js';
 	},
 })
 export class BgPopupMenu implements OnDestroy, AfterViewInit, OnDestroy {
+	private componentElemRef = inject(ElementRef);
+	private renderer = inject(Renderer2);
+	private ngZone = inject(NgZone);
+
 	get componentElem(): HTMLElement {
 		return this.componentElemRef.nativeElement! as HTMLElement;
 	}
@@ -36,11 +40,10 @@ export class BgPopupMenu implements OnDestroy, AfterViewInit, OnDestroy {
 
 	private removeWindowClickListener?: (() => void) | null = null;
 
-	constructor(
-		private componentElemRef: ElementRef,
-		private renderer: Renderer2,
-		private ngZone: NgZone,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	open(triggerElem: HTMLElement) {
 		this.lastTriggerElem = triggerElem;
@@ -142,13 +145,18 @@ export class BgPopupMenu implements OnDestroy, AfterViewInit, OnDestroy {
 	},
 })
 export class BgPopupMenuTriggerDirective {
+	private componentElemRef = inject(ElementRef);
+
 	@Input('bgPopupMenuTrigger')
 	private menu: BgPopupMenu | null = null;
 
 	@Input('bgPopupMenuData')
 	private triggerData: unknown = null;
 
-	constructor(private componentElemRef: ElementRef) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	handleClick() {
 		if (this.menu) {

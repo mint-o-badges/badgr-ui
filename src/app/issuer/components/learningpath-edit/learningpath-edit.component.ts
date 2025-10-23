@@ -39,6 +39,20 @@ import { HlmH1, HlmH3 } from '@spartan-ng/helm/typography';
 	],
 })
 export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponent {
+	protected formBuilder = inject(FormBuilder);
+	protected loginService: SessionService;
+	protected messageService = inject(MessageService);
+	protected learningPathApiService = inject(LearningPathApiService);
+	protected issuerManager = inject(IssuerManager);
+	protected issuerApiService = inject(IssuerApiService);
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected badgeClassService = inject(BadgeClassManager);
+	protected badgeApiService = inject(BadgeClassApiService);
+	private translate = inject(TranslateService);
+	protected badgeInstanceManager = inject(BadgeInstanceManager);
+	protected learningPathManager = inject(LearningPathManager);
+
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	issuerSlug: string;
 	lpSlug: string;
@@ -51,23 +65,19 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 
 	learningPathBadge: BadgeClass;
 
-	constructor(
-		protected formBuilder: FormBuilder,
-		protected loginService: SessionService,
-		protected messageService: MessageService,
-		protected learningPathApiService: LearningPathApiService,
-		protected issuerManager: IssuerManager,
-		protected issuerApiService: IssuerApiService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected badgeClassService: BadgeClassManager,
-		protected badgeApiService: BadgeClassApiService,
-		private translate: TranslateService,
-		protected badgeInstanceManager: BadgeInstanceManager,
-		protected learningPathManager: LearningPathManager,
-		// protected title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+		this.loginService = loginService;
+		this.router = router;
+		this.route = route;
+
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 		this.lpSlug = this.route.snapshot.params['learningPathSlug'];
 

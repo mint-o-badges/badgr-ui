@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -56,6 +56,14 @@ import { OebHeaderText } from '~/components/oeb-header-text.component';
 	],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected issuerManager = inject(IssuerManager);
+	protected configService = inject(AppConfigService);
+	private translate = inject(TranslateService);
+	sessionService = inject(SessionService);
+	protected profileManager = inject(UserProfileManager);
+
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
 	readonly noIssuersPlaceholderSrc =
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
@@ -162,18 +170,16 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	public loggedIn = false;
 
-	constructor(
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected configService: AppConfigService,
-		router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-		public sessionService: SessionService,
-		protected profileManager: UserProfileManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+		const title = this.title;
+
 		title.setTitle(`Issuers - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		// subscribe to issuer and badge class changes

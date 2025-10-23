@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { BaseDialog } from './base-dialog';
 import { AppConfigService } from '../app-config.service';
 import { UserProfileManager } from '../services/user-profile-manager.service';
@@ -56,6 +56,9 @@ import { FormsModule } from '@angular/forms';
 	imports: [FormsModule],
 })
 export class NewTermsDialog extends BaseDialog {
+	private configService = inject(AppConfigService);
+	private profileManager = inject(UserProfileManager);
+
 	agreedToTerms = false;
 
 	resolveFunc: () => void;
@@ -66,12 +69,13 @@ export class NewTermsDialog extends BaseDialog {
 
 	profile: UserProfile;
 
-	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
-		private configService: AppConfigService,
-		private profileManager: UserProfileManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 

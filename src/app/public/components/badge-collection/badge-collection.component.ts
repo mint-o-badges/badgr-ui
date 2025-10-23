@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
@@ -32,6 +32,11 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	],
 })
 export class PublicBadgeCollectionComponent {
+	private injector = inject(Injector);
+	embedService = inject(EmbedService);
+	configService = inject(AppConfigService);
+	private title = inject(Title);
+
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -42,12 +47,13 @@ export class PublicBadgeCollectionComponent {
 
 	collectionHashParam: LoadedRouteParam<PublicApiBadgeCollectionWithBadgeClassAndIssuer>;
 
-	constructor(
-		private injector: Injector,
-		public embedService: EmbedService,
-		public configService: AppConfigService,
-		private title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const injector = this.injector;
+		const title = this.title;
+
 		title.setTitle(`Collection - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.collectionHashParam = new LoadedRouteParam(

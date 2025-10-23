@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { UserProfileApiService } from './user-profile-api.service';
 import { StandaloneEntitySet } from '../model/managed-entity-set';
 import { UserProfile } from '../model/user-profile.model';
@@ -11,6 +11,9 @@ import { resolve } from 'dns';
  */
 @Injectable({ providedIn: 'root' })
 export class UserProfileManager {
+	commonEntityManager = inject(CommonEntityManager);
+	profileService = inject(UserProfileApiService);
+
 	userProfileSet = new StandaloneEntitySet<UserProfile, ApiUserProfile>(
 		(apiModel) => new UserProfile(this.commonEntityManager),
 		(apiModel) => UserProfile.currentProfileId,
@@ -41,11 +44,10 @@ export class UserProfileManager {
 		return this.userProfileSet.loadedPromise.then(() => this.userProfile);
 	}
 
-	constructor(
-		@Inject(forwardRef(() => CommonEntityManager))
-		public commonEntityManager: CommonEntityManager,
-		public profileService: UserProfileApiService,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	reloadUserProfileSet() {
 		return new Promise((resolve, reject) => {

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -40,6 +40,15 @@ import { Router } from '@angular/router';
 	],
 })
 export class OebNetworkDetailComponent {
+	translate = inject(TranslateService);
+	protected messageService = inject(MessageService);
+	protected title = inject(Title);
+	protected issuerManager = inject(IssuerManager);
+	protected profileManager = inject(UserProfileManager);
+	protected networkApiService = inject(NetworkApiService);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected router = inject(Router);
+
 	@Input() issuers: Issuer[] | PublicApiIssuer[];
 	@Input() network: Network | PublicApiIssuer;
 	@Input() networkPlaceholderSrc: string;
@@ -61,16 +70,10 @@ export class OebNetworkDetailComponent {
 
 	activeTab = 'network';
 
-	constructor(
-		public translate: TranslateService,
-		protected messageService: MessageService,
-		protected title: Title,
-		protected issuerManager: IssuerManager,
-		protected profileManager: UserProfileManager,
-		protected networkApiService: NetworkApiService,
-		protected badgeClassManager: BadgeClassManager,
-		protected router: Router,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	async ngOnInit() {
 		this.linkentries = [

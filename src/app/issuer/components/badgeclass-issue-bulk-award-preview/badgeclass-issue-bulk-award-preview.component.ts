@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, inject } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -26,6 +26,13 @@ import { isValidEmail } from '~/common/util/is-valid-email';
 	imports: [HlmH1, HlmP, FormsModule, OebButtonComponent, TranslatePipe, NgClass],
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent implements OnChanges {
+	protected formBuilder = inject(FormBuilder);
+	protected loginService: SessionService;
+	protected messageService = inject(MessageService);
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected title = inject(Title);
+
 	@Input() importPreviewData: BulkIssueImportPreviewData;
 
 	@Output() updateStateEmitter = new EventEmitter<ViewState>();
@@ -47,15 +54,19 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 
 	viewState: ViewState;
 
-	constructor(
-		protected formBuilder: FormBuilder,
-		protected loginService: SessionService,
-		protected messageService: MessageService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+
+		this.loginService = loginService;
+		this.router = router;
+		this.route = route;
 	}
 
 	ngOnChanges(changes) {

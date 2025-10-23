@@ -1,7 +1,7 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, viewChild, inject } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { FormsModule } from '@angular/forms';
 import { lucideSearch } from '@ng-icons/lucide';
@@ -120,6 +120,8 @@ import { Issuer } from '../issuer/models/issuer.model';
 	`,
 })
 export class NetworkInvitesDatatableComponent {
+	private networkApiService = inject(NetworkApiService);
+
 	invites = input.required<ApiNetworkInvitation[]>();
 	network = input.required<any>();
 	actionElement = output<ApiNetworkInvitation>();
@@ -170,7 +172,10 @@ export class NetworkInvitesDatatableComponent {
 		enableSortingRemoval: false,
 	}));
 
-	constructor(private networkApiService: NetworkApiService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	resendInvitation(issuer: Issuer) {
 		this.networkApiService.inviteInstitutions(this.network().slug, [issuer]);

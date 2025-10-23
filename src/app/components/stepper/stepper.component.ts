@@ -12,6 +12,7 @@ import {
 	ChangeDetectorRef,
 	ElementRef,
 	OnChanges,
+	inject,
 } from '@angular/core';
 import { CdkStepper, STEPPER_GLOBAL_OPTIONS, CdkStep } from '@angular/cdk/stepper';
 import { StepComponent } from './step.component';
@@ -43,7 +44,15 @@ export class StepperComponent extends CdkStepper implements OnInit, OnChanges {
 
 	router: Router;
 
-	constructor(dir: Directionality, changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef, router: Router) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const dir = inject(Directionality);
+		const changeDetectorRef = inject(ChangeDetectorRef);
+		const elementRef = inject(ElementRef);
+		const router = inject(Router);
+
 		super(dir, changeDetectorRef, elementRef);
 		this.router = router;
 	}

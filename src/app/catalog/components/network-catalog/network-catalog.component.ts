@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -48,6 +48,13 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 	],
 })
 export class NetworkCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
+	protected messageService = inject(MessageService);
+	protected configService = inject(AppConfigService);
+	protected catalogService = inject(CatalogService);
+	private translate = inject(TranslateService);
+	sessionService = inject(SessionService);
+	protected profileManager = inject(UserProfileManager);
+
 	readonly NETWORKS_PER_PAGE = 20;
 	readonly INPUT_DEBOUNCE_TIME = 400;
 	@ViewChild('loadMore') loadMore: ElementRef | undefined;
@@ -66,16 +73,13 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	public loggedIn = false;
 	totalNetworkCount = signal<number>(0);
 
-	constructor(
-		protected messageService: MessageService,
-		protected configService: AppConfigService,
-		protected catalogService: CatalogService,
-		router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-		public sessionService: SessionService,
-		protected profileManager: UserProfileManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
 	}
 

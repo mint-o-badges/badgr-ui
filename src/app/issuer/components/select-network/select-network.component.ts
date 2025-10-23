@@ -1,4 +1,14 @@
-import { OnInit, AfterViewInit, Component, input, OnDestroy, output, TemplateRef, ViewChild } from '@angular/core';
+import {
+	OnInit,
+	AfterViewInit,
+	Component,
+	input,
+	OnDestroy,
+	output,
+	TemplateRef,
+	ViewChild,
+	inject,
+} from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';
@@ -25,13 +35,16 @@ import { PublicApiIssuer } from '~/public/models/public-api.model';
 	imports: [TranslatePipe, OebButtonComponent, NgIcon, HlmIcon, FormsModule, NgStyle],
 })
 export class SelectNetworkComponent implements AfterViewInit, OnInit, OnDestroy {
-	constructor(
-		private publicApiService: PublicApiService,
-		private messageService: MessageService,
-		private networkApiService: NetworkApiService,
-		private badgeClassApiService: BadgeClassApiService,
-		private router: Router,
-	) {}
+	private publicApiService = inject(PublicApiService);
+	private messageService = inject(MessageService);
+	private networkApiService = inject(NetworkApiService);
+	private badgeClassApiService = inject(BadgeClassApiService);
+	private router = inject(Router);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	issuer = input.required<Issuer | Network>();
 	badge = input.required<BadgeClass>();

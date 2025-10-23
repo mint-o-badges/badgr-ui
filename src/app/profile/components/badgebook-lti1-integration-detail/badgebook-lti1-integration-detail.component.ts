@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, inject } from '@angular/core';
 import { BadebookLti1Integration } from '../../models/app-integration.model';
 import { AppIntegrationDetailComponent } from '../app-integration-detail/app-integration-detail.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -33,15 +33,18 @@ export class BadgebookLti1DetailComponent extends AppIntegrationDetailComponent<
 
 	integrationSlug = 'canvas-lti1';
 
-	constructor(
-		loginService: SessionService,
-		route: ActivatedRoute,
-		router: Router,
-		title: Title,
-		messageService: MessageService,
-		appIntegrationManager: AppIntegrationManager,
-		configService: AppConfigService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+		const title = inject(Title);
+		const messageService = inject(MessageService);
+		const appIntegrationManager = inject(AppIntegrationManager);
+		const configService = inject(AppConfigService);
+
 		super(loginService, route, router, title, messageService, appIntegrationManager, configService);
 	}
 }

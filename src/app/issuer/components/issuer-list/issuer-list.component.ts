@@ -74,6 +74,18 @@ export class IssuerListComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, AfterContentInit, AfterViewInit
 {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected issuerManager = inject(IssuerManager);
+	protected networkManager = inject(NetworkManager);
+	protected configService = inject(AppConfigService);
+	protected badgeClassService = inject(BadgeClassManager);
+	protected publicApiService = inject(PublicApiService);
+	private translate = inject(TranslateService);
+	private issuerStaffRequestApiService = inject(IssuerStaffRequestApiService);
+	private userProfileApiService = inject(UserProfileApiService);
+	private userPreferences = inject(UserPreferenceService);
+
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
 	readonly noIssuersPlaceholderSrc =
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
@@ -159,23 +171,17 @@ export class IssuerListComponent
 		},
 	};
 
-	constructor(
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected networkManager: NetworkManager,
-		protected configService: AppConfigService,
-		protected badgeClassService: BadgeClassManager,
-		protected publicApiService: PublicApiService,
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-		private issuerStaffRequestApiService: IssuerStaffRequestApiService,
-		private userProfileApiService: UserProfileApiService,
-		private userPreferences: UserPreferenceService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+		const title = this.title;
+
 		title.setTitle(`Issuers - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		// subscribe to issuer and badge class changes

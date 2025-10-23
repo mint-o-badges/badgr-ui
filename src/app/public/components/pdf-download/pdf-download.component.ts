@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,12 @@ import { ActivatedRoute } from '@angular/router';
 	template: `<p hlmP class="oeb page-padding tw-text-oebblack tw-text-xl">{{ text }}</p>`,
 })
 export class PdfDownloadComponent implements OnInit {
-	constructor(private route: ActivatedRoute) {}
+	private route = inject(ActivatedRoute);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	text = '';
 

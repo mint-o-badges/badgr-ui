@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -48,6 +48,16 @@ import { OebHeaderText } from '~/components/oeb-header-text.component';
 	],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected configService = inject(AppConfigService);
+	protected learningPathService = inject(LearningPathManager);
+	protected issuerManager = inject(IssuerManager);
+	protected sessionService = inject(SessionService);
+	protected profileManager = inject(UserProfileManager);
+	protected recipientBadgeApiService = inject(RecipientBadgeApiService);
+	private translate = inject(TranslateService);
+
 	learningPathsLoaded: Promise<unknown>;
 	issuersLoaded: Promise<unknown>;
 	userBadgesLoaded: Promise<unknown>;
@@ -118,19 +128,13 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		}
 	}
 
-	constructor(
-		protected title: Title,
-		protected messageService: MessageService,
-		protected configService: AppConfigService,
-		protected learningPathService: LearningPathManager,
-		protected issuerManager: IssuerManager,
-		protected sessionService: SessionService,
-		protected profileManager: UserProfileManager,
-		protected recipientBadgeApiService: RecipientBadgeApiService,
-		router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
 		this.learningPathsLoaded = this.loadLearningPaths();
 		this.issuersLoaded = this.loadIssuers();
