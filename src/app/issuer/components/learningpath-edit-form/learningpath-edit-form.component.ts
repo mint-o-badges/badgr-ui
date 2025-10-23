@@ -631,8 +631,8 @@ export class LearningPathEditFormComponent
 			});
 	}
 
-	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
-	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+	readonly badgeLoadingImageUrl = 'breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = 'breakdown/static/images/badge-failed.svg';
 
 	/**
 	 * Indicates wether the existing tags are currently being loaded.

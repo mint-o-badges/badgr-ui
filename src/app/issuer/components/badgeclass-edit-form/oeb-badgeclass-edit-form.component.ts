@@ -44,8 +44,9 @@ import { TranslatePipe } from '@ngx-translate/core';
 								(save)="onBadgeClassCreated()"
 								(cancelEdit)="onCancel()"
 								[issuer]="config().issuer"
-								[badgeClass]="badge()"
 								[category]="category()"
+								[isForked]="false"
+								[initBadgeClass]="null"
 							/>
 						}
 					}
