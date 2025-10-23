@@ -13,11 +13,12 @@ import { NounprojectDialog } from '~/common/dialogs/nounproject-dialog/nounproje
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
 	template: `
-		<base href="http://127.0.0.1:5500/oeb-badgeclass-edit-form/" />
+		<base [href]="baseurl()" />
 		<confirm-dialog #confirmDialog></confirm-dialog>
 		<nounproject-dialog #nounprojectDialog></nounproject-dialog>
 		@if (authService.isLoggedIn$ | async) {
@@ -75,7 +76,10 @@ import { CommonEntityManager } from '~/entity-manager/services/common-entity-man
 })
 export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly finished = output<boolean>();
-	readonly baseurl = input.required<string>();
+	readonly baseurl = input.required<SafeResourceUrl, string>({
+		transform: (url: string | undefined) =>
+			url ? this.domSanitizer.bypassSecurityTrustResourceUrl(url) : this.domSanitizer.bypassSecurityTrustHtml(''),
+	});
 	readonly token = input.required<string>();
 	readonly config = input<{ issuer: Issuer | Network; badge: ApiBadgeClass | undefined }>();
 	readonly badge = computed(() => {
@@ -83,6 +87,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 		else return undefined;
 	});
 	readonly category = signal<string>('participation');
+	readonly domSanitizer = inject(DomSanitizer);
 	readonly authService = inject(AUTH_PROVIDER);
 	readonly commonDialogsService = inject(CommonDialogsService);
 	readonly confirmDialog = viewChild.required<ConfirmDialog>('confirmDialog');
