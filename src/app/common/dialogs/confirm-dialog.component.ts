@@ -1,6 +1,7 @@
 import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { BaseDialog } from './base-dialog';
-import { SvgIconComponent } from '../components/svg-icon.component';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 export interface ConfirmDialogOptions {
 	dialogTitle?: string;
@@ -23,7 +24,7 @@ export interface ConfirmDialogOptions {
 							{{ options.dialogTitle }}
 						</h2>
 						<button (click)="rejectDialog()" class="buttonicon buttonicon-link">
-							<svg icon="icon_close"></svg>
+							<ng-icon hlm name="lucideX" />
 							<span class="visuallyhidden">Close</span>
 						</button>
 					</div>
@@ -43,7 +44,7 @@ export interface ConfirmDialogOptions {
 			</div>
 		</dialog>
 	`,
-	imports: [SvgIconComponent],
+	imports: [NgIcon, HlmIcon],
 })
 export class ConfirmDialog extends BaseDialog {
 	static defaultOptions = {

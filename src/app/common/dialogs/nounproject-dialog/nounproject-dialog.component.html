@@ -8,7 +8,7 @@
 		<div class="dialog-x-header u-background-light3">
 			<h1>{{ 'NounProject.searchIcon' | translate }}</h1>
 			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
-				<svg icon="icon_close"></svg>
+				<ng-icon hlm name="lucideX" />
 				<span class="visuallyhidden">{{ 'General.close' | translate }}</span>
 			</button>
 		</div>
@@ -23,7 +23,7 @@
 						[placeholder]="'NounProject.searchIcon' | translate"
 						(ngModel)="(searchQuery)"
 					/>
-					<svg class="forminput-x-icon" icon="icon_search"></svg>
+					<ng-icon hlm name="lucideSearch" class="forminput-x-icon" />
 				</div>
 			</div>
 			<div class="dialog-x-height">

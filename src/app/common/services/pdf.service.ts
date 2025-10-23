@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, SecurityContext, inject } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
-import { SessionService } from './session.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map } from 'rxjs';
+import { AUTH_PROVIDER } from './authentication-service';
 
 export type PdfResourceType = 'badges' | 'collections';
 
 @Injectable({ providedIn: 'root' })
 export class PdfService {
-	protected loginService = inject(SessionService);
+	protected loginService = inject(AUTH_PROVIDER);
 	protected http = inject(HttpClient);
 	protected configService = inject(AppConfigService);
 	protected messageService = inject(MessageService);

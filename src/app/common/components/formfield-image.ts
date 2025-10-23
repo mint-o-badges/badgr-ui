@@ -160,8 +160,6 @@ export class BgFormFieldImageComponent {
 	@Input() generateRandom = false;
 
 	@Output() generateRandomImage: EventEmitter<unknown> = new EventEmitter();
-	readonly imageLoadingSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-loading.svg');
-	readonly imageFailedSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-failed.svg');
 
 	@Output() imageUploaded = new EventEmitter();
 	// Image error is emitted when the image is too large or not square

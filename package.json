@@ -12,6 +12,7 @@
 		"build:web-components": "run-s build:web-components:*",
 		"build:web-components:oeb-version": "ng build web-components-cli --configuration oeb-version",
 		"build:web-components:oeb-skill-visualisation": "ng build web-components-cli --configuration oeb-skill-visualisation",
+		"build:web-components:oeb-badge-creation": "ng build web-components-cli --configuration oeb-badge-creation",
 		"build:app": "ng build badgr-ui-cli --output-hashing=all --aot --configuration production && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",
 		"build:staging": "ng build badgr-ui-cli --output-hashing=all --aot --configuration staging && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",
 		"build:develop": "ng build badgr-ui-cli --output-hashing=all --aot --configuration develop && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",

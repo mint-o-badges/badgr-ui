@@ -1,13 +1,4 @@
-import {
-	Component,
-	ElementRef,
-	OnInit,
-	ViewChild,
-	AfterContentInit,
-	inject,
-	TemplateRef,
-	ChangeDetectorRef,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterContentInit, inject, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';

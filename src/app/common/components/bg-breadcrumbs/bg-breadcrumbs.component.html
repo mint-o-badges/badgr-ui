@@ -2,7 +2,8 @@
 	@for (link of linkentries; track link; let i = $index; let last = $last) {
 		@if (!last) {
 			<a class="breadcrumbs-x-link" [routerLink]="link.routerLink" [queryParams]="link.queryParams">
-				<svg class="breadcrumbs-x-icon icon icon-dark2" icon="icon_arrow"></svg>
+				<ng-icon hlm name="lucideArrowLeft" class="breadcrumbs-x-icon icon icon-dark2" />
+
 				<span class="breadcrumbs-x-text">
 					{{ link.title }}
 				</span>

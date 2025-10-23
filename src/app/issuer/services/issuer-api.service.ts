@@ -1,15 +1,15 @@
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '../../common/app-config.service';
-import { SessionService } from '../../common/services/session.service';
 import { ApiIssuer, ApiIssuerForCreation, ApiIssuerStaffOperation, IssuerSlug } from '../models/issuer-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
-import { ApiBadgeClass, ApiBadgeClassNetworkShare } from '../models/badgeclass-api.model';
+import { ApiBadgeClassNetworkShare } from '../models/badgeclass-api.model';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class IssuerApiService extends BaseHttpApiService {
-	protected loginService: SessionService;
+	protected loginService: AuthenticationService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -18,7 +18,7 @@ export class IssuerApiService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const loginService = inject(SessionService);
+		const loginService = inject(AUTH_PROVIDER);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);
