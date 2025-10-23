@@ -32,12 +32,12 @@ export interface ApiBaseIssuer {
 	country?: string;
 	state?: string;
 	linkedinId: string;
+	badgeClassCount: number;
 }
 
 export interface ApiIssuer extends ApiBaseIssuer {
 	is_network: false;
 
-	badgeClassCount: number;
 	learningPathCount: number;
 	verified: boolean;
 	intendedUseVerified: boolean;

@@ -21,13 +21,26 @@
 						}}</span
 					>
 				</div>
-				@if (activeTab === 'badges' && network().current_user_network_role !== 'staff') {
+				@if (network().current_user_network_role !== 'staff') {
 					<div class="tw-ml-auto">
-						<oeb-button
-							variant="secondary"
-							[text]="'Network.createBadge' | translate"
-							[routerLink]="[`/issuer/issuers/${network().slug}/badges/select/`]"
-						></oeb-button>
+						@switch (activeTab) {
+							@case ('badges') {
+								<oeb-button
+									variant="secondary"
+									[text]="'Network.createBadge' | translate"
+									[routerLink]="['/issuer/issuers', network().slug, 'badges/select']"
+								>
+								</oeb-button>
+							}
+							@case ('learningpaths') {
+								<oeb-button
+									variant="secondary"
+									[text]="'Network.createLp' | translate"
+									[routerLink]="[`/issuer/issuers/${network().slug}/learningpaths/create/`]"
+								>
+								</oeb-button>
+							}
+						}
 					</div>
 				}
 			</section>
@@ -76,4 +89,8 @@
 
 <ng-template #badgesTemplate>
 	<network-badges [network]="network()"></network-badges>
+</ng-template>
+
+<ng-template #learningPathsTemplate>
+	<network-learningpaths [network]="network()"> </network-learningpaths>
 </ng-template>
