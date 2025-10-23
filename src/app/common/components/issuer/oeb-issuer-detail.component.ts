@@ -249,7 +249,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		};
 
 		this.badges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
+		// this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
 
 	private async updateNetworkResults() {
@@ -400,18 +400,14 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	}
 
 	async ngOnInit() {
-		if (this.sessionService.isLoggedIn) {
-			await this.getLearningPathsForIssuerApi(this.issuer.slug);
-		} else {
-			await this.getPublicLearningPaths(this.issuer.slug);
-		}
-		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
+		// initialize counts as 0 and update after data has loaded
 		this.badgeTemplateTabs = [
 			{
 				key: 'issuer-badges',
 				title: 'Issuer.issuerBadges',
-				count: this.badgeResults.length,
+				count: 0,
 				img: this.issuer.image,
+				component: this.issuerBadgesTemplate,
 			},
 		];
 		if (this.env.networksEnabled) {
@@ -420,8 +416,23 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 				title: 'Issuer.badgesInNetworks',
 				count: this.networkBadgeInstanceResults.length,
 				icon: 'lucideShipWheel',
+				component: this.networkBadgesTemplate,
 			});
 		}
+		await this.loadData();
+	}
+
+	private async loadData() {
+		if (this.sessionService.isLoggedIn) {
+			await this.getLearningPathsForIssuerApi(this.issuer.slug);
+		} else {
+			await this.getPublicLearningPaths(this.issuer.slug);
+		}
+
+		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
+
+		this.badgeTemplateTabs[0].count = this.badgeResults.length;
+		this.badgeTemplateTabs[1].count = this.networkBadgeInstanceResults.length;
 	}
 
 	delete(event) {
