@@ -400,7 +400,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	}
 
 	async ngOnInit() {
-		if (this.sessionService.isLoggedIn) {
+		if (this.sessionService.isLoggedIn && this.issuer instanceof Issuer && this.issuer.currentUserStaffMember) {
 			await this.getLearningPathsForIssuerApi(this.issuer.slug);
 		} else {
 			await this.getPublicLearningPaths(this.issuer.slug);
