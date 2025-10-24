@@ -17,7 +17,6 @@ import { NgIcon } from '@ng-icons/core';
 import { InfoIcon } from '../info-icon.component';
 import { TimeComponent } from '../time.component';
 import { CompetencyAccordionComponent } from '../../../components/accordion.component';
-import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
 import { HourPipe } from '../../pipes/hourPipe';
 import { PublicApiLearningPath } from '../../../public/models/public-api.model';
@@ -52,7 +51,6 @@ import {
 		TimeComponent,
 		HlmP,
 		CompetencyAccordionComponent,
-		OebSeparatorComponent,
 		BgLearningPathCard,
 		TranslatePipe,
 		HourPipe,
@@ -68,9 +66,6 @@ export class BgBadgeDetail {
 	@Input() awaitPromises?: Promise<any>[];
 	@Input() badge?: RecipientBadgeInstance | BadgeInstance | ApiImportedBadgeInstance;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
 		this.translate.get('Badge.categories.competency').subscribe((str) => {
 			this.competencyBadge = str;
@@ -78,7 +73,7 @@ export class BgBadgeDetail {
 	}
 
 	getLearningPaths(): PublicApiLearningPath[] {
-		return this.config.learningPaths as PublicApiLearningPath[];
+		return (this.config.learningPaths as PublicApiLearningPath[]).filter((l) => l.activated);
 	}
 
 	get hasCriteria(): boolean {
