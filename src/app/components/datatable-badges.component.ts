@@ -96,6 +96,10 @@ import { NgIcon } from '@ng-icons/core';
 			{{ context.header.id | translate }}
 		</ng-template>
 
+		<ng-template #recipientHeaderCellTemplate let-context>
+			<span [innerHTML]="recipientTranslation() | translate"></span>
+		</ng-template>
+
 		<ng-template #badgeCellTemplate let-context>
 			<div
 				class="tw-flex tw-flex-row tw-items-center tw-leading-7 tw-gap-2 tw-cursor-pointer"
@@ -159,6 +163,7 @@ export class DatatableComponent {
 	qrCodeAward = output<BadgeClass>();
 	redirectToBadgeDetail = output<{ badge: BadgeClass; focusRequests: boolean }>();
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	recipientHeaderCellTemplate = viewChild.required<TemplateRef<any>>('recipientHeaderCellTemplate');
 	badgeCellTemplate = viewChild.required<TemplateRef<any>>('badgeCellTemplate');
 	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
@@ -184,7 +189,7 @@ export class DatatableComponent {
 		},
 		{
 			id: 'Badge.multiRecipients',
-			header: () => this.translateHeaderIDCellTemplate(),
+			header: () => this.recipientHeaderCellTemplate(),
 			accessorFn: (row) => row.badge.recipientCount,
 			cell: (info) => info.getValue(),
 		},
