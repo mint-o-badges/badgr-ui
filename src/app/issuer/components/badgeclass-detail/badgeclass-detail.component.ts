@@ -534,7 +534,6 @@ export class BadgeClassDetailComponent
 				];
 				this.allBadgeInstances = retInstances;
 				const issuerUrls = retInstances.entities.map((i) => i.issuerUrl);
-				console.log('issuer urls', issuerUrls);
 				this.awardingIssuers = await this.issuerManager.issuersByUrls(issuerUrls);
 				this.updateResults();
 				this.loadConfig(this.badgeClass);
