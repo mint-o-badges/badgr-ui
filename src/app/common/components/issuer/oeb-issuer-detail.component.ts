@@ -432,7 +432,13 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
 
 		this.badgeTemplateTabs[0].count = this.badgeResults.length;
-		this.badgeTemplateTabs[1].count = this.networkBadgeInstanceResults.length;
+		this.badgeTemplateTabs[1].count =
+			this.networkBadgeInstanceResults.reduce((sum, group) => {
+				return sum + (group.badges.length ?? 0);
+			}, 0) +
+			this.networkGroupsArray.reduce((sum, group) => {
+				return sum + (group.badges.length ?? 0);
+			}, 0);
 	}
 
 	delete(event) {
