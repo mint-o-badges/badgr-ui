@@ -154,6 +154,7 @@ export class DatatableComponent {
 	private translate = inject(TranslateService);
 
 	badges = input.required<DatatableBadgeResult[]>();
+	recipientTranslation = input<string>('Badge.multiRecipients');
 	directBadgeAward = output<BadgeClass>();
 	qrCodeAward = output<BadgeClass>();
 	redirectToBadgeDetail = output<{ badge: BadgeClass; focusRequests: boolean }>();

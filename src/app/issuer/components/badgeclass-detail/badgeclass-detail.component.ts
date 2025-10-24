@@ -211,7 +211,7 @@ export class BadgeClassDetailComponent
 	networkQrCodeApiAwards: NetworkQrCodeGroup[] = [];
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
-	downloadStates: boolean[] = [false];
+	downloadStates: Record<string, boolean> = {};
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -240,7 +240,6 @@ export class BadgeClassDetailComponent
 		const badgeManager = this.badgeManager;
 		const issuerManager = this.issuerManager;
 		const networkManager = this.networkManager;
-
 
 		this.badgeClassLoaded = badgeManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then(
 			(badge) => {
@@ -693,16 +692,16 @@ export class BadgeClassDetailComponent
 
 	// To get and download badge certificate in pdf format
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
-		this.downloadStates[badgeIndex] = true;
+		this.downloadStates[instance.slug] = true;
 		this.pdfService
 			.getPdf(instance.slug, 'badges')
 			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
-				this.downloadStates[badgeIndex] = false;
+				this.downloadStates[instance.slug] = false;
 			})
 			.catch((error) => {
-				this.downloadStates[badgeIndex] = false;
+				this.downloadStates[instance.slug] = false;
 				console.log(error);
 			});
 	}
