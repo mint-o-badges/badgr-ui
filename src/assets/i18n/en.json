@@ -1121,7 +1121,9 @@
 		"condition": "You <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges</span> to receive the Micro Degree.",
 		"learningPathWithMicroDegree": "Learning path with Micro Degree Badge",
 		"confirmDelete": "Are you sure you want to delete this learning path?",
-		"deleteMd": "Delete learning path"
+		"deleteMd": "Delete learning path",
+		"institution": "institution",
+		"institutions": "institutions"
 	},
 	"LearningPathEditor": {
 		"shortDescriptionLine1": "Summary description of the learning program.",

@@ -1120,7 +1120,9 @@
 		"condition": "Du musst <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Micro Degree zu erhalten.",
 		"learningPathWithMicroDegree": "Lernpfad mit Abschluss-Badge Micro Degree",
 		"confirmDelete": "Möchtest du diesen Lernpfad wirklich löschen?",
-		"deleteMd": "Lernpfad löschen"
+		"deleteMd": "Lernpfad löschen",
+		"institution": "Institution",
+		"institutions": "Institutionen"
 	},
 	"LearningPathEditor": {
 		"shortDescriptionLine1": "Zusammenfassende Beschreibung des Lernangebots.",
