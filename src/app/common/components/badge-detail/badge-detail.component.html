@@ -7,51 +7,54 @@
 					<bg-breadcrumbs [linkentries]="config.crumbs"> </bg-breadcrumbs>
 				</div>
 				<div class="oeb-section-sm">
-					<div class="tw-flex tw-flex-col tw-relative">
-						<div class="tw-grid md:tw-flex md:tw-justify-between md:tw-items-center md:tw-gap-10">
-							<h1
-								hlmH1
-								class="tw-text-purple tw-font-extrabold tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0 oeb-break-words"
-							>
-								{{ config.badgeTitle }}
-							</h1>
-							<div class="tw-flex tw-gap-2">
-								@if (config.headerButton) {
-									@if (config.headerButton.routerLink) {
-										<oeb-button
-											class="tw-whitespace-nowrap tw-grow"
-											[text]="config.headerButton.title | translate"
-											width="full_width"
-											[routerLink]="config.headerButton.routerLink"
-											[disabled-when-requesting]="true"
-										></oeb-button>
-									}
-									@if (config.headerButton.action) {
-										<oeb-button
-											class="tw-whitespace-nowrap tw-grow md:tw-min-w-[327px]"
-											width="full_width"
-											(click)="config.headerButton.action()"
-											[disabled-when-requesting]="true"
-											[disabled]="config.headerButton.disabled"
-											[text]="config.headerButton.title | translate"
-										></oeb-button>
-									}
-								}
-								@if (config.shareButton && badge) {
+					<div class="tw-flex tw-flex-row tw-justify-between tw-flex-wrap tw-gap-4">
+						<h1
+							hlmH1
+							class="tw-text-purple tw-font-extrabold tw-hyphens-auto tw- break-words oeb-break-words"
+						>
+							{{ config.badgeTitle }}
+						</h1>
+
+						<div class="headerMenuGrid">
+							@if (config.headerButton) {
+								@if (config.headerButton.routerLink) {
 									<oeb-button
-										hlmBtn
-										class="lg:tw-whitespace-nowrap"
-										[text]="'RecBadgeDetail.shareBadge' | translate"
-										(click)="shareBadge()"
+										class="tw-whitespace-nowrap main-action"
+										[text]="config.headerButton.title | translate"
+										width="full_width"
+										[routerLink]="config.headerButton.routerLink"
+										[disabled-when-requesting]="true"
 									></oeb-button>
 								}
-								@if (config.menuitems) {
-									<oeb-dropdown
-										[trigger]="svgTrigger"
-										class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
-										[menuItems]="config.menuitems"
-									></oeb-dropdown>
+
+								@if (config.headerButton.action) {
+									<oeb-button
+										class="tw-whitespace-nowrap main-action"
+										width="full_width"
+										(click)="config.headerButton.action()"
+										[disabled-when-requesting]="true"
+										[disabled]="config.headerButton.disabled"
+										[text]="config.headerButton.title | translate"
+									></oeb-button>
 								}
+							}
+
+							@if (config.shareButton && badge) {
+								<oeb-button
+									hlmBtn
+									class="tw-whitespace-nowrap main-action"
+									width="full_width"
+									[text]="'RecBadgeDetail.shareBadge' | translate"
+									(click)="shareBadge()"
+								></oeb-button>
+							}
+
+							@if (config.menuitems) {
+								<oeb-dropdown
+									[trigger]="svgTrigger"
+									class="overflow-menu tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[10px]"
+									[menuItems]="config.menuitems"
+								></oeb-dropdown>
 								<ng-template #svgTrigger>
 									<svg
 										class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
@@ -60,12 +63,12 @@
 									></svg>
 									<span class="visuallyhidden">Mehr</span>
 								</ng-template>
-							</div>
-						</div>
-						<div class="tw-grid md:tw-flex tw-justify-start">
+							}
+
 							@if (config.qrCodeButton?.show) {
 								<oeb-button
-									class="oeb-button !tw-p-0 tw-mt-2 tw-w-full md:tw-w-fit md:tw-ml-auto md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
+									class="secondary"
+									width="full_width"
 									variant="secondary"
 									[text]="config.qrCodeButton?.title | translate"
 									(click)="config.qrCodeButton?.action()"
@@ -75,7 +78,7 @@
 					</div>
 				</div>
 				<!-- Sidebar -->
-				<div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-16 tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
+				<div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-7 tw-relative md:tw-mx-0 tw-mx-auto">
 					<div class="md:tw-w-[346px] md:tw-p-0 tw-pb-8 md:tw-flex-grow-1">
 						<div class="badge-sidebar-internal tw-rounded-lg tw-flex tw-flex-wrap">
 							<div class="md:tw-min-w-[260px] tw-min-w-[200px]">
@@ -358,37 +361,34 @@
 						</div>
 					</div>
 					<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
-						<div class="tw-text-oebblack tw-pt-0 tw-pb-4 oeb-break-words">
-							<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">
+						<section class="tw-text-oebblack tw-mb-10 oeb-break-words">
+							<h3 hlmH3 class="tw-font-semibold tw-mb-2">
 								{{ 'CreateBadge.shortDescription' | translate }}
 							</h3>
-							<p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
-						</div>
+							<p hlmP>{{ config.badgeDescription }}</p>
+						</section>
+
 						<!-- Kompetenzen -->
 						@if (config.competencies && config.competencies.length > 0) {
-							<section class="tw-text-oebblack tw-pb-8">
-								<h3
-									class="tw-text-[22px] tw-leading-[26.4px] tw-font-semibold tw-text-oebblack u-margin-bottom2x u-margin-top4x"
-								>
+							<section class="tw-text-oebblack tw-mb-10">
+								<h3 hlmH3 class="tw-font-semibold tw-text-oebblack">
 									{{ 'RecBadgeDetail.competencies' | translate }}
 								</h3>
-								<div>
-									@for (competency of config.competencies; track competency; let i = $index) {
-										<div>
-											<competency-accordion
-												[name]="competency.name"
-												[category]="competency.category"
-												[description]="competency.description"
-												[framework]="competency.framework"
-												[framework_identifier]="competency.framework_identifier"
-												[studyload]="(competency.studyLoad | hourPipe) + ' h'"
-											></competency-accordion>
-										</div>
-									}
-								</div>
+								@for (competency of config.competencies; track competency; let i = $index) {
+									<competency-accordion
+										[name]="competency.name"
+										[category]="competency.category"
+										[description]="competency.description"
+										[framework]="competency.framework"
+										[framework_identifier]="competency.framework_identifier"
+										[studyload]="(competency.studyLoad | hourPipe) + ' h'"
+									></competency-accordion>
+								}
 							</section>
 						}
-						<ng-content></ng-content>
+
+						<section class="tw-mt-20"><ng-content /></section>
+
 						@if (config.learningPaths.length > 0) {
 							<div>
 								<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>

@@ -36,3 +36,24 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
+
+div.headerMenuGrid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: 1fr min-content;
+	grid-template-areas:
+		'main overflow-menu'
+		'secondary secondary';
+
+	.main-action {
+		grid-area: main;
+	}
+
+	.overflow-menu {
+		grid-area: overflow-menu;
+	}
+
+	.secondary {
+		grid-area: secondary;
+	}
+}

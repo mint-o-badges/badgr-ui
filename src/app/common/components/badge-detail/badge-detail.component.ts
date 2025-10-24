@@ -24,7 +24,7 @@ import { PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 import { HlmIcon } from '@spartan-ng/helm/icon';
-import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { HlmH1, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 import { HlmDialogService } from '@spartan-ng/helm/dialog';
 import {
 	ShareBadgeDialogComponent,
@@ -56,6 +56,7 @@ import {
 		BgLearningPathCard,
 		TranslatePipe,
 		HourPipe,
+		HlmH3,
 	],
 })
 export class BgBadgeDetail {
