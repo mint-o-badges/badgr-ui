@@ -37,6 +37,7 @@ import { PublicApiIssuer } from '~/public/models/public-api.model';
 export class SelectNetworkComponent implements OnInit {
 	private publicApiService = inject(PublicApiService);
 	private messageService = inject(MessageService);
+	private networkApiService = inject(NetworkApiService);
 	private badgeClassApiService = inject(BadgeClassApiService);
 	private router = inject(Router);
 

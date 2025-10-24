@@ -178,7 +178,7 @@ export class BgLearningPathCard {
 	}
 
 	@Input() set matchOrProgress(value: MatchOrProgressType) {
-		if ('match' in value && 'progress' in value) {
+		if (value && 'match' in value && 'progress' in value) {
 			throw new Error('Only one of "match" or "progress" can be set.');
 		}
 		this._matchOrProgress = value;

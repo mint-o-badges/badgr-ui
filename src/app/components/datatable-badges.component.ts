@@ -16,6 +16,7 @@ import {
 	SortingState,
 } from '@tanstack/angular-table';
 import { NgIcon } from '@ng-icons/core';
+import { PublicApiBadgeClass } from '~/public/models/public-api.model';
 
 @Component({
 	selector: 'badges-datatable',
@@ -184,13 +185,15 @@ export class DatatableComponent {
 		{
 			id: 'Badge.createdOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.badge.createdAt,
+			accessorFn: (row) =>
+				row.badge instanceof BadgeClass ? row.badge.createdAt : new Date(row.badge.created_at),
 			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'Badge.multiRecipients',
 			header: () => this.recipientHeaderCellTemplate(),
-			accessorFn: (row) => row.awardedCount ?? row.badge.recipientCount,
+			accessorFn: (row) => row.awardedCount ?? (row.badge instanceof BadgeClass ? row.badge.recipientCount : 0),
+
 			cell: (info) => info.getValue(),
 		},
 		{
@@ -220,7 +223,7 @@ export class DatatableComponent {
 }
 
 export interface DatatableBadgeResult {
-	badge: BadgeClass;
+	badge: BadgeClass | PublicApiBadgeClass;
 	requestCount: number;
 	awardedCount: number;
 }
