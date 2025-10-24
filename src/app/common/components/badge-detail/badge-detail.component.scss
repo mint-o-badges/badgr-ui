@@ -1,17 +1,3 @@
-.badge-sidebar-internal {
-	padding: calc(var(--gridspacing) * 4);
-	padding-top: calc(var(--gridspacing) * 4);
-	background-color: var(--color-lavender);
-}
-
-@media (min-width: 768px) {
-	.badge-sidebar-internal {
-		padding-top: calc(var(--gridspacing) * 6);
-		display: flex;
-		flex-direction: column;
-	}
-}
-
 .tag {
 	--typography-size: 12px;
 	font-family: var(--font-family);
@@ -35,4 +21,25 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+}
+
+div.headerMenuGrid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: 1fr min-content;
+	grid-template-areas:
+		'main overflow-menu'
+		'secondary secondary';
+
+	.main-action {
+		grid-area: main;
+	}
+
+	.overflow-menu {
+		grid-area: overflow-menu;
+	}
+
+	.secondary {
+		grid-area: secondary;
+	}
 }

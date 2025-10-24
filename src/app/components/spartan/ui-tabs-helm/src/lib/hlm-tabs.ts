@@ -22,5 +22,5 @@ export class HlmTabs {
 	public readonly tab = input.required<string>();
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected readonly _computedClass = computed(() => hlm('tw-flex tw-flex-col tw-gap-2', this.userClass()));
+	protected readonly _computedClass = computed(() => hlm('tw-flex tw-flex-col tw-gap-x-2', this.userClass()));
 }
