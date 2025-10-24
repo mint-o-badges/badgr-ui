@@ -187,7 +187,6 @@ export class NetworkBadgesComponent {
 		return new Promise((res, rej) => {
 			this.networkApiService.getNetworkSharedBadges(this.network().slug).then((b) => {
 				this.sharedBadges = b;
-				console.log('shared', this.sharedBadges);
 				res(b);
 			});
 		});

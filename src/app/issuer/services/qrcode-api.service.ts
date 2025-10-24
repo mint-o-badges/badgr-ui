@@ -27,7 +27,7 @@ export class QrCodeApiService extends BaseHttpApiService {
 		const messageService = inject(MessageService);
 
 		super(loginService, http, configService, messageService);
-	
+
 		this.loginService = loginService;
 		this.http = http;
 		this.configService = configService;
