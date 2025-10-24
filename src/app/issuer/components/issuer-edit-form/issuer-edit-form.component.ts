@@ -191,7 +191,11 @@ export class IssuerEditFormComponent implements OnInit {
 				Validators.minLength(200),
 				Validators.maxLength(300),
 			])
-			.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
+			.addControl(
+				'issuer_url',
+				'',
+				this.networkForm() ? [UrlValidator.validUrl] : [Validators.required, UrlValidator.validUrl],
+			)
 			.addControl('issuer_image', '', Validators.required)
 			.addControl('country', 'Germany', Validators.required)
 			.addControl('state', '')
