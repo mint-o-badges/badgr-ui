@@ -392,7 +392,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	async ngOnInit() {
-		if (this.sessionService.isLoggedIn) {
+		if (this.sessionService.isLoggedIn && this.issuer instanceof Issuer && this.issuer.currentUserStaffMember) {
 			await this.getLearningPathsForIssuerApi(this.issuer.slug);
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
 				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
