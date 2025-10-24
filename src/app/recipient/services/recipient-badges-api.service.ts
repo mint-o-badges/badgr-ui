@@ -31,7 +31,7 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 		const messageService = inject(MessageService);
 
 		super(loginService, http, configService, messageService);
-	
+
 		this.loginService = loginService;
 		this.http = http;
 		this.configService = configService;
@@ -140,6 +140,15 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 			imported: true,
 			image: importedBadge.json.badge.image,
 			imagePreview: importedBadge.imagePreview,
+			isNetworkBadge: false,
+			networkImage: null,
+			networkName: null,
+			sharedOnNetwork: {
+				description: null,
+				image: null,
+				name: '',
+				slug: '',
+			},
 		};
 
 		return new RecipientBadgeInstance(this.commonEntityManager, apiModel);

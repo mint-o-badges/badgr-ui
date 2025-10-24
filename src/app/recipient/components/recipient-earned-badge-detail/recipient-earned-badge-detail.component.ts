@@ -20,6 +20,8 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
+import { IssuerManager } from '~/issuer/services/issuer-manager.service';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -58,6 +60,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	category: object;
 	badge: RecipientBadgeInstance;
 	issuerBadgeCount: string;
+	awardingIssuers: Issuer[] = null;
 
 	config: PageConfig;
 
@@ -87,12 +90,14 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		const router = inject(Router);
 		const route = inject(ActivatedRoute);
 		const loginService = inject(SessionService);
+		const issuerManager = inject(IssuerManager);
 
-		super(router, route, loginService);
+		super(router, route, loginService, issuerManager);
 
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise
-			.then((r) => {
+			.then(async (r) => {
 				this.updateBadge(r);
+				this.awardingIssuers = await issuerManager.issuersByUrls([this.badge.issuerId]);
 				this.competencies = this.badge.getExtension('extensions:CompetencyExtension', [{}]);
 				this.category = this.badge.getExtension('extensions:CategoryExtension', {});
 				this.crumbs = [
@@ -150,9 +155,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
-					category: this.translate.instant(
-						`Badge.categories.${this.category['Category'] || 'participation'}`,
-					),
+					category: this.category['Category'],
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
@@ -166,6 +169,11 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					shareButton: true,
 					badgeInstanceSlug: this.badgeSlug,
 					version: assertionVersion,
+					awardingIssuers: this.awardingIssuers,
+					networkBadge: this.badge.isNetworkBadge,
+					networkImage: this.badge.networkImage,
+					networkName: this.badge.networkName,
+					sharedOnNetwork: this.badge.sharedOnNetwork,
 				};
 			})
 			.finally(() => {
