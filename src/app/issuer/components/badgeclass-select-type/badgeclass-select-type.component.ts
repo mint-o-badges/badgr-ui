@@ -54,7 +54,6 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 		super(router, route, sessionService);
 		const title = this.title;
 
-
 		this.translate.get('Issuer.createBadge').subscribe((str) => {
 			title.setTitle(`${str} - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		});

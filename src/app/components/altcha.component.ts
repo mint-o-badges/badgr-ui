@@ -1,4 +1,13 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, ViewChild, forwardRef, output, AfterViewInit, inject } from '@angular/core';
+import {
+	CUSTOM_ELEMENTS_SCHEMA,
+	Component,
+	ElementRef,
+	ViewChild,
+	forwardRef,
+	output,
+	AfterViewInit,
+	inject,
+} from '@angular/core';
 import {
 	ControlValueAccessor,
 	NG_VALUE_ACCESSOR,

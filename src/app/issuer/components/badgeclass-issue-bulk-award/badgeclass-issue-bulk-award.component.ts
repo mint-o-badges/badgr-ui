@@ -104,7 +104,6 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 		this.router = router;
 		this.route = route;
 
-
 		this.updateViewState('import');
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {

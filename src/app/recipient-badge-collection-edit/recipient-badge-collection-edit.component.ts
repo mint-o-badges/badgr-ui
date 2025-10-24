@@ -39,7 +39,6 @@ export class RecipientBadgeCollectionEditComponent extends BaseAuthenticatedRout
 		super(router, route, sessionService);
 		const title = this.title;
 
-
 		this.slug = this.route.snapshot.params['collectionSlug'];
 
 		this.collectionLoaded = this.collectionManager.recipientBadgeCollectionList.loadedPromise.then(

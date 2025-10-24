@@ -20,7 +20,7 @@ export class BaseAuthenticatedRoutableComponent extends BaseRoutableComponent im
 		const route = inject(ActivatedRoute);
 
 		super(router, route);
-	
+
 		this.router = router;
 		this.route = route;
 	}

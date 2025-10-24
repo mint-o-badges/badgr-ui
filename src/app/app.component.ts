@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, signal, computed, DOCUMENT, inject } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	OnInit,
+	Renderer2,
+	ViewChild,
+	signal,
+	computed,
+	DOCUMENT,
+	inject,
+} from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MessageService } from './common/services/message.service';

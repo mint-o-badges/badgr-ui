@@ -74,7 +74,6 @@ export class NewPasswordComponent extends BaseRoutableComponent implements OnIni
 		super(router, route);
 		const title = this.title;
 
-
 		title.setTitle(`New Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.profileManager.userProfilePromise.then((profile) => (this.profile = profile));

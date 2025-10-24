@@ -63,7 +63,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		const route = inject(ActivatedRoute);
 
 		super(router, route, loginService);
-	
+
 		this.loginService = loginService;
 		this.router = router;
 		this.route = route;

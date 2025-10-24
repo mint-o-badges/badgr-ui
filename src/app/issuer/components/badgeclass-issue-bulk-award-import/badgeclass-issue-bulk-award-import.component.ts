@@ -67,7 +67,6 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 		this.router = router;
 		this.route = route;
 
-
 		this.csvForm = formBuilder.group({
 			file: [],
 		} as ImportCsvForm<Array<unknown>>);

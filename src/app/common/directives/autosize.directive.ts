@@ -1,4 +1,13 @@
-import { AfterViewChecked, Directive, ElementRef, HostListener, Input, PLATFORM_ID, Renderer2, inject } from '@angular/core';
+import {
+	AfterViewChecked,
+	Directive,
+	ElementRef,
+	HostListener,
+	Input,
+	PLATFORM_ID,
+	Renderer2,
+	inject,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 /**
