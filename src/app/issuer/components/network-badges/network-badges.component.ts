@@ -179,6 +179,7 @@ export class NetworkBadgesComponent {
 		this.badgeResults = this.badges.map((badge) => ({
 			badge,
 			requestCount: this.getRequestCount(badge, requestMap),
+			awardedCount: badge.recipientCount,
 		}));
 	}
 
@@ -186,6 +187,7 @@ export class NetworkBadgesComponent {
 		return new Promise((res, rej) => {
 			this.networkApiService.getNetworkSharedBadges(this.network().slug).then((b) => {
 				this.sharedBadges = b;
+				console.log('shared', this.sharedBadges);
 				res(b);
 			});
 		});

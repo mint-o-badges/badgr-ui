@@ -190,7 +190,7 @@ export class DatatableComponent {
 		{
 			id: 'Badge.multiRecipients',
 			header: () => this.recipientHeaderCellTemplate(),
-			accessorFn: (row) => row.badge.recipientCount,
+			accessorFn: (row) => row.awardedCount ?? row.badge.recipientCount,
 			cell: (info) => info.getValue(),
 		},
 		{
@@ -222,4 +222,5 @@ export class DatatableComponent {
 export interface DatatableBadgeResult {
 	badge: BadgeClass;
 	requestCount: number;
+	awardedCount: number;
 }

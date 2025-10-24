@@ -243,7 +243,9 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 				return false;
 			}
 
-			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, this.getRequestCount(badge, requestMap)));
+			this.badgeResults.push(
+				new BadgeResult(badge, this.issuer.name, this.getRequestCount(badge, requestMap), badge.recipientCount),
+			);
 
 			return true;
 		};
@@ -296,7 +298,15 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 
 					const requestCount = requestMap.get(badgeClass.slug)?.length ?? 0;
 
-					const badgeResult = new BadgeResult(badgeClass, group.network_issuer.name, requestCount);
+					// Extract the awarded_count from the API response
+					const awardedCount = networkBadgeClass.awarded_count ?? 0;
+
+					const badgeResult = new BadgeResult(
+						badgeClass,
+						group.network_issuer.name,
+						requestCount,
+						awardedCount,
+					);
 
 					groupBadges.push(badgeResult);
 				}
@@ -325,7 +335,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 
 		if (this.sessionService.isLoggedIn) {
 			const sharedBadges = await this.issuerApiService.listSharedNetworkBadges(this.issuer.slug);
-
+			console.log('shared badges', sharedBadges);
 			const uniqueBadgeClasses = new Map<string, ApiBadgeClassNetworkShare>();
 			sharedBadges.forEach((share) => {
 				if (!uniqueBadgeClasses.has(share.badgeclass.slug)) {
@@ -359,7 +369,12 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 				const badge = new BadgeClass(this.entityManager, share.badgeclass);
 				const issuerName = share.shared_by_issuer?.name || this.issuer.name;
 				const requestCount = this.getRequestCount(badge, requestMap);
-				const badgeResult = new BadgeResult(badge, issuerName, requestCount);
+				const badgeResult = new BadgeResult(
+					badge,
+					issuerName,
+					requestCount,
+					share.awarded_count_original_issuer,
+				);
 
 				const networkId = share.network.slug;
 
@@ -587,5 +602,6 @@ export class BadgeResult {
 		public badge: BadgeClass,
 		public issuerName: string,
 		public requestCount: number,
+		public awardedCount: number,
 	) {}
 }

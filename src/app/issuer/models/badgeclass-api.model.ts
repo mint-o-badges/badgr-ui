@@ -107,4 +107,5 @@ export interface ApiBadgeClassNetworkShare {
 		image: string;
 	};
 	is_active: boolean;
+	awarded_count_original_issuer: number;
 }
