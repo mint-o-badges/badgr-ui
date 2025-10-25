@@ -140,6 +140,15 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 			imported: true,
 			image: importedBadge.json.badge.image,
 			imagePreview: importedBadge.imagePreview,
+			isNetworkBadge: false,
+			networkImage: null,
+			networkName: null,
+			sharedOnNetwork: {
+				description: null,
+				image: null,
+				name: '',
+				slug: '',
+			},
 		};
 
 		return new RecipientBadgeInstance(this.commonEntityManager, apiModel);

@@ -196,6 +196,7 @@
 		"noBadges": "Keine Badges",
 		"recipient": "Empfänger:in",
 		"recipients": "Empfänger:innen",
+		"recipientsViaThisInstitution": "Empfänger:innen <span class='tw-italic tw-font-normal'>(durch diese Institution)</span>",
 		"noRecipient": "Kein Empfänger",
 		"createInstitution": "Institution erstellen",
 		"createInstitutionNow": "Jetzt Institution erstellen",

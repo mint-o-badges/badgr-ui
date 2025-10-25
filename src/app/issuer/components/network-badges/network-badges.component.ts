@@ -139,7 +139,7 @@ export class NetworkBadgesComponent {
 			},
 			{
 				key: 'partner',
-				title: 'Partner-Badges',
+				title: 'Issuer.partnerBadges',
 				icon: 'lucideHexagon',
 				count: this.sharedBadges.length,
 				component: this.partnerTemplate,
@@ -179,6 +179,7 @@ export class NetworkBadgesComponent {
 		this.badgeResults = this.badges.map((badge) => ({
 			badge,
 			requestCount: this.getRequestCount(badge, requestMap),
+			awardedCount: badge.recipientCount,
 		}));
 	}
 

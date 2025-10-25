@@ -156,6 +156,10 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.isNetworkBadge;
 	}
 
+	get networkName(): string {
+		return this.apiModel.networkName;
+	}
+
 	get networkImage(): string {
 		return this.apiModel.networkImage;
 	}

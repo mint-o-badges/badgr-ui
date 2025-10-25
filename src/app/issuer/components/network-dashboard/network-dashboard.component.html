@@ -71,7 +71,8 @@
 </ng-template>
 
 <ng-template #addInstitutionsTemplate>
-	<add-institution [network]="network()" (institutionsInvited)="onInstitutionsInvited()"> </add-institution>
+	<add-institution [network]="network()" [invites]="networkInvites()" (institutionsInvited)="onInstitutionsInvited()">
+	</add-institution>
 </ng-template>
 
 <ng-template #badgesTemplate>

@@ -86,7 +86,7 @@
 			}
 		</section>
 		<oeb-button
-			[disabled]="!selectedIssuers.length"
+			[disabled]="!selectedIssuers.length || inviting"
 			(click)="inviteInstitutions(selectedIssuers)"
 			[text]="'Network.addInstitutions' | translate"
 		>

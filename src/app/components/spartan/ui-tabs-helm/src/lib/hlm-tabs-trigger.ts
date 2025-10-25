@@ -15,9 +15,14 @@ export const tabsVariants = cva('', {
 			bluebackground:
 				'data-[state=active]:tw-bg-aipurple tw-rounded-[10px] data-[state=inactive]:tw-border-[#CCD7FF] tw-border-2 tw-text-purple data-[state=active]:tw-font-semibold',
 		},
+		width: {
+			default: '',
+			min_max: 'tw-min-w-max',
+		},
 	},
 	defaultVariants: {
 		variant: 'default',
+		width: 'default',
 	},
 });
 
@@ -34,10 +39,12 @@ export class HlmTabsTrigger {
 	public readonly triggerFor = input.required<string>({ alias: 'hlmTabsTrigger' });
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	public readonly _variant = input<TabsVariants['variant']>('default');
+	public readonly _width = input<TabsVariants['width']>('default');
 	protected readonly _computedClass = computed(() =>
 		hlm(
 			tabsVariants({
 				variant: this._variant(),
+				width: this._width(),
 			}),
 			'tw-text-oebblack tw-text-[14px] tw-leading-[19px] md:tw-text-[22px] md:tw-leading-[28px] tw-inline-flex tw-items-center tw-justify-center tw-whitespace-nowrap tw-px-3 tw-py-1.5 tw-transition-all focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-pointer-events-none disabled:tw-opacity-50 tw-border-solid tw-border-b-2 tw-border-white data-[state=active]:tw-font-medium data-[state=active]:tw-shadow-sm [&_ng-icon]:tw-pointer-events-none [&_ng-icon]:tw-shrink-0 [&_ng-icon]:tw-text-base',
 			this.userClass(),
