@@ -92,7 +92,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		const loginService = inject(SessionService);
 		const issuerManager = inject(IssuerManager);
 
-		super(router, route, loginService, issuerManager);
+		super(router, route, loginService);
 
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise
 			.then(async (r) => {

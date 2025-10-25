@@ -318,7 +318,6 @@ export class OebIssuerDetailComponent implements OnInit {
 
 		if (this.sessionService.isLoggedIn) {
 			const sharedBadges = await this.issuerApiService.listSharedNetworkBadges(this.issuer.slug);
-			console.log('shared badges', sharedBadges);
 			const uniqueBadgeClasses = new Map<string, ApiBadgeClassNetworkShare>();
 			sharedBadges.forEach((share) => {
 				if (!uniqueBadgeClasses.has(share.badgeclass.slug)) {
