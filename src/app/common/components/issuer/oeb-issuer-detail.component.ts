@@ -422,7 +422,6 @@ export class OebIssuerDetailComponent implements OnInit {
 				title: 'Issuer.issuerBadges',
 				count: 0,
 				img: this.issuer.image,
-				component: this.issuerBadgesTemplate,
 			},
 		];
 		if (this.env.networksEnabled) {
@@ -431,7 +430,6 @@ export class OebIssuerDetailComponent implements OnInit {
 				title: 'Issuer.badgesInNetworks',
 				count: this.networkBadgeInstanceResults.length,
 				icon: 'lucideShipWheel',
-				component: this.networkBadgesTemplate,
 			});
 		}
 		await this.loadData();
