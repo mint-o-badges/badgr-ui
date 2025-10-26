@@ -1,7 +1,7 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, viewChild, inject } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
@@ -16,6 +16,7 @@ import {
 	SortingState,
 } from '@tanstack/angular-table';
 import { NgIcon } from '@ng-icons/core';
+import { PublicApiBadgeClass } from '~/public/models/public-api.model';
 
 @Component({
 	selector: 'badges-datatable',
@@ -151,6 +152,8 @@ import { NgIcon } from '@ng-icons/core';
 		</ng-template>`,
 })
 export class DatatableComponent {
+	private translate = inject(TranslateService);
+
 	badges = input.required<DatatableBadgeResult[]>();
 	directBadgeAward = output<BadgeClass>();
 	qrCodeAward = output<BadgeClass>();
@@ -176,13 +179,14 @@ export class DatatableComponent {
 		{
 			id: 'Badge.createdOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.badge.createdAt,
+			accessorFn: (row) =>
+				row.badge instanceof BadgeClass ? row.badge.createdAt : new Date(row.badge.created_at),
 			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'Badge.multiRecipients',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.badge.recipientCount,
+			accessorFn: (row) => (row.badge instanceof BadgeClass ? row.badge.recipientCount : 0),
 			cell: (info) => info.getValue(),
 		},
 		{
@@ -205,10 +209,13 @@ export class DatatableComponent {
 		enableSortingRemoval: false, // ensures at least one column is sorted
 	}));
 
-	constructor(private translate: TranslateService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 }
 
 export interface DatatableBadgeResult {
-	badge: BadgeClass;
+	badge: BadgeClass | PublicApiBadgeClass;
 	requestCount: number;
 }

@@ -64,8 +64,4 @@ export class OebTabsComponent {
 	onTabChange(tab: string) {
 		this.onTabChanged.emit(tab);
 	}
-
-	ngOnInit() {
-		console.log(this.tabs());
-	}
 }

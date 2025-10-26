@@ -61,6 +61,14 @@ import { Network } from '~/issuer/network.model';
 	],
 })
 export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
+	private networkManager = inject(NetworkManager);
+	protected title = inject(Title);
+	protected translate = inject(TranslateService);
+	private configService = inject(AppConfigService);
+	private publicApiService = inject(PublicApiService);
+	private messageService = inject(MessageService);
+	private networkApiService = inject(NetworkApiService);
+
 	networkLoaded: Promise<unknown>;
 	networkSlug: string;
 	crumbs: LinkEntry[];
@@ -99,18 +107,14 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 	@ViewChild('issuerSearchInputModel') issuerSearchInputModel: NgModel;
 
-	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		private networkManager: NetworkManager,
-		protected title: Title,
-		protected translate: TranslateService,
-		private configService: AppConfigService,
-		private publicApiService: PublicApiService,
-		private messageService: MessageService,
-		private networkApiService: NetworkApiService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
 
 		this.networkSlug = this.route.snapshot.params['networkSlug'];

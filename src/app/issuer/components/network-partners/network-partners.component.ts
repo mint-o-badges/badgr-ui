@@ -22,6 +22,11 @@ import { Router } from '@angular/router';
 	imports: [TranslatePipe, OebButtonComponent, NetworkPartnersDatatableComponent, NetworkInvitesDatatableComponent],
 })
 export class NetworkPartnersComponent {
+	private networkApiService = inject(NetworkApiService);
+	private publicApiService = inject(PublicApiService);
+	private messageService = inject(MessageService);
+	private router = inject(Router);
+
 	issuers = input.required<Issuer[]>();
 	network = input.required<Network>();
 	addInstitutionsTemplate = input.required<TemplateRef<void>>();
@@ -46,12 +51,10 @@ export class NetworkPartnersComponent {
 
 	@ViewChild('issuerSearchInputPartnerModel') issuerSearchInputPartnerModel: NgModel;
 
-	constructor(
-		private networkApiService: NetworkApiService,
-		private publicApiService: PublicApiService,
-		private messageService: MessageService,
-		private router: Router,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		effect(() => {
 			const invites = this.networkInvites();
 			this.approvedInvites.set(invites.filter((i) => i.acceptedOn));

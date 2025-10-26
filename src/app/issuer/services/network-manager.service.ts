@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { StandaloneEntitySet } from '~/common/model/managed-entity-set';
 import { ApiNetwork, ApiNetworkForCreation, IssuerSlug } from '../models/issuer-api.model';
 import { NetworkApiService } from './network-api.service';
@@ -11,18 +11,20 @@ import { Network } from '../network.model';
 	providedIn: 'root',
 })
 export class NetworkManager {
+	networkApiService = inject(NetworkApiService);
+	issuerManager = inject(IssuerManager);
+	commonEntityManager = inject(CommonEntityManager);
+
 	networksList = new StandaloneEntitySet<Network, ApiNetwork>(
 		(apiModel) => new Network(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
 		() => this.networkApiService.listNetworks(),
 	);
 
-	constructor(
-		public networkApiService: NetworkApiService,
-		public issuerManager: IssuerManager,
-		@Inject(forwardRef(() => CommonEntityManager))
-		public commonEntityManager: CommonEntityManager,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	createNetwork(initialNetwork: ApiNetworkForCreation): Promise<Network> {
 		return this.networkApiService

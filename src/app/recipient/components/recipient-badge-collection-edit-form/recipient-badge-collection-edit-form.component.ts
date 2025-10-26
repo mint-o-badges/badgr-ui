@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -52,6 +52,14 @@ interface CreateBadgeCollectionForm<T> {
 	],
 })
 export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	private formBuilder = inject(FormBuilder);
+	private title = inject(Title);
+	private messageService = inject(MessageService);
+	private configService = inject(AppConfigService);
+	private recipientBadgeCollectionManager = inject(RecipientBadgeCollectionManager);
+	private badgeManager = inject(RecipientBadgeManager);
+	private translate = inject(TranslateService);
+
 	@Input()
 	set badgeCollection(collection: RecipientBadgeCollection) {
 		this.editing = true;
@@ -130,18 +138,14 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 		},
 	};
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		loginService: SessionService,
-		private formBuilder: FormBuilder,
-		private title: Title,
-		private messageService: MessageService,
-		private configService: AppConfigService,
-		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
-		private badgeManager: RecipientBadgeManager,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+		const loginService = inject(SessionService);
+
 		super(router, route, loginService);
 		this.updateData();
 

@@ -1,5 +1,5 @@
 import { FormBuilder, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SignupModel } from '../../models/signup-model.type';
 import { SignupService } from '../../services/signup.service';
@@ -44,6 +44,17 @@ import { OebHeaderText } from '~/components/oeb-header-text.component';
 	],
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
+	private title = inject(Title);
+	messageService = inject(MessageService);
+	configService = inject(AppConfigService);
+	sessionService = inject(SessionService);
+	signupService = inject(SignupService);
+	translate = inject(TranslateService);
+	oAuthManager = inject(OAuthManager);
+	private sanitizer = inject(DomSanitizer);
+	private renderer = inject(Renderer2);
+	private elementRef = inject(ElementRef);
+
 	// Translations
 	enterPassword = this.translate.instant('Signup.enterPassword');
 	passwordMustBe8Char = this.translate.instant('Signup.passwordMustBe8Char');
@@ -75,22 +86,16 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		return this.configService.theme;
 	}
 
-	constructor(
-		fb: FormBuilder,
-		private title: Title,
-		public messageService: MessageService,
-		public configService: AppConfigService,
-		public sessionService: SessionService,
-		public signupService: SignupService,
-		public translate: TranslateService,
-		public oAuthManager: OAuthManager,
-		private sanitizer: DomSanitizer,
-		private renderer: Renderer2,
-		private elementRef: ElementRef,
-		router: Router,
-		route: ActivatedRoute,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+		const title = this.title;
+
 		title.setTitle(`Signup - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}

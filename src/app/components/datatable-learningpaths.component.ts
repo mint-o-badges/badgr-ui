@@ -2,7 +2,7 @@ import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { RouterModule } from '@angular/router';
-import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, viewChild, inject } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { Issuer } from '../issuer/models/issuer.model';
@@ -130,6 +130,8 @@ import { NgIcon } from '@ng-icons/core';
 		</ng-template>`,
 })
 export class LearningPathDatatableComponent {
+	private translate = inject(TranslateService);
+
 	learningPaths = input.required<ApiLearningPath[]>();
 	issuer = input<Issuer | null>(null);
 	onDelete = output<string>();
@@ -185,5 +187,8 @@ export class LearningPathDatatableComponent {
 		enableSortingRemoval: false, // ensures at least one column is sorted
 	}));
 
-	constructor(private translate: TranslateService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 }

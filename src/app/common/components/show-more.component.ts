@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 
 @Component({
 	selector: 'show-more',
@@ -20,6 +20,8 @@ import { AfterViewChecked, Component, ElementRef, Input, ViewChild } from '@angu
 	`,
 })
 export class ShowMore implements AfterViewChecked {
+	private componentRef = inject(ElementRef);
+
 	@Input()
 	maxCollapsedHeight = 256;
 
@@ -41,7 +43,10 @@ export class ShowMore implements AfterViewChecked {
 		return this.componentRef.nativeElement as HTMLElement;
 	}
 
-	constructor(private componentRef: ElementRef) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	toggleOpen() {
 		this.isOpen = !this.isOpen;

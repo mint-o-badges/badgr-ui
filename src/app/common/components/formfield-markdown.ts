@@ -7,6 +7,7 @@ import {
 	SimpleChanges,
 	ViewChild,
 	ViewEncapsulation,
+	inject,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 
@@ -36,12 +37,15 @@ interface UploadResult {
 	imports: [LMarkdownEditorModule, FormsModule],
 })
 export class FormFieldMarkdown implements OnChanges, AfterViewInit {
+	private http = inject(HttpClient);
+	private configService = inject(AppConfigService);
+
 	markdown_content = '';
 
-	constructor(
-		private http: HttpClient,
-		private configService: AppConfigService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this.doUpload = this.doUpload.bind(this);
 	}
 

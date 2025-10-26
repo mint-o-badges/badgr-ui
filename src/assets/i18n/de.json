@@ -287,7 +287,7 @@
 		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Beispiel-Vorlage.csv''>Download CSV-Beispiel-Vorlage</a>",
 		"openInExcel": "Öffne sie in Excel",
 		"fillInList": "Lösche den Beispiel-Eintrag und fülle die beiden Tabellenspalten entsprechend mit <span class='tw-font-bold'>Vor- und Nachnamen*</span> sowie <span class='tw-font-bold'>E-Mail-Adressen</span> deiner Lernenden aus.",
-		"exportAsCSV": "Exportiere die Vorlage als CSV-Datei.",
+		"exportAsCSV": "Exportiere die Vorlage als CSV-Datei (Textcodierung: Unicode (UTF-8).",
 		"uploadCSV": "Lade deine CSV-Datei hoch:",
 		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { OAuthManager } from '../services/oauth-manager.service';
 
@@ -16,6 +16,9 @@ import { OAuthManager } from '../services/oauth-manager.service';
 	imports: [],
 })
 export class OAuthBannerComponent {
+	private messageService = inject(MessageService);
+	oAuthManager = inject(OAuthManager);
+
 	readonly authLinkBadgrLogoSrc = '../../../breakdown/static/images/logo.svg';
 
 	get authInfo() {
@@ -30,8 +33,8 @@ export class OAuthBannerComponent {
 		return this.oAuthManager.isAuthorizationInProgress;
 	}
 
-	constructor(
-		private messageService: MessageService,
-		public oAuthManager: OAuthManager,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 }

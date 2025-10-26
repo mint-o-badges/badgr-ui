@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
@@ -8,11 +8,15 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 	template: '',
 })
 export class LogoutComponent extends BaseRoutableComponent implements OnInit {
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		protected loginService: SessionService,
-	) {
+	protected loginService = inject(SessionService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
 	}
 

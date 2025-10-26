@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SafeHtml } from '@angular/platform-browser';
 import { CmsApiService } from '../../services/cms-api.service';
@@ -21,6 +21,11 @@ import { Subscription } from 'rxjs';
 	standalone: true,
 })
 export class CmsPageComponent implements OnInit, OnChanges, OnDestroy {
+	private route = inject(ActivatedRoute);
+	protected cmsApiService = inject(CmsApiService);
+	protected translate = inject(TranslateService);
+	private router = inject(Router);
+
 	apidata: CmsApiPage | CmsApiPost;
 	headline: SafeHtml;
 	image: string;
@@ -32,12 +37,10 @@ export class CmsPageComponent implements OnInit, OnChanges, OnDestroy {
 	notfound = false;
 	languageSubscription: Subscription | null;
 
-	constructor(
-		private route: ActivatedRoute,
-		protected cmsApiService: CmsApiService,
-		protected translate: TranslateService,
-		private router: Router,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	async setContent(slug: string, type: string) {
 		this.type = 'page';

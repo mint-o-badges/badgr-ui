@@ -61,20 +61,23 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 	],
 })
 export class NetworkBadgesComponent {
-	constructor(
-		private networkApiService: NetworkApiService,
-		private badgeClassService: BadgeClassManager,
-		private badgeClassApiService: BadgeClassApiService,
-		private userProfileManager: UserProfileManager,
-		private entityManager: CommonEntityManager,
-		private issuerManager: IssuerManager,
-		private networkManager: NetworkManager,
-		private messageService: MessageService,
-		private qrCodeApiService: QrCodeApiService,
-		private translate: TranslateService,
-		private router: Router,
-		private route: ActivatedRoute,
-	) {
+	private networkApiService = inject(NetworkApiService);
+	private badgeClassService = inject(BadgeClassManager);
+	private badgeClassApiService = inject(BadgeClassApiService);
+	private userProfileManager = inject(UserProfileManager);
+	private entityManager = inject(CommonEntityManager);
+	private issuerManager = inject(IssuerManager);
+	private networkManager = inject(NetworkManager);
+	private messageService = inject(MessageService);
+	private qrCodeApiService = inject(QrCodeApiService);
+	private translate = inject(TranslateService);
+	private router = inject(Router);
+	private route = inject(ActivatedRoute);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		effect(async () => {
 			const slug = this.network()?.slug;
 			if (!slug) {

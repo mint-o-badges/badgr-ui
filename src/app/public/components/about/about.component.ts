@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CmsPageComponent } from '~/common/components/cms/cms-page.component';
 
@@ -9,7 +9,12 @@ import { CmsPageComponent } from '~/common/components/cms/cms-page.component';
 	imports: [CmsPageComponent],
 })
 export class AboutComponent {
+	translate = inject(TranslateService);
+
 	mailAddress = 'support@openbadges.education';
 	mailBody = 'Interesse an Open Educational Badges';
-	constructor(public translate: TranslateService) {}
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+	constructor() {}
 }

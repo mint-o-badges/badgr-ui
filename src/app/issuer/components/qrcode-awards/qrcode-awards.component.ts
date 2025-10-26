@@ -45,12 +45,15 @@ import { Network } from '~/issuer/network.model';
 	],
 })
 export class QrCodeAwardsComponent implements OnChanges {
-	constructor(
-		private badgeRequestApiService: BadgeRequestApiService,
-		private qrCodeApiService: QrCodeApiService,
-		private router: Router,
-		private translate: TranslateService,
-	) {}
+	private badgeRequestApiService = inject(BadgeRequestApiService);
+	private qrCodeApiService = inject(QrCodeApiService);
+	private router = inject(Router);
+	private translate = inject(TranslateService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	getSvgFillColor(int: number) {
 		if (int === 0) {
