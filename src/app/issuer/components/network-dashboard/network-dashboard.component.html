@@ -6,12 +6,12 @@
 		<h1 hlmH1 class="tw-text-purple tw-font-black tw-mt-20">{{ 'Network.welcomeDashboard' | translate }}</h1>
 		<ng-template [bgAwaitPromises]="[networkLoaded]">
 			<section class="tw-flex tw-gap-4 tw-mt-8 tw-items-center">
-				<div class="tw-bg-white tw-w-[100px] tw-h-[100px]">
+				<div class="tw-bg-white tw-aspect-square tw-flex tw-items-center tw-justify-center">
 					<img width="70px" [src]="network().image" alt="Network Logo" />
 				</div>
 				<div class="tw-flex tw-flex-col">
 					<span class="tw-font-bold tw-text-3xl tw-text-oebblack">{{ network().name }}</span>
-					<span class="tw-text-oebblack tw-text-lg tw-font-semibold">
+					<span class="tw-text-oebblack tw-text-lg tw-font-semibold tw-mt-2">
 						{{
 							'Network.yourRole'
 								| translate
