@@ -226,6 +226,7 @@ export class OebIssuerDetailComponent implements OnInit {
 					badge,
 					this.issuer.name,
 					badge instanceof BadgeClass ? this.getRequestCount(badge, requestMap) : 0,
+					badge instanceof BadgeClass ? badge.recipientCount : 0,
 				),
 			);
 
@@ -280,7 +281,15 @@ export class OebIssuerDetailComponent implements OnInit {
 
 					const requestCount = requestMap.get(badgeClass.slug)?.length ?? 0;
 
-					const badgeResult = new BadgeResult(badgeClass, group.network_issuer.name, requestCount);
+					// Extract the awarded_count from the API response
+					const awardedCount = networkBadgeClass.awarded_count ?? 0;
+
+					const badgeResult = new BadgeResult(
+						badgeClass,
+						group.network_issuer.name,
+						requestCount,
+						awardedCount,
+					);
 
 					groupBadges.push(badgeResult);
 				}
@@ -309,7 +318,6 @@ export class OebIssuerDetailComponent implements OnInit {
 
 		if (this.sessionService.isLoggedIn) {
 			const sharedBadges = await this.issuerApiService.listSharedNetworkBadges(this.issuer.slug);
-
 			const uniqueBadgeClasses = new Map<string, ApiBadgeClassNetworkShare>();
 			sharedBadges.forEach((share) => {
 				if (!uniqueBadgeClasses.has(share.badgeclass.slug)) {
@@ -343,7 +351,12 @@ export class OebIssuerDetailComponent implements OnInit {
 				const badge = new BadgeClass(this.entityManager, share.badgeclass);
 				const issuerName = share.shared_by_issuer?.name || this.issuer.name;
 				const requestCount = this.getRequestCount(badge, requestMap);
-				const badgeResult = new BadgeResult(badge, issuerName, requestCount);
+				const badgeResult = new BadgeResult(
+					badge,
+					issuerName,
+					requestCount,
+					share.awarded_count_original_issuer,
+				);
 
 				const networkId = share.network.slug;
 
@@ -392,6 +405,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	async ngOnInit() {
+		// initialize counts as 0 and update after data has loaded
 		if (this.sessionService.isLoggedIn && this.issuer instanceof Issuer && this.issuer.currentUserStaffMember) {
 			await this.getLearningPathsForIssuerApi(this.issuer.slug);
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
@@ -405,7 +419,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			{
 				key: 'issuer-badges',
 				title: 'Issuer.issuerBadges',
-				count: this.badgeResults.length,
+				count: 0,
 				img: this.issuer.image,
 			},
 		];
@@ -417,6 +431,15 @@ export class OebIssuerDetailComponent implements OnInit {
 				icon: 'lucideShipWheel',
 			});
 		}
+
+		this.badgeTemplateTabs[0].count = this.badgeResults.length;
+		this.badgeTemplateTabs[1].count =
+			this.networkBadgeInstanceResults.reduce((sum, group) => {
+				return sum + (group.badges.length ?? 0);
+			}, 0) +
+			this.networkGroupsArray.reduce((sum, group) => {
+				return sum + (group.badges.length ?? 0);
+			}, 0);
 
 		this.tabs = [
 			{
@@ -578,5 +601,6 @@ export class BadgeResult {
 		public badge: BadgeClass | PublicApiBadgeClass,
 		public issuerName: string,
 		public requestCount: number,
+		public awardedCount: number,
 	) {}
 }

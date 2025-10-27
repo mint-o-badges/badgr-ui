@@ -214,18 +214,6 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		}
 	}
 
-	public openSuccessDialog() {
-		const dialogRef = this._hlmDialogService.open(DialogComponent, {
-			context: {
-				content: this.inviteSuccessContent,
-				variant: 'success',
-			},
-		});
-		this.dialogRef = dialogRef;
-	}
-
-	closeDialog() {}
-
 	async issuerSearchChange() {
 		if (this.issuerSearchQuery.length >= 3) {
 			this.issuersLoading = true;
@@ -275,14 +263,6 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 	collapseRoles() {
 		this.rightsAndRolesExpanded = !this.rightsAndRolesExpanded;
-	}
-
-	inviteInstitutions(issuers: Issuer[]) {
-		this.networkApiService.inviteInstitutions(this.network().slug, issuers).then((res) => {
-			if (res) {
-				this.openSuccessDialog();
-			}
-		});
 	}
 
 	get role() {

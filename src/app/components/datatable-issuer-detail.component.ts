@@ -144,7 +144,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 					<tbody hlmTBody>
 						@for (row of table.getRowModel().rows; track row.id; let i = $index) {
 							<tr hlmTr>
-								@if (downloadStates()[i]) {
+								@if (downloadStates()[row.original.slug]) {
 									<td hlmTd [colSpan]="3">
 										<loading-dots [showLoading]="false" />
 									</td>
@@ -258,7 +258,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 								})
 							"
 							text="{{ 'Issuer.pdfCertificate' | translate }}"
-							[disabled]="downloadStates()[context.row.index]"
+							[disabled]="downloadStates()[context.row.original.slug]"
 						/>
 						@if (issuer().canEditBadge) {
 							<oeb-button
@@ -278,7 +278,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 export class IssuerDetailDatatableComponent {
 	issuer = input<Issuer | Network>();
 	recipientCount = input<number>(0);
-	downloadStates = input<boolean[]>([]);
+	downloadStates = input<Record<string, boolean>>({});
 	awardInProgress = input<boolean>(false);
 	recipients = input.required<BadgeInstance[]>();
 	actionElement = output<BadgeInstance>();
