@@ -406,6 +406,7 @@
 		"addPartnerNext": "You can add your partner institutions in the next step.",
 		"welcomeDashboard": "Welcome to the dashboard of the network",
 		"inviteInstitutions": "Invite institutions to network",
+		"shortInviteInstitutions": "Invite institutions",
 		"addInstitutions": "Add institutions",
 		"rolesAndRights": "<span class='tw-text-link tw-underline'>Roles and rights</span> are transferred: The invitation email is sent to the owners of the institutions. <span class='tw-font-bold'>They will have corresponding rights within the network, such as creating network badges and adding additional partner organizations</span>.",
 		"addMember_owner": "Owner",
