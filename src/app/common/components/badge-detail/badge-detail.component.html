@@ -80,7 +80,7 @@
 				<div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-7 tw-relative md:tw-mx-0 tw-mx-auto">
 					<!-- Sidebar -->
 					<aside
-						class="md:tw-max-w-[346px] md:tw-min-w-[278px] tw-flex-grow md:tw-flex-shrink tw-p-6 tw-bg-lavender tw-rounded-lg"
+						class="md:tw-max-w-[356px] md:tw-min-w-[278px] tw-flex-grow md:tw-flex-shrink tw-p-6 tw-bg-lavender tw-rounded-lg"
 					>
 						<div class="tw-flex tw-flex-wrap tw-gap-4">
 							<div class="tw-flex-grow tw-flex-shrink">
@@ -152,7 +152,7 @@
 											class="tw-mb-6 tw-p-4 tw-gap-3 tw-flex tw-items-center oeb-slight-shadow tw-bg-white tw-rounded-lg"
 										>
 											<img
-												class="ttw-block tw-aspect-square tw-min-h-9 tw-max-h-14"
+												class="tw-block tw-aspect-square tw-min-h-9 tw-max-h-14"
 												[loaded-src]="issuer.image"
 												[loading-src]="config.issuerImagePlacholderUrl"
 												[error-src]="config.issuerImagePlacholderUrl"
@@ -173,7 +173,7 @@
 								@if (config.copy_permissions && !config.copy_permissions.includes('none')) {
 									<div
 										class="tw-flex tw-flex-row tw-text-oebblack tw-italic"
-										[class.tw-pb-4]="hasCriteria || config.competencies.length"
+										[class.tw-pb-2]="hasCriteria || config.competencies.length"
 									>
 										<dt [innerHTML]="('Badge.copyableFor' | translate) + ':&nbsp;'"></dt>
 										<dd
@@ -252,7 +252,9 @@
 										</div>
 									}
 									@if (config.version) {
-										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col tw-items-center">
+										<div
+											class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col md:tw-items-center tw-items-start"
+										>
 											<dt class="tw-text-sm tw-text-darkgray">
 												{{ 'Badge.standard' | translate }}
 											</dt>
@@ -313,8 +315,8 @@
 											<dt class="tw-text-sm tw-text-darkgray">
 												{{ 'RecBadgeDetail.awardedTo' | translate }}
 											</dt>
-											<dd class="tw-text-sm tw-break-words tw-font-medium">
-												&nbsp;{{ config.issuedTo }}
+											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+												{{ config.issuedTo }}
 											</dd>
 										</div>
 									}
