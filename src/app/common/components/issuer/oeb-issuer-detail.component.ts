@@ -106,17 +106,6 @@ export class OebIssuerDetailComponent implements OnInit {
 	userIsMember = false;
 	env = environment;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
-	constructor() {
-		if (this.sessionService.isLoggedIn) {
-			this.issuerManager.myIssuers$.subscribe((issuers) => {
-				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
-			});
-		}
-	}
-
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	isFullIssuer(issuer: Issuer | PublicApiIssuer): issuer is Issuer {
