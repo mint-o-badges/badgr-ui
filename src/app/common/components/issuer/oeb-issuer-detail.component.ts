@@ -431,17 +431,6 @@ export class OebIssuerDetailComponent implements OnInit {
 				icon: 'lucideShipWheel',
 			});
 		}
-		await this.loadData();
-	}
-
-	private async loadData() {
-		if (this.sessionService.isLoggedIn) {
-			await this.getLearningPathsForIssuerApi(this.issuer.slug);
-		} else {
-			await this.getPublicLearningPaths(this.issuer.slug);
-		}
-
-		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
 
 		this.badgeTemplateTabs[0].count = this.badgeResults.length;
 		this.badgeTemplateTabs[1].count =
