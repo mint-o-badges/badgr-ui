@@ -108,4 +108,5 @@ export interface ApiBadgeClassNetworkShare {
 	};
 	is_active: boolean;
 	awarded_count_original_issuer: number;
+	recipient_count: number;
 }
