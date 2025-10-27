@@ -79,6 +79,16 @@ import { DateRangeValidator } from '~/common/validators/date-range.validator';
 	],
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected eventsService = inject(EventsService);
+	protected issuerManager = inject(IssuerManager);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected badgeInstanceManager = inject(BadgeInstanceManager);
+	protected dialogService = inject(CommonDialogsService);
+	protected configService = inject(AppConfigService);
+	protected translate = inject(TranslateService);
+
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 
@@ -171,21 +181,14 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		// telephone: "Telephone",
 	};
 
-	constructor(
-		protected title: Title,
-		protected messageService: MessageService,
-		protected eventsService: EventsService,
-		protected issuerManager: IssuerManager,
-		protected badgeClassManager: BadgeClassManager,
-		protected badgeInstanceManager: BadgeInstanceManager,
-		protected dialogService: CommonDialogsService,
-		protected configService: AppConfigService,
-		protected translate: TranslateService,
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-	) {
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const title = this.title;
+
 		title.setTitle(`Award Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {

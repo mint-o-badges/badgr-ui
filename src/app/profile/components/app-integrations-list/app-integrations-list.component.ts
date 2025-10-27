@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -15,14 +15,18 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 	imports: [FormMessageComponent, AddCredentialsDialog, AppIntegrationDetailsDialog, TranslatePipe],
 })
 export class AppIntegrationListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		private dialogService: CommonDialogsService,
-		private applicationCredentialsService: ApplicationCredentialsService,
-		private translate: TranslateService,
-	) {
+	private dialogService = inject(CommonDialogsService);
+	private applicationCredentialsService = inject(ApplicationCredentialsService);
+	private translate = inject(TranslateService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
 	}
 

@@ -61,6 +61,17 @@ export class BadgeclassIssueBulkAwardConformation
 	extends BaseAuthenticatedRoutableComponent
 	implements OnDestroy, AfterViewChecked, OnInit
 {
+	protected badgeInstanceManager = inject(BadgeInstanceManager);
+	protected badgeInstanceApiService = inject(BadgeInstanceApiService);
+	protected sessionService: SessionService;
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected messageService = inject(MessageService);
+	protected formBuilder = inject(FormBuilder);
+	protected title = inject(Title);
+	protected taskService = inject(TaskPollingManagerService);
+	protected translate = inject(TranslateService);
+
 	@Input() transformedImportData: TransformedImportData;
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
@@ -86,19 +97,19 @@ export class BadgeclassIssueBulkAwardConformation
 
 	private focusedRow: BulkIssueData | null = null;
 
-	constructor(
-		protected badgeInstanceManager: BadgeInstanceManager,
-		protected badgeInstanceApiService: BadgeInstanceApiService,
-		protected sessionService: SessionService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected messageService: MessageService,
-		protected formBuilder: FormBuilder,
-		protected title: Title,
-		protected taskService: TaskPollingManagerService,
-		protected translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+
+		this.sessionService = sessionService;
+		this.router = router;
+		this.route = route;
 	}
 
 	ngOnInit(): void {

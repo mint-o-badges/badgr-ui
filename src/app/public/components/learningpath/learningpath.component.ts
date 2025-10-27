@@ -60,6 +60,19 @@ import { HlmH1, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 	],
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
+	private injector = inject(Injector);
+	embedService = inject(EmbedService);
+	configService = inject(AppConfigService);
+	publicService = inject(PublicApiService);
+	private learningPathApiService = inject(LearningPathApiService);
+	protected userProfileApiService = inject(UserProfileApiService);
+	protected recipientBadgeManager = inject(RecipientBadgeManager);
+	protected translate = inject(TranslateService);
+	protected sessionService = inject(SessionService);
+	private pdfService = inject(PdfService);
+	issuerManager = inject(IssuerManager);
+	private title = inject(Title);
+
 	learningPathSlug: string;
 	isParticipating: boolean = false;
 	learningPath: PublicApiLearningPath;
@@ -99,20 +112,12 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 	crumbs = [{ title: this.translate.instant('General.learningPaths'), routerLink: ['/catalog/learningpaths'] }];
 
-	constructor(
-		private injector: Injector,
-		public embedService: EmbedService,
-		public configService: AppConfigService,
-		public publicService: PublicApiService,
-		private learningPathApiService: LearningPathApiService,
-		protected userProfileApiService: UserProfileApiService,
-		protected recipientBadgeManager: RecipientBadgeManager,
-		protected translate: TranslateService,
-		protected sessionService: SessionService,
-		private pdfService: PdfService,
-		public issuerManager: IssuerManager,
-		private title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const injector = this.injector;
+
 		this.title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', async (paramValue) => {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -67,6 +67,14 @@ import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 	],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected configService = inject(AppConfigService);
+	protected badgeClassService = inject(BadgeClassManager);
+	protected catalogService = inject(CatalogService);
+	protected issuerService = inject(IssuerApiService);
+	private translate = inject(TranslateService);
+
 	@ViewChild('loadMore') loadMore: ElementRef | undefined;
 
 	readonly INPUT_DEBOUNCE_TIME = 400;
@@ -165,18 +173,16 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	]);
 	viewInitialized: boolean = false;
 
-	constructor(
-		protected title: Title,
-		protected messageService: MessageService,
-		protected configService: AppConfigService,
-		protected badgeClassService: BadgeClassManager,
-		protected catalogService: CatalogService,
-		protected issuerService: IssuerApiService,
-		router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+		const title = this.title;
+
 		title.setTitle(`Badges - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 

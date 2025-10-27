@@ -47,7 +47,7 @@
 		"aboutBadges": "Badges",
 		"hours": "Hours",
 		"minutes": "Minutes",
-		"characters": "Characters",
+		"characters": "characters",
 		"fileformats": "File Formats",
 		"show": "Show",
 		"hide": "Hide",
@@ -198,6 +198,7 @@
 		"noBadges": "No badges",
 		"recipient": "Recipient",
 		"recipients": "Recipients",
+		"recipientsViaThisInstitution": "Recipients <span class='tw-italic tw-font-normal'>(via this institution)</span>",
 		"noRecipient": "No recipient",
 		"createInstitution": "Create institution",
 		"createInstitutionNow": "Create institution now",
@@ -286,10 +287,10 @@
 		"multipleBadgeAwardHeadline": "Award badge to multiple learners simultaneously",
 		"uploadListText": "You can <span class='tw-font-bold'>import a list of recipients</span> who should receive the badge at the same time. Here's how:",
 		"downloadExampleCSV": "Download our file template:",
-		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Beispiel-Vorlage.csv''>Download CSV example template</a>",
+		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Sample-template.csv''>Download CSV example template</a>",
 		"openInExcel": "Open it in Excel",
 		"fillInList": "Delete the example entry and fill in the two table columns with the <span class='tw-font-bold'>first and last names*</span> and <span class='tw-font-bold'>email addresses</span> of your learners accordingly.",
-		"exportAsCSV": "Export the template as a CSV file.",
+		"exportAsCSV": "Export the template as a CSV file (text encoding: Unicode (UTF-8).",
 		"uploadCSV": "Upload your CSV file:",
 		"uploadFields": "Include email address, name, and evidence (optional)",
 		"uploadFormat": "CSV or TXT format",
@@ -425,8 +426,8 @@
 		"confirmInvitation": "Confirm invitation",
 		"networksHeadline": "All networks at a glance",
 		"noNetworks": "no networks",
-		"networkRegistered": "Network is registered on OEB",
-		"networksRegistered": "Networks are registered on OEB",
+		"networkRegistered": "network is registered on OEB",
+		"networksRegistered": "networks are registered on OEB",
 		"partners": "Network members",
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
 		"partnerIssuers": "Partners",
@@ -694,7 +695,8 @@
 		"newsletterEmail": "We have also sent you an email to confirm your newsletter subscription.",
 		"confirmNewsletter": "Click on <span class ='tw-font-bold'> “Confirm newsletter subscription” </span> in the newsletter email <br> to complete the newsletter registration.",
 		"newsletterEmailNotReceived": "You did not receive a newsletter email? Please submit your data via <br> our <a class='tw-underline tw-text-purple' href='public/about/newsletter'>newsletter registration form</a> or <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>write to us.</a>",
-		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Yes</span>, I would like to stay up to date and subscribe to the OEB newsletter."
+		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Yes</span>, I would like to stay up to date and subscribe to the OEB newsletter.",
+		"signingUp": "Signing up..."
 	},
 	"Captcha": {
 		"error": "Verification failed. Please try again.",
@@ -726,7 +728,8 @@
 		"newPassword": "New password",
 		"areYouNew": "No account yet?",
 		"yourEmail": "Your email address",
-		"yourPassword": "Your password"
+		"yourPassword": "Your password",
+		"loggingIn": "Logging in..."
 	},
 	"Legend": {
 		"legendTitle": "Legend",
@@ -1129,7 +1132,9 @@
 		"condition": "You <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges</span> to receive the Micro Degree.",
 		"learningPathWithMicroDegree": "Learning path with Micro Degree Badge",
 		"confirmDelete": "Are you sure you want to delete this learning path?",
-		"deleteMd": "Delete learning path"
+		"deleteMd": "Delete learning path",
+		"institution": "institution",
+		"institutions": "institutions"
 	},
 	"LearningPathEditor": {
 		"shortDescriptionLine1": "Summary description of the learning program.",

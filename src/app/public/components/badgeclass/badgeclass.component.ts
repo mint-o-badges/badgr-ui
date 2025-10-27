@@ -41,6 +41,17 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 	],
 })
 export class PublicBadgeClassComponent implements OnInit {
+	private injector = inject(Injector);
+	configService = inject(AppConfigService);
+	private title = inject(Title);
+	private sessionService = inject(SessionService);
+	private recipientBadgeApiService = inject(RecipientBadgeApiService);
+	private translate = inject(TranslateService);
+	protected issuerManager = inject(IssuerManager);
+	private router = inject(Router);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected userProfileManager = inject(UserProfileManager);
+
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -72,18 +83,14 @@ export class PublicBadgeClassComponent implements OnInit {
 
 	badgeClassPromise: Promise<PublicApiBadgeClassWithIssuer>;
 
-	constructor(
-		private injector: Injector,
-		public configService: AppConfigService,
-		private title: Title,
-		private sessionService: SessionService,
-		private recipientBadgeApiService: RecipientBadgeApiService,
-		private translate: TranslateService,
-		protected issuerManager: IssuerManager,
-		private router: Router,
-		protected badgeClassManager: BadgeClassManager,
-		protected userProfileManager: UserProfileManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const injector = this.injector;
+		const title = this.title;
+		const badgeClassManager = this.badgeClassManager;
+
 		title.setTitle(`Badge Class - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.badgeIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'badgeId', async (paramValue) => {

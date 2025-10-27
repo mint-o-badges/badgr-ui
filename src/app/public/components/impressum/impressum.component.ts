@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { uiTimestamp } from '../../../../environments/timestamp';
 import { ServerTimestampService } from '../../../common/services/server-timestamp.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
@@ -10,9 +10,16 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 	imports: [FormMessageComponent],
 })
 export class ImpressumComponent {
+	protected serverTimestampService = inject(ServerTimestampService);
+
 	uiTimestamp = uiTimestamp;
 	serverTimestamp = '?';
-	constructor(protected serverTimestampService: ServerTimestampService) {
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+	constructor() {
+		const serverTimestampService = this.serverTimestampService;
+
 		serverTimestampService.getServerTimestamp().then(
 			(ts) => {
 				this.serverTimestamp = ts;

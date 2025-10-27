@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, inject } from '@angular/core';
 
 import { Issuer } from '../../issuer/models/issuer.model';
 import { preloadImageURL } from '../util/file-util';
@@ -21,6 +21,8 @@ import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status
 	imports: [BgImageStatusPlaceholderDirective],
 })
 export class BgIssuerLinkComponent implements OnChanges {
+	private elemRef = inject(ElementRef);
+
 	readonly issuerPlaceholderImageSrc = preloadImageURL(
 		'../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -28,7 +30,10 @@ export class BgIssuerLinkComponent implements OnChanges {
 	@Input()
 	bgIssuerLink: Issuer;
 
-	constructor(private elemRef: ElementRef) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngOnChanges() {
 		if (!this.bgIssuerLink || !this.bgIssuerLink.websiteUrl) {

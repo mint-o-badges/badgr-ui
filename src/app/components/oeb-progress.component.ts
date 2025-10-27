@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ChangeDetectorRef, inject } from '@angular/core';
 import { BrnProgress, BrnProgressIndicator } from '@spartan-ng/brain/progress';
 import { HlmProgressIndicator } from './spartan/ui-progress-helm/src';
 import { NgTemplateOutlet } from '@angular/common';
@@ -16,11 +16,16 @@ import { NgTemplateOutlet } from '@angular/common';
 	`,
 })
 export class OebProgressComponent implements OnInit {
+	private cdr = inject(ChangeDetectorRef);
+
 	@Input() value: number;
 	@Input() class: string = '';
 	@Input() template?: TemplateRef<any>;
 
-	constructor(private cdr: ChangeDetectorRef) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 	progressValue = 0;
 
 	ngOnInit() {

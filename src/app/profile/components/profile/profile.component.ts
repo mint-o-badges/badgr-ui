@@ -1,4 +1,4 @@
-import { Component, computed, OnDestroy, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, computed, OnDestroy, OnInit, signal, TemplateRef, viewChild, inject } from '@angular/core';
 import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -63,6 +63,15 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 	],
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
+	protected router: Router;
+	protected sessionService: SessionService;
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected profileManager = inject(UserProfileManager);
+	protected dialogService = inject(CommonDialogsService);
+	protected configService = inject(AppConfigService);
+	private translate = inject(TranslateService);
+
 	emails = signal<UserProfileEmail[]>([]);
 	menuItems = computed(() => this.emails().map((x) => this.menuItemsForEmail(x)));
 	emailForm = typedFormGroup().addControl('email', '', [Validators.required, EmailValidator.validEmail]);
@@ -118,18 +127,19 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		enableSortingRemoval: false, // ensures at least one column is sorted
 	}));
 
-	constructor(
-		protected router: Router,
-		route: ActivatedRoute,
-		protected sessionService: SessionService,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected profileManager: UserProfileManager,
-		protected dialogService: CommonDialogsService,
-		protected configService: AppConfigService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+		const sessionService = inject(SessionService);
+
 		super(router, route, sessionService);
+		this.router = router;
+		this.sessionService = sessionService;
+		const title = this.title;
+
 		title.setTitle(`Profile - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 

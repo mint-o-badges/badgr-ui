@@ -16,19 +16,23 @@ import { SessionService } from '../../../../common/services/session.service';
 	imports: [TranslatePipe],
 })
 export class NewsletterComponent extends BaseRoutableComponent implements OnInit {
+	private translate = inject(TranslateService);
+	private userProfileApiService = inject(UserProfileApiService);
+	private sessionService = inject(SessionService);
+	private renderer = inject(Renderer2);
+	private elementRef = inject(ElementRef);
+
 	newsletterForm = typedFormGroup({})
 		.addControl('email', '', Validators.required)
 		.addControl('firstName', '', Validators.required)
 		.addControl('lastName', '', Validators.required);
-	constructor(
-		private translate: TranslateService,
-		private userProfileApiService: UserProfileApiService,
-		private sessionService: SessionService,
-		private renderer: Renderer2,
-		private elementRef: ElementRef,
-		router: Router,
-		route: ActivatedRoute,
-	) {
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
 	}
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BadgrApiError, BaseHttpApiService } from './base-http-api.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AppConfigService } from '../app-config.service';
@@ -11,13 +11,26 @@ const ENDPOINT = 'v3/user/preferences';
 	providedIn: 'root',
 })
 export class UserPreferenceService extends BaseHttpApiService {
-	constructor(
-		protected sessionService: SessionService,
-		protected httpClient: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-	) {
+	protected sessionService: SessionService;
+	protected httpClient: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const httpClient = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(sessionService, httpClient, configService, messageService);
+
+		this.sessionService = sessionService;
+		this.httpClient = httpClient;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	/**

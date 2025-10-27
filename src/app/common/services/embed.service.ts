@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { QueryParametersService } from './query-parameters.service';
 
 /**
@@ -6,13 +6,20 @@ import { QueryParametersService } from './query-parameters.service';
  */
 @Injectable({ providedIn: 'root' })
 export class EmbedService {
+	private paramService = inject(QueryParametersService);
+
 	readonly embedVersion: number | null;
 	readonly embedSize: {
 		width: number;
 		height: number;
 	} | null;
 
-	constructor(private paramService: QueryParametersService) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const paramService = this.paramService;
+
 		this.embedVersion = parseFloat(paramService.queryStringValue('embedVersion', true)) || null;
 
 		if (this.embedVersion) {

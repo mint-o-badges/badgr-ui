@@ -3,13 +3,13 @@
 		<bg-breadcrumbs [linkentries]="linkentries"></bg-breadcrumbs>
 	</nav>
 
-	<header>
-		<h2 class="tw-text-purple tw-mt-20 tw-uppercase tw-text-[22px] tw-font-bold tw-leading-[120%]">
+	<header class="tw-relative">
+		<h2 class="tw-text-purple tw-mt-20 tw-mb-8 tw-uppercase tw-text-[22px] tw-font-bold tw-leading-[120%]">
 			{{ 'General.network' | translate }}
 		</h2>
 
 		<section class="tw-flex tw-justify-between tw-gap-6 oeb" aria-labelledby="network-info">
-			<div class="tw-flex md:tw-max-w-[70%] tw-items-center">
+			<div class="tw-flex md:tw-max-w-[70%]">
 				<figure class="tw-relative">
 					<img
 						[loaded-src]="network?.image"
@@ -38,11 +38,14 @@
 				</hgroup>
 			</div>
 
-			<aside class="tw-w-auto tw-hidden md:tw-grid !tw-content-center" aria-label="Network actions and partners">
+			<aside
+				class="tw-w-auto tw-hidden md:tw-grid !tw-content-center tw-absolute tw-right-0 tw-top-8"
+				aria-label="Network actions and partners"
+			>
 				@if (public) {
 					<nav aria-label="Network actions" class="tw-flex tw-flex-col tw-gap-2">
 						<oeb-button
-							width="full_width"
+							width="min_320"
 							class="tw-whitespace-nowrap"
 							(click)="routeToUrl(network.url)"
 							[text]="'Network.website' | translate"
@@ -53,6 +56,7 @@
 							class="tw-whitespace-nowrap"
 							[text]="'Issuer.memberView' | translate"
 							variant="secondary"
+							width="min_320"
 						>
 						</oeb-button>
 					</nav>
@@ -62,7 +66,10 @@
 					class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-4 tw-flex tw-flex-col tw-justify-center tw-items-center"
 					aria-labelledby="partners-heading"
 				>
-					<h2 id="partners-heading" class="tw-w-full tw-text-oebblack tw-text-lg tw-font-bold">
+					<h2
+						id="partners-heading"
+						class="tw-w-full tw-text-oebblack tw-text-lg tw-font-semibold tw-uppercase"
+					>
 						{{ 'Network.partner' | translate }}
 					</h2>
 					<ul class="tw-w-full tw-list-none tw-mt-2" role="list">
@@ -86,9 +93,9 @@
 		</section>
 	</header>
 
-	<section aria-labelledby="description-heading">
+	<section aria-labelledby="description-heading" class="tw-mt-4 tw-pr-[280px]">
 		<h2 id="description-heading" class="tw-sr-only">Network Description</h2>
-		<p class="tw-text-oebblack tw-text-lg oeb-break-words tw-py-4 tw-max-w-[80%]">
+		<p class="tw-text-oebblack tw-text-lg oeb-break-words tw-max-w-[80%]">
 			{{ network.description }}
 		</p>
 	</section>

@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { IssuerApiService } from './issuer-api.service';
 import { Issuer } from '../models/issuer.model';
 import {
@@ -17,6 +17,10 @@ import { Network } from '../network.model';
 
 @Injectable({ providedIn: 'root' })
 export class IssuerManager {
+	issuerApiService = inject(IssuerApiService);
+	networkApiService = inject(NetworkApiService);
+	commonEntityManager = inject(CommonEntityManager);
+
 	issuersList = new StandaloneEntitySet<Issuer, ApiIssuer>(
 		(apiModel) => new Issuer(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
@@ -35,12 +39,10 @@ export class IssuerManager {
 		() => this.issuerApiService.listAllIssuers(),
 	);
 
-	constructor(
-		public issuerApiService: IssuerApiService,
-		public networkApiService: NetworkApiService,
-		@Inject(forwardRef(() => CommonEntityManager))
-		public commonEntityManager: CommonEntityManager,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	createIssuer(initialIssuer: ApiIssuerForCreation): Promise<Issuer> {
 		return this.issuerApiService

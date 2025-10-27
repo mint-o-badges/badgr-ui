@@ -1,14 +1,4 @@
-import {
-	Component,
-	Input,
-	OnInit,
-	Output,
-	EventEmitter,
-	ViewChild,
-	inject,
-	TemplateRef,
-	AfterViewInit,
-} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild, inject, TemplateRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -84,7 +74,22 @@ import { environment } from 'src/environments/environment';
 		NgTemplateOutlet,
 	],
 })
-export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
+export class OebIssuerDetailComponent implements OnInit {
+	private router = inject(Router);
+	translate = inject(TranslateService);
+	protected messageService = inject(MessageService);
+	protected title = inject(Title);
+	protected issuerManager = inject(IssuerManager);
+	protected profileManager = inject(UserProfileManager);
+	protected entityManager = inject(CommonEntityManager);
+	private configService = inject(AppConfigService);
+	private learningPathApiService = inject(LearningPathApiService);
+	private qrCodeApiService = inject(QrCodeApiService);
+	private sessionService = inject(SessionService);
+	private networkApiService = inject(NetworkApiService);
+	private issuerApiService = inject(IssuerApiService);
+	private publicApiService = inject(PublicApiService);
+
 	@Input() issuer: Issuer | PublicApiIssuer;
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
@@ -101,22 +106,10 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	userIsMember = false;
 	env = environment;
 
-	constructor(
-		private router: Router,
-		public translate: TranslateService,
-		protected messageService: MessageService,
-		protected title: Title,
-		protected issuerManager: IssuerManager,
-		protected profileManager: UserProfileManager,
-		protected entityManager: CommonEntityManager,
-		private configService: AppConfigService,
-		private learningPathApiService: LearningPathApiService,
-		private qrCodeApiService: QrCodeApiService,
-		private sessionService: SessionService,
-		private networkApiService: NetworkApiService,
-		private issuerApiService: IssuerApiService,
-		private publicApiService: PublicApiService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		if (this.sessionService.isLoggedIn) {
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
 				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
@@ -172,21 +165,6 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 	@ViewChild('issuerBadgesTemplate', { static: false }) issuerBadgesTemplate: TemplateRef<any>;
 	@ViewChild('networkBadgesTemplate', { static: false }) networkBadgesTemplate: TemplateRef<any>;
 
-	ngAfterViewInit() {
-		this.tabs = [
-			{
-				key: 'badges',
-				title: 'Badges',
-				component: this.badgesTemplate,
-			},
-			{
-				key: 'micro-degrees',
-				title: 'LearningPath.learningpathsPlural',
-				component: this.learningPathTemplate,
-			},
-		];
-	}
-
 	badgeResults: BadgeResult[] = [];
 	networkBadgeInstanceResults: NetworkBadgeGroup[] = [];
 	maxDisplayedResults = 100;
@@ -228,25 +206,35 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		}
 		const requestMap = await this.requestsLoaded;
 
-		const addBadgeToResults = async (badge: BadgeClass) => {
+		const addBadgeToResults = async (badge: BadgeClass | PublicApiBadgeClass) => {
 			if (this.badgeResults.length > this.maxDisplayedResults) {
 				return false;
 			}
-			if (badge.extension && badge.extension['extensions:CategoryExtension'].Category === 'learningpath') {
-				return false;
+
+			if (badge instanceof BadgeClass) {
+				if (badge.extension && badge.extension['extensions:CategoryExtension'].Category === 'learningpath') {
+					return false;
+				}
+
+				if (badge.isNetworkBadge || badge.sharedOnNetwork) {
+					return false;
+				}
 			}
 
-			if (badge.isNetworkBadge || badge.sharedOnNetwork) {
-				return false;
-			}
-
-			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, this.getRequestCount(badge, requestMap)));
+			this.badgeResults.push(
+				new BadgeResult(
+					badge,
+					this.issuer.name,
+					badge instanceof BadgeClass ? this.getRequestCount(badge, requestMap) : 0,
+					badge instanceof BadgeClass ? badge.recipientCount : 0,
+				),
+			);
 
 			return true;
 		};
 
 		this.badges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
+		this.badgeResults.sort(this.sortBadgeResult);
 	}
 
 	private async updateNetworkResults() {
@@ -293,12 +281,20 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 
 					const requestCount = requestMap.get(badgeClass.slug)?.length ?? 0;
 
-					const badgeResult = new BadgeResult(badgeClass, group.network_issuer.name, requestCount);
+					// Extract the awarded_count from the API response
+					const awardedCount = networkBadgeClass.awarded_count ?? 0;
+
+					const badgeResult = new BadgeResult(
+						badgeClass,
+						group.network_issuer.name,
+						requestCount,
+						awardedCount,
+					);
 
 					groupBadges.push(badgeResult);
 				}
 
-				groupBadges.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
+				groupBadges.sort(this.sortBadgeResult);
 
 				this.networkBadgeInstanceResults.push({
 					issuerName: group.network_issuer.name,
@@ -308,9 +304,9 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 			}
 
 			this.networkBadgeInstanceResults.sort((a, b) => {
-				const aTime = a.badges[0]?.badge.createdAt.getTime() ?? 0;
-				const bTime = b.badges[0]?.badge.createdAt.getTime() ?? 0;
-				return bTime - aTime;
+				const aBadge = a.badges[0];
+				const bBadge = b.badges[0];
+				return this.sortBadgeResult(aBadge, bBadge);
 			});
 		} catch (error) {
 			console.error('Error loading network badge groups:', error);
@@ -322,7 +318,6 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 
 		if (this.sessionService.isLoggedIn) {
 			const sharedBadges = await this.issuerApiService.listSharedNetworkBadges(this.issuer.slug);
-
 			const uniqueBadgeClasses = new Map<string, ApiBadgeClassNetworkShare>();
 			sharedBadges.forEach((share) => {
 				if (!uniqueBadgeClasses.has(share.badgeclass.slug)) {
@@ -356,7 +351,12 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 				const badge = new BadgeClass(this.entityManager, share.badgeclass);
 				const issuerName = share.shared_by_issuer?.name || this.issuer.name;
 				const requestCount = this.getRequestCount(badge, requestMap);
-				const badgeResult = new BadgeResult(badge, issuerName, requestCount);
+				const badgeResult = new BadgeResult(
+					badge,
+					issuerName,
+					requestCount,
+					share.awarded_count_original_issuer,
+				);
 
 				const networkId = share.network.slug;
 
@@ -396,9 +396,21 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 		}
 	}
 
+	private sortBadgeResult(a: BadgeResult, b: BadgeResult) {
+		const aTime =
+			a.badge instanceof BadgeClass ? a.badge.createdAt.getTime() : new Date(a.badge.created_at).getTime();
+		const bTime =
+			b.badge instanceof BadgeClass ? b.badge.createdAt.getTime() : new Date(b.badge.created_at).getTime();
+		return bTime - aTime;
+	}
+
 	async ngOnInit() {
-		if (this.sessionService.isLoggedIn) {
+		// initialize counts as 0 and update after data has loaded
+		if (this.sessionService.isLoggedIn && this.issuer instanceof Issuer && this.issuer.currentUserStaffMember) {
 			await this.getLearningPathsForIssuerApi(this.issuer.slug);
+			this.issuerManager.myIssuers$.subscribe((issuers) => {
+				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
+			});
 		} else {
 			await this.getPublicLearningPaths(this.issuer.slug);
 		}
@@ -407,7 +419,7 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 			{
 				key: 'issuer-badges',
 				title: 'Issuer.issuerBadges',
-				count: this.badgeResults.length,
+				count: 0,
 				img: this.issuer.image,
 			},
 		];
@@ -419,6 +431,39 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 				icon: 'lucideShipWheel',
 			});
 		}
+		await this.loadData();
+	}
+
+	private async loadData() {
+		if (this.sessionService.isLoggedIn) {
+			await this.getLearningPathsForIssuerApi(this.issuer.slug);
+		} else {
+			await this.getPublicLearningPaths(this.issuer.slug);
+		}
+
+		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
+
+		this.badgeTemplateTabs[0].count = this.badgeResults.length;
+		this.badgeTemplateTabs[1].count =
+			this.networkBadgeInstanceResults.reduce((sum, group) => {
+				return sum + (group.badges.length ?? 0);
+			}, 0) +
+			this.networkGroupsArray.reduce((sum, group) => {
+				return sum + (group.badges.length ?? 0);
+			}, 0);
+
+		this.tabs = [
+			{
+				key: 'badges',
+				title: 'Badges',
+				component: this.badgesTemplate,
+			},
+			{
+				key: 'micro-degrees',
+				title: 'LearningPath.learningpathsPlural',
+				component: this.learningPathTemplate,
+			},
+		];
 	}
 
 	delete(event) {
@@ -523,8 +568,8 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 			.then(
 				(learningPaths) =>
 					(this.learningPaths = learningPaths
-						.filter((l) => l.activated)
-						.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())),
+						.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+						.filter((lp) => (this.public ? lp.activated : true))),
 			);
 	}
 
@@ -564,8 +609,9 @@ export class OebIssuerDetailComponent implements OnInit, AfterViewInit {
 
 export class BadgeResult {
 	constructor(
-		public badge: BadgeClass,
+		public badge: BadgeClass | PublicApiBadgeClass,
 		public issuerName: string,
 		public requestCount: number,
+		public awardedCount: number,
 	) {}
 }

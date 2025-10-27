@@ -1,140 +1,159 @@
-<div class="tw-flex tw-justify-between tw-gap-6">
-	<div class="tw-flex oeb-section-sm md:tw-max-w-[70%]">
-		<div class="tw-relative">
-			<img
-				[loaded-src]="issuer?.image"
-				[loading-src]="issuerPlaceholderSrc"
-				[error-src]="issuerPlaceholderSrc"
-				alt="{{ issuer.name }} avatar"
-				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
-			/>
-		</div>
-		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%] oeb-break-words">
-			<h1 hlmH1 class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
-				{{ issuer.name }}
-			</h1>
-			<ng-container *ngIf="!public && isFullIssuer(issuer)">
-				<p
-					class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
-				>
-					{{ 'Issuer.yourRole' | translate }}
-					{{ issuer.currentUserStaffMember?.roleInfo.label | translate }}
-				</p>
-			</ng-container>
-		</div>
-	</div>
-	<div class="tw-w-auto tw-hidden md:tw-grid !tw-content-center">
-		<p
-			*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
-			class="u-margin-top1x u-width-paragraph"
-		>
-			{{ 'Issuer.nichtVerified' | translate }}
-		</p>
-		<div class="tw-flex tw-gap-2">
-			<oeb-button
-				class="tw-whitespace-nowrap"
-				*ngIf="!public"
-				[routerLink]="activeTab === 'badges' ? ['./badges/select'] : ['./learningpaths/create']"
-				[disabled]="isFullIssuer(issuer) && !issuer.canCreateBadge"
-				[text]="
-					activeTab === 'badges'
-						? ('Issuer.createBadge' | translate)
-						: ('Issuer.myInstitutionsCreateLearningPath' | translate)
-				"
-				[class]="isFullIssuer(issuer) && issuer.canCreateBadge ? '' : 'disabled'"
-				[umamiEvent]="'create-badge'"
-			>
-			</oeb-button>
-			<div *ngIf="public" class="tw-flex tw-flex-col tw-gap-2">
-				<oeb-button
-					*ngIf="userIsMember"
-					class="tw-whitespace-nowrap"
-					(click)="routeToMemberView()"
-					[text]="'Issuer.memberView' | translate"
-					variant="secondary"
-				>
-				</oeb-button>
-				<oeb-button
-					class="tw-whitespace-nowrap"
-					*ngIf="public"
-					(click)="routeToUrl(issuer.url)"
-					[text]="'General.website' | translate"
-				>
-				</oeb-button>
-
-				<!-- Network section -->
-				@if (env.networksEnabled && networks.length) {
-					<section
-						class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
+<header class="tw-relative">
+	<div class="tw-flex tw-justify-between tw-gap-6">
+		<div class="tw-flex oeb-section-sm md:tw-max-w-[70%]">
+			<figure class="tw-relative">
+				<img
+					[loaded-src]="issuer?.image"
+					[loading-src]="issuerPlaceholderSrc"
+					[error-src]="issuerPlaceholderSrc"
+					alt="{{ issuer.name }} avatar"
+					class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
+				/>
+			</figure>
+			<hgroup class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%] oeb-break-words">
+				<h1 hlmH1 class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
+					{{ issuer.name }}
+				</h1>
+				<ng-container *ngIf="!public && isFullIssuer(issuer)">
+					<p
+						class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
 					>
-						<div>
-							<h2 class="tw-w-full tw-text-lg tw-font-boldtw-text-lg tw-text-oebblack tw-font-bold">
+						{{ 'Issuer.yourRole' | translate }}
+						{{ issuer.currentUserStaffMember?.roleInfo.label | translate }}
+					</p>
+				</ng-container>
+			</hgroup>
+		</div>
+
+		<aside class="tw-w-auto tw-hidden md:tw-grid !tw-content-center tw-absolute tw-right-0 tw-top-0">
+			<p
+				*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
+				class="u-margin-top1x u-width-paragraph"
+			>
+				{{ 'Issuer.nichtVerified' | translate }}
+			</p>
+			<div class="tw-flex tw-gap-2">
+				<oeb-button
+					class="tw-whitespace-nowrap"
+					*ngIf="!public"
+					[routerLink]="activeTab === 'badges' ? ['./badges/select'] : ['./learningpaths/create']"
+					[disabled]="isFullIssuer(issuer) && !issuer.canCreateBadge"
+					[text]="
+						activeTab === 'badges'
+							? ('Issuer.createBadge' | translate)
+							: ('Issuer.myInstitutionsCreateLearningPath' | translate)
+					"
+					[class]="isFullIssuer(issuer) && issuer.canCreateBadge ? '' : 'disabled'"
+					[umamiEvent]="'create-badge'"
+				>
+				</oeb-button>
+				<div *ngIf="public" class="tw-flex tw-flex-col tw-gap-2">
+					<oeb-button
+						*ngIf="userIsMember"
+						class="tw-whitespace-nowrap"
+						(click)="routeToMemberView()"
+						[text]="'Issuer.memberView' | translate"
+						variant="secondary"
+					>
+					</oeb-button>
+					<oeb-button
+						class="tw-whitespace-nowrap"
+						*ngIf="public"
+						(click)="routeToUrl(issuer.url)"
+						[text]="'General.website' | translate"
+					>
+					</oeb-button>
+
+					<!-- Network section -->
+					@if (env.networksEnabled && networks.length) {
+						<section
+							class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-4 tw-flex tw-flex-col tw-justify-center tw-items-center"
+							aria-labelledby="networks-heading"
+						>
+							<h2 id="networks-heading" class="tw-w-full tw-text-lg tw-text-oebblack tw-font-bold">
 								{{ 'Issuer.partOfNetwork' | translate }}
 							</h2>
-							<ul class="tw-w-full tw-list-none tw-mt-2">
+							<ul class="tw-w-full tw-list-none tw-mt-2" role="list">
 								@for (network of networks; track network) {
-									<li
-										class="tw-flex tw-gap-2 tw-items-center"
-										[routerLink]="['/public/networks', network.slug]"
-									>
-										<img class="tw-w-[33px]" [src]="network.image" />
-										<span class="tw-text-oebblack">
-											{{ network.name }}
-										</span>
+									<li class="tw-flex tw-gap-2 tw-items-center tw-mt-2">
+										<a
+											[routerLink]="['/public/networks', network.slug]"
+											class="tw-flex tw-gap-2 tw-items-center tw-no-underline hover:tw-underline"
+											[attr.aria-label]="'Visit ' + network.name + ' network'"
+										>
+											<img
+												class="tw-w-[33px]"
+												[src]="network.image"
+												[alt]="network.name + ' logo'"
+											/>
+											<span class="tw-text-oebblack">
+												{{ network.name }}
+											</span>
+										</a>
 									</li>
 								}
 							</ul>
-						</div>
-					</section>
-				}
+						</section>
+					}
 
-				<!-- Partner Issuers section -->
-				@if (env.networksEnabled && partner_issuers.length) {
-					<section
-						class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
-					>
-						<div>
-							<h2 class="tw-w-full tw-text-lg tw-font-boldtw-text-lg tw-text-oebblack tw-font-bold">
+					<!-- Partner Issuers section -->
+					@if (env.networksEnabled && partner_issuers.length) {
+						<section
+							class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-4 tw-flex tw-flex-col tw-justify-center tw-items-center"
+							aria-labelledby="partners-heading"
+						>
+							<h2 id="partners-heading" class="tw-w-full tw-text-lg tw-text-oebblack tw-font-bold">
 								{{ 'Network.partner' | translate }}
 							</h2>
-							<ul class="tw-w-full tw-list-none tw-mt-2">
+							<ul class="tw-w-full tw-list-none tw-mt-2" role="list">
 								@for (partner of partner_issuers; track partner) {
-									<li
-										class="tw-flex tw-gap-2 tw-items-center"
-										[routerLink]="['/public/issuers', partner.slug]"
-									>
-										<img class="tw-w-[33px]" [src]="partner.image" />
-										<span class="tw-text-oebblack">
-											{{ partner.name }}
-										</span>
+									<li class="tw-flex tw-gap-2 tw-items-center tw-mt-2">
+										<a
+											[routerLink]="['/public/issuers', partner.slug]"
+											class="tw-flex tw-gap-2 tw-items-center tw-no-underline hover:tw-underline"
+											[attr.aria-label]="'Visit ' + partner.name + ' profile'"
+										>
+											<img
+												class="tw-w-[33px]"
+												[src]="partner.image"
+												[alt]="partner.name + ' logo'"
+											/>
+											<span class="tw-text-oebblack">
+												{{ partner.name }}
+											</span>
+										</a>
 									</li>
 								}
 							</ul>
-						</div>
-					</section>
-				}
+						</section>
+					}
+				</div>
+				<oeb-dropdown
+					[trigger]="svgTrigger"
+					class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
+					*ngIf="menuItemsPublic && isFullIssuer(issuer) && issuer.canUpdateDeleteIssuer"
+					[menuItems]="public ? menuItemsPublic : menuItems"
+				></oeb-dropdown>
+				<ng-template #svgTrigger>
+					<svg
+						class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+						fill="var(--color-purple)"
+						icon="icon_more"
+					></svg>
+					<span class="visuallyhidden">Mehr</span>
+				</ng-template>
 			</div>
-			<oeb-dropdown
-				[trigger]="svgTrigger"
-				class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
-				*ngIf="menuItemsPublic && isFullIssuer(issuer) && issuer.canUpdateDeleteIssuer"
-				[menuItems]="public ? menuItemsPublic : menuItems"
-			></oeb-dropdown>
-			<ng-template #svgTrigger>
-				<svg
-					class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
-					fill="var(--color-purple)"
-					icon="icon_more"
-				></svg>
-				<span class="visuallyhidden">Mehr</span>
-			</ng-template>
-		</div>
+		</aside>
 	</div>
-</div>
-<div>
-	<p class="tw-text-oebblack oeb-break-words tw-py-4">{{ issuer.description }}</p>
-</div>
-<div class="topbar-x-buttons tw-grid md:tw-hidden">
+</header>
+
+<section aria-labelledby="description-heading" class="tw-mt-4 md:tw-pr-[280px]">
+	<h2 id="description-heading" class="tw-sr-only">Issuer Description</h2>
+	<p class="tw-text-oebblack tw-text-lg oeb-break-words">{{ issuer.description }}</p>
+</section>
+
+<!-- Mobile buttons section -->
+<div class="topbar-x-buttons tw-grid md:tw-hidden tw-mt-4">
 	<p
 		*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
 		class="u-margin-top1x u-width-paragraph"
@@ -184,7 +203,7 @@
 	</div>
 </div>
 
-<div class="oeb-section-sm">
+<div class="oeb-section-sm md:tw-pr-[280px]">
 	<oeb-tabs
 		[variant]="'lightpurple'"
 		(onTabChanged)="onTabChange($event)"
@@ -197,6 +216,7 @@
 			<div class="tw-mt-12">
 				<oeb-tabs
 					[variant]="'bluebackground'"
+					[width]="'min_max'"
 					(onTabChanged)="onNestedTabChange($event)"
 					[tabs]="badgeTemplateTabs"
 					[activeTab]="activeTabBadgeTemplate"
@@ -256,9 +276,8 @@
 										[studyLoad]="calculateStudyLoad(lp)"
 										[completed]="false"
 										[requested]="lp.requested"
-										[progress]="lp.progress"
 										[matchOrProgress]="undefined"
-										[badgeImage]="$any(lp).image"
+										[badgeImage]="lp.participationBadge_image"
 									></bg-learningpathcard>
 								}
 							}
@@ -289,7 +308,7 @@
 			<ng-template [bgAwaitPromises]="requestsLoaded">
 				<badges-datatable
 					*ngIf="!public"
-					[badges]="badgeResults"
+					[badges]="$any(badgeResults)"
 					(directBadgeAward)="routeToBadgeAward($event, issuer)"
 					(qrCodeAward)="routeToQRCodeAward($event, issuer)"
 					(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
@@ -317,8 +336,8 @@
 						[badgeImage]="badge.badge.image"
 						[badgeDescription]="badge.badge.description"
 						[badgeSlug]="badge.badge.slug"
-						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.badge.issuer"
-						[badgeIssueDate]="badge.badge.createdAt"
+						[issuerTitle]="badge.issuerName"
+						[badgeIssueDate]="$any(badge.badge).created_at"
 						[public]="true"
 						[publicUrl]="`../../public/badges/${badge.badge.slug}`"
 					></bg-badgecard>
@@ -359,6 +378,7 @@
 
 						<badges-datatable
 							[badges]="networkGroup.badges"
+							[recipientTranslation]="'Issuer.recipientsViaThisInstitution'"
 							(directBadgeAward)="routeToBadgeAward($event, issuer)"
 							(qrCodeAward)="routeToQRCodeAward($event, issuer)"
 							(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.focusRequests)"
@@ -389,6 +409,7 @@
 
 					<badges-datatable
 						[badges]="group.badges"
+						[recipientTranslation]="'Issuer.recipientsViaThisInstitution'"
 						(directBadgeAward)="routeToBadgeAward($event, issuer)"
 						(qrCodeAward)="routeToQRCodeAward($event, issuer)"
 						(redirectToBadgeDetail)="

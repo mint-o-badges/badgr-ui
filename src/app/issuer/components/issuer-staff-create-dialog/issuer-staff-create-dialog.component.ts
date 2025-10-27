@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailValidator } from '../../../common/validators/email.validator';
@@ -21,6 +21,9 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 	imports: [SvgIconComponent, FormsModule, ReactiveFormsModule, FormFieldRadio, FormFieldText, TranslatePipe],
 })
 export class IssuerStaffCreateDialogComponent extends BaseDialog {
+	protected messageService = inject(MessageService);
+	private translate = inject(TranslateService);
+
 	staffCreateForm = typedFormGroup()
 		.addControl('staffRole', 'staff' as IssuerStaffRoleSlug, Validators.required)
 		.addControl('staffEmail', '', [Validators.required, EmailValidator.validEmail]);
@@ -30,12 +33,13 @@ export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	issuerLoaded: Promise<Issuer>;
 	error: string = null;
 
-	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
-		protected messageService: MessageService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 
