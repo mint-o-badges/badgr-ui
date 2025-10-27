@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, inject } from '@angular/core';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
@@ -23,6 +23,11 @@ export interface RecipientBadgeCollectionSelectionDialogOptions {
 	imports: [SvgIconComponent, FormsModule, BgAwaitPromises],
 })
 export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog {
+	private badgeManager = inject(RecipientBadgeManager);
+	private recipientBadgeCollectionManager = inject(RecipientBadgeCollectionManager);
+	private messageService = inject(MessageService);
+	private settingsService = inject(SettingsService);
+
 	get searchQuery() {
 		return this._searchQuery;
 	}
@@ -44,14 +49,13 @@ export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog
 	private resolveFunc: { (collection: RecipientBadgeCollection[]): void };
 	private _searchQuery = '';
 
-	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
-		private badgeManager: RecipientBadgeManager,
-		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
-		private messageService: MessageService,
-		private settingsService: SettingsService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const componentElem = inject(ElementRef);
+		const renderer = inject(Renderer2);
+
 		super(componentElem, renderer);
 	}
 

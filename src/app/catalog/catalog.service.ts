@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '~/common/app-config.service';
 import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
@@ -13,13 +13,26 @@ const ENDPOINT = 'v3/issuer';
 	providedIn: 'root',
 })
 export class CatalogService extends BaseHttpApiService {
-	constructor(
-		protected sessionService: SessionService,
-		protected httpClient: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-	) {
+	protected sessionService: SessionService;
+	protected httpClient: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const httpClient = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(sessionService, httpClient, configService, messageService);
+
+		this.sessionService = sessionService;
+		this.httpClient = httpClient;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	/**
@@ -157,6 +170,7 @@ export interface PaginatedBadgeClass {
 	count: number;
 	next: string | null;
 	previous: string | null;
+	total_count: number;
 	results: BadgeClassV3[];
 }
 
@@ -164,5 +178,6 @@ export interface PaginatedNetwork {
 	count: number;
 	next: string | null;
 	previous: string | null;
+	total_count: number;
 	results: NetworkV3[];
 }

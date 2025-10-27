@@ -67,6 +67,16 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 	],
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected eventsService = inject(EventsService);
+	protected issuerManager = inject(IssuerManager);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected badgeInstanceManager = inject(BadgeInstanceManager);
+	protected dialogService = inject(CommonDialogsService);
+	protected configService = inject(AppConfigService);
+	protected translate = inject(TranslateService);
+
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 
@@ -101,6 +111,24 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		}
 	}
 
+	idValidator: (control: FormControl) => ValidationResult = (control) => {
+		if (this.issueForm) {
+			switch (this.issueForm.controls.recipient_type.value) {
+				case 'email':
+					return EmailValidator.validEmail(control);
+				case 'openBadgeId':
+					return null;
+				case 'telephone':
+					return TelephoneValidator.validTelephone(control);
+				//case 'url': return UrlValidator.validUrl(control);
+				default:
+					return null;
+			}
+		} else {
+			return null;
+		}
+	};
+
 	expirationDateEditable = false;
 	idError: string | boolean = false;
 	dateError = false;
@@ -114,7 +142,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				this.issueForm.controls.recipient_identifier.rawControl.updateValueAndValidity();
 			});
 		})
-		.addControl('recipient_identifier', '', [Validators.required, this['idValidator']])
+		.addControl('recipient_identifier', '', [Validators.required, this.idValidator])
 		.addControl('narrative', '', [MdImgValidator.imageTest, Validators.maxLength(160)])
 		.addControl('notify_earner', true)
 		.addArray(
@@ -139,23 +167,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	evidenceEnabled = false;
 	narrativeEnabled = false;
 	expirationEnabled = false;
-	idValidator: (control: FormControl) => ValidationResult = (control) => {
-		if (this.issueForm) {
-			switch (this.issueForm.controls.recipient_type.value) {
-				case 'email':
-					return EmailValidator.validEmail(control);
-				case 'openBadgeId':
-					return null;
-				case 'telephone':
-					return TelephoneValidator.validTelephone(control);
-				//case 'url': return UrlValidator.validUrl(control);
-				default:
-					return null;
-			}
-		} else {
-			return null;
-		}
-	};
 	expirationValidator: (control: FormControl) => ValidationResult = (control) => {
 		if (this.expirationEnabled) {
 			return Validators.compose([Validators.required, DateValidator.validDate])(control);
@@ -164,21 +175,17 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		}
 	};
 
-	constructor(
-		protected title: Title,
-		protected messageService: MessageService,
-		protected eventsService: EventsService,
-		protected issuerManager: IssuerManager,
-		protected badgeClassManager: BadgeClassManager,
-		protected badgeInstanceManager: BadgeInstanceManager,
-		protected dialogService: CommonDialogsService,
-		protected configService: AppConfigService,
-		protected translate: TranslateService,
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const title = this.title;
+
 		title.setTitle(`Award Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {

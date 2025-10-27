@@ -92,11 +92,13 @@
 										></ng-icon>
 									</div>
 									<span>{{ 'Badge.sortBy' | translate }} </span>
-									<oeb-sort-select
+									<oeb-global-sort-select
+										placeholder="{{ 'Badge.sortBy' | translate }}"
+										class="oeb tw-w-[12rem]"
 										[control]="sortControl"
-										[result]="badgeResults"
-										[recipient]="true"
-									></oeb-sort-select>
+										(sortChanged)="onSortChanged($event)"
+									>
+									</oeb-global-sort-select>
 									<oeb-checkbox
 										class="tw-mt-2 md:tw-mt-0"
 										name="groupby"
@@ -109,12 +111,13 @@
 								@if (badgesDisplay === 'grid') {
 									<!-- ------------------ UNGROUPED ------------------  -->
 									@if (!groupByIssuer) {
-										<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
+										<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
 											@for (
 												badgeResult of badgeResults;
 												track trackById($index, badgeResult.badge)
 											) {
 												<bg-badgecard
+													@appearAnimation
 													[badgeTitle]="badgeResult.badge.badgeClass.name"
 													[badgeImage]="badgeResult.badge.image"
 													[badgeIssueDate]="badgeResult?.badge?.issueDate"
@@ -147,9 +150,10 @@
 														{{ issuerGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
 													>
 												</h3>
-												<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
+												<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
 													@for (badge of issuerGroup.badges; track badge) {
 														<bg-badgecard
+															@appearAnimation
 															[badgeTitle]="badge.badgeClass.name"
 															[badgeImage]="badge.image"
 															[badgeIssueDate]="badge.issueDate"

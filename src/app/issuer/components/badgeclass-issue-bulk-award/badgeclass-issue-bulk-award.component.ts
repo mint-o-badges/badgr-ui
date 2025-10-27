@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -20,6 +20,11 @@ import { BadgeClassIssueBulkAwardPreviewComponent } from '../badgeclass-issue-bu
 import { BadgeclassIssueBulkAwardConformation } from '../badgeclass-issue-bulk-award-confirmation/badgeclass-issue-bulk-award-confirmation.component';
 import { BadgeclassIssueBulkAwardError } from '../badgeclass-issue-bulk-award-error/badgeclass-issue-bulk-award-error.component';
 
+export interface ParsedRow {
+	cells: string[];
+	emailInvalid?: boolean;
+}
+
 export interface TransformedImportData {
 	duplicateRecords: BulkIssueData[];
 	validRowsTransformed: Set<BulkIssueData>;
@@ -28,20 +33,22 @@ export interface TransformedImportData {
 
 export interface BulkIssueImportPreviewData {
 	columnHeaders: ColumnHeaders[];
-	invalidRows: string[][];
+	invalidRows: ParsedRow[];
 	rowLongerThenHeader: boolean;
-	rows: string[];
-	validRows: string[][];
+	rows: ParsedRow[];
+	validRows: ParsedRow[];
 }
 
 export interface BulkIssueData {
 	email: string;
 	name: string;
+	emailInvalid?: boolean;
+	isEditing?: boolean;
 }
 
 export type DestSelectOptions = 'email' | 'name' | 'NA';
 
-export type ViewState = 'import' | 'importPreview' | 'importError' | 'importConformation' | 'cancel' | 'exit';
+export type ViewState = 'import' | 'importPreview' | 'importError' | 'importConfirmation' | 'cancel' | 'exit';
 
 export interface ColumnHeaders {
 	destColumn: DestSelectOptions;
@@ -63,6 +70,16 @@ export interface ColumnHeaders {
 	],
 })
 export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutableComponent {
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected formBuilder = inject(FormBuilder);
+	protected issuerManager = inject(IssuerManager);
+	protected sessionService: SessionService;
+	protected messageService = inject(MessageService);
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected configService = inject(AppConfigService);
+	protected title = inject(Title);
+
 	importPreviewData: BulkIssueImportPreviewData;
 	transformedImportData: TransformedImportData;
 	viewState: ViewState;
@@ -74,18 +91,18 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
-	constructor(
-		protected badgeClassManager: BadgeClassManager,
-		protected formBuilder: FormBuilder,
-		protected issuerManager: IssuerManager,
-		protected sessionService: SessionService,
-		protected messageService: MessageService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected configService: AppConfigService,
-		protected title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		this.sessionService = sessionService;
+		this.router = router;
+		this.route = route;
 
 		this.updateViewState('import');
 
@@ -122,7 +139,7 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 		// Determine if the transformed data contains any errors
 		if (this.transformedImportData && transformedImportData.invalidRowsTransformed.length)
 			this.updateViewState('importError');
-		else this.updateViewState('importConformation');
+		else this.updateViewState('importConfirmation');
 	}
 
 	updateViewState(state: ViewState) {

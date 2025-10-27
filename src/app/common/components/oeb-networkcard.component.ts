@@ -8,7 +8,7 @@ import { Network } from '~/issuer/network.model';
 @Component({
 	selector: 'oeb-networkcard',
 	host: {
-		class: 'tw-rounded-[10px] tw-bg-purple tw-border-[#CFCECE] tw-border-solid tw-border tw-relative tw-p-6 tw-block tw-overflow-hidden tw-max-w-[600px] tw-h-[455px]',
+		class: 'tw-rounded-[10px] tw-bg-purple tw-border-[#CFCECE] tw-border-solid tw-border tw-relative tw-p-6 tw-block tw-overflow-hidden tw-max-w-[600px] tw-h-[455px] tw-cursor-pointer',
 	},
 	template: `
 		<div class="tw-flex tw-flex-col tw-h-full">
@@ -19,11 +19,7 @@ import { Network } from '~/issuer/network.model';
 					<img [src]="network.image" class="tw-aspect-square" width="80" />
 				</div>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
-					<a
-						class="!tw-text-3xl tw-font-bold tw-leading-[120%] tw-text-white"
-						[routerLink]="['/issuer/networks', network.slug]"
-						>{{ network.name }}</a
-					>
+					<div class="!tw-text-3xl tw-font-bold tw-leading-[120%] tw-text-white">{{ network.name }}</div>
 					@if (!public) {
 						<span class="tw-text-white tw-text-lg"
 							>{{
@@ -48,12 +44,16 @@ import { Network } from '~/issuer/network.model';
 								variant="secondary"
 								width="full_width"
 								[text]="'Issuer.createBadge' | translate"
+								[routerLink]="['/issuer/networks', network.slug]"
+								[queryParams]="{ tab: 'badges' }"
 							></oeb-button>
 						}
 						<oeb-button
 							variant="secondary"
 							width="full_width"
 							[text]="'Issuer.giveBadge' | translate"
+							[routerLink]="['/issuer/networks', network.slug]"
+							[queryParams]="{ tab: 'badges' }"
 						></oeb-button>
 					</div>
 				</section>

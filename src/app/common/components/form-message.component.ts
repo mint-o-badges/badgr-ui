@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, inject } from '@angular/core';
 import { FlashMessage, MessageService } from '../services/message.service';
 
 import { Router } from '@angular/router';
@@ -46,6 +46,11 @@ const messageStatusTypeToNotificationMap: { [key in string]: Notification } = {
 	imports: [],
 })
 export class FormMessageComponent implements OnInit, OnDestroy {
+	protected messageService = inject(MessageService);
+	protected router = inject(Router);
+	protected elemRef = inject(ElementRef);
+	protected eventService = inject(EventsService);
+
 	messageDismissed = false;
 	message: FlashMessage;
 	msg: string;
@@ -55,12 +60,10 @@ export class FormMessageComponent implements OnInit, OnDestroy {
 	timeout: Timeout;
 	private clickSubscription: Subscription;
 
-	constructor(
-		protected messageService: MessageService,
-		protected router: Router,
-		protected elemRef: ElementRef,
-		protected eventService: EventsService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this.subscription = this.messageService.message$.subscribe((message) => {
 			this.setMessage(message);
 		});

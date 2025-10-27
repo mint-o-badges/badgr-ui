@@ -33,6 +33,8 @@ import { provideIcons } from '@ng-icons/core';
 	`,
 })
 export class DangerDialogComponentTemplate {
+	private translate = inject(TranslateService);
+
 	// @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
 
 	// @Input() title: String;
@@ -51,7 +53,10 @@ export class DangerDialogComponentTemplate {
 	protected readonly qrCodeRequested = this._dialogContext.qrCodeRequested;
 	private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 
-	constructor(private translate: TranslateService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	cancelText = this.translate.instant('General.cancel');
 	deleteText = this.translate.instant('General.delete');

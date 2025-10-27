@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, ElementRef, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -38,7 +38,9 @@ import { skip } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
-import { HlmH1 } from '@spartan-ng/helm/typography';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
+import { IssuerApiService } from '~/issuer/services/issuer-api.service';
+import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -47,7 +49,6 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		HlmH1,
 		CountUpModule,
 		BadgeLegendComponent,
 		FormsModule,
@@ -62,9 +63,18 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		LoadingDotsComponent,
 		OebButtonComponent,
 		BgAwaitPromises,
+		OebHeaderText,
 	],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected configService = inject(AppConfigService);
+	protected badgeClassService = inject(BadgeClassManager);
+	protected catalogService = inject(CatalogService);
+	protected issuerService = inject(IssuerApiService);
+	private translate = inject(TranslateService);
+
 	@ViewChild('loadMore') loadMore: ElementRef | undefined;
 
 	readonly INPUT_DEBOUNCE_TIME = 400;
@@ -98,6 +108,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	 */
 	badges = signal<BadgeClassV3[]>([]);
 
+	totalBadgeCount = signal<number>(0);
+
 	/** Whether or not a next page of badge classes can be exists to be loaded. */
 	hasNext = signal<boolean>(true);
 
@@ -110,12 +122,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	observeScrolling$ = toObservable(this.observeScrolling);
 
 	/** Unique issuers of all badges. */
-	issuers = computed<string[]>(() =>
-		this.badges()
-			.filter((b) => b.issuerVerified)
-			.flatMap((b) => b.issuer)
-			.filter((value, index, array) => array.indexOf(value) === index),
-	);
+	issuers = signal<ApiIssuer[]>([]);
+	issuers$ = toObservable(this.issuers);
 
 	/** Selectable options to filter with. */
 	tagsOptions = signal<ITag[]>([]);
@@ -124,12 +132,15 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	/** A string used for displaying the amount of badges that is aware of the current language. */
 	badgesPluralWord = toSignal(
 		combineLatest(
-			[toObservable(this.badges), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
+			[
+				toObservable(this.totalBadgeCount),
+				this.translate.onLangChange.pipe(startWith(this.translate.currentLang)),
+			],
 			(badges, lang) => badges,
 		).pipe(
-			map((badges) => {
-				if (badges.length === 0) return 'Badge.noBadges';
-				if (badges.length === 1) return 'Badge.oneBadge';
+			map((badgeCount) => {
+				if (badgeCount === 0) return 'Badge.multiBadges';
+				if (badgeCount === 1) return 'Badge.oneBadge';
 				return 'Badge.multiBadges';
 			}),
 			switchMap((key) => this.translate.get(key)),
@@ -155,20 +166,23 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	tagsControl = new FormControl();
 	intersectionObserver: IntersectionObserver | undefined;
 	pageSubscriptions: Subscription[] = [];
-	pageReadyPromise: Promise<unknown> = firstValueFrom(this.tagsOptions$.pipe(skip(1))); // skip initial value of signal
+	// initial values need to be skipped to await the actual loading
+	pageReadyPromise: Promise<unknown> = Promise.all([
+		firstValueFrom(this.tagsOptions$.pipe(skip(1))),
+		firstValueFrom(this.issuers$.pipe(skip(1))),
+	]);
 	viewInitialized: boolean = false;
 
-	constructor(
-		protected title: Title,
-		protected messageService: MessageService,
-		protected configService: AppConfigService,
-		protected badgeClassService: BadgeClassManager,
-		protected catalogService: CatalogService,
-		router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+		const title = this.title;
+
 		title.setTitle(`Badges - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 
@@ -198,6 +212,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					concatMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
 				)
 				.subscribe((paginatedBadges) => {
+					this.totalBadgeCount.set(paginatedBadges.total_count);
 					this.hasNext.set(paginatedBadges?.next !== null);
 					if (!paginatedBadges?.previous)
 						// on the first page, set the whole array to make sure to not append anything
@@ -236,7 +251,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			}),
 		);
 
-		// load the tags, kicking off the page load process
+		// load the tags & issuers, kicking off the page load process
+		this.fetchIssuers();
 		this.fetchAvailableTags();
 	}
 
@@ -279,6 +295,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		// remove on the control, triggering an update of the setter
 		// and thus updating all dependent signals
 		this.tagsControl.setValue(this.tagsControl.value.filter((t) => t != tag));
+	}
+
+	private fetchIssuers(): Promise<ApiIssuer[]> {
+		return this.issuerService.listAllIssuers().then((i) => {
+			this.issuers.set(i.filter((x) => !x.is_network && x.verified && x.ownerAcceptedTos));
+			return i;
+		});
 	}
 
 	private fetchAvailableTags(): Promise<ITag[]> {

@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
@@ -15,7 +15,7 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { SlicePipe } from '@angular/common';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
-import { PublicNotFoundBadgeCollectionComponent } from '../not-found-badge-collection/not-found-badge-collection.component';
+import { PublicNotFoundComponent } from '../not-found/not-found-component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HlmH1 } from '@spartan-ng/helm/typography';
 
@@ -26,12 +26,17 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		BgImageStatusPlaceholderDirective,
 		HlmH1,
 		BgBadgecard,
-		PublicNotFoundBadgeCollectionComponent,
+		PublicNotFoundComponent,
 		SlicePipe,
 		TranslatePipe,
 	],
 })
 export class PublicBadgeCollectionComponent {
+	private injector = inject(Injector);
+	embedService = inject(EmbedService);
+	configService = inject(AppConfigService);
+	private title = inject(Title);
+
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -42,12 +47,13 @@ export class PublicBadgeCollectionComponent {
 
 	collectionHashParam: LoadedRouteParam<PublicApiBadgeCollectionWithBadgeClassAndIssuer>;
 
-	constructor(
-		private injector: Injector,
-		public embedService: EmbedService,
-		public configService: AppConfigService,
-		private title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const injector = this.injector;
+		const title = this.title;
+
 		title.setTitle(`Collection - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.collectionHashParam = new LoadedRouteParam(

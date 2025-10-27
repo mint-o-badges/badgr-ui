@@ -1,10 +1,15 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class BreakpointService {
-	constructor(private breakpointObserver: BreakpointObserver) {}
+	private breakpointObserver = inject(BreakpointObserver);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	isMobile$: Observable<boolean> = this.breakpointObserver
 		.observe([Breakpoints.XSmall, Breakpoints.Small])

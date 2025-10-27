@@ -21,7 +21,7 @@
 						}}</span
 					>
 				</div>
-				@if (activeTab === 'badges') {
+				@if (activeTab === 'badges' && network().current_user_network_role !== 'staff') {
 					<div class="tw-ml-auto">
 						<oeb-button
 							variant="secondary"
@@ -48,6 +48,7 @@
 					[variant]="partnerIssuers().length ? 'secondary' : 'default'"
 					(click)="openDialog()"
 					[text]="'Network.inviteInstitutions' | translate"
+					[disabled]="network().current_user_network_role !== 'owner'"
 				>
 				</oeb-button>
 			</div>
@@ -70,7 +71,8 @@
 </ng-template>
 
 <ng-template #addInstitutionsTemplate>
-	<add-institution [network]="network()" (institutionsInvited)="onInstitutionsInvited()"> </add-institution>
+	<add-institution [network]="network()" [invites]="networkInvites()" (institutionsInvited)="onInstitutionsInvited()">
+	</add-institution>
 </ng-template>
 
 <ng-template #badgesTemplate>

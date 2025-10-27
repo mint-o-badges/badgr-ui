@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild, inject } from '@angular/core';
 
 import Tether from 'tether';
 import { NgClass } from '@angular/common';
@@ -20,6 +20,8 @@ import { NgClass } from '@angular/common';
 	imports: [NgClass],
 })
 export class TooltipComponent implements AfterViewInit, OnDestroy {
+	private el = inject(ElementRef);
+
 	@Input() position = {
 		attachment: 'bottom left',
 		targetAttachment: 'middle right',
@@ -44,7 +46,10 @@ export class TooltipComponent implements AfterViewInit, OnDestroy {
 		}
 	}
 
-	constructor(private el: ElementRef) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	updateTip(open: boolean) {
 		this.active = open;

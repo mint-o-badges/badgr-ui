@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { OAuthApiService } from './oauth-api.service';
 import { SessionService } from './session.service';
 import {
@@ -17,6 +17,11 @@ const OAUTH_STATE_STORAGE_NAME = 'oauthState';
 
 @Injectable({ providedIn: 'root' })
 export class OAuthManager {
+	oauthApi = inject(OAuthApiService);
+	private sessionService = inject(SessionService);
+	private commonEntityManager = inject(CommonEntityManager);
+	private commonDialogsService = inject(CommonDialogsService);
+
 	readonly authorizedApps = new StandaloneEntitySet<OAuth2AppAuthorization, ApiOAuth2AppAuthorization>(
 		() => new OAuth2AppAuthorization(this.commonEntityManager),
 		(apiModel) => apiModel.entityId,
@@ -58,12 +63,10 @@ export class OAuthManager {
 		} catch (e) {}
 	}
 
-	constructor(
-		public oauthApi: OAuthApiService,
-		private sessionService: SessionService,
-		private commonEntityManager: CommonEntityManager,
-		private commonDialogsService: CommonDialogsService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this._oAuthState =
 			window.localStorage[OAUTH_STATE_STORAGE_NAME] && JSON.parse(window.localStorage[OAUTH_STATE_STORAGE_NAME]);
 	}

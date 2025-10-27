@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { SessionService } from '../../../common/services/session.service';
@@ -22,6 +22,12 @@ import { PatternLibraryIconName } from '../../../common/components/svg-icon.comp
 	imports: [BgAwaitPromises, FormMessageComponent, TimeComponent, SvgIconComponent],
 })
 export class OAuthAppDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	private title = inject(Title);
+	private messageService = inject(MessageService);
+	private oAuthManager = inject(OAuthManager);
+	protected configService = inject(AppConfigService);
+	private dialogService = inject(CommonDialogsService);
+
 	app: OAuth2AppAuthorization;
 	appTokens: OAuth2AppAuthorization[];
 	appPromise: Promise<unknown>;
@@ -38,18 +44,18 @@ export class OAuthAppDetailComponent extends BaseAuthenticatedRoutableComponent 
 				return '';
 		}
 	}
-	constructor(
-		loginService: SessionService,
-		route: ActivatedRoute,
-		router: Router,
 
-		private title: Title,
-		private messageService: MessageService,
-		private oAuthManager: OAuthManager,
-		protected configService: AppConfigService,
-		private dialogService: CommonDialogsService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+	constructor() {
+		const loginService = inject(SessionService);
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+
 		super(router, route, loginService);
+		const title = this.title;
+		const oAuthManager = this.oAuthManager;
+
 		title.setTitle(`App Integrations - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.appPromise = oAuthManager.authorizedApps.loadedPromise.then((list) => {

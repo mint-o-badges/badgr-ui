@@ -115,7 +115,8 @@
 		"rolesAndRights": "Rollen und Rechte",
 		"website": "Webseite",
 		"organization": "Organisation",
-		"notNow": "Jetzt nicht"
+		"notNow": "Jetzt nicht",
+		"notFound": "Nicht gefunden"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -195,6 +196,7 @@
 		"noBadges": "Keine Badges",
 		"recipient": "Empfänger:in",
 		"recipients": "Empfänger:innen",
+		"recipientsViaThisInstitution": "Empfänger:innen <span class='tw-italic tw-font-normal'>(durch diese Institution)</span>",
 		"noRecipient": "Kein Empfänger",
 		"createInstitution": "Institution erstellen",
 		"createInstitutionNow": "Jetzt Institution erstellen",
@@ -211,7 +213,9 @@
 		"nichtVerified": "Dieser Issuer wurde noch nicht verifiziert",
 		"createBadge": "Badge erstellen",
 		"createParticipationBadge": "Teilnahme-Badge erstellen",
+		"copyParticipationBadge": "Teilnahme-Badge kopieren",
 		"createCompetencyBadge": "Kompetenz-Badge erstellen",
+		"copyCompetencyBadge": "Kompetenz-Badge kopieren",
 		"contactInstitution": "Institution kontaktieren",
 		"jsonView": "JSON ansehen",
 		"viewOriginal": "Original ansehen",
@@ -284,7 +288,7 @@
 		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Beispiel-Vorlage.csv''>Download CSV-Beispiel-Vorlage</a>",
 		"openInExcel": "Öffne sie in Excel",
 		"fillInList": "Lösche den Beispiel-Eintrag und fülle die beiden Tabellenspalten entsprechend mit <span class='tw-font-bold'>Vor- und Nachnamen*</span> sowie <span class='tw-font-bold'>E-Mail-Adressen</span> deiner Lernenden aus.",
-		"exportAsCSV": "Exportiere die Vorlage als CSV-Datei.",
+		"exportAsCSV": "Exportiere die Vorlage als CSV-Datei (Textcodierung: Unicode (UTF-8).",
 		"uploadCSV": "Lade deine CSV-Datei hoch:",
 		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
@@ -386,7 +390,10 @@
 		"badgesApprovedForNetworks": " Diese Badges hat {{ issuer }} für die Nutzung im jeweiligen Netzwerk <span class='tw-underline'>freigegeben</span>:",
 		"noBadgesApprovedForNetworks": "{{ issuer }} hat noch keine Badges für die Nutzung im Netzwerk <span class='tw-underline'>freigegeben</span>.",
 		"badgeAwards": "Badge-Vergaben",
-		"partnerBadges": "Partner-Badges"
+		"partnerBadges": "Partner-Badges",
+		"bulkInvalidEmail": "1 ungültige E-Mail-Adresse gefunden. Bitte korrigiere oder entferne die rot markierte E-Mail-Adresse.",
+		"bulkInvalidEmailsPlural": "{{count}} ungültige E-Mail-Adressen gefunden. Bitte korrigiere oder entferne die rot markierten E-Mail-Adressen.",
+		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
@@ -435,7 +442,8 @@
 		"partOfNetwork": "Teil vom NETZWERK",
 		"noBadgesYet": "Das Netzwerk <span class='tw-font-semibold'>{{network}}</span> hat noch keine eigenen Badges erstellt.",
 		"sharedBy": "Freigegeben von",
-		"sharedOn": "Freigegeben am"
+		"sharedOn": "Freigegeben am",
+		"website": "Netzwerk-Webseite"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -679,7 +687,8 @@
 		"newsletterEmail": "Wir haben dir ebenfalls eine E-Mail zur Bestätigung deiner Newsletter-Anmeldung geschickt.",
 		"confirmNewsletter": "Klicke in der Newsletter-E-Mail auf <span class ='tw-font-bold'> „Newsletter-Anmeldung bestätigen” </span>, <br> um die Newsletter-Anmeldung abzuschließen.",
 		"newsletterEmailNotReceived": "Du hast keine Newsletter-E-Mail bekommen? Bitte übermittle deine Daten über <br> unser <a class='tw-underline tw-text-purple' href='public/about/newsletter'> Newsletter-Anmelde-Formular </a> oder <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>schreib uns.</a>",
-		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Ja</span>, ich möchte auf dem Laufenden bleiben und den OEB-Newsletter abonnieren."
+		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Ja</span>, ich möchte auf dem Laufenden bleiben und den OEB-Newsletter abonnieren.",
+		"signingUp": "Registrieren..."
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
@@ -711,7 +720,8 @@
 		"newPassword": "Neues Passwort",
 		"areYouNew": "Du bist neu hier?",
 		"yourEmail": "Deine E-Mail-Adresse",
-		"yourPassword": "Dein Passwort"
+		"yourPassword": "Dein Passwort",
+		"loggingIn": "Einloggen..."
 	},
 	"Legend": {
 		"legendTitle": "Legende",
@@ -1049,7 +1059,7 @@
 		"invalidDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
 		"invalidDate": "Bitte gib ein Datum in der Form YYYY/mm/dd an",
 		"missingStartDate": "Bitte gib ein Start-Datum für die Gültigkeit an",
-		"expired": "Die Gültigkeit dieses Qr Codes ist abgelaufen."
+		"expired": "QR-Code ist nicht mehr gültig."
 	},
 	"LearningPath": {
 		"learningpathsPlural": "Lernpfade",
@@ -1111,7 +1121,9 @@
 		"condition": "Du musst <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Micro Degree zu erhalten.",
 		"learningPathWithMicroDegree": "Lernpfad mit Abschluss-Badge Micro Degree",
 		"confirmDelete": "Möchtest du diesen Lernpfad wirklich löschen?",
-		"deleteMd": "Lernpfad löschen"
+		"deleteMd": "Lernpfad löschen",
+		"institution": "Institution",
+		"institutions": "Institutionen"
 	},
 	"LearningPathEditor": {
 		"shortDescriptionLine1": "Zusammenfassende Beschreibung des Lernangebots.",

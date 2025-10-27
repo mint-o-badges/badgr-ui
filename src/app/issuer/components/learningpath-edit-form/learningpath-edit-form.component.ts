@@ -18,7 +18,6 @@ import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
@@ -100,6 +99,18 @@ export class LearningPathEditFormComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, OnChanges, AfterViewInit
 {
+	protected loginService: SessionService;
+	protected messageService = inject(MessageService);
+	protected learningPathApiService = inject(LearningPathApiService);
+	protected issuerManager = inject(IssuerManager);
+	protected issuerApiService = inject(IssuerApiService);
+	protected badgeClassService = inject(BadgeClassManager);
+	protected badgeClassApiService = inject(BadgeClassApiService);
+	private translate = inject(TranslateService);
+	protected badgeInstanceManager = inject(BadgeInstanceManager);
+	protected learningPathManager = inject(LearningPathManager);
+	protected configService = inject(AppConfigService);
+
 	@ViewChild(StepperComponent) stepper: StepperComponent;
 
 	@ViewChild('badgeStudio')
@@ -214,28 +225,17 @@ export class LearningPathEditFormComponent
 
 	selectMinBadgesOptions: FormFieldSelectOption[] = [];
 
-	constructor(
-		protected loginService: SessionService,
-		protected messageService: MessageService,
-		protected learningPathApiService: LearningPathApiService,
-		protected issuerManager: IssuerManager,
-		protected issuerApiService: IssuerApiService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected badgeClassService: BadgeClassManager,
-		protected badgeClassApiService: BadgeClassApiService,
-		private translate: TranslateService,
-		protected badgeInstanceManager: BadgeInstanceManager,
-		protected learningPathManager: LearningPathManager,
-		protected configService: AppConfigService,
-	) {
-		// protected title: Title,
-		super(router, route, loginService);
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		super();
+		this.loginService = inject(SessionService);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
+			this.badgesLoaded = this.loadBadges();
 		});
-		this.badgesLoaded = this.loadBadges();
 	}
 	next: string;
 	previous: string;

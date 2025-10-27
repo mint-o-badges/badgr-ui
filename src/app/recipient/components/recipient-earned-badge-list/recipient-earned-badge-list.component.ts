@@ -1,4 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterContentInit, inject, TemplateRef } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	OnInit,
+	ViewChild,
+	AfterContentInit,
+	inject,
+	TemplateRef,
+	ChangeDetectorRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
@@ -37,7 +46,6 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebTabsComponent } from '../../../components/oeb-tabs.component';
-import { OebSortSelectComponent } from '../../../components/oeb-sort-select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { OebCompetency } from '../../../common/components/oeb-competency';
@@ -49,7 +57,8 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
-import { ApiLearningPath } from '~/common/model/learningpath-api.model';
+import { OebGlobalSortSelectComponent } from '~/components/oeb-global-sort-select.component';
+import { appearAnimation } from '~/common/animations/animations';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -61,6 +70,7 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 @Component({
 	selector: 'recipient-earned-badge-list',
 	templateUrl: './recipient-earned-badge-list.component.html',
+	animations: [appearAnimation],
 	providers: [
 		provideIcons({ lucideHexagon }),
 		provideIcons({ lucideMedal }),
@@ -82,7 +92,6 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		HlmP,
 		CountUpModule,
 		HlmInput,
-		OebSortSelectComponent,
 		OebCheckboxComponent,
 		BgBadgecard,
 		HlmH3,
@@ -93,12 +102,26 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		DynamicFilterPipe,
 		TranslatePipe,
 		RecipientSkillVisualisationComponent,
+		OebGlobalSortSelectComponent,
 	],
 })
 export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, AfterContentInit
 {
+	private title = inject(Title);
+	private dialogService = inject(CommonDialogsService);
+	private messageService = inject(MessageService);
+	private recipientBadgeManager = inject(RecipientBadgeManager);
+	private learningPathApi = inject(LearningPathApiService);
+	configService = inject(AppConfigService);
+	private profileManager = inject(UserProfileManager);
+	private translate = inject(TranslateService);
+	recipientBadgeCollectionApiService = inject(RecipientBadgeCollectionApiService);
+	private recipientBadgeCollectionManager = inject(RecipientBadgeCollectionManager);
+	private recipientBadgeApiService = inject(RecipientBadgeApiService);
+	private breakpointService = inject(BreakpointService);
+
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -197,25 +220,19 @@ export class RecipientEarnedBadgeListComponent
 		this.updateResults();
 	}
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		sessionService: SessionService,
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
 
-		private title: Title,
-		private dialogService: CommonDialogsService,
-		private messageService: MessageService,
-		private recipientBadgeManager: RecipientBadgeManager,
-		private learningPathApi: LearningPathApiService,
-		public configService: AppConfigService,
-		private profileManager: UserProfileManager,
-		private translate: TranslateService,
-		public recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService,
-		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
-		private recipientBadgeApiService: RecipientBadgeApiService,
-		private breakpointService: BreakpointService,
-	) {
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+		const sessionService = inject(SessionService);
+
 		super(router, route, sessionService);
+		const title = this.title;
+		const dialogService = this.dialogService;
+		const profileManager = this.profileManager;
+		const translate = this.translate;
 
 		title.setTitle(`Backpack - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -534,8 +551,8 @@ export class RecipientEarnedBadgeListComponent
 		// this.learningPathResults.forEach((r) => r.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
 	}
 
-	trackById(index: number, item: { id?: unknown; slug: unknown }): unknown {
-		return item.id ? item.id : item.slug;
+	trackById(index: number, badge: RecipientBadgeInstance) {
+		return badge.slug;
 	}
 
 	private groupCompetencies(badges) {
@@ -587,6 +604,30 @@ export class RecipientEarnedBadgeListComponent
 		});
 		this.newGroupedUserCompetencies = Object.values(newGroupedCompetencies).sort((a, b) => {
 			return a.lastReceived.getTime() - b.lastReceived.getTime();
+		});
+	}
+
+	onSortChanged(sortOption: string): void {
+		this.badgeResults = this.sortBadges([...this.badgeResults], sortOption);
+	}
+
+	private sortBadges(badges: BadgeResult[], sortOption: string): BadgeResult[] {
+		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
+		const multiplier = order === 'asc' ? 1 : -1;
+
+		return badges.sort((a, b) => {
+			const nameA = a.badge.badgeClass.name;
+			const nameB = b.badge.badgeClass.name;
+			const dateA = new Date(a.badge.issueDate).getTime();
+			const dateB = new Date(b.badge.issueDate).getTime();
+
+			if (sortBy === 'name') {
+				return multiplier * nameA.localeCompare(nameB);
+			}
+			if (sortBy === 'date') {
+				return multiplier * (dateA - dateB);
+			}
+			return 0;
 		});
 	}
 

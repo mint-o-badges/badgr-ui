@@ -45,6 +45,15 @@ export interface ApiRecipientBadgeInstance {
 	extensions?: object;
 	pending?: boolean;
 	imported?: boolean;
+	isNetworkBadge: boolean;
+	networkImage: string;
+	networkName: string;
+	sharedOnNetwork: {
+		slug: string;
+		name: string;
+		image: string | null;
+		description: string | null;
+	} | null;
 }
 
 export interface ApiRecipientBadgeRecipient {

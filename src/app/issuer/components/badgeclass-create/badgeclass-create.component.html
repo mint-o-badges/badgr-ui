@@ -10,13 +10,9 @@
 						<span>
 							@if (translate.currentLang === 'en') {
 								<span>{{
-									copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
-								}}</span>
-							}
-							{{ 'Badge.participation' | translate }}-Badge
-							@if (translate.currentLang === 'de') {
-								<span>{{
-									copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
+									copiedBadgeClass
+										? ('Issuer.copyParticipationBadge' | translate)
+										: ('Issuer.createParticipationBadge' | translate)
 								}}</span>
 							}
 						</span>
@@ -25,13 +21,9 @@
 						<span>
 							@if (translate.currentLang === 'en') {
 								<span>{{
-									copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
-								}}</span>
-							}
-							{{ 'Badge.competency' | translate }}-Badge
-							@if (translate.currentLang === 'de') {
-								<span>{{
-									copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
+									copiedBadgeClass
+										? ('Issuer.copyCompetencyBadge' | translate)
+										: ('Issuer.createCompetencyBadge' | translate)
 								}}</span>
 							}
 						</span>

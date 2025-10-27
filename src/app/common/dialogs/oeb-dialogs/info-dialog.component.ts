@@ -57,6 +57,8 @@ import { provideIcons } from '@ng-icons/core';
 	`,
 })
 export class InfoDialogComponent {
+	private translate = inject(TranslateService);
+
 	// @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
 	private readonly _dialogContext = injectBrnDialogContext<{
 		caption: string;
@@ -78,7 +80,10 @@ export class InfoDialogComponent {
 	protected readonly singleButtonAction = this._dialogContext.singleButtonAction;
 	private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 
-	constructor(private translate: TranslateService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	public cancel() {
 		this._dialogRef.close('cancel');

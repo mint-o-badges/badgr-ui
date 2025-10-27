@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -21,6 +21,7 @@ import { firstValueFrom } from 'rxjs';
 import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 import { BadgeClassManager } from '~/issuer/services/badgeclass-manager.service';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'oeb-network-detail',
@@ -39,6 +40,15 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 	],
 })
 export class OebNetworkDetailComponent {
+	translate = inject(TranslateService);
+	protected messageService = inject(MessageService);
+	protected title = inject(Title);
+	protected issuerManager = inject(IssuerManager);
+	protected profileManager = inject(UserProfileManager);
+	protected networkApiService = inject(NetworkApiService);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected router = inject(Router);
+
 	@Input() issuers: Issuer[] | PublicApiIssuer[];
 	@Input() network: Network | PublicApiIssuer;
 	@Input() networkPlaceholderSrc: string;
@@ -60,15 +70,10 @@ export class OebNetworkDetailComponent {
 
 	activeTab = 'network';
 
-	constructor(
-		public translate: TranslateService,
-		protected messageService: MessageService,
-		protected title: Title,
-		protected issuerManager: IssuerManager,
-		protected profileManager: UserProfileManager,
-		protected networkApiService: NetworkApiService,
-		protected badgeClassManager: BadgeClassManager,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	async ngOnInit() {
 		this.linkentries = [
@@ -113,7 +118,7 @@ export class OebNetworkDetailComponent {
 			},
 			{
 				key: 'partner',
-				title: 'Partner-Badges',
+				title: 'Issuer.partnerBadges',
 				icon: 'lucideHexagon',
 				component: this.partnerTemplate,
 				count: this.partnerBadges.length,
@@ -126,8 +131,14 @@ export class OebNetworkDetailComponent {
 			const badgesByIssuer = await firstValueFrom(
 				this.badgeClassManager.getNetworkBadgesByIssuerUrl$(this.network.slug),
 			);
-			this.networkBadges = Object.values(badgesByIssuer).flat();
+			this.networkBadges = Object.values(badgesByIssuer)
+				.flat()
+				.filter((b) => !b.sharedOnNetwork);
 			res(this.networkBadges);
 		});
+	}
+
+	routeToMemberView() {
+		this.router.navigate(['/issuer/networks/', this.network.slug]);
 	}
 }

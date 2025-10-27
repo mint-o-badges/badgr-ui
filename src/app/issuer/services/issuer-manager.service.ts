@@ -1,19 +1,36 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { IssuerApiService } from './issuer-api.service';
 import { Issuer } from '../models/issuer.model';
-import { ApiIssuer, ApiIssuerForCreation, ApiIssuerForEditing, IssuerSlug } from '../models/issuer-api.model';
+import {
+	ApiIssuer,
+	ApiIssuerForCreation,
+	ApiIssuerForEditing,
+	ApiNetwork,
+	IssuerSlug,
+} from '../models/issuer-api.model';
 import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
-import { ManagedEntitySet, StandaloneEntitySet } from '../../common/model/managed-entity-set';
+import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
-import { catchError, first, map, withLatestFrom } from 'rxjs/operators';
+import { catchError, first, map } from 'rxjs/operators';
 import { NetworkApiService } from './network-api.service';
+import { Network } from '../network.model';
 
 @Injectable({ providedIn: 'root' })
 export class IssuerManager {
+	issuerApiService = inject(IssuerApiService);
+	networkApiService = inject(NetworkApiService);
+	commonEntityManager = inject(CommonEntityManager);
+
 	issuersList = new StandaloneEntitySet<Issuer, ApiIssuer>(
 		(apiModel) => new Issuer(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
 		() => this.issuerApiService.listIssuers(),
+	);
+
+	networksList = new StandaloneEntitySet<Network, ApiNetwork>(
+		(apiModel) => new Network(this.commonEntityManager),
+		(apiModel) => apiModel.json.id,
+		() => this.networkApiService.listNetworks(),
 	);
 
 	allIssuersList = new StandaloneEntitySet<Issuer, ApiIssuer>(
@@ -22,12 +39,10 @@ export class IssuerManager {
 		() => this.issuerApiService.listAllIssuers(),
 	);
 
-	constructor(
-		public issuerApiService: IssuerApiService,
-		public networkApiService: NetworkApiService,
-		@Inject(forwardRef(() => CommonEntityManager))
-		public commonEntityManager: CommonEntityManager,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	createIssuer(initialIssuer: ApiIssuerForCreation): Promise<Issuer> {
 		return this.issuerApiService
@@ -75,6 +90,38 @@ export class IssuerManager {
 		).then(
 			(issuers) =>
 				issuers.find((i) => i.slug === issuerSlug) || this.throwError(`Issuer Slug '${issuerSlug}' not found`),
+		);
+	}
+
+	issuerOrNetworkBySlug(issuerSlug: IssuerSlug): Promise<Issuer | Network> {
+		return firstValueFrom(
+			combineLatest([
+				this.allIssuersList.loaded$.pipe(map((l) => l.entities)),
+				this.issuersList.loaded$.pipe(
+					catchError((err: any) => of({ entities: [] })),
+					map((l) => l.entities),
+				),
+				this.networksList.loaded$.pipe(
+					catchError((err: any) => of({ entities: [] })),
+					map((l) => l.entities),
+				),
+			]).pipe(
+				map(([all, mine, networks]) => {
+					const allEntities = [...mine, ...networks];
+
+					all.forEach((entity) => {
+						if (!allEntities.find((e) => e.slug === entity.slug)) {
+							allEntities.push(entity);
+						}
+					});
+
+					return allEntities;
+				}),
+			),
+		).then(
+			(entities) =>
+				entities.find((e) => e.slug === issuerSlug) ||
+				this.throwError(`Issuer/Network Slug '${issuerSlug}' not found`),
 		);
 	}
 

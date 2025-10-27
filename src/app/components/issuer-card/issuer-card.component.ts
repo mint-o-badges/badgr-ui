@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { BgImageStatusPlaceholderDirective } from '../../common/directives/bg-image-status-placeholder.directive';
 import { TruncatedTextComponent } from '../../common/components/truncated-text.component';
 import { HlmBadge } from '../spartan/ui-badge-helm/src/lib/hlm-badge.directive';
@@ -26,12 +26,17 @@ import { Issuer } from '~/issuer/models/issuer.model';
 	],
 })
 export class IssuerCardComponent {
+	private translate = inject(TranslateService);
+
 	@Input() issuer: Issuer;
 	@Input() plural: object;
 
 	@Output() navigate = new EventEmitter<void>();
 
-	constructor(private translate: TranslateService) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);

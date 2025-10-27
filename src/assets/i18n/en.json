@@ -5,6 +5,7 @@
 		"name": "Name",
 		"email": "Email",
 		"institutions": "Institutions",
+		"network": "Network",
 		"networks": "Networks",
 		"institutionsNav": "Institutions A-Z",
 		"account": "Account",
@@ -46,7 +47,7 @@
 		"aboutBadges": "Badges",
 		"hours": "Hours",
 		"minutes": "Minutes",
-		"characters": "Characters",
+		"characters": "characters",
 		"fileformats": "File Formats",
 		"show": "Show",
 		"hide": "Hide",
@@ -114,7 +115,8 @@
 		"rolesAndRights": "Roles and rights",
 		"website": "Website",
 		"organization": "Organization",
-		"notNow": "Not Now"
+		"notNow": "Not Now",
+		"notFound": "Not found"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -194,6 +196,7 @@
 		"noBadges": "No badges",
 		"recipient": "Recipient",
 		"recipients": "Recipients",
+		"recipientsViaThisInstitution": "Recipients <span class='tw-italic tw-font-normal'>(via this institution)</span>",
 		"noRecipient": "No recipient",
 		"createInstitution": "Create institution",
 		"createInstitutionNow": "Create institution now",
@@ -210,7 +213,9 @@
 		"nichtVerified": "This issuer has not yet been verified",
 		"createBadge": "Create badge",
 		"createParticipationBadge": "Create participation badge",
+		"copyParticipationBadge": "Copy participation badge",
 		"createCompetencyBadge": "Create competency badge",
+		"copyCompetencyBadge": "Copy competency badge",
 		"contactInstitution": "Contact institution",
 		"jsonView": "View JSON",
 		"viewOriginal": "View original",
@@ -280,10 +285,10 @@
 		"multipleBadgeAwardHeadline": "Award badge to multiple learners simultaneously",
 		"uploadListText": "You can <span class='tw-font-bold'>import a list of recipients</span> who should receive the badge at the same time. Here's how:",
 		"downloadExampleCSV": "Download our file template:",
-		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Beispiel-Vorlage.csv''>Download CSV example template</a>",
+		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Sample-template.csv''>Download CSV example template</a>",
 		"openInExcel": "Open it in Excel",
 		"fillInList": "Delete the example entry and fill in the two table columns with the <span class='tw-font-bold'>first and last names*</span> and <span class='tw-font-bold'>email addresses</span> of your learners accordingly.",
-		"exportAsCSV": "Export the template as a CSV file.",
+		"exportAsCSV": "Export the template as a CSV file (text encoding: Unicode (UTF-8).",
 		"uploadCSV": "Upload your CSV file:",
 		"uploadFields": "Include email address, name, and evidence (optional)",
 		"uploadFormat": "CSV or TXT format",
@@ -297,8 +302,8 @@
 		"csvError": "The CSV file contains rows longer than its header. Please fix this error and try again.",
 		"useImageFormat": "Please use an image in a square 1:1 format so that it can be displayed optimally on our platform.",
 		"pdfCertificate": "PDF certificate",
-		"institutionIssued": "Institution awards badges via OEB",
-		"institutionsIssued": "Institutions are registered on OEB",
+		"institutionIssued": "institution awards badges via OEB",
+		"institutionsIssued": "institutions are registered on OEB",
 		"categories": {
 			"allCategories": "All categories",
 			"schule": "School",
@@ -385,7 +390,10 @@
 		"badgesApprovedForNetworks": " {{ issuer }} has approved these badges for use in the respective network:",
 		"noBadgesApprovedForNetworks": "{{ issuer }} has not yet <span class='tw-underline'>approved</span> badges for a network.",
 		"badgeAwards": "Badge Awards",
-		"partnerBadges": "Partner badges"
+		"partnerBadges": "Partner badges",
+		"bulkInvalidEmail": "1 invalid email address found. Please correct or remove the email address marked in red.",
+		"bulkInvalidEmailsPlural": "{{count}} invalid email addresses found. Please correct or remove the email addresses marked in red.",
+		"bulkReceiveByEmail": "Recipients will receive the badge by email."
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -393,8 +401,8 @@
 		"networksUseBadgesTogether": "Networks can share badges.",
 		"networkLogoOnBadge": "The network logo is also displayed on the corresponding badge images.",
 		"youCanAddInstitutions": "You can create your own network and add your partner institutions:",
-		"create": "create network",
-		"name": "name of the network",
+		"create": "Create network",
+		"name": "Name of the network",
 		"addPartnerNext": "You can add your partner institutions in the next step.",
 		"welcomeDashboard": "Welcome to the dashboard of the network",
 		"inviteInstitutions": "Invite institutions to network",
@@ -411,6 +419,8 @@
 		"confirmInvitation": "Confirm invitation",
 		"networksHeadline": "All networks at a glance",
 		"noNetworks": "no networks",
+		"networkRegistered": "network is registered on OEB",
+		"networksRegistered": "networks are registered on OEB",
 		"partners": "Network members",
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
 		"partnerIssuers": "Partners",
@@ -433,7 +443,8 @@
 		"partOfNetwork": "Part of the NETWORK",
 		"noBadgesYet": "The network <span class='tw-font-semibold'>{{network}}</span> has not created any badges yet.",
 		"sharedBy": "Shared by",
-		"sharedOn": "Shared on"
+		"sharedOn": "Shared on",
+		"website": "Network website"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -522,11 +533,12 @@
 		"awardingInProgress": "Badge awarding in progress",
 		"willBeAwardedSoon": "We will have awarded the badges soon!",
 		"catalogAllLoaded": "All badges matching your search criteria loaded.",
-		"shareOnNetwork": "share on network",
+		"shareOnNetwork": "Share on network",
+		"shareOnWhichNetwork": "Which of your networks should the badge be shared on?",
 		"allNetworkMembersGetBadge": "All members of the selected network can award the badge via their institution.",
 		"networkAssertionsGetTracked": "All badge awards are included in the network's data evaluation.",
 		"cantRemoveFromNetwork": "The badge CANNOT be removed from the network.",
-		"shareBadgeOnNetwork": "share badge on network"
+		"shareBadgeOnNetwork": "Share badge on network"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
@@ -676,7 +688,8 @@
 		"newsletterEmail": "We have also sent you an email to confirm your newsletter subscription.",
 		"confirmNewsletter": "Click on <span class ='tw-font-bold'> “Confirm newsletter subscription” </span> in the newsletter email <br> to complete the newsletter registration.",
 		"newsletterEmailNotReceived": "You did not receive a newsletter email? Please submit your data via <br> our <a class='tw-underline tw-text-purple' href='public/about/newsletter'>newsletter registration form</a> or <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>write to us.</a>",
-		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Yes</span>, I would like to stay up to date and subscribe to the OEB newsletter."
+		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Yes</span>, I would like to stay up to date and subscribe to the OEB newsletter.",
+		"signingUp": "Signing up..."
 	},
 	"Captcha": {
 		"error": "Verification failed. Please try again.",
@@ -708,7 +721,8 @@
 		"newPassword": "New password",
 		"areYouNew": "No account yet?",
 		"yourEmail": "Your email address",
-		"yourPassword": "Your password"
+		"yourPassword": "Your password",
+		"loggingIn": "Logging in..."
 	},
 	"Legend": {
 		"legendTitle": "Legend",
@@ -1049,7 +1063,7 @@
 		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
-		"learningpathsPlural": "learning paths",
+		"learningpathsPlural": "Learning paths",
 		"learningpathsNav": "Learning Paths A-Z",
 		"catalogHeadline": "All learning paths at a glance",
 		"participate": "Participate",
@@ -1108,7 +1122,9 @@
 		"condition": "You <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges</span> to receive the Micro Degree.",
 		"learningPathWithMicroDegree": "Learning path with Micro Degree Badge",
 		"confirmDelete": "Are you sure you want to delete this learning path?",
-		"deleteMd": "Delete learning path"
+		"deleteMd": "Delete learning path",
+		"institution": "institution",
+		"institutions": "institutions"
 	},
 	"LearningPathEditor": {
 		"shortDescriptionLine1": "Summary description of the learning program.",

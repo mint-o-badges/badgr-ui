@@ -14,6 +14,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Network } from '~/issuer/network.model';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'network-partners',
@@ -21,6 +22,11 @@ import { Network } from '~/issuer/network.model';
 	imports: [TranslatePipe, OebButtonComponent, NetworkPartnersDatatableComponent, NetworkInvitesDatatableComponent],
 })
 export class NetworkPartnersComponent {
+	private networkApiService = inject(NetworkApiService);
+	private publicApiService = inject(PublicApiService);
+	private messageService = inject(MessageService);
+	private router = inject(Router);
+
 	issuers = input.required<Issuer[]>();
 	network = input.required<Network>();
 	addInstitutionsTemplate = input.required<TemplateRef<void>>();
@@ -45,11 +51,10 @@ export class NetworkPartnersComponent {
 
 	@ViewChild('issuerSearchInputPartnerModel') issuerSearchInputPartnerModel: NgModel;
 
-	constructor(
-		private networkApiService: NetworkApiService,
-		private publicApiService: PublicApiService,
-		private messageService: MessageService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		effect(() => {
 			const invites = this.networkInvites();
 			this.approvedInvites.set(invites.filter((i) => i.acceptedOn));
@@ -113,5 +118,13 @@ export class NetworkPartnersComponent {
 
 	async onPartnerRemoved(issuer: Issuer) {
 		this.removePartnerRequest.emit(issuer);
+	}
+
+	redirectToIssuerDetail(issuer: Issuer) {
+		if (issuer.currentUserStaffMember) {
+			this.router.navigate(['/issuer/issuers/', issuer.slug]);
+		} else {
+			this.router.navigate(['/public/issuers/', issuer.slug]);
+		}
 	}
 }

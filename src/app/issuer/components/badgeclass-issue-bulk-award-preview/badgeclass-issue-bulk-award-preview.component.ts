@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, inject } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -9,19 +9,30 @@ import {
 	BulkIssueData,
 	BulkIssueImportPreviewData,
 	DestSelectOptions,
+	ParsedRow,
 	TransformedImportData,
 	ViewState,
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { NgClass } from '@angular/common';
+import tlds from '../../../../assets/data/tld-list.json';
+import { isValidEmail } from '~/common/util/is-valid-email';
 
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-preview',
 	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
-	imports: [HlmH1, HlmP, FormsModule, OebButtonComponent, TranslatePipe],
+	imports: [HlmH1, HlmP, FormsModule, OebButtonComponent, TranslatePipe, NgClass],
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent implements OnChanges {
+	protected formBuilder = inject(FormBuilder);
+	protected loginService: SessionService;
+	protected messageService = inject(MessageService);
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected title = inject(Title);
+
 	@Input() importPreviewData: BulkIssueImportPreviewData;
 
 	@Output() updateStateEmitter = new EventEmitter<ViewState>();
@@ -43,15 +54,19 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 
 	viewState: ViewState;
 
-	constructor(
-		protected formBuilder: FormBuilder,
-		protected loginService: SessionService,
-		protected messageService: MessageService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+
+		this.loginService = loginService;
+		this.router = router;
+		this.route = route;
 	}
 
 	ngOnChanges(changes) {
@@ -105,11 +120,11 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 	}
 
 	removeFromInvalidRowsWithEmptyOptionalCells() {
-		const invalidRow = [];
+		const invalidRow: ParsedRow[] = [];
 		let emptyCellsAreOptional: boolean;
 
 		this.importPreviewData.invalidRows.forEach((row) => {
-			emptyCellsAreOptional = row.every((cell, index) => {
+			emptyCellsAreOptional = row.cells.every((cell, index) => {
 				if (cell.length) {
 					return true;
 				} else {
@@ -134,24 +149,40 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 	}
 
 	transformValidRows() {
-		this.importPreviewData.validRows.forEach((row) => {
-			this.validRowsTransformed.add({
-				email: this.getEmailFromRow(row),
-				name: this.getNameFromRow(row),
-			});
-		});
+		this.validRowsTransformed = new Set<BulkIssueData>(
+			this.importPreviewData.validRows.map((row) => {
+				const email = this.getEmailFromRow(row);
+				const name = this.getNameFromRow(row);
+
+				const emailInvalid = !isValidEmail(email);
+
+				return { email, name, emailInvalid };
+			}),
+		);
 	}
 
 	removeDuplicateEmails() {
-		const tempRow = new Set<string>();
+		const seenEmails = new Set<string>();
+		const uniqueRows = new Set<BulkIssueData>();
+		const duplicates: BulkIssueData[] = [];
+
 		this.validRowsTransformed.forEach((row) => {
-			if (tempRow.has(row.email)) {
-				this.duplicateRecords.push(row);
-				this.validRowsTransformed.delete(row);
+			const normalizedEmail = row.email?.trim().toLowerCase();
+			if (!normalizedEmail) {
+				duplicates.push(row);
+				return;
+			}
+
+			if (seenEmails.has(normalizedEmail)) {
+				duplicates.push(row);
 			} else {
-				tempRow.add(row.email);
+				seenEmails.add(normalizedEmail);
+				uniqueRows.add(row);
 			}
 		});
+
+		this.validRowsTransformed = uniqueRows;
+		this.duplicateRecords = duplicates;
 	}
 
 	mapDestNameToSourceName(columnHeaderId: number, selected: DestSelectOptions) {
@@ -180,8 +211,9 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		return this.getCellFromRowByDestName('name', row);
 	}
 
-	getCellFromRowByDestName(destName: string, row: object) {
-		return row[this.destNameToColumnHeaderMap[destName]];
+	getCellFromRowByDestName(destName: string, row: ParsedRow) {
+		const index = this.destNameToColumnHeaderMap[destName];
+		return index !== undefined ? (row.cells[index]?.trim() ?? '') : '';
 	}
 
 	generateDestNameToColumnHeaderMap() {

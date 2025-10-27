@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -12,6 +12,7 @@ import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmP, HlmH2 } from '@spartan-ng/helm/typography';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	templateUrl: 'badgeclass-select-type.component.html',
@@ -19,8 +20,15 @@ import { HlmH1, HlmP, HlmH2 } from '@spartan-ng/helm/typography';
 	imports: [BgBreadcrumbsComponent, HlmH1, HlmP, HlmH2, RouterLink, TranslatePipe],
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected issuerManager = inject(IssuerManager);
+	protected badgeClassService = inject(BadgeClassManager);
+	private configService = inject(AppConfigService);
+	private translate = inject(TranslateService);
+
 	issuerSlug: string;
-	issuer: Issuer;
+	issuer: Issuer | Network;
 	issuerLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	scrolled = false;
@@ -35,25 +43,23 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 
 	@ViewChild('badgeimage') badgeImage;
 
-	constructor(
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected badgeClassService: BadgeClassManager,
-		private configService: AppConfigService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const title = this.title;
 
 		this.translate.get('Issuer.createBadge').subscribe((str) => {
 			title.setTitle(`${str} - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		});
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 
-		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+		this.issuerLoaded = this.issuerManager.issuerOrNetworkBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
 			this.breadcrumbLinkEntries = [
 				{ title: 'Issuers', routerLink: ['/issuer'] },

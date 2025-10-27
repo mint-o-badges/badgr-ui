@@ -87,9 +87,9 @@
 			</span>
 		</div>
 	} @else {
-		<div class="tw-mt-12" *bgAwaitPromises="sharedBadgesLoaded">
+		<div class="tw-mt-12">
 			<network-shared-badges-datatable
-				[badges]="sharedBadges"
+				[badges]="sharedBadgeResults"
 				(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.issuerSlug, $event.focusRequests)"
 				(directBadgeAward)="routeToBadgeAward($event)"
 				(qrCodeAward)="routeToQRCodeAward($event)"

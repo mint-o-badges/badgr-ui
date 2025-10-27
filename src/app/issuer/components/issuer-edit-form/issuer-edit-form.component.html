@@ -140,6 +140,7 @@
 			[control]="issuerForm.rawControlMap.country"
 			label="{{ 'General.country' | translate }}"
 			placeholder="{{ 'General.select' | translate }}"
+			[dropdownMaxHeight]="500"
 			[options]="_countriesOptions"
 			#networkCountry
 		>
@@ -207,7 +208,7 @@
 				[disabled]="!!addIssuerFinished"
 				text="{{ existingIssuer ? ('General.save' | translate) : ('Network.create' | translate) }}"
 				[loading-promises]="[addIssuerFinished]"
-				loading-message="Hinzufügen"
+				[loading-message]="'General.add' | translate"
 			>
 			</oeb-button>
 		} @else {
