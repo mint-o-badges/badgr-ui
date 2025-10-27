@@ -212,7 +212,7 @@
 	></oeb-tabs>
 
 	<ng-template #badgesTemplate>
-		@if (env.networksEnabled) {
+		@if (env.networksEnabled && !public) {
 			<div class="tw-mt-12">
 				<oeb-tabs
 					[variant]="'bluebackground'"
@@ -225,7 +225,6 @@
 				</oeb-tabs>
 			</div>
 		}
-
 		@switch (activeTabBadgeTemplate) {
 			@case ('issuer-badges') {
 				<ng-container *ngTemplateOutlet="issuerBadgesTemplate"></ng-container>
