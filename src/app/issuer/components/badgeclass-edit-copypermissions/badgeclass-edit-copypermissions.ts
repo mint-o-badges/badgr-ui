@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -36,6 +36,13 @@ import { HlmH1, HlmH2 } from '@spartan-ng/helm/typography';
 	],
 })
 export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected issuerManager = inject(IssuerManager);
+	protected badgeManager = inject(BadgeClassManager);
+	private configService = inject(AppConfigService);
+	private translate = inject(TranslateService);
+
 	issuerSlug: string;
 	badgeSlug: string;
 	category: string;
@@ -52,18 +59,18 @@ export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRou
 
 	savePromise: Promise<BadgeClass> | null = null;
 
-	constructor(
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected badgeManager: BadgeClassManager,
-		private configService: AppConfigService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const title = this.title;
+		const badgeManager = this.badgeManager;
+
 		this.translate.get('Badge.copyBadgeHeadline').subscribe((str) => {
 			title.setTitle(`${str} - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		});

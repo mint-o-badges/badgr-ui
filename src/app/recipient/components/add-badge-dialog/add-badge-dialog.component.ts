@@ -44,6 +44,12 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	styleUrl: './add-badge-dialog.component.scss',
 })
 export class AddBadgeDialogComponent implements AfterViewInit {
+	protected recipientBadgeManager = inject(RecipientBadgeManager);
+	protected formBuilder = inject(FormBuilder);
+	protected messageService = inject(MessageService);
+	private translate = inject(TranslateService);
+	private router = inject(Router);
+
 	@ViewChild('dialogHeader') dialogHeader: TemplateRef<void>;
 	@ViewChild('dialogContent') dialogContent: TemplateRef<void>;
 	@ViewChild('uploadTabTemplate') uploadTabTemplate: TemplateRef<void>;
@@ -68,13 +74,10 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 	private dialogRef: BrnDialogRef;
 	private _hlmDialogService = inject(HlmDialogService);
 
-	constructor(
-		protected recipientBadgeManager: RecipientBadgeManager,
-		protected formBuilder: FormBuilder,
-		protected messageService: MessageService,
-		private translate: TranslateService,
-		private router: Router,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngAfterViewInit() {
 		// Initialize tabs after view is initialized to get template references

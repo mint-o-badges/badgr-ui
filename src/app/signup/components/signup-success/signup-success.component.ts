@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { Title } from '@angular/platform-browser';
@@ -19,15 +19,20 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 	imports: [FormMessageComponent, OAuthBannerComponent, NgIcon, HlmIcon, OebButtonComponent, TranslatePipe],
 })
 export class SignupSuccessComponent implements OnInit {
-	constructor(
-		private routeParams: ActivatedRoute,
-		private title: Title,
-		private sessionService: SessionService,
-		private configService: AppConfigService,
-		private router: Router,
-		private messageService: MessageService,
-		private translate: TranslateService,
-	) {
+	private routeParams = inject(ActivatedRoute);
+	private title = inject(Title);
+	private sessionService = inject(SessionService);
+	private configService = inject(AppConfigService);
+	private router = inject(Router);
+	private messageService = inject(MessageService);
+	private translate = inject(TranslateService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const title = this.title;
+
 		title.setTitle(`Verification - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 

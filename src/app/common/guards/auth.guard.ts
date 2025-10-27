@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { SessionService } from '../services/session.service';
 import { OAuthManager } from '../services/oauth-manager.service';
@@ -6,12 +6,15 @@ import { UserProfileApiService } from '../services/user-profile-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard {
-	constructor(
-		private sessionService: SessionService,
-		private router: Router,
-		private oAuthManager: OAuthManager,
-		private userProfileApiService: UserProfileApiService,
-	) {}
+	private sessionService = inject(SessionService);
+	private router = inject(Router);
+	private oAuthManager = inject(OAuthManager);
+	private userProfileApiService = inject(UserProfileApiService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	canActivate(
 		// Not using but worth knowing about

@@ -19,6 +19,7 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
+import { SharedBadgeWithRequests } from '~/issuer/components/network-badges/network-badges.component';
 
 @Component({
 	selector: 'network-shared-badges-datatable',
@@ -148,7 +149,7 @@ import { OebButtonComponent } from './oeb-button.component';
 						width="full_width"
 						(click)="
 							redirectToBadgeDetail.emit({
-								badge: context.row.original.badge,
+								badge: context.row.original.badgeclass,
 								issuerSlug: context.row.original.shared_by_issuer.slug,
 								focusRequests: true,
 							})
@@ -165,7 +166,7 @@ import { OebButtonComponent } from './oeb-button.component';
 	`,
 })
 export class NetworkSharedBadgesDatatableComponent {
-	badges = input.required<ApiBadgeClassNetworkShare[]>();
+	badges = input.required<SharedBadgeWithRequests[]>();
 	directBadgeAward = output<BadgeClass>();
 	qrCodeAward = output<BadgeClass>();
 
@@ -183,7 +184,7 @@ export class NetworkSharedBadgesDatatableComponent {
 		},
 	]);
 
-	private readonly tableColumnDefinition: ColumnDef<ApiBadgeClassNetworkShare>[] = [
+	private readonly tableColumnDefinition: ColumnDef<SharedBadgeWithRequests>[] = [
 		{
 			id: 'General.badge',
 			header: () => this.translateHeaderIDCellTemplate(),
@@ -206,7 +207,7 @@ export class NetworkSharedBadgesDatatableComponent {
 		{
 			id: 'Issuer.recipients',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => 0,
+			accessorFn: (row) => row.badgeclass.recipient_count,
 			cell: (info) => info.getValue(),
 		},
 		{

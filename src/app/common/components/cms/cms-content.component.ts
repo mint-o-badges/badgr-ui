@@ -1,4 +1,4 @@
-import { Component, input, Input, OnChanges } from '@angular/core';
+import { Component, input, Input, OnChanges, inject } from '@angular/core';
 import { AppConfigService } from '../../app-config.service';
 import { CmsManager } from '../../services/cms-manager.service';
 import { ShadowDomComponent } from '../shadow-dom/shadow-dom.component';
@@ -34,6 +34,9 @@ import { ShadowDomComponent } from '../shadow-dom/shadow-dom.component';
 	standalone: true,
 })
 export class CmsContentComponent implements OnChanges {
+	configService = inject(AppConfigService);
+	private cmsManager = inject(CmsManager);
+
 	headline = input<string>();
 	image = input<string>();
 	content = input<string>();
@@ -42,10 +45,12 @@ export class CmsContentComponent implements OnChanges {
 	styles: string;
 	styleUrls: string[];
 
-	constructor(
-		public configService: AppConfigService,
-		private cmsManager: CmsManager,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const cmsManager = this.cmsManager;
+
 		// styles as <style> element
 		cmsManager.styles$.subscribe((s) => {
 			this.styles = s;

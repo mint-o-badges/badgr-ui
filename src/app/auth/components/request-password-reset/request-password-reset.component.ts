@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EmailValidator } from '../../../common/validators/email.validator';
@@ -31,6 +31,10 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 	],
 })
 export class RequestPasswordResetComponent extends BaseRoutableComponent implements OnInit {
+	private fb = inject(FormBuilder);
+	private sessionService = inject(SessionService);
+	private messageService = inject(MessageService);
+
 	readonly requestPasswordResetForm = typedFormGroup().addControl('username', '', [
 		Validators.required,
 		EmailValidator.validEmail,
@@ -40,13 +44,13 @@ export class RequestPasswordResetComponent extends BaseRoutableComponent impleme
 		return this.route.snapshot.params['email'];
 	}
 
-	constructor(
-		private fb: FormBuilder,
-		private sessionService: SessionService,
-		private messageService: MessageService,
-		route: ActivatedRoute,
-		router: Router,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+
 		super(router, route);
 	}
 

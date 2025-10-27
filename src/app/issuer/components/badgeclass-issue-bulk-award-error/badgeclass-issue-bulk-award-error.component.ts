@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -17,21 +17,32 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 	imports: [FormsModule, ReactiveFormsModule, FormFieldText],
 })
 export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected formBuilder = inject(FormBuilder);
+	protected sessionService: SessionService;
+	protected messageService = inject(MessageService);
+	protected router: Router;
+	protected route: ActivatedRoute;
+	protected title = inject(Title);
+
 	@Input() transformedImportData: TransformedImportData;
 	@Output() updateStateEmitter = new EventEmitter<ViewState>();
 
 	importErrorForm: FormGroup;
 	issuer: string;
 
-	constructor(
-		protected formBuilder: FormBuilder,
-		protected sessionService: SessionService,
-		protected messageService: MessageService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected title: Title,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+
+		this.sessionService = sessionService;
+		this.router = router;
+		this.route = route;
 	}
 
 	ngOnInit() {

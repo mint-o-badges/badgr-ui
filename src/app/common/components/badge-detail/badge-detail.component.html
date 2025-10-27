@@ -129,7 +129,7 @@
 										<dd class="oeb-break-words tw-font-bold tw-text-oebblack">
 											{{
 												config.networkBadge
-													? config.issuerName
+													? config.networkName
 													: config.sharedOnNetwork
 														? config.sharedOnNetwork.name
 														: config.issuerName
@@ -402,7 +402,7 @@
 										@if (lp.activated) {
 											<bg-learningpathcard
 												[name]="lp.name"
-												[badgeImage]="$any(lp).participationBadge_image"
+												[badgeImage]="lp.participationBadge_image"
 												[issuerTitle]="lp.issuer_name"
 												[description]="lp.description"
 												[slug]="lp.slug"

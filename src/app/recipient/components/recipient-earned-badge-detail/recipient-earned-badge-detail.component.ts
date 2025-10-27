@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MessageService } from '../../../common/services/message.service';
@@ -20,6 +20,8 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
+import { IssuerManager } from '~/issuer/services/issuer-manager.service';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -31,6 +33,16 @@ import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-det
 	imports: [BgBadgeDetail],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	private recipientBadgeManager = inject(RecipientBadgeManager);
+	private learningPathApiService = inject(LearningPathApiService);
+	private title = inject(Title);
+	private messageService = inject(MessageService);
+	private eventService = inject(EventsService);
+	private dialogService = inject(CommonDialogsService);
+	private configService = inject(AppConfigService);
+	queryParametersService = inject(QueryParametersService);
+	private translate = inject(TranslateService);
+
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -48,6 +60,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	category: object;
 	badge: RecipientBadgeInstance;
 	issuerBadgeCount: string;
+	awardingIssuers: Issuer[] = null;
 
 	config: PageConfig;
 
@@ -70,25 +83,21 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		return this.recipientBadgeManager.recipientBadgeList;
 	}
 
-	constructor(
-		router: Router,
-		route: ActivatedRoute,
-		loginService: SessionService,
-		private recipientBadgeManager: RecipientBadgeManager,
-		private learningPathApiService: LearningPathApiService,
-		private title: Title,
-		private messageService: MessageService,
-		private eventService: EventsService,
-		private dialogService: CommonDialogsService,
-		private configService: AppConfigService,
-		public queryParametersService: QueryParametersService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+		const loginService = inject(SessionService);
+		const issuerManager = inject(IssuerManager);
+
 		super(router, route, loginService);
 
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise
-			.then((r) => {
+			.then(async (r) => {
 				this.updateBadge(r);
+				this.awardingIssuers = await issuerManager.issuersByUrls([this.badge.issuerId]);
 				this.competencies = this.badge.getExtension('extensions:CompetencyExtension', [{}]);
 				this.category = this.badge.getExtension('extensions:CategoryExtension', {});
 				this.crumbs = [
@@ -146,9 +155,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
-					category: this.translate.instant(
-						`Badge.categories.${this.category['Category'] || 'participation'}`,
-					),
+					category: this.category['Category'],
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
@@ -162,6 +169,11 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					shareButton: true,
 					badgeInstanceSlug: this.badgeSlug,
 					version: assertionVersion,
+					awardingIssuers: this.awardingIssuers,
+					networkBadge: this.badge.isNetworkBadge,
+					networkImage: this.badge.networkImage,
+					networkName: this.badge.networkName,
+					sharedOnNetwork: this.badge.sharedOnNetwork,
 				};
 			})
 			.finally(() => {

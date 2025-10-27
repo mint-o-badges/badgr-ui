@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, OnChanges, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, input, OnChanges, SimpleChanges, ViewChild, OnDestroy, inject } from '@angular/core';
 import { ApiRootSkill, ApiSkill } from '../../../common/model/ai-skills.model';
 import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -121,6 +121,8 @@ const skillIconMap = {
 	],
 })
 export class RecipientSkillVisualisationComponent implements OnChanges, OnDestroy {
+	private translate = inject(TranslateService);
+
 	@ViewChild('d3canvas') d3canvas: ElementRef<HTMLElement>;
 
 	skills = input<ApiRootSkill[]>([]);
@@ -139,7 +141,10 @@ export class RecipientSkillVisualisationComponent implements OnChanges, OnDestro
 	selectedNodeNumber: string | undefined = undefined;
 	showSingleNode: boolean = false;
 
-	constructor(private translate: TranslateService) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		fromEvent(window, 'resize')
 			.pipe(
 				debounceTime(300),

@@ -41,6 +41,15 @@ export interface PublicApiBadgeAssertion {
 	slug: string;
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
+	isNetworkBadge: boolean;
+	networkImage: string;
+	networkName: string;
+	sharedOnNetwork: {
+		slug: string;
+		name: string;
+		image: string | null;
+		description: string | null;
+	} | null;
 }
 
 export interface PublicApiBadgeAssertionWithBadgeClass extends PublicApiBadgeAssertion {
@@ -50,6 +59,7 @@ export interface PublicApiBadgeAssertionWithBadgeClass extends PublicApiBadgeAss
 export interface PublicApiBadgeClass {
 	'@context': string | Array<string>;
 	description: string;
+	created_at: Date;
 	type: 'BadgeClass';
 	id: string;
 	hostedUrl: string;
@@ -145,7 +155,7 @@ export interface PublicApiBadgeCollectionEntryWithBadgeClassAndIssuer {
 export interface PublicApiLearningPath {
 	name: string;
 	description: string;
-	image?: string;
+	participationBadge_image?: string;
 	badges: PublicApiBadgeClass[];
 	slug: string;
 	tags: string[];

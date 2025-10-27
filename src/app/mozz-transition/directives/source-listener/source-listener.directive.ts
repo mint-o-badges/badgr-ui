@@ -1,16 +1,19 @@
-import { Directive, OnInit } from '@angular/core';
+import { Directive, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 
 @Directive({ selector: '[sourceListener]' })
 export class SourceListenerDirective implements OnInit {
+	private route = inject(ActivatedRoute);
+	private queryParams = inject(QueryParametersService);
+
 	getVars = ['signup', 'source'];
 	getVarSets = ['assertion'];
 
-	constructor(
-		private route: ActivatedRoute,
-		private queryParams: QueryParametersService,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngOnInit() {
 		this.getVars.forEach((gv) => this.varSet(gv));

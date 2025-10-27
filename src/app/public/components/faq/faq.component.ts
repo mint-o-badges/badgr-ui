@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CmsPageComponent } from '~/common/components/cms/cms-page.component';
 
@@ -9,5 +9,10 @@ import { CmsPageComponent } from '~/common/components/cms/cms-page.component';
 	imports: [CmsPageComponent],
 })
 export class FaqComponent {
-	constructor(protected translate: TranslateService) {}
+	protected translate = inject(TranslateService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 }

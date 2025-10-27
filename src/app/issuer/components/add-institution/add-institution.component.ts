@@ -15,6 +15,7 @@ import { NetworkApiService } from '../../../issuer/services/network-api.service'
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { MemoizedProperty } from '~/common/util/memoized-property-decorator';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { ApiNetworkInvitation } from '~/issuer/models/network-invite-api.model';
 
 @Component({
 	selector: 'add-institution',
@@ -22,15 +23,20 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 	imports: [TranslatePipe, OebButtonComponent, NgIcon, HlmIcon, FormsModule, NgStyle],
 })
 export class AddInstitutionComponent implements AfterViewInit {
-	constructor(
-		private publicApiService: PublicApiService,
-		private messageService: MessageService,
-		private networkApiService: NetworkApiService,
-	) {}
+	private publicApiService = inject(PublicApiService);
+	private messageService = inject(MessageService);
+	private networkApiService = inject(NetworkApiService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	network = input.required<any>();
+	invites = input.required<ApiNetworkInvitation[]>();
 
 	institutionsInvited = output();
+	inviting = false;
 
 	@ViewChild('inviteSuccessContent')
 	inviteSuccessContent: TemplateRef<void>;
@@ -73,7 +79,7 @@ export class AddInstitutionComponent implements AfterViewInit {
 			try {
 				this.issuerSearchResults = [];
 				this.issuerSearchResults = (await this.publicApiService.searchIssuers(this.issuerSearchQuery)).filter(
-					(i) => !i.is_network,
+					(i) => !i.is_network && !this.invites().some((inv) => inv.issuer.slug == i.slug && !inv.revoked),
 				);
 			} catch (error) {
 				this.messageService.reportAndThrowError(`Failed to issuers: ${error.message}`, error);
@@ -123,13 +129,19 @@ export class AddInstitutionComponent implements AfterViewInit {
 	}
 
 	inviteInstitutions(issuers: Issuer[]) {
-		if (!issuers.length) return;
-		this.networkApiService.inviteInstitutions(this.network().slug, issuers).then((res) => {
-			if (res) {
-				this.openSuccessDialog();
-				this.institutionsInvited.emit();
-			}
-		});
+		if (!issuers.length || this.inviting) return;
+		this.inviting = true;
+		this.networkApiService
+			.inviteInstitutions(this.network().slug, issuers)
+			.then((res) => {
+				if (res) {
+					this.openSuccessDialog();
+					this.institutionsInvited.emit();
+				}
+			})
+			.finally(() => {
+				this.inviting = false;
+			});
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);

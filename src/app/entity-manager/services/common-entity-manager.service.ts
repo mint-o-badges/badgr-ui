@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, inject } from '@angular/core';
 import { BadgeClassManager } from '../../issuer/services/badgeclass-manager.service';
 import { MessageService } from '../../common/services/message.service';
 import { BadgeInstanceManager } from '../../issuer/services/badgeinstance-manager.service';
@@ -16,6 +16,8 @@ import { LearningPathManager } from '../../issuer/services/learningpath-manager.
  */
 @Injectable({ providedIn: 'root' })
 export class CommonEntityManager {
+	private injector = inject(Injector);
+
 	get badgeInstanceManager(): BadgeInstanceManager {
 		return this.injector.get(BadgeInstanceManager);
 	}
@@ -56,5 +58,8 @@ export class CommonEntityManager {
 		return this.injector.get(LearningPathManager);
 	}
 
-	constructor(private injector: Injector) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 }

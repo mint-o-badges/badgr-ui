@@ -1,4 +1,4 @@
-import { Component, NgZone, signal, WritableSignal, OnInit } from '@angular/core';
+import { Component, NgZone, signal, WritableSignal, OnInit, inject } from '@angular/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
@@ -54,7 +54,12 @@ import { saveAsImage } from '../../util/qrcode-util';
 	`,
 })
 export class ShareCollectionDialogComponent implements OnInit {
-	constructor(private zone: NgZone) {}
+	private zone = inject(NgZone);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 	private readonly COPY_NOTIF_TIMEOUT_MS: number = 3000;
 
 	private readonly _dialogContext = injectBrnDialogContext<{

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../common/services/session.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,21 +18,26 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	imports: [HlmH1, RecipientBadgeCollectionEditFormComponent, TranslatePipe],
 })
 export class RecipientBadgeCollectionEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected badgeManager = inject(BadgeClassManager);
+	protected collectionManager = inject(RecipientBadgeCollectionManager);
+	private configService = inject(AppConfigService);
+
 	collectionLoaded: Promise<unknown>;
 	collection: RecipientBadgeCollection;
 	slug: string;
 
-	constructor(
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected badgeManager: BadgeClassManager,
-		protected collectionManager: RecipientBadgeCollectionManager,
-		private configService: AppConfigService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const title = this.title;
 
 		this.slug = this.route.snapshot.params['collectionSlug'];
 
