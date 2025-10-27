@@ -41,6 +41,15 @@ export interface PublicApiBadgeAssertion {
 	slug: string;
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
+	isNetworkBadge: boolean;
+	networkImage: string;
+	networkName: string;
+	sharedOnNetwork: {
+		slug: string;
+		name: string;
+		image: string | null;
+		description: string | null;
+	} | null;
 }
 
 export interface PublicApiBadgeAssertionWithBadgeClass extends PublicApiBadgeAssertion {

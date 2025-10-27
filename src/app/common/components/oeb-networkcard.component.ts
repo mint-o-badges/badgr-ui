@@ -44,12 +44,16 @@ import { Network } from '~/issuer/network.model';
 								variant="secondary"
 								width="full_width"
 								[text]="'Issuer.createBadge' | translate"
+								[routerLink]="['/issuer/networks', network.slug]"
+								[queryParams]="{ tab: 'badges' }"
 							></oeb-button>
 						}
 						<oeb-button
 							variant="secondary"
 							width="full_width"
 							[text]="'Issuer.giveBadge' | translate"
+							[routerLink]="['/issuer/networks', network.slug]"
+							[queryParams]="{ tab: 'badges' }"
 						></oeb-button>
 					</div>
 				</section>
