@@ -54,7 +54,7 @@
 							@if (award.request_count > 0 && issuer?.slug && badgeClass?.slug && interactive) {
 								<brn-accordion-content hlm class="tw-text-white">
 									<qrcodes-datatable
-										[qrCodeId]="award.slug"
+										[qrCode]="award"
 										[issuerSlug]="issuer.slug"
 										[badgeSlug]="badgeClass.slug"
 										(deletedQRAward)="deleteQRAward($event)"
