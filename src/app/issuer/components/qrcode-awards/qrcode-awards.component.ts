@@ -5,7 +5,6 @@ import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-hel
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { BadgeRequestApiService } from '../../services/badgerequest-api.service';
@@ -37,7 +36,6 @@ import { ApiQRCode } from '~/issuer/models/qrcode-api.model';
 		BrnAccordionContent,
 		RouterModule,
 		NgClass,
-		OebSeparatorComponent,
 		OebButtonComponent,
 		OebDropdownComponent,
 		QrCodeDatatableComponent,
