@@ -207,7 +207,7 @@
 										[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
 										fieldType="date"
 										[noTopMargin]="true"
-										[errorMessage]="'Startdatum ist erforderlich'"
+										[errorMessage]="'CreateBadge.activityStartDateRequired' | translate"
 									></oeb-input>
 									<oeb-input
 										[control]="issueForm.controls.activity_end_date.rawControl"
@@ -215,7 +215,7 @@
 										[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
 										fieldType="date"
 										[noTopMargin]="true"
-										[errorMessage]="'Enddatum ist erforderlich und muss nach dem Startdatum liegen'"
+										[errorMessage]="'CreateBadge.activityEndDateRequired' | translate"
 									></oeb-input>
 								</div>
 							</oeb-collapsible>

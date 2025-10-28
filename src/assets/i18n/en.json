@@ -88,7 +88,10 @@
 		"oneRequest": "1 request",
 		"multiRequests": "# requests",
 		"license": "License",
-		"language": { "de": "German", "en": "English" },
+		"language": {
+			"de": "German",
+			"en": "English"
+		},
 		"close": "Close",
 		"notification": "Notification",
 		"validationCompleteForm": "Please fill out completely",
@@ -436,7 +439,11 @@
 		"resendInvitation": "Resend invitation",
 		"invitedOn": "Invited on",
 		"yourRole": "Your role: {{role}}",
-		"role": { "owner": "Owner", "editor": "Editor", "staff": "Member" },
+		"role": {
+			"owner": "Owner",
+			"editor": "Editor",
+			"staff": "Member"
+		},
 		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
 		"partnerSince": "Network Partner since",
 		"partner": "Network Members",
@@ -655,7 +662,9 @@
 		"subjectMatter": "Write down what your learning program teaches in terms of <u>subject matter</u>.",
 		"howLearningWorks": "Also describe <u>how</u> the learning takes place.",
 		"inAddition": "In addition to subject-specific skills, <u>soft skills</u> such as social, communication, or problem-solving skills can often be acquired through teamwork, experimentation or planning.",
-		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>"
+		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>",
+		"activityEndDateRequired": "End date is required must be after start date",
+		"activityStartDateRequired": "Start date is required"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -1092,7 +1101,11 @@
 		"continue": "Continue learning",
 		"finished": "Finished",
 		"includedBadges": "Contained badges",
-		"badgeTabs": { "all": "All", "inprogress": "In progress", "finished": "Finished" },
+		"badgeTabs": {
+			"all": "All",
+			"inprogress": "In progress",
+			"finished": "Finished"
+		},
 		"chooseBadges": "Choose included badges",
 		"badgeSequenceStep": "Badge order",
 		"badgeSequence": "Order of badges in the learning path",
@@ -1140,7 +1153,9 @@
 		"shortDescriptionLine1": "Summary description of the learning program.",
 		"shortDescriptionLine2": "This short description will be saved in the Micro Degree completion badge."
 	},
-	"OEBComponents": { "fieldIsRequired": "This field is required" },
+	"OEBComponents": {
+		"fieldIsRequired": "This field is required"
+	},
 	"ErrorDialog": {
 		"title": "An error has occurred!",
 		"message": "Below you can see the error message. If you believe the error is on our side, you can copy the error message and send it to us by email, or you can create an issue on GitHub.",
@@ -1149,5 +1164,9 @@
 		"createIssue": "Go to GitHub Issues",
 		"sendEmail": "Send an email"
 	},
-	"NounProject": { "searchIcon": "Search Icon", "loading": "Loading...", "noIconsFoundFor": "No icons found for" }
+	"NounProject": {
+		"searchIcon": "Search Icon",
+		"loading": "Loading...",
+		"noIconsFoundFor": "No icons found for"
+	}
 }
