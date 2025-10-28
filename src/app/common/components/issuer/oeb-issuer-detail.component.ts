@@ -281,8 +281,11 @@ export class OebIssuerDetailComponent implements OnInit {
 
 					const requestCount = requestMap.get(badgeClass.slug)?.length ?? 0;
 
-					// Extract the awarded_count from the API response
 					const awardedCount = networkBadgeClass.awarded_count ?? 0;
+
+					if (awardedCount === 0) {
+						continue;
+					}
 
 					const badgeResult = new BadgeResult(
 						badgeClass,
@@ -294,13 +297,15 @@ export class OebIssuerDetailComponent implements OnInit {
 					groupBadges.push(badgeResult);
 				}
 
-				groupBadges.sort(this.sortBadgeResult);
+				if (groupBadges.length > 0) {
+					groupBadges.sort(this.sortBadgeResult);
 
-				this.networkBadgeInstanceResults.push({
-					issuerName: group.network_issuer.name,
-					badges: groupBadges,
-					networkIssuer: group.network_issuer,
-				});
+					this.networkBadgeInstanceResults.push({
+						issuerName: group.network_issuer.name,
+						badges: groupBadges,
+						networkIssuer: group.network_issuer,
+					});
+				}
 			}
 
 			this.networkBadgeInstanceResults.sort((a, b) => {
