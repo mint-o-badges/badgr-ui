@@ -121,8 +121,8 @@ export class PublicBadgeClassComponent implements OnInit {
 					learningPaths: this.learningPaths,
 					copy_permissions: badge.copy_permissions,
 					networkBadge: badge.isNetworkBadge,
-					networkImage: badge.badgeClass.networkImage,
-					networkName: badge.badgeClass.networkName,
+					networkImage: badge.networkImage,
+					networkName: badge.networkName,
 				};
 
 				// wait for user profile, emails, issuer to check if user can copy
