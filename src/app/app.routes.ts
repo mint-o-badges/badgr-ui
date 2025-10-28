@@ -2,10 +2,6 @@ import { Route, Routes, UrlMatcher, UrlMatchResult, UrlSegment, UrlSegmentGroup 
 import { environment } from '../environments/environment';
 import { AuthGuard } from './common/guards/auth.guard';
 
-
-
-
-
 const cmsSlugMatcher = (segments: UrlSegment[], group: UrlSegmentGroup, route: Route, type: string): UrlMatchResult => {
 	if (segments[0].path == type) {
 		const slugSegments = segments.slice(1);
@@ -28,11 +24,11 @@ export const ROUTE_CONFIG: Routes = [
 	},
 	{
 		path: 'initial-redirect',
-		loadComponent: () => import('./initial-redirect.component').then(m => m.InitialRedirectComponent),
+		loadComponent: () => import('./initial-redirect.component').then((m) => m.InitialRedirectComponent),
 	},
 	{
 		path: 'forward',
-		loadComponent: () => import('./common/pages/forward-route.component').then(m => m.ForwardRouteComponent),
+		loadComponent: () => import('./common/pages/forward-route.component').then((m) => m.ForwardRouteComponent),
 	},
 	{
 		path: 'auth',
@@ -97,18 +93,19 @@ export const ROUTE_CONFIG: Routes = [
 
 	// CMS contents
 	{
-		loadComponent: () => import('./common/components/cms/cms-page.component').then(m => m.CmsPageComponent),
+		loadComponent: () => import('./common/components/cms/cms-page.component').then((m) => m.CmsPageComponent),
 		data: { cmsContentType: 'page' },
 		matcher: cmsPageMatcher,
 	},
 	{
-		loadComponent: () => import('./common/components/cms/cms-page.component').then(m => m.CmsPageComponent),
+		loadComponent: () => import('./common/components/cms/cms-page.component').then((m) => m.CmsPageComponent),
 		data: { cmsContentType: 'post' },
 		matcher: cmsPostMatcher,
 	},
 	{
 		path: 'news',
-		loadComponent: () => import('./common/components/cms/cms-post-list/cms-post-list.component').then(m => m.CmsPostListComponent),
+		loadComponent: () =>
+			import('./common/components/cms/cms-post-list/cms-post-list.component').then((m) => m.CmsPostListComponent),
 	},
 
 	// catchall
