@@ -80,7 +80,15 @@ export class BadgeclassIssueBulkAwardConformation
 	@ViewChildren('emailInput') emailInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
 	activityDatesForm = typedFormGroup()
-		.addControl('activity_start_date', '', DateValidator.validDate)
+		.addControl('activity_start_date', '', DateValidator.validDate, (control) => {
+			control.rawControl.valueChanges.subscribe(() => {
+				if (
+					this.activityDatesForm.controls.activity_end_date.rawControl.value === '' &&
+					control.rawControl.value !== ''
+				)
+					this.activityDatesForm.controls.activity_end_date.setValue(control.rawControl.value);
+			});
+		})
 		.addControl('activity_end_date', '', [
 			DateValidator.validDate,
 			DateRangeValidator.endDateAfterStartDate('activity_start_date', 'activityEndBeforeStart'),
@@ -189,9 +197,10 @@ export class BadgeclassIssueBulkAwardConformation
 		const activityStartDate = formState.activity_start_date
 			? new Date(formState.activity_start_date).toISOString()
 			: null;
-		const activityEndDate = formState.activity_end_date
-			? new Date(formState.activity_end_date).toISOString()
-			: null;
+		const activityEndDate =
+			formState.activity_end_date && formState.activity_start_date !== formState.activity_end_date
+				? new Date(formState.activity_end_date).toISOString()
+				: null;
 
 		this.transformedImportData.validRowsTransformed.forEach((row) => {
 			let assertion: BadgeInstanceBatchAssertion;
