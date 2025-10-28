@@ -170,12 +170,18 @@
 							}
 
 							@if (config.activity_start_date) {
-								<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+								<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col tw-flex-wrap">
 									<dt class="tw-text-sm tw-text-darkgray">
 										{{ 'RecBadge.courseDateShort' | translate }}
 									</dt>
-									<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+									<dd class="tw-text-sm tw-font-medium tw-text-oebblack">
 										<time [date]="config.activity_start_date" format="dd.MM.y"></time>
+										@if (config.activity_end_date) {
+											&nbsp; — &nbsp;<time
+												[date]="config.activity_end_date"
+												format="dd.MM.y"
+											></time>
+										}
 									</dd>
 								</div>
 							}
