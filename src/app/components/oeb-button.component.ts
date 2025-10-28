@@ -18,6 +18,7 @@ import { map, Subscription } from 'rxjs';
 		class="tw-relative"
 		hlmBtn
 		[disabled]="computedDisabled()"
+		[weight]="weight()"
 		[width]="width()"
 		[size]="size()"
 		[variant]="variant()"
@@ -39,6 +40,7 @@ import { map, Subscription } from 'rxjs';
 export class OebButtonComponent implements OnInit, OnDestroy {
 	readonly variant = input<ButtonVariants['variant']>('default');
 	readonly size = input<ButtonVariants['size']>('default');
+	readonly weight = input<ButtonVariants['weight']>('bold');
 	readonly width = input<ButtonVariants['width']>('default');
 	readonly disabled = input<boolean>(false);
 	readonly text = input<string>();

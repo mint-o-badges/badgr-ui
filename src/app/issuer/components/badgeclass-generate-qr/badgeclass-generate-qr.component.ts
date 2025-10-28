@@ -75,6 +75,9 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	creator: string;
 	valid: boolean = true;
 	validity: string;
+	course_date: string;
+	activity_start_date: string | null;
+	activity_end_date: string | null;
 	valid_from: string | null;
 	expires_at: string | null;
 	baseUrl: string;
@@ -155,8 +158,30 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
 				this.qrTitle = qrCode.title;
 				this.creator = qrCode.createdBy;
+				this.activity_start_date = qrCode.activity_start_date;
+				this.activity_end_date = qrCode.activity_end_date;
 				this.valid_from = qrCode.valid_from;
 				this.expires_at = qrCode.expires_at;
+
+				if (this.activity_start_date) {
+					if (this.activity_end_date) {
+						this.course_date =
+							BadgeClassGenerateQrComponent.datePipe.transform(
+								new Date(this.activity_start_date),
+								'dd.MM.yyyy',
+							) +
+							' - ' +
+							BadgeClassGenerateQrComponent.datePipe.transform(
+								new Date(this.activity_end_date),
+								'dd.MM.yyyy',
+							);
+					} else {
+						this.course_date = BadgeClassGenerateQrComponent.datePipe.transform(
+							new Date(this.activity_start_date),
+							'dd.MM.yyyy',
+						);
+					}
+				}
 
 				if (this.valid_from && this.expires_at) {
 					this.validity =

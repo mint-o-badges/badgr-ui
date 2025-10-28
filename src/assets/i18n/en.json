@@ -88,7 +88,10 @@
 		"oneRequest": "1 request",
 		"multiRequests": "# requests",
 		"license": "License",
-		"language": { "de": "German", "en": "English" },
+		"language": {
+			"de": "German",
+			"en": "English"
+		},
 		"close": "Close",
 		"notification": "Notification",
 		"validationCompleteForm": "Please fill out completely",
@@ -116,7 +119,9 @@
 		"website": "Website",
 		"organization": "Organization",
 		"notNow": "Not Now",
-		"notFound": "Not found"
+		"notFound": "Not found",
+		"start": "Start",
+		"end": "End"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -393,7 +398,12 @@
 		"partnerBadges": "Partner badges",
 		"bulkInvalidEmail": "1 invalid email address found. Please correct or remove the email address marked in red.",
 		"bulkInvalidEmailsPlural": "{{count}} invalid email addresses found. Please correct or remove the email addresses marked in red.",
-		"bulkReceiveByEmail": "Recipients will receive the badge by email."
+		"bulkReceiveByEmail": "Recipients will receive the badge by email.",
+		"addOptionalDetails": "Add optional details",
+		"evidence": "Proof of successful participation",
+		"addNewEvidence": "Add another evidence",
+		"evidenceUrl": "Evidence URL",
+		"evidenceNarrative": "Textual narrative"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -429,7 +439,11 @@
 		"resendInvitation": "Resend invitation",
 		"invitedOn": "Invited on",
 		"yourRole": "Your role: {{role}}",
-		"role": { "owner": "Owner", "editor": "Editor", "staff": "Member" },
+		"role": {
+			"owner": "Owner",
+			"editor": "Editor",
+			"staff": "Member"
+		},
 		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
 		"partnerSince": "Network Partner since",
 		"partner": "Network Members",
@@ -648,7 +662,9 @@
 		"subjectMatter": "Write down what your learning program teaches in terms of <u>subject matter</u>.",
 		"howLearningWorks": "Also describe <u>how</u> the learning takes place.",
 		"inAddition": "In addition to subject-specific skills, <u>soft skills</u> such as social, communication, or problem-solving skills can often be acquired through teamwork, experimentation or planning.",
-		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>"
+		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>",
+		"activityEndDateRequired": "End date is required and may not be before the start date",
+		"activityStartDateRequired": "Start date is required"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -837,7 +853,9 @@
 		"shareViaLink": "Via Link:",
 		"addToLinkedInProfile": "Add badge to LinkedIn profile",
 		"shareViaLinkedIn": "On LinkedIn:",
-		"shareWithoutLinkedInId": "Info: The institution that awarded you the badge has not provided us with a LinkedIn ID. Therefore, the corresponding logo image cannot be displayed on LinkedIn."
+		"shareWithoutLinkedInId": "Info: The institution that awarded you the badge has not provided us with a LinkedIn ID. Therefore, the corresponding logo image cannot be displayed on LinkedIn.",
+		"courseDate": "Course date",
+		"courseDateShort": "Course date"
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
@@ -1039,7 +1057,7 @@
 		"description": "If you create a QR code here, your learners can scan the generated QR code and collect the badge themselves.",
 		"howItWorks": "How it works:",
 		"create": "Create QR Code for",
-		"titlePlaceholder": "Badge Award June 2024",
+		"titlePlaceholder": "Badge Award June 2025 in Berlin",
 		"creatorName": "Creator name",
 		"creatorNamePlaceholder": "My first and last name",
 		"expiration": "QR Code expiration date",
@@ -1057,7 +1075,8 @@
 		"downloadPoster": "Download QR-Code-Poster",
 		"badgeDetailPage": "badge detail page",
 		"badgesAwardedSuccessfully": "badges awarded successfully",
-		"invalidDateRange": "The expiration date must be after the start date",
+		"invalidExpirationDateRange": "The expiration date must be after the start date",
+		"invalidDateRange": "The end date may not be before the start date",
 		"invalidDate": "Please enter a date in the format YYYY/mm/dd",
 		"missingStartDate": "Please enter a start date for validity",
 		"expired": "This QR code has expired."
@@ -1082,7 +1101,11 @@
 		"continue": "Continue learning",
 		"finished": "Finished",
 		"includedBadges": "Contained badges",
-		"badgeTabs": { "all": "All", "inprogress": "In progress", "finished": "Finished" },
+		"badgeTabs": {
+			"all": "All",
+			"inprogress": "In progress",
+			"finished": "Finished"
+		},
 		"chooseBadges": "Choose included badges",
 		"badgeSequenceStep": "Badge order",
 		"badgeSequence": "Order of badges in the learning path",
@@ -1130,7 +1153,9 @@
 		"shortDescriptionLine1": "Summary description of the learning program.",
 		"shortDescriptionLine2": "This short description will be saved in the Micro Degree completion badge."
 	},
-	"OEBComponents": { "fieldIsRequired": "This field is required" },
+	"OEBComponents": {
+		"fieldIsRequired": "This field is required"
+	},
 	"ErrorDialog": {
 		"title": "An error has occurred!",
 		"message": "Below you can see the error message. If you believe the error is on our side, you can copy the error message and send it to us by email, or you can create an issue on GitHub.",
@@ -1139,5 +1164,9 @@
 		"createIssue": "Go to GitHub Issues",
 		"sendEmail": "Send an email"
 	},
-	"NounProject": { "searchIcon": "Search Icon", "loading": "Loading...", "noIconsFoundFor": "No icons found for" }
+	"NounProject": {
+		"searchIcon": "Search Icon",
+		"loading": "Loading...",
+		"noIconsFoundFor": "No icons found for"
+	}
 }

@@ -186,6 +186,23 @@
 									</div>
 								}
 								<dl class="tw-pt-2">
+									@if (config.activity_start_date) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'RecBadge.courseDateShort' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+												<time [date]="config.activity_start_date" format="dd.MM.y"></time>
+												@if (config.activity_end_date) {
+													&nbsp; — &nbsp;<time
+														[date]="config.activity_end_date"
+														format="dd.MM.y"
+													></time>
+												}
+											</dd>
+										</div>
+									}
+
 									@if (hasCriteria || config.competencies.length) {
 										<div
 											class="tw-bg-white tw-mb-4 tw-rounded-[10px] tw-p-2"
@@ -207,28 +224,29 @@
 															hlm
 															name="lucideAward"
 															class="tw-w-6 tw-h-6 tw-text-purple"
-														>
-														</ng-icon>
+														/>
 														<span
-															class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
+															class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-2 tw-uppercase"
 															[innerHTML]="'Badge.awardCriteria' | translate"
 														></span>
 													</dt>
 												</ng-template>
 												@if (hasCriteria) {
 													<dd>
-														<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
+														<ul class="tw-pl-10 tw-mt-1 tw-list-inside tw-list-disc">
 															@for (
 																criteria of config.awardCriteria;
 																track criteria.name
 															) {
-																<li class="tw-mb-1">
-																	<span class="tw-text-oebblack">{{
-																		criteria.name
-																	}}</span>
+																<li class="tw-mb-2">
+																	<p hlmP [size]="'sm'" class="tw-inline">
+																		{{ criteria.name }}
+																	</p>
 																	@if (criteria.description) {
 																		<p
-																			class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1"
+																			hlmP
+																			[size]="'sm'"
+																			class="tw-text-darkgrey tw-italic tw-ml-4 tw-mt-1"
 																		>
 																			{{ criteria.description }}
 																		</p>
