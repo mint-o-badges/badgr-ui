@@ -155,12 +155,11 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		.addControl('recipient_identifier', '', [Validators.required, this.idValidator])
 		.addControl('activity_start_date', '', [], (control) => {
 			control.rawControl.valueChanges.subscribe(() => {
-				console.log(this.issueForm.controls.activity_end_date.rawControl.value, control.rawControl.value);
 				if (
 					this.issueForm.controls.activity_end_date.rawControl.value === '' &&
 					control.rawControl.value !== ''
 				)
-					this.issueForm.controls.activity_end_date.rawControl.setValue(control.rawControl.value);
+					this.issueForm.controls.activity_end_date.setValue(control.rawControl.value);
 			});
 		})
 		.addControl('activity_end_date', '', [

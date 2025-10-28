@@ -663,7 +663,7 @@
 		"howLearningWorks": "Also describe <u>how</u> the learning takes place.",
 		"inAddition": "In addition to subject-specific skills, <u>soft skills</u> such as social, communication, or problem-solving skills can often be acquired through teamwork, experimentation or planning.",
 		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>",
-		"activityEndDateRequired": "End date is required must be after start date",
+		"activityEndDateRequired": "End date is required and may not be before the start date",
 		"activityStartDateRequired": "Start date is required"
 	},
 	"Signup": {
@@ -1076,7 +1076,7 @@
 		"badgeDetailPage": "badge detail page",
 		"badgesAwardedSuccessfully": "badges awarded successfully",
 		"invalidExpirationDateRange": "The expiration date must be after the start date",
-		"invalidDateRange": "The end date must be after the start date",
+		"invalidDateRange": "The end date may not be before the start date",
 		"invalidDate": "Please enter a date in the format YYYY/mm/dd",
 		"missingStartDate": "Please enter a start date for validity",
 		"expired": "This QR code has expired."

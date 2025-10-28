@@ -86,7 +86,12 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	qrForm = typedFormGroup(this.missingStartDate.bind(this))
 		.addControl('title', '', Validators.required)
 		.addControl('createdBy', '', Validators.required)
-		.addControl('activity_start_date', '', DateValidator.validDate)
+		.addControl('activity_start_date', '', DateValidator.validDate, (control) => {
+			control.rawControl.valueChanges.subscribe(() => {
+				if (this.qrForm.controls.activity_end_date.rawControl.value === '' && control.rawControl.value !== '')
+					this.qrForm.controls.activity_end_date.setValue(control.rawControl.value);
+			});
+		})
 		.addControl('activity_end_date', '', [
 			DateValidator.validDate,
 			DateRangeValidator.endDateAfterStartDate('activity_start_date', 'activityEndBeforeStart'),
@@ -228,9 +233,10 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					activity_start_date: formState.activity_start_date
 						? new Date(formState.activity_start_date).toISOString()
 						: null,
-					activity_end_date: formState.activity_end_date
-						? new Date(formState.activity_end_date).toISOString()
-						: null,
+					activity_end_date:
+						formState.activity_end_date && formState.activity_start_date !== formState.activity_end_date
+							? new Date(formState.activity_end_date).toISOString()
+							: null,
 					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : null,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : null,
 					badgeclass_id: this.badgeSlug,

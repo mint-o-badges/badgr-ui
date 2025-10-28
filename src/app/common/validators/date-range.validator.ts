@@ -33,7 +33,7 @@ export class DateRangeValidator {
 				return null; // Invalid dates, let other validators handle this
 			}
 
-			if (endDate <= startDate) {
+			if (endDate < startDate) {
 				return { [errorKey]: true };
 			}
 
