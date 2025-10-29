@@ -408,7 +408,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			{
 				key: 'issuer-badges',
 				title: 'Issuer.issuerBadges',
-				count: 0,
+				count: this.badgeResults.length,
 				img: this.issuer.image,
 			},
 		];
@@ -419,16 +419,15 @@ export class OebIssuerDetailComponent implements OnInit {
 				count: this.networkBadgeInstanceResults.length,
 				icon: 'lucideShipWheel',
 			});
-		}
 
-		this.badgeTemplateTabs[0].count = this.badgeResults.length;
-		this.badgeTemplateTabs[1].count =
-			this.networkBadgeInstanceResults.reduce((sum, group) => {
-				return sum + (group.badges.length ?? 0);
-			}, 0) +
-			this.networkGroupsArray.reduce((sum, group) => {
-				return sum + (group.badges.length ?? 0);
-			}, 0);
+			this.badgeTemplateTabs[1].count =
+				this.networkBadgeInstanceResults.reduce((sum, group) => {
+					return sum + (group.badges.length ?? 0);
+				}, 0) +
+				this.networkGroupsArray.reduce((sum, group) => {
+					return sum + (group.badges.length ?? 0);
+				}, 0);
+		}
 
 		this.tabs = [
 			{
