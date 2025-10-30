@@ -106,17 +106,6 @@ export class OebIssuerDetailComponent implements OnInit {
 	userIsMember = false;
 	env = environment;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
-	constructor() {
-		if (this.sessionService.isLoggedIn) {
-			this.issuerManager.myIssuers$.subscribe((issuers) => {
-				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
-			});
-		}
-	}
-
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	isFullIssuer(issuer: Issuer | PublicApiIssuer): issuer is Issuer {
@@ -424,7 +413,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			{
 				key: 'issuer-badges',
 				title: 'Issuer.issuerBadges',
-				count: 0,
+				count: this.badgeResults.length,
 				img: this.issuer.image,
 			},
 		];
@@ -435,16 +424,15 @@ export class OebIssuerDetailComponent implements OnInit {
 				count: this.networkBadgeInstanceResults.length,
 				icon: 'lucideShipWheel',
 			});
-		}
 
-		this.badgeTemplateTabs[0].count = this.badgeResults.length;
-		this.badgeTemplateTabs[1].count =
-			this.networkBadgeInstanceResults.reduce((sum, group) => {
-				return sum + (group.badges.length ?? 0);
-			}, 0) +
-			this.networkGroupsArray.reduce((sum, group) => {
-				return sum + (group.badges.length ?? 0);
-			}, 0);
+			this.badgeTemplateTabs[1].count =
+				this.networkBadgeInstanceResults.reduce((sum, group) => {
+					return sum + (group.badges.length ?? 0);
+				}, 0) +
+				this.networkGroupsArray.reduce((sum, group) => {
+					return sum + (group.badges.length ?? 0);
+				}, 0);
+		}
 
 		this.tabs = [
 			{

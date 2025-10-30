@@ -155,6 +155,8 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
+					activity_start_date: this.badge.activityStartDate,
+					activity_end_date: this.badge.activityEndDate,
 					category: this.category['Category'],
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,

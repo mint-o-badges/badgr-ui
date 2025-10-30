@@ -90,7 +90,43 @@
 			<tbody></tbody>
 		</table>
 	</div>
-	<div class="oeb-standard-padding-bottom tw-flex tw-flex-col tw-text-end tw-gap-6">
+
+	<section
+		class="tw-border tw-border-purple tw-border-solid tw-bg-white tw-rounded-[10px] tw-flex tw-flex-col tw-items-start tw-gap-2 tw-p-6"
+	>
+		<span
+			class="tw-mb-2 tw-text-oebblack tw-text-lg tw-uppercase tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+		>
+			<span class="tw-font-normal tw-italic">Optional:</span>
+			{{ 'RecBadge.courseDate' | translate }}
+		</span>
+
+		<div class="tw-flex tw-gap-4">
+			<oeb-input
+				[noTopMargin]="true"
+				labelStyle="tw-text-oebblack"
+				[label]="'General.start' | translate"
+				[errorMessage]="{
+					invalidDate: 'QrCode.invalidDate' | translate,
+				}"
+				[control]="activityDatesForm.rawControlMap.activity_start_date"
+				fieldType="date"
+			></oeb-input>
+			<oeb-input
+				[noTopMargin]="true"
+				labelStyle="tw-text-oebblack"
+				[label]="'General.end' | translate"
+				[errorMessage]="{
+					activityEndBeforeStart: 'QrCode.invalidDateRange' | translate,
+					invalidDate: 'QrCode.invalidDate' | translate,
+				}"
+				[control]="activityDatesForm.rawControlMap.activity_end_date"
+				fieldType="date"
+			></oeb-input>
+		</div>
+	</section>
+
+	<div class="oeb-standard-padding-bottom tw-flex tw-flex-col tw-text-end tw-gap-6 tw-mt-6">
 		@if (invalidEmailCount === 1) {
 			<span class="tw-text-red tw-text-lg">
 				{{ 'Issuer.bulkInvalidEmail' | translate }}
