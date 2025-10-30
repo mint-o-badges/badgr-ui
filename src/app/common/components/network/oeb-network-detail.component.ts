@@ -22,6 +22,9 @@ import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 import { BadgeClassManager } from '~/issuer/services/badgeclass-manager.service';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { Router } from '@angular/router';
+import { SessionService } from '~/common/services/session.service';
+import { NgClass } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
 	selector: 'oeb-network-detail',
@@ -37,6 +40,8 @@ import { Router } from '@angular/router';
 		BgBreadcrumbsComponent,
 		OebTabsComponent,
 		BgBadgecard,
+		NgClass,
+		NgTemplateOutlet,
 	],
 })
 export class OebNetworkDetailComponent {
@@ -47,6 +52,7 @@ export class OebNetworkDetailComponent {
 	protected profileManager = inject(UserProfileManager);
 	protected networkApiService = inject(NetworkApiService);
 	protected badgeClassManager = inject(BadgeClassManager);
+	protected sessionService = inject(SessionService);
 	protected router = inject(Router);
 
 	@Input() issuers: Issuer[] | PublicApiIssuer[];
@@ -69,6 +75,7 @@ export class OebNetworkDetailComponent {
 	tabs: Tab[] = undefined;
 
 	activeTab = 'network';
+	userIsMember = false;
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
@@ -76,6 +83,11 @@ export class OebNetworkDetailComponent {
 	constructor() {}
 
 	async ngOnInit() {
+		if (this.sessionService.isLoggedIn) {
+			this.issuerManager.myNetworks$.subscribe((networks) => {
+				this.userIsMember = networks.some((i) => this.network.slug == i.slug);
+			});
+		}
 		this.linkentries = [
 			{ title: this.translate.instant('Network.networksNav'), routerLink: ['/catalog/networks'] },
 			{

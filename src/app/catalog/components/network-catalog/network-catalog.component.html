@@ -19,11 +19,7 @@
 					<oeb-networkcard
 						@appearAnimation
 						[network]="network"
-						[routerLink]="
-							network.current_user_network_role
-								? ['/issuer/networks', network.slug]
-								: ['/public/networks', network.slug]
-						"
+						[routerLink]="['/public/networks', network.slug]"
 					></oeb-networkcard>
 				}
 			</div>
