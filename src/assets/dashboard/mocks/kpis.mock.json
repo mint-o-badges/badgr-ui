@@ -1,0 +1,88 @@
+{
+  "description": "Dashboard KPI Data - Top 3 primary KPIs and secondary KPIs for municipal dashboard",
+  "topKpis": [
+    {
+      "label": "Nutzende Institutionen",
+      "value": 127,
+      "unit": "Institutionen",
+      "trend": "up",
+      "trendValue": 15,
+      "trendLabel": "+15 im letzten Monat",
+      "icon": "lucideBuilding",
+      "color": "text-purple-600"
+    },
+    {
+      "label": "Vergebene Badges",
+      "value": 342,
+      "unit": "Badges",
+      "trend": "up",
+      "trendValue": 28,
+      "trendLabel": "+28 im letzten Monat",
+      "icon": "lucideAward",
+      "color": "text-purple-600"
+    },
+    {
+      "label": "Kompetenzstunden insgesamt",
+      "value": 1247,
+      "unit": "Stunden",
+      "trend": "up",
+      "trendValue": 95,
+      "trendLabel": "+95 im letzten Monat",
+      "icon": "lucideBookOpen",
+      "color": "text-purple-600",
+      "tooltip": "Anzahl der Kompetenz in Stunden, welche die Badges insgesamt erhalten"
+    }
+  ],
+  "secondaryKpis": [
+    {
+      "label": "Kompetenzstunden je Kompetenzen",
+      "value": 9.8,
+      "unit": "Stunden/Kompetenz",
+      "trend": "up",
+      "trendValue": 12,
+      "trendLabel": "+12 im letzten Monat",
+      "icon": "lucideBookOpen",
+      "color": "text-green-600"
+    },
+    {
+      "label": "Angebotsvielfalt-Index",
+      "value": 73.2,
+      "unit": "Index",
+      "trend": "up",
+      "trendValue": 5,
+      "trendLabel": "+5 im letzten Monat",
+      "icon": "lucideBarChart3",
+      "color": "text-blue-600"
+    },
+    {
+      "label": "Kompetenzportfolio-Breite (PLZ)",
+      "value": 85,
+      "unit": "PLZ-Bereiche",
+      "trend": "stable",
+      "trendValue": 2,
+      "trendLabel": "+2 im letzten Monat",
+      "icon": "lucideMapPin",
+      "color": "text-purple-600"
+    },
+    {
+      "label": "Badge-Dichte (räumlich)",
+      "value": 2.4,
+      "unit": "Badges/km²",
+      "trend": "up",
+      "trendValue": 8,
+      "trendLabel": "+8 im letzten Monat",
+      "icon": "lucideMap",
+      "color": "text-orange-600"
+    },
+    {
+      "label": "Neu eingebrachte Kompetenzen",
+      "value": 42,
+      "unit": "neue Felder",
+      "trend": "up",
+      "trendValue": 7,
+      "trendLabel": "+7 im letzten Monat",
+      "icon": "lucidePlus",
+      "color": "text-cyan-600"
+    }
+  ]
+}

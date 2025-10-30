@@ -1,0 +1,35 @@
+{
+  "description": "Badge Competency Data - Top badges by competency count for horizontal bar chart",
+  "data": [
+    {
+      "badgeTitle": "Digital Marketing Expert",
+      "count": 87,
+      "color": "#492E98"
+    },
+    {
+      "badgeTitle": "Web Development Fundamentals",
+      "count": 64,
+      "color": "#492E98"
+    },
+    {
+      "badgeTitle": "Project Management Professional",
+      "count": 52,
+      "color": "#492E98"
+    },
+    {
+      "badgeTitle": "Data Analytics Specialist",
+      "count": 45,
+      "color": "#492E98"
+    },
+    {
+      "badgeTitle": "Communication Skills",
+      "count": 38,
+      "color": "#CCD7FF"
+    },
+    {
+      "badgeTitle": "Leadership & Team Management",
+      "count": 31,
+      "color": "#93F993"
+    }
+  ]
+}
