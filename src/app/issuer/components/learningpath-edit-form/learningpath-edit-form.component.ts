@@ -18,7 +18,6 @@ import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
@@ -107,8 +106,6 @@ export class LearningPathEditFormComponent
 	protected learningPathApiService = inject(LearningPathApiService);
 	protected issuerManager = inject(IssuerManager);
 	protected issuerApiService = inject(IssuerApiService);
-	protected router: Router;
-	protected route: ActivatedRoute;
 	protected badgeClassService = inject(BadgeClassManager);
 	protected badgeClassApiService = inject(BadgeClassApiService);
 	private translate = inject(TranslateService);
@@ -230,20 +227,9 @@ export class LearningPathEditFormComponent
 
 	selectMinBadgesOptions: FormFieldSelectOption[] = [];
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
-		const loginService = inject(AUTH_PROVIDER);
-		const router = inject(Router);
-		const route = inject(ActivatedRoute);
-
-		// protected title: Title,
-		super(router, route, loginService);
-		this.loginService = loginService;
-		this.router = router;
-		this.route = route;
-
+		super();
+		this.loginService = inject(AUTH_PROVIDER);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		if (!this.issuer)
 			this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {

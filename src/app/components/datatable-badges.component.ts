@@ -16,6 +16,7 @@ import {
 	SortingState,
 } from '@tanstack/angular-table';
 import { NgIcon } from '@ng-icons/core';
+import { PublicApiBadgeClass } from '~/public/models/public-api.model';
 
 @Component({
 	selector: 'badges-datatable',
@@ -96,6 +97,10 @@ import { NgIcon } from '@ng-icons/core';
 			{{ context.header.id | translate }}
 		</ng-template>
 
+		<ng-template #recipientHeaderCellTemplate let-context>
+			<span [innerHTML]="recipientTranslation() | translate"></span>
+		</ng-template>
+
 		<ng-template #badgeCellTemplate let-context>
 			<div
 				class="tw-flex tw-flex-row tw-items-center tw-leading-7 tw-gap-2 tw-cursor-pointer"
@@ -154,10 +159,12 @@ export class DatatableComponent {
 	private translate = inject(TranslateService);
 
 	badges = input.required<DatatableBadgeResult[]>();
+	recipientTranslation = input<string>('Badge.multiRecipients');
 	directBadgeAward = output<BadgeClass>();
 	qrCodeAward = output<BadgeClass>();
 	redirectToBadgeDetail = output<{ badge: BadgeClass; focusRequests: boolean }>();
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	recipientHeaderCellTemplate = viewChild.required<TemplateRef<any>>('recipientHeaderCellTemplate');
 	badgeCellTemplate = viewChild.required<TemplateRef<any>>('badgeCellTemplate');
 	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
@@ -178,13 +185,15 @@ export class DatatableComponent {
 		{
 			id: 'Badge.createdOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.badge.createdAt,
+			accessorFn: (row) =>
+				row.badge instanceof BadgeClass ? row.badge.createdAt : new Date(row.badge.created_at),
 			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'Badge.multiRecipients',
-			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.badge.recipientCount,
+			header: () => this.recipientHeaderCellTemplate(),
+			accessorFn: (row) => row.awardedCount ?? (row.badge instanceof BadgeClass ? row.badge.recipientCount : 0),
+
 			cell: (info) => info.getValue(),
 		},
 		{
@@ -214,6 +223,7 @@ export class DatatableComponent {
 }
 
 export interface DatatableBadgeResult {
-	badge: BadgeClass;
+	badge: BadgeClass | PublicApiBadgeClass;
 	requestCount: number;
+	awardedCount: number;
 }

@@ -43,6 +43,10 @@ import { ApiBadgeClassNetworkShare } from '~/issuer/models/badgeclass-api.model'
 import { ActivatedRoute } from '@angular/router';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 
+export interface SharedBadgeWithRequests extends ApiBadgeClassNetworkShare {
+	requestCount: number;
+}
+
 @Component({
 	selector: 'network-badges',
 	templateUrl: './network-badges.component.html',
@@ -116,6 +120,7 @@ export class NetworkBadgesComponent {
 	activeTab = 'network';
 
 	sharedBadges: ApiBadgeClassNetworkShare[] = [];
+	sharedBadgeResults: SharedBadgeWithRequests[] = [];
 
 	@ViewChild('networkTemplate', { static: true }) networkTemplate: ElementRef;
 	@ViewChild('partnerTemplate', { static: true }) partnerTemplate: ElementRef;
@@ -139,9 +144,9 @@ export class NetworkBadgesComponent {
 			},
 			{
 				key: 'partner',
-				title: 'Partner-Badges',
+				title: 'Issuer.partnerBadges',
 				icon: 'lucideHexagon',
-				count: this.sharedBadges.length,
+				count: this.sharedBadgeResults.length,
 				component: this.partnerTemplate,
 			},
 		];
@@ -155,7 +160,7 @@ export class NetworkBadgesComponent {
 		});
 		try {
 			await this.loadBadgesAndRequests();
-			await this.loadSharedBadges();
+			await this.loadSharedBadgesAndRequests();
 			this.initializeTabs();
 		} catch (error) {
 			this.messageService.reportAndThrowError(
@@ -179,16 +184,37 @@ export class NetworkBadgesComponent {
 		this.badgeResults = this.badges.map((badge) => ({
 			badge,
 			requestCount: this.getRequestCount(badge, requestMap),
+			awardedCount: badge.recipientCount,
 		}));
 	}
 
-	private loadSharedBadges() {
-		return new Promise((res, rej) => {
-			this.networkApiService.getNetworkSharedBadges(this.network().slug).then((b) => {
-				this.sharedBadges = b;
-				res(b);
-			});
+	private async loadSharedBadgesAndRequests() {
+		const networkSlug = this.network().slug;
+		this.sharedBadges = await this.networkApiService.getNetworkSharedBadges(networkSlug);
+
+		const sharedBadgePromises = this.sharedBadges.map(async (sharedBadge) => {
+			let requestCount = 0;
+
+			try {
+				const requests = await this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(
+					networkSlug,
+					sharedBadge.badgeclass.slug,
+				);
+
+				if (requests.length) {
+					requestCount = requests.reduce((sum, code) => sum + (code.request_count || 0), 0);
+				}
+			} catch (error) {
+				console.error(`Error loading requests for shared badge ${sharedBadge.badgeclass.slug}:`, error);
+			}
+
+			return {
+				...sharedBadge,
+				requestCount,
+			};
 		});
+
+		this.sharedBadgeResults = await Promise.all(sharedBadgePromises);
 	}
 
 	private sortBadgesByCreatedAt(badges: any[]) {

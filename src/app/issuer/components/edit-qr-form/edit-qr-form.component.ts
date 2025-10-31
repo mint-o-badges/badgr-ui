@@ -22,6 +22,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { environment } from '../../../../environments/environment';
+import { DateRangeValidator } from '~/common/validators/date-range.validator';
 
 @Component({
 	selector: 'edit-qr-form',
@@ -85,6 +86,16 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	qrForm = typedFormGroup(this.missingStartDate.bind(this))
 		.addControl('title', '', Validators.required)
 		.addControl('createdBy', '', Validators.required)
+		.addControl('activity_start_date', '', DateValidator.validDate, (control) => {
+			control.rawControl.valueChanges.subscribe(() => {
+				if (this.qrForm.controls.activity_end_date.rawControl.value === '' && control.rawControl.value !== '')
+					this.qrForm.controls.activity_end_date.setValue(control.rawControl.value);
+			});
+		})
+		.addControl('activity_end_date', '', [
+			DateValidator.validDate,
+			DateRangeValidator.endDateAfterStartDate('activity_start_date', 'activityEndBeforeStart'),
+		])
 		.addControl('valid_from', '', DateValidator.validDate)
 		.addControl('expires_at', '', [DateValidator.validDate, this.validDateRange.bind(this)])
 		.addControl('badgeclass_id', '', Validators.required)
@@ -146,6 +157,12 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 				this.qrForm.setValue({
 					title: qrCode.title,
 					createdBy: qrCode.createdBy,
+					activity_start_date: qrCode.activity_start_date
+						? EditQrFormComponent.datePipe.transform(new Date(qrCode.activity_start_date), 'yyyy-MM-dd')
+						: '',
+					activity_end_date: qrCode.activity_end_date
+						? EditQrFormComponent.datePipe.transform(new Date(qrCode.activity_end_date), 'yyyy-MM-dd')
+						: '',
 					valid_from: qrCode.valid_from
 						? EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd')
 						: undefined,
@@ -213,6 +230,13 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 				.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
 					title: formState.title,
 					createdBy: formState.createdBy,
+					activity_start_date: formState.activity_start_date
+						? new Date(formState.activity_start_date).toISOString()
+						: null,
+					activity_end_date:
+						formState.activity_end_date && formState.activity_start_date !== formState.activity_end_date
+							? new Date(formState.activity_end_date).toISOString()
+							: null,
 					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : null,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : null,
 					badgeclass_id: this.badgeSlug,
@@ -240,6 +264,12 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					createdBy: formState.createdBy,
 					badgeclass_id: formState.badgeclass_id,
 					issuer_id: this.isNetworkBadge ? this.partnerIssuerSlug : formState.issuer_id,
+					activity_start_date: formState.activity_start_date
+						? new Date(formState.activity_start_date).toISOString()
+						: undefined,
+					activity_end_date: formState.activity_end_date
+						? new Date(formState.activity_end_date).toISOString()
+						: undefined,
 					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 					notifications: formState.notifications,

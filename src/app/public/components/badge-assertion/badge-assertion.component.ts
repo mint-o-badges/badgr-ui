@@ -21,6 +21,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 import { PdfService } from '../../../common/services/pdf.service';
 import { SessionService } from '~/common/services/session.service';
+import { IssuerManager } from '~/issuer/services/issuer-manager.service';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 @Component({
 	template: ` <bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam.loadedPromise]"></bg-badgedetail>`,
@@ -36,10 +38,8 @@ export class PublicBadgeAssertionComponent {
 	private translate = inject(TranslateService);
 	private pdfService = inject(PdfService);
 	private sessionService = inject(SessionService);
+	private issuerManager = inject(IssuerManager);
 	protected route = inject(ActivatedRoute);
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {
 		const title = this.title;
@@ -63,6 +63,8 @@ export class PublicBadgeAssertionComponent {
 	assertionIdParam: LoadedRouteParam<PublicApiBadgeAssertionWithBadgeClass>;
 
 	assertionId: string;
+
+	awardingIssuers: Issuer[] = null;
 
 	awardedToDisplayName: string;
 
@@ -184,6 +186,10 @@ export class PublicBadgeAssertionComponent {
 				this.assertionId = paramValue;
 				const service: PublicApiService = this.injector.get(PublicApiService);
 				const assertion = await service.getBadgeAssertion(paramValue);
+				if (this.sessionService.isLoggedIn) {
+					const issuer = await this.issuerManager.issuerBySlug(assertion.badge.issuer.slug);
+					this.awardingIssuers = [issuer];
+				}
 				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug);
 
 				const assertionVersion =
@@ -237,10 +243,7 @@ export class PublicBadgeAssertionComponent {
 					// 	typeof assertion.badge.criteria != 'string' ? assertion.badge.criteria.narrative : null,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
-					category:
-						assertion.badge['extensions:CategoryExtension'].Category === 'competency'
-							? this.translate.instant('Badge.categories.competency')
-							: this.translate.instant('Badge.categories.participation'),
+					category: assertion.badge['extensions:CategoryExtension'].Category,
 					tags: assertion.badge.tags,
 					issuerName: assertion.badge.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -252,6 +255,11 @@ export class PublicBadgeAssertionComponent {
 					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
 					learningPaths: lps,
 					version: assertionVersion,
+					networkBadge: assertion.isNetworkBadge,
+					networkImage: assertion.networkImage,
+					networkName: assertion.networkName,
+					sharedOnNetwork: assertion.sharedOnNetwork,
+					awardingIssuers: this.awardingIssuers,
 				};
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {

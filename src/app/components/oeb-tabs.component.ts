@@ -22,7 +22,12 @@ export type Tab = {
 	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab()" (tabActivated)="onTabChange($event)">
 		<hlm-tabs-list class="tw-w-full tw-max-w-[600px] tw-flex tw-justify-between" aria-label="tabs">
 			@for (tab of tabs(); track tab) {
-				<button class="tw-grow tw-px-6 tw-py-2" [hlmTabsTrigger]="tab.key" [_variant]="variant()">
+				<button
+					class="tw-grow tw-px-6 tw-py-2"
+					[hlmTabsTrigger]="tab.key"
+					[_variant]="variant()"
+					[_width]="width()"
+				>
 					<div class="tw-flex tw-items-center tw-justify-center">
 						@if (tab.icon) {
 							<ng-icon size="38px" [name]="tab.icon" class="tw-mr-2"></ng-icon>
@@ -46,7 +51,7 @@ export type Tab = {
 			}
 		</hlm-tabs-list>
 		@for (tab of tabs(); track tab) {
-			<div [hlmTabsContent]="tab.key">
+			<div [hlmTabsContent]="tab.key" class="tw-mt-6">
 				<ng-template *ngTemplateOutlet="tab.component"></ng-template>
 			</div>
 		}
@@ -58,14 +63,11 @@ export class OebTabsComponent {
 	tabs = input.required<Tab[]>();
 	activeTab = input<string>();
 	variant = input<TabsVariants['variant']>('default');
+	width = input<TabsVariants['width']>('default');
 	countStyle = input<'rounded' | 'parentheses'>('rounded');
 	onTabChanged = output<string>();
 
 	onTabChange(tab: string) {
 		this.onTabChanged.emit(tab);
-	}
-
-	ngOnInit() {
-		console.log(this.tabs());
 	}
 }

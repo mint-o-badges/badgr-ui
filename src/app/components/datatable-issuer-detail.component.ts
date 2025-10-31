@@ -26,6 +26,7 @@ import {
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { Network } from '~/issuer/network.model';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -42,20 +43,19 @@ import { Network } from '~/issuer/network.model';
 		FlexRenderDirective,
 		NgIcon,
 		HlmIconModule,
+		HlmP,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
-		<div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-2">
+		<div>
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
-				<div class="l-stack u-margin-bottom2x u-margin-top4x tw-w-full tw-flex tw-justify-between">
-					<h3
-						class="md:tw-text-nowrap tw-text-lg tw-font-semibold tw-font-[rubik] tw-text-purple tw-uppercase"
-					>
+				<div class="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+					<p hlmP class="tw-font-semibold tw-text-purple tw-uppercase">
 						{{ recipientCount() }} Badge -
 						{{
 							recipientCount() == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate)
 						}}
-					</h3>
+					</p>
 
 					<div class="tw-relative">
 						<ng-icon
@@ -144,7 +144,7 @@ import { Network } from '~/issuer/network.model';
 					<tbody hlmTBody>
 						@for (row of table.getRowModel().rows; track row.id; let i = $index) {
 							<tr hlmTr>
-								@if (downloadStates()[i]) {
+								@if (downloadStates()[row.original.slug]) {
 									<td hlmTd [colSpan]="3">
 										<loading-dots [showLoading]="false" />
 									</td>
@@ -258,7 +258,7 @@ import { Network } from '~/issuer/network.model';
 								})
 							"
 							text="{{ 'Issuer.pdfCertificate' | translate }}"
-							[disabled]="downloadStates()[context.row.index]"
+							[disabled]="downloadStates()[context.row.original.slug]"
 						/>
 						@if (issuer().canEditBadge) {
 							<oeb-button
@@ -278,7 +278,7 @@ import { Network } from '~/issuer/network.model';
 export class IssuerDetailDatatableComponent {
 	issuer = input<Issuer | Network>();
 	recipientCount = input<number>(0);
-	downloadStates = input<boolean[]>([]);
+	downloadStates = input<Record<string, boolean>>({});
 	awardInProgress = input<boolean>(false);
 	recipients = input.required<BadgeInstance[]>();
 	actionElement = output<BadgeInstance>();

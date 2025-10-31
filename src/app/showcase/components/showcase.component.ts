@@ -32,6 +32,7 @@ import { HlmH1, HlmH2, HlmH3, HlmP } from '@spartan-ng/helm/typography';
 export class ShowcaseComponent {
 	public badges = [
 		{
+			awardedCount: 5,
 			requestCount: 10,
 			badge: {
 				name: 'test',
@@ -41,6 +42,7 @@ export class ShowcaseComponent {
 			} as unknown as BadgeClass,
 		},
 		{
+			awardedCount: 4,
 			requestCount: 0,
 			badge: {
 				name: 'test2323',
@@ -50,6 +52,7 @@ export class ShowcaseComponent {
 			} as unknown as BadgeClass,
 		},
 		{
+			awardedCount: 1,
 			requestCount: 1,
 			badge: {
 				image: 'test',

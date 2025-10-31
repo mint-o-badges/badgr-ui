@@ -46,6 +46,18 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 			: (this._expiresDate = (this.apiModel.json.expires && new Date(this.apiModel.json.expires)) || null);
 	}
 
+	get activityStartDate(): Date | undefined {
+		return this.apiModel.json.credentialSubject.activityStartDate
+			? new Date(this.apiModel.json.credentialSubject.activityStartDate)
+			: undefined;
+	}
+
+	get activityEndDate(): Date | undefined {
+		return this.apiModel.json.credentialSubject.activityEndDate
+			? new Date(this.apiModel.json.credentialSubject.activityEndDate)
+			: undefined;
+	}
+
 	get shareUrl(): string {
 		return this.apiModel.shareUrl;
 	}
@@ -85,6 +97,23 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 	get imported(): boolean {
 		return this.apiModel.imported;
 	}
+
+	get isNetworkBadge(): boolean {
+		return this.apiModel.isNetworkBadge;
+	}
+
+	get networkImage(): string {
+		return this.apiModel.networkImage;
+	}
+
+	get networkName(): string {
+		return this.apiModel.networkName;
+	}
+
+	get sharedOnNetwork(): { slug: string; name: string; image: string | null; description: string | null } | null {
+		return this.apiModel.sharedOnNetwork;
+	}
+
 	/**
 	 * Cached copy of the immutable issueDate for optimization
 	 */
