@@ -38,7 +38,11 @@ import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { StringMatchingUtil } from '~/common/util/string-matching-util';
-import { ApiBadgeClassForCreation, BadgeClassCategory } from '~/issuer/models/badgeclass-api.model';
+import {
+	ApiBadgeClassForCreation,
+	ApiBadgeClassNetworkShare,
+	BadgeClassCategory,
+} from '~/issuer/models/badgeclass-api.model';
 import { base64ByteSize } from '~/common/util/file-util';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '~/common/components/formfield-image';
@@ -59,6 +63,8 @@ import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { UpperCasePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
+import { NetworkApiService } from '~/issuer/services/network-api.service';
+import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
@@ -104,8 +110,10 @@ export class LearningPathEditFormComponent
 	protected learningPathApiService = inject(LearningPathApiService);
 	protected issuerManager = inject(IssuerManager);
 	protected issuerApiService = inject(IssuerApiService);
+	protected networkApiService = inject(NetworkApiService);
 	protected badgeClassService = inject(BadgeClassManager);
 	protected badgeClassApiService = inject(BadgeClassApiService);
+	protected entityManager = inject(CommonEntityManager);
 	private translate = inject(TranslateService);
 	protected badgeInstanceManager = inject(BadgeInstanceManager);
 	protected learningPathManager = inject(LearningPathManager);
@@ -242,6 +250,10 @@ export class LearningPathEditFormComponent
 			this.learningPathForm.controls.badge_image.dirty || this.learningPathForm.controls.badge_customImage.dirty
 		);
 	}
+
+	// getIssuerDisplayName(badge: BadgeClass): string {
+	// 	return (badge as any)._sharedIssuerName || badge.issuerName;
+	// }
 
 	selectMinBadgesOptions: FormFieldSelectOption[] = [];
 
@@ -580,7 +592,23 @@ export class LearningPathEditFormComponent
 
 			const issuerBadges = badgesByIssuer[this.issuer.issuerUrl] || [];
 
-			this.badges = issuerBadges
+			let sharedBadges: ApiBadgeClassNetworkShare[] = [];
+			if (this.issuer.is_network) {
+				try {
+					const networkSlug = this.issuer.slug;
+					sharedBadges = await this.networkApiService.getNetworkSharedBadges(networkSlug);
+				} catch (e) {
+					console.warn('Failed to load network shared badges', e);
+					sharedBadges = [];
+				}
+			}
+
+			const sharedBadgeClasses: BadgeClass[] = sharedBadges.map((shared) => {
+				const badge = new BadgeClass(this.entityManager, shared.badgeclass);
+				return badge;
+			});
+
+			this.badges = [...issuerBadges, ...sharedBadgeClasses]
 				.filter(
 					(b) =>
 						b.extension['extensions:StudyLoadExtension'].StudyLoad > 0 &&
@@ -660,6 +688,7 @@ export class LearningPathEditFormComponent
 			issuerResults.addBadge(item);
 			return true;
 		};
+
 		var addBadgeToResultsByCategory = (item) => {
 			let itemCategory =
 				item.extension && item.extension['extensions:CategoryExtension']
