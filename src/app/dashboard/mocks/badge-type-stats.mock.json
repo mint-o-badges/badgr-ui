@@ -1,0 +1,26 @@
+{
+  "description": "Badge Type Statistics - Distribution of badges by type (Participation, Competency, Learning Path)",
+  "data": [
+    {
+      "type": "competency",
+      "label": "Teilnahmezertifikat",
+      "count": 156,
+      "percentage": 45.6,
+      "color": "#CCD7FF"
+    },
+    {
+      "type": "participation",
+      "label": "Badge",
+      "count": 128,
+      "percentage": 37.4,
+      "color": "#E4FFE4"
+    },
+    {
+      "type": "learningpath",
+      "label": "Micro Degrees",
+      "count": 58,
+      "percentage": 17.0,
+      "color": "#FFBAB9"
+    }
+  ]
+}

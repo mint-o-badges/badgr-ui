@@ -1,0 +1,227 @@
+
+	<!-- 2x2 Grid Layout: Charts Section -->
+	<div class="tw-mb-8">
+		<!-- Row 1 Left: Vergebene Badges im Jahr (Line Chart) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-justify-between tw-mb-6">
+				<div class="tw-flex tw-items-center tw-space-x-3">
+					<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+					<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">Vergebene Badges im Jahr</h2>
+				</div>
+
+				<!-- Filters -->
+				<div class="tw-flex tw-items-center tw-gap-2">
+					<!-- Year Filter -->
+					<div class="tw-flex tw-items-center tw-gap-2">
+						<label class="tw-text-xs tw-font-medium tw-text-gray-700">Jahr:</label>
+						<select
+							[(ngModel)]="selectedYear"
+							(change)="onYearChange(selectedYear)"
+							class="tw-px-2 tw-py-1 tw-border tw-border-gray-300 tw-rounded-lg tw-text-xs tw-bg-white tw-cursor-pointer hover:tw-border-purple-400 tw-transition-colors">
+							@for (year of availableYears; track year) {
+								<option [value]="year">{{ year }}</option>
+							}
+						</select>
+					</div>
+
+					<!-- Badge Type Filter -->
+					<div class="tw-flex tw-items-center tw-gap-2">
+						<label class="tw-text-xs tw-font-medium tw-text-gray-700">Typ:</label>
+						<select
+							[(ngModel)]="selectedBadgeType"
+							(change)="onBadgeTypeChange(selectedBadgeType)"
+							class="tw-px-2 tw-py-1 tw-border tw-border-gray-300 tw-rounded-lg tw-text-xs tw-bg-white tw-cursor-pointer hover:tw-border-purple-400 tw-transition-colors">
+							@for (type of badgeTypes; track type.value) {
+								<option [value]="type.value">{{ type.label }}</option>
+							}
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<!-- Line Chart Container -->
+			<div class="tw-relative" style="height: 350px;">
+				<svg #lineChartSvg class="tw-w-full tw-h-full">
+					<!-- Chart will be rendered here -->
+				</svg>
+
+				<!-- Tooltip (shown on hover) -->
+				<div
+					#chartTooltip
+					class="tw-absolute tw-hidden tw-bg-gray-900 tw-text-white tw-px-3 tw-py-2 tw-rounded-lg tw-text-sm tw-shadow-lg tw-pointer-events-none tw-z-10"
+					style="transition: all 0.2s ease;">
+					<div class="tw-font-semibold tw-mb-1" #tooltipDate></div>
+					<div #tooltipContent></div>
+				</div>
+			</div>
+
+			<!-- Legend -->
+			<div class="tw-flex tw-items-center tw-justify-center tw-gap-4 tw-mt-4 tw-pt-3 tw-border-t tw-border-gray-200">
+				<div class="tw-flex tw-items-center tw-gap-2">
+					<div class="tw-w-3 tw-h-3 tw-rounded-full" style="background-color: #492E98;"></div>
+					<span class="tw-text-xs tw-text-gray-700">Teilnahmezertifikat</span>
+				</div>
+				<div class="tw-flex tw-items-center tw-gap-2">
+					<div class="tw-w-3 tw-h-3 tw-rounded-full" style="background-color: #CCD7FF;"></div>
+					<span class="tw-text-xs tw-text-gray-700">Badge</span>
+				</div>
+				<div class="tw-flex tw-items-center tw-gap-2">
+					<div class="tw-w-3 tw-h-3 tw-rounded-full" style="background-color: #93F993;"></div>
+					<span class="tw-text-xs tw-text-gray-700">Micro Degrees</span>
+				</div>
+			</div>
+		</div>
+</div>
+	<div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-8 tw-mb-8">
+		<!-- Row 1 Right: Badge-Verteilung nach Typ (Pie Chart) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">Badge-Verteilung nach Typ</h2>
+			</div>
+
+			<div class="tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-justify-center tw-gap-8">
+				<!-- CSS Pie Chart -->
+				<div class="tw-relative tw-w-64 tw-h-64">
+					<!-- Create a conic gradient pie chart -->
+					<div class="tw-w-full tw-h-full tw-rounded-full tw-shadow-lg"
+						style="background: conic-gradient(
+							from 0deg,
+							#CCD7FF 0deg 164.16deg,
+							#FFBAB9 164.16deg 298.8deg,
+							#E4FFE4 298.8deg 360deg
+						);">
+					</div>
+					<!-- Center circle for donut effect -->
+					<div class="tw-absolute tw-inset-0 tw-flex tw-items-center tw-justify-center">
+						<div class="tw-w-32 tw-h-32 tw-bg-white tw-rounded-full tw-shadow-inner tw-flex tw-flex-col tw-items-center tw-justify-center">
+							<p class="tw-text-3xl tw-font-bold" style="color: var(--color-purple);">{{ totalBadges }}</p>
+							<p class="tw-text-xs tw-text-gray-500">Gesamt</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Legend -->
+				<div class="tw-space-y-3">
+					@for (stat of badgeTypeStats; track stat.type) {
+						<div class="tw-flex tw-items-center tw-gap-3">
+							<div class="tw-w-6 tw-h-6 tw-rounded-full tw-shadow" [style.background-color]="stat.color"></div>
+							<div>
+								<p class="tw-text-sm tw-font-semibold tw-text-gray-800">{{ stat.label }}</p>
+								<p class="tw-text-xs tw-text-gray-600">{{ stat.count }} ({{ stat.percentage }}%)</p>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+
+		<!-- Row 2 Left: Top 3 Badges (Podium) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<!-- Header -->
+			<div class="tw-flex tw-items-center tw-justify-between tw-mb-6">
+				<div class="tw-flex tw-items-center tw-space-x-3">
+					<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+					<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">Top 3 Badges</h2>
+				</div>
+				<svg class="tw-w-6 tw-h-6" style="color: var(--color-purple);" fill="currentColor" viewBox="0 0 24 24">
+					<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+				</svg>
+			</div>
+
+			<!-- Vertical Podium Display -->
+			<div class="tw-flex tw-items-end tw-justify-center tw-gap-4 md:tw-gap-6 tw-px-2" style="min-height: 400px;">
+				<!-- 2nd Place (OEB Blau - Left) -->
+				<div class="podium-position tw-flex tw-flex-col tw-items-center tw-flex-1 tw-max-w-[130px]">
+					<div class="tw-mb-3 tw-text-center">
+						<!-- Medal with Icon -->
+						<div class="tw-inline-flex tw-items-center tw-justify-center tw-w-12 tw-h-12 tw-rounded-full tw-shadow-lg tw-border-4 tw-border-white tw-mb-2"
+							style="background: linear-gradient(135deg, #6A4FBB 0%, #492E98 50%, #3A2478 100%);">
+							<ng-icon name="lucideMedal" size="20" class="tw-text-white"></ng-icon>
+						</div>
+						<!-- Badge Name -->
+						<h3 class="tw-text-xs tw-font-bold tw-text-gray-900 tw-mb-1">
+							{{ top3Badges[1].name }}
+						</h3>
+						<p class="tw-text-xs tw-text-gray-500">
+							{{ top3Badges[1].count }} Verleihungen
+						</p>
+					</div>
+					<!-- Podium Bar -->
+					<div class="podium-bar tw-w-full tw-rounded-t-xl tw-shadow-lg tw-relative tw-group tw-cursor-pointer"
+						style="height: 200px; background: linear-gradient(180deg, #6A4FBB 0%, #492E98 50%, #3A2478 100%);">
+						<div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-items-center tw-justify-center tw-text-white">
+							<div class="tw-text-2xl tw-font-black tw-drop-shadow-lg">{{ top3Badges[1].count }}</div>
+							<div class="tw-text-xs tw-font-semibold tw-opacity-90 tw-mt-1">Badges</div>
+						</div>
+						<!-- Hover Effect -->
+						<div class="tw-absolute tw-inset-0 tw-bg-white tw-opacity-0 group-hover:tw-opacity-10 tw-transition-opacity tw-rounded-t-xl"></div>
+					</div>
+				</div>
+
+				<!-- 1st Place (OEB Gelb - Center, Tallest) -->
+				<div class="podium-position tw-flex tw-flex-col tw-items-center tw-flex-1 tw-max-w-[130px]">
+					<div class="tw-mb-3 tw-text-center">
+						<!-- Medal with Trophy Icon -->
+						<div class="tw-relative tw-inline-block">
+							<!-- Crown SVG above medal -->
+							<svg class="tw-w-7 tw-h-7 tw-absolute -tw-top-4 tw-left-1/2 tw-transform -tw-translate-x-1/2" style="color: #FFCC00;" fill="currentColor" viewBox="0 0 24 24">
+								<path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z"/>
+							</svg>
+							<div class="tw-flex tw-items-center tw-justify-center tw-w-14 tw-h-14 tw-rounded-full tw-shadow-xl tw-border-4 tw-border-white"
+								style="background: linear-gradient(135deg, #FFE566 0%, #FFCC00 50%, #E6B800 100%);">
+								<ng-icon name="lucideTrophy" size="24" class="tw-text-white"></ng-icon>
+							</div>
+						</div>
+						<!-- Badge Name -->
+						<h3 class="tw-text-sm tw-font-bold tw-text-gray-900 tw-mb-1 tw-mt-2">
+							{{ top3Badges[0].name }}
+						</h3>
+						<p class="tw-text-xs tw-text-gray-500">
+							{{ top3Badges[0].count }} Verleihungen
+						</p>
+					</div>
+					<!-- Podium Bar (Tallest) -->
+					<div class="podium-bar tw-w-full tw-rounded-t-xl tw-shadow-xl tw-relative tw-group tw-cursor-pointer"
+						style="height: 250px; background: linear-gradient(180deg, #FFE566 0%, #FFCC00 50%, #E6B800 100%);">
+						<div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-items-center tw-justify-center tw-text-white">
+							<div class="tw-text-3xl tw-font-black tw-drop-shadow-lg">{{ top3Badges[0].count }}</div>
+							<div class="tw-text-sm tw-font-semibold tw-opacity-90 tw-mt-2">Badges</div>
+						</div>
+						<!-- Shimmer Effect -->
+						<div class="podium-shimmer tw-absolute tw-inset-0 tw-rounded-t-xl"></div>
+						<!-- Hover Effect -->
+						<div class="tw-absolute tw-inset-0 tw-bg-white tw-opacity-0 group-hover:tw-opacity-10 tw-transition-opacity tw-rounded-t-xl"></div>
+					</div>
+				</div>
+
+				<!-- 3rd Place (OEB Blau - Right) -->
+				<div class="podium-position tw-flex tw-flex-col tw-items-center tw-flex-1 tw-max-w-[130px]">
+					<div class="tw-mb-3 tw-text-center">
+						<!-- Medal with Icon -->
+						<div class="tw-inline-flex tw-items-center tw-justify-center tw-w-12 tw-h-12 tw-rounded-full tw-shadow-lg tw-border-4 tw-border-white tw-mb-2"
+							style="background: linear-gradient(135deg, #6A4FBB 0%, #492E98 50%, #3A2478 100%);">
+							<ng-icon name="lucideAward" size="20" class="tw-text-white"></ng-icon>
+						</div>
+						<!-- Badge Name -->
+						<h3 class="tw-text-xs tw-font-bold tw-text-gray-900 tw-mb-1">
+							{{ top3Badges[2].name }}
+						</h3>
+						<p class="tw-text-xs tw-text-gray-500">
+							{{ top3Badges[2].count }} Verleihungen
+						</p>
+					</div>
+					<!-- Podium Bar -->
+					<div class="podium-bar tw-w-full tw-rounded-t-xl tw-shadow-lg tw-relative tw-group tw-cursor-pointer"
+						style="height: 170px; background: linear-gradient(180deg, #6A4FBB 0%, #492E98 50%, #3A2478 100%);">
+						<div class="tw-absolute tw-inset-0 tw-flex tw-flex-col tw-items-center tw-justify-center tw-text-white">
+							<div class="tw-text-2xl tw-font-black tw-drop-shadow-lg">{{ top3Badges[2].count }}</div>
+							<div class="tw-text-xs tw-font-semibold tw-opacity-90 tw-mt-1">Badges</div>
+						</div>
+						<!-- Hover Effect -->
+						<div class="tw-absolute tw-inset-0 tw-bg-white tw-opacity-0 group-hover:tw-opacity-10 tw-transition-opacity tw-rounded-t-xl"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

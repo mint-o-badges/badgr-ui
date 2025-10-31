@@ -1,0 +1,1089 @@
+openapi: 3.0.0
+info:
+  title: Badgr Dashboard API
+  version: 1.0.0
+  description: |
+    Dashboard-specific API endpoints for the Badgr Server platform.
+
+    These endpoints provide aggregated badge statistics, competency distribution,
+    institution metrics, spatial data, and activity feeds optimized for dashboard
+    visualizations.
+
+  contact:
+    name: ALGEBRA
+    url: https://algebra-ec.de
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Badge Statistics
+    description: Aggregated badge counts and distribution metrics
+  - name: Competency Distribution
+    description: Skills and competency analytics from badge alignments
+  - name: Institution Statistics
+    description: Issuer/organization metrics and regional data
+  - name: Spatial Distribution
+    description: Geographic distribution of badges and institutions
+  - name: Activity Feed
+    description: Recent badge awards and platform activities
+  - name: Time Series
+    description: Historical badge award data for trend analysis
+
+paths:
+  /v1/dashboard/badge-statistics:
+    get:
+      summary: Get aggregated badge statistics
+      description: |
+        Returns comprehensive badge statistics including total counts by type,
+        trend analysis, and comparison to previous periods.
+
+        **Use Case**: Dashboard KPI cards and summary metrics
+
+        **Data Source**: badge_badgeclass and badge_badgeclassinstance tables
+
+        **Performance**: Should complete in <100ms for typical users with <10k badges
+
+      tags:
+        - Badge Statistics
+      operationId: getBadgeStatistics
+      parameters:
+        - name: include_trends
+          in: query
+          description: Include trend analysis comparing to previous period
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: period
+          in: query
+          description: Period for trend comparison (30d, 90d, 1y)
+          required: false
+          schema:
+            type: string
+            enum: [30d, 90d, 1y]
+            default: 30d
+      responses:
+        '200':
+          description: Successful response with badge statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadgeStatisticsResponse'
+              example:
+                total: 1247
+                byType:
+                  competency: 523
+                  participation: 489
+                  learningpath: 235
+                trend:
+                  direction: up
+                  percentageChange: 12.5
+                  absoluteChange: 138
+                  comparisonPeriod: 30d
+                  previousTotal: 1109
+                lastUpdated: '2025-10-26T13:00:00Z'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/dashboard/competency-distribution:
+    get:
+      summary: Get competency category distribution
+      description: |
+        Returns distribution of competencies/skills across all badges with
+        category grouping and percentage calculations.
+
+        **Use Case**: Competency bubble charts, skill distribution visualizations
+
+        **Data Source**: badge_badgeclass.alignments, ESCO API integration
+
+        **Performance**: May require caching for users with many badges
+
+      tags:
+        - Competency Distribution
+      operationId: getCompetencyDistribution
+      parameters:
+        - name: language
+          in: query
+          description: Language code for localized competency names
+          required: false
+          schema:
+            type: string
+            default: de
+            enum: [de, en, fr, it]
+        - name: limit
+          in: query
+          description: Maximum number of competencies to return (top N)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: include_badges
+          in: query
+          description: Include badge IDs that contain each competency
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful response with competency distribution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetencyDistributionResponse'
+              example:
+                competencies:
+                  - category: Digitale Kompetenz
+                    count: 342
+                    percentage: 27.4
+                    escoUri: http://data.europa.eu/esco/skill/12345
+                    badges:
+                      - badge-id-1
+                      - badge-id-2
+                  - category: Kommunikation
+                    count: 298
+                    percentage: 23.9
+                    escoUri: http://data.europa.eu/esco/skill/67890
+                    badges:
+                      - badge-id-3
+                  - category: Teamarbeit
+                    count: 187
+                    percentage: 15.0
+                    escoUri: http://data.europa.eu/esco/skill/11111
+                    badges:
+                      - badge-id-4
+                totalCompetencies: 827
+                totalUniqueBadges: 523
+                language: de
+                lastUpdated: '2025-10-26T13:00:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/dashboard/institution-statistics:
+    get:
+      summary: Get institution-level statistics
+      description: |
+        Returns aggregated statistics about badge-issuing institutions including
+        total counts, active institutions, new registrations, and regional distribution.
+
+        **Use Case**: Institution KPIs, organizational dashboard cards
+
+        **Data Source**: issuer_issuer table with aggregations
+
+        **Admin Access**: May require elevated permissions for full statistics
+
+      tags:
+        - Institution Statistics
+      operationId: getInstitutionStatistics
+      parameters:
+        - name: include_regional
+          in: query
+          description: Include breakdown by region/canton
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: time_period
+          in: query
+          description: Period for "new institutions" calculation
+          required: false
+          schema:
+            type: string
+            enum: [30d, 90d, 1y]
+            default: 30d
+      responses:
+        '200':
+          description: Successful response with institution statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstitutionStatisticsResponse'
+              example:
+                total: 89
+                active: 67
+                new: 5
+                byRegion:
+                  Zürich: 23
+                  Bern: 18
+                  Basel: 12
+                  Luzern: 9
+                  Geneva: 8
+                  other: 19
+                byType:
+                  university: 15
+                  vocational_school: 34
+                  company: 28
+                  nonprofit: 12
+                averageBadgesPerInstitution: 14.2
+                topIssuers:
+                  - name: ETH Zürich
+                    slug: eth-zurich
+                    badgeCount: 127
+                  - name: Swisscom
+                    slug: swisscom
+                    badgeCount: 98
+                lastUpdated: '2025-10-26T13:00:00Z'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/dashboard/spatial-distribution:
+    get:
+      summary: Get geographic/PLZ distribution data
+      description: |
+        Returns badge and institution distribution grouped by geographic regions
+        (postal codes, cantons, or countries).
+
+        **Use Case**: Geographic heat maps, regional analytics, PLZ distribution charts
+
+        **Data Source**: issuer_issuer location data with aggregations
+
+        **Performance**: Results are cacheable; consider CDN for public data
+
+      tags:
+        - Spatial Distribution
+      operationId: getSpatialDistribution
+      parameters:
+        - name: regionType
+          in: query
+          description: Type of geographic grouping
+          required: false
+          schema:
+            type: string
+            enum: [plz, state, canton, country]
+            default: plz
+        - name: limit
+          in: query
+          description: Maximum number of regions to return (top N)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+        - name: min_count
+          in: query
+          description: Minimum badge count to include region
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        '200':
+          description: Successful response with spatial distribution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpatialDistributionResponse'
+              example:
+                regionType: plz
+                regions:
+                  - region: '8001'
+                    name: Zürich City
+                    count: 342
+                    percentage: 27.4
+                    institutionCount: 12
+                    coordinates:
+                      latitude: 47.3769
+                      longitude: 8.5417
+                  - region: '3001'
+                    name: Bern City
+                    count: 287
+                    percentage: 23.0
+                    institutionCount: 9
+                    coordinates:
+                      latitude: 46.9480
+                      longitude: 7.4474
+                  - region: '4001'
+                    name: Basel City
+                    count: 198
+                    percentage: 15.9
+                    institutionCount: 7
+                    coordinates:
+                      latitude: 47.5596
+                      longitude: 7.5886
+                totalRegions: 87
+                totalBadges: 1247
+                lastUpdated: '2025-10-26T13:00:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/dashboard/activity-feed:
+    get:
+      summary: Get recent badge and activity events
+      description: |
+        Returns a paginated feed of recent platform activities including
+        badge awards, new institutions, collection creations, and skill additions.
+
+        **Use Case**: Activity timeline widgets, notification feeds
+
+        **Data Source**: Multiple tables with timestamp-based queries
+
+        **Real-time**: Consider WebSocket/SSE for live updates in future
+
+      tags:
+        - Activity Feed
+      operationId: getActivityFeed
+      parameters:
+        - name: limit
+          in: query
+          description: Number of activity items to return
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: offset
+          in: query
+          description: Number of items to skip (for pagination)
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: types
+          in: query
+          description: Filter by activity types (comma-separated)
+          required: false
+          schema:
+            type: string
+            example: badge_issued,collection_created
+        - name: since
+          in: query
+          description: Return only activities after this timestamp
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successful response with activity feed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityFeedResponse'
+              example:
+                results:
+                  - id: act-12345
+                    type: badge_issued
+                    title: Neues Digitalkompetenz Badge verliehen
+                    description: Digital Leadership Badge an 5 Personen
+                    count: 5
+                    timestamp: '2025-10-26T12:45:00Z'
+                    metadata:
+                      badgeName: Digital Leadership
+                      issuerName: ETH Zürich
+                    icon: award
+                  - id: act-12344
+                    type: institution_added
+                    title: Neue Institution registriert
+                    description: Swisscom AG beigetreten
+                    count: 1
+                    timestamp: '2025-10-26T11:20:00Z'
+                    metadata:
+                      institutionName: Swisscom AG
+                    icon: building
+                  - id: act-12343
+                    type: collection_created
+                    title: Badge-Sammlung erstellt
+                    description: 'Neue Sammlung: IT Security Basics'
+                    count: 1
+                    timestamp: '2025-10-26T10:15:00Z'
+                    metadata:
+                      collectionName: IT Security Basics
+                      badgeCount: 8
+                    icon: folder
+                count: 247
+                next: /v1/dashboard/activity-feed?offset=10&limit=10
+                previous: null
+                lastUpdated: '2025-10-26T13:00:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/dashboard/badge-awards-timeseries:
+    get:
+      summary: Get time-series badge award data
+      description: |
+        Returns historical badge award counts grouped by time periods (day, week, month)
+        for trend analysis and time-series visualizations.
+
+        **Use Case**: Line charts, growth charts, temporal analysis
+
+        **Data Source**: badge_badgeclassinstance.issued_on with date grouping
+
+        **Performance**: Use database date functions for efficient grouping
+
+      tags:
+        - Time Series
+      operationId: getBadgeAwardsTimeSeries
+      parameters:
+        - name: startDate
+          in: query
+          description: Start date for time series (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date
+            example: '2024-01-01'
+        - name: endDate
+          in: query
+          description: End date for time series (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date
+            example: '2024-12-31'
+        - name: groupBy
+          in: query
+          description: Time grouping granularity
+          required: false
+          schema:
+            type: string
+            enum: [day, week, month, quarter, year]
+            default: month
+        - name: badgeType
+          in: query
+          description: Filter by badge type
+          required: false
+          schema:
+            type: string
+            enum: [competency, participation, learningpath, all]
+            default: all
+        - name: fillGaps
+          in: query
+          description: Fill missing time periods with zero counts
+          required: false
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: Successful response with time-series data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeriesResponse'
+              example:
+                startDate: '2024-01-01'
+                endDate: '2024-12-31'
+                groupBy: month
+                badgeType: all
+                dataPoints:
+                  - date: '2024-01-01'
+                    count: 87
+                    byType:
+                      competency: 42
+                      participation: 31
+                      learningpath: 14
+                  - date: '2024-02-01'
+                    count: 93
+                    byType:
+                      competency: 45
+                      participation: 34
+                      learningpath: 14
+                  - date: '2024-03-01'
+                    count: 112
+                    byType:
+                      competency: 54
+                      participation: 41
+                      learningpath: 17
+                  - date: '2024-04-01'
+                    count: 98
+                    byType:
+                      competency: 47
+                      participation: 38
+                      learningpath: 13
+                totalCount: 1247
+                averagePerPeriod: 103.9
+                growthRate: 8.2
+                lastUpdated: '2025-10-26T13:00:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        JWT token obtained from /o/token or /v1/user/auth-token endpoints.
+        Include in Authorization header: `Bearer <token>`
+
+  schemas:
+    BadgeType:
+      type: string
+      enum:
+        - competency
+        - participation
+        - learningpath
+      description: |
+        Badge type classification:
+        - competency: Skill or competency-based badges
+        - participation: Attendance or participation badges
+        - learningpath: Learning path or course completion badges
+
+    TrendDirection:
+      type: string
+      enum:
+        - up
+        - down
+        - stable
+      description: |
+        Trend direction indicator:
+        - up: Increasing trend (>2% change)
+        - down: Decreasing trend (<-2% change)
+        - stable: No significant change (-2% to +2%)
+
+    BadgeStatisticsResponse:
+      type: object
+      required:
+        - total
+        - byType
+        - lastUpdated
+      properties:
+        total:
+          type: integer
+          description: Total number of badges across all types
+          example: 1247
+        byType:
+          type: object
+          required:
+            - competency
+            - participation
+            - learningpath
+          properties:
+            competency:
+              type: integer
+              description: Number of competency badges
+              example: 523
+            participation:
+              type: integer
+              description: Number of participation badges
+              example: 489
+            learningpath:
+              type: integer
+              description: Number of learning path badges
+              example: 235
+        trend:
+          type: object
+          description: Trend analysis compared to previous period
+          properties:
+            direction:
+              $ref: '#/components/schemas/TrendDirection'
+            percentageChange:
+              type: number
+              format: float
+              description: Percentage change from previous period
+              example: 12.5
+            absoluteChange:
+              type: integer
+              description: Absolute number change from previous period
+              example: 138
+            comparisonPeriod:
+              type: string
+              description: Period used for comparison
+              example: 30d
+            previousTotal:
+              type: integer
+              description: Total from previous period
+              example: 1109
+        lastUpdated:
+          type: string
+          format: date-time
+          description: Timestamp of last data update
+          example: '2025-10-26T13:00:00Z'
+
+    CompetencyItem:
+      type: object
+      required:
+        - category
+        - count
+        - percentage
+      properties:
+        category:
+          type: string
+          description: Competency category name (localized)
+          example: Digitale Kompetenz
+        count:
+          type: integer
+          description: Number of badges with this competency
+          example: 342
+        percentage:
+          type: number
+          format: float
+          description: Percentage of total competencies
+          example: 27.4
+        escoUri:
+          type: string
+          format: uri
+          description: ESCO framework URI for this competency
+          example: http://data.europa.eu/esco/skill/12345
+        badges:
+          type: array
+          description: Badge IDs containing this competency (if requested)
+          items:
+            type: string
+          example:
+            - badge-id-1
+            - badge-id-2
+
+    CompetencyDistributionResponse:
+      type: object
+      required:
+        - competencies
+        - totalCompetencies
+        - lastUpdated
+      properties:
+        competencies:
+          type: array
+          description: Array of competency distribution items
+          items:
+            $ref: '#/components/schemas/CompetencyItem'
+        totalCompetencies:
+          type: integer
+          description: Total number of competency occurrences
+          example: 827
+        totalUniqueBadges:
+          type: integer
+          description: Number of unique badges with competencies
+          example: 523
+        language:
+          type: string
+          description: Language code used for localization
+          example: de
+        lastUpdated:
+          type: string
+          format: date-time
+          example: '2025-10-26T13:00:00Z'
+
+    TopIssuer:
+      type: object
+      required:
+        - name
+        - slug
+        - badgeCount
+      properties:
+        name:
+          type: string
+          description: Institution display name
+          example: ETH Zürich
+        slug:
+          type: string
+          description: Institution URL slug identifier
+          example: eth-zurich
+        badgeCount:
+          type: integer
+          description: Number of badges issued
+          example: 127
+
+    InstitutionStatisticsResponse:
+      type: object
+      required:
+        - total
+        - active
+        - lastUpdated
+      properties:
+        total:
+          type: integer
+          description: Total number of registered institutions
+          example: 89
+        active:
+          type: integer
+          description: Number of active institutions (issued badges recently)
+          example: 67
+        new:
+          type: integer
+          description: Number of newly registered institutions in time period
+          example: 5
+        byRegion:
+          type: object
+          description: Institution count by region/canton
+          additionalProperties:
+            type: integer
+          example:
+            Zürich: 23
+            Bern: 18
+            Basel: 12
+        byType:
+          type: object
+          description: Institution count by organization type
+          additionalProperties:
+            type: integer
+          example:
+            university: 15
+            vocational_school: 34
+            company: 28
+        averageBadgesPerInstitution:
+          type: number
+          format: float
+          description: Average badge classes per institution
+          example: 14.2
+        topIssuers:
+          type: array
+          description: Top badge-issuing institutions
+          items:
+            $ref: '#/components/schemas/TopIssuer'
+        lastUpdated:
+          type: string
+          format: date-time
+          example: '2025-10-26T13:00:00Z'
+
+    Coordinates:
+      type: object
+      required:
+        - latitude
+        - longitude
+      properties:
+        latitude:
+          type: number
+          format: float
+          description: Latitude coordinate
+          example: 47.3769
+        longitude:
+          type: number
+          format: float
+          description: Longitude coordinate
+          example: 8.5417
+
+    SpatialRegion:
+      type: object
+      required:
+        - region
+        - name
+        - count
+        - percentage
+      properties:
+        region:
+          type: string
+          description: Region identifier (PLZ, canton code, etc.)
+          example: '8001'
+        name:
+          type: string
+          description: Human-readable region name
+          example: Zürich City
+        count:
+          type: integer
+          description: Number of badges in this region
+          example: 342
+        percentage:
+          type: number
+          format: float
+          description: Percentage of total badges
+          example: 27.4
+        institutionCount:
+          type: integer
+          description: Number of institutions in this region
+          example: 12
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+
+    SpatialDistributionResponse:
+      type: object
+      required:
+        - regionType
+        - regions
+        - totalRegions
+        - lastUpdated
+      properties:
+        regionType:
+          type: string
+          description: Type of geographic grouping used
+          example: plz
+        regions:
+          type: array
+          description: Array of regional distribution items
+          items:
+            $ref: '#/components/schemas/SpatialRegion'
+        totalRegions:
+          type: integer
+          description: Total number of regions with badges
+          example: 87
+        totalBadges:
+          type: integer
+          description: Total badges across all regions
+          example: 1247
+        lastUpdated:
+          type: string
+          format: date-time
+          example: '2025-10-26T13:00:00Z'
+
+    ActivityType:
+      type: string
+      enum:
+        - badge_issued
+        - collection_created
+        - institution_added
+        - skill_added
+        - badge_created
+      description: Type of platform activity
+
+    ActivityItem:
+      type: object
+      required:
+        - id
+        - type
+        - title
+        - timestamp
+      properties:
+        id:
+          type: string
+          description: Unique activity identifier
+          example: act-12345
+        type:
+          $ref: '#/components/schemas/ActivityType'
+        title:
+          type: string
+          description: Activity title (localized)
+          example: Neues Digitalkompetenz Badge verliehen
+        description:
+          type: string
+          description: Activity description
+          example: Digital Leadership Badge an 5 Personen
+        count:
+          type: integer
+          description: Number of items affected
+          example: 5
+        timestamp:
+          type: string
+          format: date-time
+          description: Activity timestamp
+          example: '2025-10-26T12:45:00Z'
+        metadata:
+          type: object
+          description: Additional activity metadata
+          additionalProperties: true
+          example:
+            badgeName: Digital Leadership
+            issuerName: ETH Zürich
+        icon:
+          type: string
+          description: Icon identifier for UI display
+          example: award
+
+    ActivityFeedResponse:
+      type: object
+      required:
+        - results
+        - count
+        - lastUpdated
+      properties:
+        results:
+          type: array
+          description: Array of activity items
+          items:
+            $ref: '#/components/schemas/ActivityItem'
+        count:
+          type: integer
+          description: Total number of activities matching query
+          example: 247
+        next:
+          type: string
+          format: uri
+          description: URL for next page of results
+          example: /v1/dashboard/activity-feed?offset=10&limit=10
+          nullable: true
+        previous:
+          type: string
+          format: uri
+          description: URL for previous page of results
+          nullable: true
+        lastUpdated:
+          type: string
+          format: date-time
+          example: '2025-10-26T13:00:00Z'
+
+    TimeSeriesDataPoint:
+      type: object
+      required:
+        - date
+        - count
+      properties:
+        date:
+          type: string
+          format: date
+          description: Date for this data point (start of period)
+          example: '2024-01-01'
+        count:
+          type: integer
+          description: Total badge count for this period
+          example: 87
+        byType:
+          type: object
+          description: Breakdown by badge type
+          properties:
+            competency:
+              type: integer
+              example: 42
+            participation:
+              type: integer
+              example: 31
+            learningpath:
+              type: integer
+              example: 14
+
+    TimeSeriesResponse:
+      type: object
+      required:
+        - startDate
+        - endDate
+        - groupBy
+        - dataPoints
+        - lastUpdated
+      properties:
+        startDate:
+          type: string
+          format: date
+          description: Start date of time series
+          example: '2024-01-01'
+        endDate:
+          type: string
+          format: date
+          description: End date of time series
+          example: '2024-12-31'
+        groupBy:
+          type: string
+          description: Time grouping used
+          example: month
+        badgeType:
+          type: string
+          description: Badge type filter applied
+          example: all
+        dataPoints:
+          type: array
+          description: Array of time-series data points
+          items:
+            $ref: '#/components/schemas/TimeSeriesDataPoint'
+        totalCount:
+          type: integer
+          description: Total badges in time range
+          example: 1247
+        averagePerPeriod:
+          type: number
+          format: float
+          description: Average count per time period
+          example: 103.9
+        growthRate:
+          type: number
+          format: float
+          description: Overall growth rate percentage
+          example: 8.2
+        lastUpdated:
+          type: string
+          format: date-time
+          example: '2025-10-26T13:00:00Z'
+
+    Error:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error code or type
+          example: VALIDATION_ERROR
+        message:
+          type: string
+          description: Human-readable error message
+          example: Invalid date format for startDate parameter
+        details:
+          type: object
+          description: Additional error details
+          additionalProperties: true
+        timestamp:
+          type: string
+          format: date-time
+          example: '2025-10-26T13:00:00Z'
+
+  responses:
+    BadRequestError:
+      description: Bad request - Invalid parameters or request format
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: BAD_REQUEST
+            message: Invalid date format for startDate parameter
+            details:
+              parameter: startDate
+              expected: ISO 8601 date format (YYYY-MM-DD)
+              received: '2024-13-45'
+            timestamp: '2025-10-26T13:00:00Z'
+
+    UnauthorizedError:
+      description: Unauthorized - Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: UNAUTHORIZED
+            message: Authentication required. Please provide a valid Bearer token.
+            timestamp: '2025-10-26T13:00:00Z'
+
+    ForbiddenError:
+      description: Forbidden - Insufficient permissions for this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: FORBIDDEN
+            message: Insufficient permissions to access institution statistics
+            details:
+              required_permission: view_institution_stats
+              user_role: earner
+            timestamp: '2025-10-26T13:00:00Z'
+
+    NotFoundError:
+      description: Not found - Requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: NOT_FOUND
+            message: No data found for the specified parameters
+            timestamp: '2025-10-26T13:00:00Z'
+
+    InternalServerError:
+      description: Internal server error - Unexpected server error occurred
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: INTERNAL_SERVER_ERROR
+            message: An unexpected error occurred while processing your request
+            timestamp: '2025-10-26T13:00:00Z'

@@ -1,0 +1,97 @@
+<div class="plz-map-container">
+	<!-- Map Visualization (Simplified Germany Map Grid) -->
+	<div class="tw-grid tw-grid-cols-5 tw-gap-2 tw-mb-6">
+		<!-- PLZ 0-1: East/Northeast -->
+		<div class="tw-col-span-1 tw-row-span-2 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[0]?.percentage || 0)"
+			[title]="'PLZ 0xxxx: ' + plzRegions[0]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">0</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[0]?.count || 0 }}</div>
+		</div>
+
+		<div class="tw-col-span-1 tw-row-span-2 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[1]?.percentage || 0)"
+			[title]="'PLZ 1xxxx: ' + plzRegions[1]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">1</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[1]?.count || 0 }}</div>
+		</div>
+
+		<!-- PLZ 2: North -->
+		<div class="tw-col-span-3 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[2]?.percentage || 0)"
+			[title]="'PLZ 2xxxx: ' + plzRegions[2]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">2</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[2]?.count || 0 }}</div>
+		</div>
+
+		<!-- PLZ 3: Northwest -->
+		<div class="tw-col-span-3 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[3]?.percentage || 0)"
+			[title]="'PLZ 3xxxx: ' + plzRegions[3]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">3</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[3]?.count || 0 }}</div>
+		</div>
+
+		<!-- PLZ 4-5-6: West Central -->
+		<div class="tw-col-span-2 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[4]?.percentage || 0)"
+			[title]="'PLZ 4xxxx: ' + plzRegions[4]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">4</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[4]?.count || 0 }}</div>
+		</div>
+
+		<div class="tw-col-span-1 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[5]?.percentage || 0)"
+			[title]="'PLZ 5xxxx: ' + plzRegions[5]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">5</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[5]?.count || 0 }}</div>
+		</div>
+
+		<div class="tw-col-span-2 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[6]?.percentage || 0)"
+			[title]="'PLZ 6xxxx: ' + plzRegions[6]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">6</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[6]?.count || 0 }}</div>
+		</div>
+
+		<!-- PLZ 7-8-9: South -->
+		<div class="tw-col-span-2 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[7]?.percentage || 0)"
+			[title]="'PLZ 7xxxx: ' + plzRegions[7]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">7</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[7]?.count || 0 }}</div>
+		</div>
+
+		<div class="tw-col-span-2 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[8]?.percentage || 0)"
+			[title]="'PLZ 8xxxx: ' + plzRegions[8]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">8</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[8]?.count || 0 }}</div>
+		</div>
+
+		<div class="tw-col-span-1 tw-p-4 tw-rounded-lg tw-border-2 tw-border-white tw-text-center tw-cursor-pointer hover:tw-opacity-80 tw-transition-opacity"
+			[style.background-color]="getColorIntensity(plzRegions[9]?.percentage || 0)"
+			[title]="'PLZ 9xxxx: ' + plzRegions[9]?.count + ' Badges'">
+			<div class="tw-text-white tw-font-bold tw-text-lg">9</div>
+			<div class="tw-text-white tw-text-xs tw-mt-1">{{ plzRegions[9]?.count || 0 }}</div>
+		</div>
+	</div>
+
+	<!-- Legend -->
+	<div class="tw-flex tw-items-center tw-justify-between tw-text-sm tw-text-gray-600">
+		<div class="tw-flex tw-items-center tw-space-x-2">
+			<span>Niedrig</span>
+			<div class="tw-flex tw-space-x-1">
+				<div class="tw-w-6 tw-h-4 tw-rounded" style="background-color: rgba(73, 46, 152, 0.2);"></div>
+				<div class="tw-w-6 tw-h-4 tw-rounded" style="background-color: rgba(73, 46, 152, 0.4);"></div>
+				<div class="tw-w-6 tw-h-4 tw-rounded" style="background-color: rgba(73, 46, 152, 0.6);"></div>
+				<div class="tw-w-6 tw-h-4 tw-rounded" style="background-color: rgba(73, 46, 152, 0.8);"></div>
+				<div class="tw-w-6 tw-h-4 tw-rounded" style="background-color: rgba(73, 46, 152, 1);"></div>
+			</div>
+			<span>Hoch</span>
+		</div>
+		<div class="tw-text-xs">
+			Hover über Regionen für Details
+		</div>
+	</div>
+</div>

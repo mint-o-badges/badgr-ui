@@ -1,0 +1,41 @@
+{
+  "description": "Competency Bubble Data - Distribution of competencies by category with weights for bubble chart visualization",
+  "data": [
+    {
+      "name": "IT & Digital",
+      "value": 28.5,
+      "weight": 285,
+      "color": "#492E98"
+    },
+    {
+      "name": "Soziale Kompetenzen",
+      "value": 22.1,
+      "weight": 221,
+      "color": "#492E98"
+    },
+    {
+      "name": "Sprachen",
+      "value": 18.3,
+      "weight": 183,
+      "color": "#CCD7FF"
+    },
+    {
+      "name": "Handwerk",
+      "value": 12.7,
+      "weight": 127,
+      "color": "#93F993"
+    },
+    {
+      "name": "Management",
+      "value": 10.8,
+      "weight": 108,
+      "color": "#E4FFE4"
+    },
+    {
+      "name": "Andere",
+      "value": 7.6,
+      "weight": 76,
+      "color": "#757575"
+    }
+  ]
+}

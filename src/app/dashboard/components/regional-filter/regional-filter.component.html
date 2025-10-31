@@ -1,0 +1,146 @@
+<div class="regional-filter tw-container tw-mx-auto tw-p-6 tw-max-w-7xl">
+	<!-- Header -->
+	<div class="tw-mb-8">
+		<h1 class="tw-text-3xl tw-font-bold tw-mb-2" style="color: var(--color-purple);">
+			Regionale Auswahl
+		</h1>
+		<p class="tw-text-gray-600 tw-text-lg">
+			Wählen Sie Ihre Region aus, um regionale Dashboard-Daten anzuzeigen
+		</p>
+	</div>
+
+	<!-- Current Selection (if any) -->
+	@if (selectedRegion) {
+		<div class="tw-mb-6 tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-purple);">
+			<div class="tw-flex tw-items-center tw-justify-between">
+				<div>
+					<h2 class="tw-text-xl tw-font-semibold tw-mb-2" style="color: var(--color-purple);">
+						Aktuelle Region
+					</h2>
+					<p class="tw-text-lg tw-font-medium tw-text-gray-900">
+						{{ selectedRegion.name }}
+					</p>
+					<p class="tw-text-sm tw-text-gray-600">
+						{{ selectedRegion.type === 'kreisfreie-stadt' ? 'Kreisfreie Stadt' : 'Landkreis' }} • {{ selectedRegion.state }}
+					</p>
+				</div>
+				<button
+					(click)="clearSelection()"
+					class="tw-px-4 tw-py-2 tw-rounded-lg tw-border tw-border-gray-300 tw-text-gray-700 hover:tw-bg-gray-50 tw-transition-colors">
+					Region ändern
+				</button>
+			</div>
+		</div>
+	}
+
+	<!-- Filters -->
+	<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border tw-border-gray-200 tw-mb-6">
+		<h2 class="tw-text-lg tw-font-semibold tw-mb-4" style="color: var(--color-purple);">
+			Filter
+		</h2>
+		<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-gap-4">
+			<!-- Search Input -->
+			<div>
+				<label class="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
+					Suche (Name oder PLZ)
+				</label>
+				<input
+					type="text"
+					[(ngModel)]="searchTerm"
+					placeholder="z.B. München oder 80331"
+					class="tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-lg focus:tw-outline-none focus:tw-ring-2"
+					style="--tw-ring-color: var(--color-purple);">
+			</div>
+
+			<!-- State Filter -->
+			<div>
+				<label class="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
+					Bundesland
+				</label>
+				<select
+					[(ngModel)]="selectedState"
+					class="tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-lg focus:tw-outline-none focus:tw-ring-2"
+					style="--tw-ring-color: var(--color-purple);">
+					<option value="">Alle Bundesländer</option>
+					@for (state of germanStates; track state) {
+						<option [value]="state">{{ state }}</option>
+					}
+				</select>
+			</div>
+
+			<!-- Type Filter -->
+			<div>
+				<label class="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
+					Typ
+				</label>
+				<select
+					[(ngModel)]="selectedType"
+					class="tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-lg focus:tw-outline-none focus:tw-ring-2"
+					style="--tw-ring-color: var(--color-purple);">
+					<option value="">Alle Typen</option>
+					<option value="kreisfreie-stadt">Kreisfreie Stadt</option>
+					<option value="landkreis">Landkreis</option>
+				</select>
+			</div>
+		</div>
+
+		@if (searchTerm || selectedState || selectedType) {
+			<div class="tw-mt-4">
+				<button
+					(click)="clearFilters()"
+					class="tw-text-sm tw-font-medium hover:tw-underline"
+					style="color: var(--color-purple);">
+					Filter zurücksetzen
+				</button>
+			</div>
+		}
+	</div>
+
+	<!-- Regions List -->
+	<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-border tw-border-gray-200">
+		<div class="tw-p-6 tw-border-b tw-border-gray-200">
+			<h2 class="tw-text-lg tw-font-semibold" style="color: var(--color-purple);">
+				Verfügbare Regionen
+			</h2>
+			<p class="tw-text-sm tw-text-gray-600 tw-mt-1">
+				{{ filteredRegions.length }} von 400 Kreisfreien Städten und Landkreisen
+			</p>
+		</div>
+
+		<div class="tw-max-h-96 tw-overflow-y-auto">
+			@if (filteredRegions.length > 0) {
+				<div class="tw-divide-y tw-divide-gray-200">
+					@for (region of filteredRegions; track region.id) {
+						<div
+							(click)="selectRegion(region)"
+							class="tw-p-4 hover:tw-bg-gray-50 tw-cursor-pointer tw-transition-colors">
+							<div class="tw-flex tw-items-center tw-justify-between">
+								<div>
+									<h3 class="tw-text-base tw-font-semibold tw-text-gray-900">
+										{{ region.name }}
+									</h3>
+									<p class="tw-text-sm tw-text-gray-600 tw-mt-1">
+										{{ region.type === 'kreisfreie-stadt' ? 'Kreisfreie Stadt' : 'Landkreis' }} • {{ region.state }}
+									</p>
+									<p class="tw-text-xs tw-text-gray-500 tw-mt-1">
+										PLZ: {{ region.plz.slice(0, 3).join(', ') }}@if (region.plz.length > 3) { <span>, ...</span> }
+									</p>
+								</div>
+								<div class="tw-text-gray-400">
+									<svg class="tw-w-6 tw-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+									</svg>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			} @else {
+				<div class="tw-p-8 tw-text-center tw-text-gray-500">
+					<p class="tw-text-lg tw-mb-2">Keine Regionen gefunden</p>
+					<p class="tw-text-sm">Bitte ändern Sie Ihre Filterkriterien</p>
+				</div>
+			}
+		</div>
+	</div>
+</div>

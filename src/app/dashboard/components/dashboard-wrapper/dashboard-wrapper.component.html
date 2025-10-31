@@ -1,0 +1,49 @@
+<!-- Show Regional Filter if no region is selected -->
+@if (showRegionalFilter) {
+	<app-regional-filter (regionSelected)="onRegionSelected($event)"></app-regional-filter>
+}
+
+<!-- Show Dashboard with Theme Switcher if region is selected -->
+@if (!showRegionalFilter && selectedRegion) {
+	<div class="tw-bg-white tw-min-h-screen">
+		<!-- Region Info Bar -->
+		<div class="tw-border-b-2" style="border-color: var(--color-purple); background-color: var(--color-lavender);">
+			<div class="tw-container tw-mx-auto tw-px-6 tw-py-3">
+				<div class="tw-flex tw-items-center tw-justify-between">
+					<div class="tw-flex tw-items-center tw-space-x-3">
+						<div class="tw-p-2 tw-rounded-lg" style="background-color: var(--color-purple);">
+							<svg class="tw-w-5 tw-h-5 tw-text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+							</svg>
+						</div>
+						<div>
+							<p class="tw-text-sm tw-text-gray-600">Ausgewählte Region</p>
+							<p class="tw-text-lg tw-font-semibold" style="color: var(--color-purple);">
+								{{ selectedRegion.name }}, {{ selectedRegion.state }}
+							</p>
+						</div>
+					</div>
+					<button
+						(click)="onChangeRegion()"
+						class="tw-px-4 tw-py-2 tw-rounded-lg tw-border-2 tw-font-medium tw-transition-colors hover:tw-bg-white"
+						style="border-color: var(--color-purple); color: var(--color-purple);">
+						Region ändern
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Dashboard Content with Section Headers -->
+		<div class="tw-container tw-mx-auto tw-px-6 tw-py-6">
+			<!-- Kompetenzen Tracking Section -->
+			<app-kompetenzen-tracking></app-kompetenzen-tracking>
+
+			<!-- Divider between sections -->
+			<div class="tw-my-12 tw-border-t-2" style="border-color: var(--color-lavender);"></div>
+
+			<!-- Badge Analyse Section -->
+			<app-badge-analyse></app-badge-analyse>
+		</div>
+	</div>
+}
