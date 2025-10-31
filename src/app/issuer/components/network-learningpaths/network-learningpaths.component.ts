@@ -7,22 +7,26 @@ import { Network } from '~/issuer/network.model';
 import { ApiLearningPath } from '~/common/model/learningpath-api.model';
 import { BgLearningPathCard } from '~/common/components/bg-learningpathcard';
 import { NgClass } from '@angular/common';
+import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 
 @Component({
 	selector: 'network-learningpaths',
 	templateUrl: './network-learningpaths.component.html',
-	imports: [TranslatePipe, OebButtonComponent, RouterLink, BgLearningPathCard, NgClass],
+	imports: [TranslatePipe, OebButtonComponent, RouterLink, BgLearningPathCard, NgClass, BgAwaitPromises],
 })
 export class NetworkLearningPathsComponent implements OnInit {
 	constructor() {}
 	private learningPathApiService = inject(LearningPathApiService);
 	network = input.required<Network>();
+	learningPathsLoaded: Promise<unknown>;
 
 	networkLearningPaths: ApiLearningPath[] = [];
 
 	ngOnInit() {
-		this.learningPathApiService.getLearningPathsForIssuer(this.network().slug).then((lps) => {
-			this.networkLearningPaths = lps;
-		});
+		this.learningPathsLoaded = this.learningPathApiService
+			.getLearningPathsForIssuer(this.network().slug)
+			.then((lps) => {
+				this.networkLearningPaths = lps;
+			});
 	}
 }
