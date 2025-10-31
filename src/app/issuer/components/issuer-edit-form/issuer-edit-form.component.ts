@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, input, ElementRef, viewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, input, ElementRef, viewChild, TemplateRef, inject } from '@angular/core';
 import { TypedFormGroup, typedFormGroup } from '../../../common/util/typed-forms';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
@@ -49,6 +49,19 @@ import { DialogComponent } from '~/components/dialog.component';
 	],
 })
 export class IssuerEditFormComponent implements OnInit {
+	protected router = inject(Router);
+	protected route = inject(ActivatedRoute);
+	protected configService = inject(AppConfigService);
+	protected profileManager = inject(UserProfileManager);
+	protected queryParams = inject(QueryParametersService);
+	protected formBuilder = inject(FormBuilder);
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected translate = inject(TranslateService);
+	protected issuerManager = inject(IssuerManager);
+	protected networkManager = inject(NetworkManager);
+	protected dialogService = inject(HlmDialogService);
+
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -97,21 +110,13 @@ export class IssuerEditFormComponent implements OnInit {
 	linkedInIdHeaderTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogHeader');
 	linkedInIdBodyTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogBody');
 
-	constructor(
-		loginService: SessionService,
-		protected router: Router,
-		protected route: ActivatedRoute,
-		protected configService: AppConfigService,
-		protected profileManager: UserProfileManager,
-		protected queryParams: QueryParametersService,
-		protected formBuilder: FormBuilder,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected translate: TranslateService,
-		protected issuerManager: IssuerManager,
-		protected networkManager: NetworkManager,
-		protected dialogService: HlmDialogService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const title = this.title;
+
 		title.setTitle(`Create Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		if (this.configService.theme.dataProcessorTermsLink) {
@@ -186,7 +191,11 @@ export class IssuerEditFormComponent implements OnInit {
 				Validators.minLength(200),
 				Validators.maxLength(300),
 			])
-			.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
+			.addControl(
+				'issuer_url',
+				'',
+				this.networkForm() ? [UrlValidator.validUrl] : [Validators.required, UrlValidator.validUrl],
+			)
 			.addControl('issuer_image', '', Validators.required)
 			.addControl('country', 'Germany', Validators.required)
 			.addControl('state', '')

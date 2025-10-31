@@ -47,7 +47,7 @@
 		"aboutBadges": "Badges",
 		"hours": "Hours",
 		"minutes": "Minutes",
-		"characters": "Characters",
+		"characters": "characters",
 		"fileformats": "File Formats",
 		"show": "Show",
 		"hide": "Hide",
@@ -88,7 +88,10 @@
 		"oneRequest": "1 request",
 		"multiRequests": "# requests",
 		"license": "License",
-		"language": { "de": "German", "en": "English" },
+		"language": {
+			"de": "German",
+			"en": "English"
+		},
 		"close": "Close",
 		"notification": "Notification",
 		"validationCompleteForm": "Please fill out completely",
@@ -116,7 +119,9 @@
 		"website": "Website",
 		"organization": "Organization",
 		"notNow": "Not Now",
-		"notFound": "Not found"
+		"notFound": "Not found",
+		"start": "Start",
+		"end": "End"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -196,6 +201,7 @@
 		"noBadges": "No badges",
 		"recipient": "Recipient",
 		"recipients": "Recipients",
+		"recipientsViaThisInstitution": "Recipients <span class='tw-italic tw-font-normal'>(via this institution)</span>",
 		"noRecipient": "No recipient",
 		"createInstitution": "Create institution",
 		"createInstitutionNow": "Create institution now",
@@ -284,10 +290,10 @@
 		"multipleBadgeAwardHeadline": "Award badge to multiple learners simultaneously",
 		"uploadListText": "You can <span class='tw-font-bold'>import a list of recipients</span> who should receive the badge at the same time. Here's how:",
 		"downloadExampleCSV": "Download our file template:",
-		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Beispiel-Vorlage.csv''>Download CSV example template</a>",
+		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Sample-template.csv''>Download CSV example template</a>",
 		"openInExcel": "Open it in Excel",
 		"fillInList": "Delete the example entry and fill in the two table columns with the <span class='tw-font-bold'>first and last names*</span> and <span class='tw-font-bold'>email addresses</span> of your learners accordingly.",
-		"exportAsCSV": "Export the template as a CSV file.",
+		"exportAsCSV": "Export the template as a CSV file (text encoding: Unicode (UTF-8).",
 		"uploadCSV": "Upload your CSV file:",
 		"uploadFields": "Include email address, name, and evidence (optional)",
 		"uploadFormat": "CSV or TXT format",
@@ -392,7 +398,12 @@
 		"partnerBadges": "Partner badges",
 		"bulkInvalidEmail": "1 invalid email address found. Please correct or remove the email address marked in red.",
 		"bulkInvalidEmailsPlural": "{{count}} invalid email addresses found. Please correct or remove the email addresses marked in red.",
-		"bulkReceiveByEmail": "Recipients will receive the badge by email."
+		"bulkReceiveByEmail": "Recipients will receive the badge by email.",
+		"addOptionalDetails": "Add optional details",
+		"evidence": "Proof of successful participation",
+		"addNewEvidence": "Add another evidence",
+		"evidenceUrl": "Evidence URL",
+		"evidenceNarrative": "Textual narrative"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -405,6 +416,7 @@
 		"addPartnerNext": "You can add your partner institutions in the next step.",
 		"welcomeDashboard": "Welcome to the dashboard of the network",
 		"inviteInstitutions": "Invite institutions to network",
+		"shortInviteInstitutions": "Invite institutions",
 		"addInstitutions": "Add institutions",
 		"rolesAndRights": "<span class='tw-text-link tw-underline'>Roles and rights</span> are transferred: The invitation email is sent to the owners of the institutions. <span class='tw-font-bold'>They will have corresponding rights within the network, such as creating network badges and adding additional partner organizations</span>.",
 		"addMember_owner": "Owner",
@@ -418,8 +430,8 @@
 		"confirmInvitation": "Confirm invitation",
 		"networksHeadline": "All networks at a glance",
 		"noNetworks": "no networks",
-		"networkRegistered": "Network is registered on OEB",
-		"networksRegistered": "Networks are registered on OEB",
+		"networkRegistered": "network is registered on OEB",
+		"networksRegistered": "networks are registered on OEB",
 		"partners": "Network members",
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
 		"partnerIssuers": "Partners",
@@ -428,7 +440,11 @@
 		"resendInvitation": "Resend invitation",
 		"invitedOn": "Invited on",
 		"yourRole": "Your role: {{role}}",
-		"role": { "owner": "Owner", "editor": "Editor", "staff": "Member" },
+		"role": {
+			"owner": "Owner",
+			"editor": "Editor",
+			"staff": "Member"
+		},
 		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
 		"partnerSince": "Network Partner since",
 		"partner": "Network Members",
@@ -650,7 +666,9 @@
 		"subjectMatter": "Write down what your learning program teaches in terms of <u>subject matter</u>.",
 		"howLearningWorks": "Also describe <u>how</u> the learning takes place.",
 		"inAddition": "In addition to subject-specific skills, <u>soft skills</u> such as social, communication, or problem-solving skills can often be acquired through teamwork, experimentation or planning.",
-		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>"
+		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>",
+		"activityEndDateRequired": "End date is required and may not be before the start date",
+		"activityStartDateRequired": "Start date is required"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -690,7 +708,8 @@
 		"newsletterEmail": "We have also sent you an email to confirm your newsletter subscription.",
 		"confirmNewsletter": "Click on <span class ='tw-font-bold'> “Confirm newsletter subscription” </span> in the newsletter email <br> to complete the newsletter registration.",
 		"newsletterEmailNotReceived": "You did not receive a newsletter email? Please submit your data via <br> our <a class='tw-underline tw-text-purple' href='public/about/newsletter'>newsletter registration form</a> or <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>write to us.</a>",
-		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Yes</span>, I would like to stay up to date and subscribe to the OEB newsletter."
+		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Yes</span>, I would like to stay up to date and subscribe to the OEB newsletter.",
+		"signingUp": "Signing up..."
 	},
 	"Captcha": {
 		"error": "Verification failed. Please try again.",
@@ -722,7 +741,8 @@
 		"newPassword": "New password",
 		"areYouNew": "No account yet?",
 		"yourEmail": "Your email address",
-		"yourPassword": "Your password"
+		"yourPassword": "Your password",
+		"loggingIn": "Logging in..."
 	},
 	"Legend": {
 		"legendTitle": "Legend",
@@ -837,7 +857,9 @@
 		"shareViaLink": "Via Link:",
 		"addToLinkedInProfile": "Add badge to LinkedIn profile",
 		"shareViaLinkedIn": "On LinkedIn:",
-		"shareWithoutLinkedInId": "Info: The institution that awarded you the badge has not provided us with a LinkedIn ID. Therefore, the corresponding logo image cannot be displayed on LinkedIn."
+		"shareWithoutLinkedInId": "Info: The institution that awarded you the badge has not provided us with a LinkedIn ID. Therefore, the corresponding logo image cannot be displayed on LinkedIn.",
+		"courseDate": "Course date",
+		"courseDateShort": "Course date"
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
@@ -1039,7 +1061,7 @@
 		"description": "If you create a QR code here, your learners can scan the generated QR code and collect the badge themselves.",
 		"howItWorks": "How it works:",
 		"create": "Create QR Code for",
-		"titlePlaceholder": "Badge Award June 2024",
+		"titlePlaceholder": "Badge Award June 2025 in Berlin",
 		"creatorName": "Creator name",
 		"creatorNamePlaceholder": "My first and last name",
 		"expiration": "QR Code expiration date",
@@ -1057,7 +1079,8 @@
 		"downloadPoster": "Download QR-Code-Poster",
 		"badgeDetailPage": "badge detail page",
 		"badgesAwardedSuccessfully": "badges awarded successfully",
-		"invalidDateRange": "The expiration date must be after the start date",
+		"invalidExpirationDateRange": "The expiration date must be after the start date",
+		"invalidDateRange": "The end date may not be before the start date",
 		"invalidDate": "Please enter a date in the format YYYY/mm/dd",
 		"missingStartDate": "Please enter a start date for validity",
 		"expired": "This QR code has expired."
@@ -1082,7 +1105,11 @@
 		"continue": "Continue learning",
 		"finished": "Finished",
 		"includedBadges": "Contained badges",
-		"badgeTabs": { "all": "All", "inprogress": "In progress", "finished": "Finished" },
+		"badgeTabs": {
+			"all": "All",
+			"inprogress": "In progress",
+			"finished": "Finished"
+		},
 		"chooseBadges": "Choose included badges",
 		"badgeSequenceStep": "Badge order",
 		"badgeSequence": "Order of badges in the learning path",
@@ -1122,13 +1149,17 @@
 		"condition": "You <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges</span> to receive the Micro Degree.",
 		"learningPathWithMicroDegree": "Learning path with Micro Degree Badge",
 		"confirmDelete": "Are you sure you want to delete this learning path?",
-		"deleteMd": "Delete learning path"
+		"deleteMd": "Delete learning path",
+		"institution": "institution",
+		"institutions": "institutions"
 	},
 	"LearningPathEditor": {
 		"shortDescriptionLine1": "Summary description of the learning program.",
 		"shortDescriptionLine2": "This short description will be saved in the Micro Degree completion badge."
 	},
-	"OEBComponents": { "fieldIsRequired": "This field is required" },
+	"OEBComponents": {
+		"fieldIsRequired": "This field is required"
+	},
 	"ErrorDialog": {
 		"title": "An error has occurred!",
 		"message": "Below you can see the error message. If you believe the error is on our side, you can copy the error message and send it to us by email, or you can create an issue on GitHub.",
@@ -1137,5 +1168,9 @@
 		"createIssue": "Go to GitHub Issues",
 		"sendEmail": "Send an email"
 	},
-	"NounProject": { "searchIcon": "Search Icon", "loading": "Loading...", "noIconsFoundFor": "No icons found for" }
+	"NounProject": {
+		"searchIcon": "Search Icon",
+		"loading": "Loading...",
+		"noIconsFoundFor": "No icons found for"
+	}
 }

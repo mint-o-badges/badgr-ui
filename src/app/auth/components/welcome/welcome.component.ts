@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -14,15 +14,16 @@ import { TranslatePipe } from '@ngx-translate/core';
 	imports: [RouterLink, TranslatePipe],
 })
 export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ implements OnInit {
-	constructor(
-		private router: Router,
-		route: ActivatedRoute,
-		private sessionService: SessionService,
+	private router = inject(Router);
+	private sessionService = inject(SessionService);
+	configService = inject(AppConfigService);
+	private queryParams = inject(QueryParametersService);
+	private messageService = inject(MessageService);
 
-		public configService: AppConfigService,
-		private queryParams: QueryParametersService,
-		private messageService: MessageService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		//super(router, route, sessionService);
 	}
 

@@ -110,6 +110,18 @@ export class BadgeClassEditFormComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, AfterViewInit, AfterViewChecked, OnChanges
 {
+	protected fb = inject(FormBuilder);
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected issuerManager = inject(IssuerManager);
+	private configService = inject(AppConfigService);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected dialogService = inject(CommonDialogsService);
+	protected componentElem = inject<ElementRef<HTMLElement>>(ElementRef);
+	protected aiSkillsService = inject(AiSkillsService);
+	private translate = inject(TranslateService);
+	private navService = inject(NavigationService);
+
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	baseUrl: string;
@@ -486,23 +498,16 @@ export class BadgeClassEditFormComponent
 	next: string;
 	previous: string;
 
-	constructor(
-		sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected fb: FormBuilder,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		private configService: AppConfigService,
-		protected badgeClassManager: BadgeClassManager,
-		protected dialogService: CommonDialogsService,
-		protected componentElem: ElementRef<HTMLElement>,
-		protected aiSkillsService: AiSkillsService,
-		private translate: TranslateService,
-		private navService: NavigationService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const sessionService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, sessionService);
+		const translate = this.translate;
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 

@@ -208,7 +208,7 @@
 				[disabled]="!!addIssuerFinished"
 				text="{{ existingIssuer ? ('General.save' | translate) : ('Network.create' | translate) }}"
 				[loading-promises]="[addIssuerFinished]"
-				loading-message="Hinzufügen"
+				[loading-message]="'General.add' | translate"
 			>
 			</oeb-button>
 		} @else {

@@ -40,6 +40,7 @@ import { map, Subscription } from 'rxjs';
 export class OebButtonComponent implements OnInit, OnDestroy {
 	readonly variant = input<ButtonVariants['variant']>('default');
 	readonly size = input<ButtonVariants['size']>('default');
+	readonly weight = input<ButtonVariants['weight']>('bold');
 	readonly width = input<ButtonVariants['width']>('default');
 	readonly weight = input<ButtonVariants['weight']>('bold');
 	readonly disabled = input<boolean>(false);

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BaseHttpApiService } from './base-http-api.service';
 import { SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
@@ -10,14 +10,27 @@ import { LanguageService } from './language.service';
 
 @Injectable({ providedIn: 'root' })
 export class CmsApiService extends BaseHttpApiService {
-	constructor(
-		protected loginService: SessionService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-		protected languageService: LanguageService,
-	) {
+	protected loginService: SessionService;
+	protected http: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+	protected languageService = inject(LanguageService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const http = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(loginService, http, configService, messageService);
+
+		this.loginService = loginService;
+		this.http = http;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	getMenus() {

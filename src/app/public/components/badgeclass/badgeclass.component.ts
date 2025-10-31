@@ -41,6 +41,17 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 	],
 })
 export class PublicBadgeClassComponent implements OnInit {
+	private injector = inject(Injector);
+	configService = inject(AppConfigService);
+	private title = inject(Title);
+	private sessionService = inject(SessionService);
+	private recipientBadgeApiService = inject(RecipientBadgeApiService);
+	private translate = inject(TranslateService);
+	protected issuerManager = inject(IssuerManager);
+	private router = inject(Router);
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected userProfileManager = inject(UserProfileManager);
+
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -72,18 +83,11 @@ export class PublicBadgeClassComponent implements OnInit {
 
 	badgeClassPromise: Promise<PublicApiBadgeClassWithIssuer>;
 
-	constructor(
-		private injector: Injector,
-		public configService: AppConfigService,
-		private title: Title,
-		private sessionService: SessionService,
-		private recipientBadgeApiService: RecipientBadgeApiService,
-		private translate: TranslateService,
-		protected issuerManager: IssuerManager,
-		private router: Router,
-		protected badgeClassManager: BadgeClassManager,
-		protected userProfileManager: UserProfileManager,
-	) {
+	constructor() {
+		const injector = this.injector;
+		const title = this.title;
+		const badgeClassManager = this.badgeClassManager;
+
 		title.setTitle(`Badge Class - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.badgeIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'badgeId', async (paramValue) => {
@@ -102,9 +106,7 @@ export class PublicBadgeClassComponent implements OnInit {
 					awardCriteria: badge.criteria['narrative'],
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
-					category: this.translate.instant(
-						`Badge.categories.${badge['extensions:CategoryExtension']?.Category || 'participation'}`,
-					),
+					category: badge['extensions:CategoryExtension']?.Category,
 					duration: badge['extensions:StudyLoadExtension'].StudyLoad,
 					tags: badge.tags,
 					issuerName: badge.issuer.name,
@@ -118,6 +120,9 @@ export class PublicBadgeClassComponent implements OnInit {
 					crumbs: [{ title: 'Badges', routerLink: ['/catalog/badges'] }, { title: badge.name }],
 					learningPaths: this.learningPaths,
 					copy_permissions: badge.copy_permissions,
+					networkBadge: badge.isNetworkBadge,
+					networkImage: badge.networkImage,
+					networkName: badge.networkName,
 				};
 
 				// wait for user profile, emails, issuer to check if user can copy

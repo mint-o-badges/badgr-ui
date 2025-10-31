@@ -7,51 +7,54 @@
 					<bg-breadcrumbs [linkentries]="config.crumbs"> </bg-breadcrumbs>
 				</div>
 				<div class="oeb-section-sm">
-					<div class="tw-flex tw-flex-col tw-relative">
-						<div class="tw-grid md:tw-flex md:tw-justify-between md:tw-items-center md:tw-gap-10">
-							<h1
-								hlmH1
-								class="tw-text-purple tw-font-extrabold tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0 oeb-break-words"
-							>
-								{{ config.badgeTitle }}
-							</h1>
-							<div class="tw-flex tw-gap-2">
-								@if (config.headerButton) {
-									@if (config.headerButton.routerLink) {
-										<oeb-button
-											class="tw-whitespace-nowrap tw-grow"
-											[text]="config.headerButton.title | translate"
-											width="full_width"
-											[routerLink]="config.headerButton.routerLink"
-											[disabled-when-requesting]="true"
-										></oeb-button>
-									}
-									@if (config.headerButton.action) {
-										<oeb-button
-											class="tw-whitespace-nowrap tw-grow md:tw-min-w-[327px]"
-											width="full_width"
-											(click)="config.headerButton.action()"
-											[disabled-when-requesting]="true"
-											[disabled]="config.headerButton.disabled"
-											[text]="config.headerButton.title | translate"
-										></oeb-button>
-									}
-								}
-								@if (config.shareButton && badge) {
+					<div class="tw-flex tw-flex-row tw-justify-between tw-flex-wrap tw-gap-4">
+						<h1
+							hlmH1
+							class="tw-text-purple tw-font-extrabold tw-hyphens-auto tw- break-words oeb-break-words"
+						>
+							{{ config.badgeTitle }}
+						</h1>
+
+						<div class="headerMenuGrid">
+							@if (config.headerButton) {
+								@if (config.headerButton.routerLink) {
 									<oeb-button
-										hlmBtn
-										class="lg:tw-whitespace-nowrap"
-										[text]="'RecBadgeDetail.shareBadge' | translate"
-										(click)="shareBadge()"
+										class="tw-whitespace-nowrap main-action"
+										[text]="config.headerButton.title | translate"
+										width="full_width"
+										[routerLink]="config.headerButton.routerLink"
+										[disabled-when-requesting]="true"
 									></oeb-button>
 								}
-								@if (config.menuitems) {
-									<oeb-dropdown
-										[trigger]="svgTrigger"
-										class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
-										[menuItems]="config.menuitems"
-									></oeb-dropdown>
+
+								@if (config.headerButton.action) {
+									<oeb-button
+										class="tw-whitespace-nowrap main-action"
+										width="full_width"
+										(click)="config.headerButton.action()"
+										[disabled-when-requesting]="true"
+										[disabled]="config.headerButton.disabled"
+										[text]="config.headerButton.title | translate"
+									></oeb-button>
 								}
+							}
+
+							@if (config.shareButton && badge) {
+								<oeb-button
+									hlmBtn
+									class="tw-whitespace-nowrap main-action"
+									width="full_width"
+									[text]="'RecBadgeDetail.shareBadge' | translate"
+									(click)="shareBadge()"
+								></oeb-button>
+							}
+
+							@if (config.menuitems) {
+								<oeb-dropdown
+									[trigger]="svgTrigger"
+									class="overflow-menu tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[10px]"
+									[menuItems]="config.menuitems"
+								></oeb-dropdown>
 								<ng-template #svgTrigger>
 									<svg
 										class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
@@ -60,12 +63,12 @@
 									></svg>
 									<span class="visuallyhidden">Mehr</span>
 								</ng-template>
-							</div>
-						</div>
-						<div class="tw-grid md:tw-flex tw-justify-start">
+							}
+
 							@if (config.qrCodeButton?.show) {
 								<oeb-button
-									class="oeb-button !tw-p-0 tw-mt-2 tw-w-full md:tw-w-fit md:tw-ml-auto md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
+									class="secondary"
+									width="full_width"
 									variant="secondary"
 									[text]="config.qrCodeButton?.title | translate"
 									(click)="config.qrCodeButton?.action()"
@@ -74,16 +77,16 @@
 						</div>
 					</div>
 				</div>
-				<!-- Sidebar -->
-				<div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-16 tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
-					<div class="md:tw-w-[346px] md:tw-p-0 tw-pb-8 md:tw-flex-grow-1">
-						<div class="badge-sidebar-internal tw-rounded-lg tw-flex tw-flex-wrap">
-							<div class="md:tw-min-w-[260px] tw-min-w-[200px]">
-								<div
-									class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-py-8 tw-rounded-lg oeb-slight-shadow"
-								>
+				<div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-7 tw-relative md:tw-mx-0 tw-mx-auto">
+					<!-- Sidebar -->
+					<aside
+						class="md:tw-max-w-[356px] md:tw-min-w-[278px] tw-flex-grow md:tw-flex-shrink tw-p-6 tw-bg-lavender tw-rounded-lg"
+					>
+						<div class="tw-flex tw-flex-wrap tw-gap-4">
+							<div class="tw-flex-grow tw-flex-shrink">
+								<div class="tw-p-11 tw-bg-white tw-rounded-lg oeb-slight-shadow">
 									<img
-										class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
+										class="tw-aspect-square tw-max-h-40 tw-block tw-mx-auto"
 										[loaded-src]="config.badgeImage"
 										[loading-src]="config.badgeLoadingImageUrl"
 										[error-src]="config.badgeFailedImageUrl"
@@ -91,24 +94,22 @@
 								</div>
 								<!-- Issuer Information -->
 								<div
-									class="tw-mt-4 tw-mb-6 tw-mx-auto tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-pr-2 tw-py-4 tw-bg-white tw-rounded-lg"
+									class="tw-mt-4 tw-p-4 tw-gap-3 tw-flex tw-items-center oeb-slight-shadow tw-bg-white tw-rounded-lg"
 								>
-									<div>
-										<img
-											class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image tw-aspect-square"
-											[loaded-src]="
-												config.networkBadge
-													? config.networkImage
-													: config.sharedOnNetwork
-														? config.sharedOnNetwork.image
-														: config.issuerImage
-											"
-											[loading-src]="config.issuerImagePlacholderUrl"
-											[error-src]="config.issuerImagePlacholderUrl"
-										/>
-									</div>
+									<img
+										class="tw-block tw-aspect-square tw-min-h-9 tw-max-h-14"
+										[loaded-src]="
+											config.networkBadge
+												? config.networkImage
+												: config.sharedOnNetwork
+													? config.sharedOnNetwork.image
+													: config.issuerImage
+										"
+										[loading-src]="config.issuerImagePlacholderUrl"
+										[error-src]="config.issuerImagePlacholderUrl"
+									/>
 
-									<div class="tw-leading-[120%] tw-ml-2">
+									<div class="tw-leading-[120%]">
 										<dt
 											class="{{
 												config.networkBadge
@@ -129,7 +130,7 @@
 										<dd class="oeb-break-words tw-font-bold tw-text-oebblack">
 											{{
 												config.networkBadge
-													? config.issuerName
+													? config.networkName
 													: config.sharedOnNetwork
 														? config.sharedOnNetwork.name
 														: config.issuerName
@@ -139,284 +140,299 @@
 								</div>
 							</div>
 
-							<!-- Awarding Issuers Section (for network/shared badges) -->
-							@if (
-								(config.networkBadge || config.sharedOnNetwork) && config.awardingIssuers?.length > 0
-							) {
-								@for (issuer of config.awardingIssuers; track issuer.slug) {
-									<a
-										[href]="issuer.url"
-										class="tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-pr-2 tw-py-4 tw-bg-white tw-rounded-lg tw-mb-4"
-									>
-										<div>
+							<div class="tw-flex-grow">
+								<!-- Awarding Issuers Section (for network/shared badges) -->
+								@if (
+									(config.networkBadge || config.sharedOnNetwork) &&
+									config.awardingIssuers?.length > 0
+								) {
+									@for (issuer of config.awardingIssuers; track issuer.slug) {
+										<a
+											[href]="issuer.url"
+											class="tw-mb-6 tw-p-4 tw-gap-3 tw-flex tw-items-center oeb-slight-shadow tw-bg-white tw-rounded-lg"
+										>
 											<img
-												class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image tw-aspect-square"
+												class="tw-block tw-aspect-square tw-min-h-9 tw-max-h-14"
 												[loaded-src]="issuer.image"
 												[loading-src]="config.issuerImagePlacholderUrl"
 												[error-src]="config.issuerImagePlacholderUrl"
 											/>
-										</div>
 
-										<div class="tw-leading-[120%] tw-ml-2">
-											<dt class="tw-text-[#757575]">
-												{{ 'RecBadgeDetail.issuedBy' | translate }}
+											<div class="tw-leading-[120%]">
+												<dt class="tw-text-[#757575]">
+													{{ 'RecBadgeDetail.issuedBy' | translate }}
+												</dt>
+												<dd class="oeb-break-words tw-font-bold tw-text-oebblack">
+													{{ issuer.name }}
+												</dd>
+											</div>
+										</a>
+									}
+								}
+
+								@if (config.copy_permissions && !config.copy_permissions.includes('none')) {
+									<div
+										class="tw-flex tw-flex-row tw-text-oebblack tw-italic"
+										[class.tw-pb-2]="hasCriteria || config.competencies.length"
+									>
+										<dt [innerHTML]="('Badge.copyableFor' | translate) + ':&nbsp;'"></dt>
+										<dd
+											[innerHTML]="
+												config.copy_permissions.includes('others')
+													? ('Issuer.allInstitutions' | translate)
+													: ('Issuer.ownInstitution' | translate)
+											"
+										></dd>
+									</div>
+								}
+								<dl class="tw-pt-2">
+									@if (config.activity_start_date) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'RecBadge.courseDateShort' | translate }}
 											</dt>
-											<dd class="oeb-break-words tw-font-bold tw-text-oebblack">
-												{{ issuer.name }}
+											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+												<time [date]="config.activity_start_date" format="dd.MM.y"></time>
+												@if (config.activity_end_date) {
+													&nbsp; — &nbsp;<time
+														[date]="config.activity_end_date"
+														format="dd.MM.y"
+													></time>
+												}
 											</dd>
 										</div>
-									</a>
-								}
-							}
+									}
 
-							@if (config.copy_permissions && !config.copy_permissions.includes('none')) {
-								<div
-									class="tw-flex tw-flex-row tw-gap-1"
-									[class.tw-pb-4]="hasCriteria || config.competencies.length"
-								>
-									<dt
-										class="tw-text-oebblack tw-font-bold"
-										[innerHTML]="('Badge.copyableFor' | translate) + ': '"
-									></dt>
-									<dd
-										class="tw-text-oebblack tw-italic"
-										[innerHTML]="
-											config.copy_permissions.includes('others')
-												? ('Issuer.allInstitutions' | translate)
-												: ('Issuer.ownInstitution' | translate)
-										"
-									></dd>
-								</div>
-							}
-							<dl clss="tw-min-w-[150px]">
-								@if (hasCriteria || config.competencies.length) {
-									<div
-										class="tw-bg-white tw-mb-4 tw-rounded-[10px] tw-p-2"
-										[class.tw-mt-6]="!config.copy_permissions"
-									>
-										<oeb-collapsible
-											[trigger]="collapseCriteriaTrigger"
-											closeIcon="lucideChevronDown"
-											[iconSize]="'24px'"
-											[iconStyle]="'tw-text-oebblack tw-mr-2'"
-											[defaultOpen]="hasCriteria"
-											[id]=""
+									@if (hasCriteria || config.competencies.length) {
+										<div
+											class="tw-bg-white tw-mb-4 tw-rounded-[10px] tw-p-2"
+											[class.tw-mt-6]="!config.copy_permissions"
 										>
-											<ng-template #collapseCriteriaTrigger>
-												<dt
-													class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2"
-												>
-													<ng-icon
-														hlm
-														name="lucideAward"
-														class="tw-w-6 tw-h-6 tw-text-purple"
+											<oeb-collapsible
+												[trigger]="collapseCriteriaTrigger"
+												closeIcon="lucideChevronDown"
+												[iconSize]="'24px'"
+												[iconStyle]="'tw-text-oebblack tw-mr-2'"
+												[defaultOpen]="hasCriteria"
+												[id]=""
+											>
+												<ng-template #collapseCriteriaTrigger>
+													<dt
+														class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2"
 													>
-													</ng-icon>
-													<span
-														class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
-														[innerHTML]="'Badge.awardCriteria' | translate"
-													></span>
-												</dt>
-											</ng-template>
-											@if (hasCriteria) {
-												<dd>
+														<ng-icon
+															hlm
+															name="lucideAward"
+															class="tw-w-6 tw-h-6 tw-text-purple"
+														/>
+														<span
+															class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-2 tw-uppercase"
+															[innerHTML]="'Badge.awardCriteria' | translate"
+														></span>
+													</dt>
+												</ng-template>
+												@if (hasCriteria) {
+													<dd>
+														<ul class="tw-pl-10 tw-mt-1 tw-list-inside tw-list-disc">
+															@for (
+																criteria of config.awardCriteria;
+																track criteria.name
+															) {
+																<li class="tw-mb-2">
+																	<p hlmP [size]="'sm'" class="tw-inline">
+																		{{ criteria.name }}
+																	</p>
+																	@if (criteria.description) {
+																		<p
+																			hlmP
+																			[size]="'sm'"
+																			class="tw-text-darkgrey tw-italic tw-ml-4 tw-mt-1"
+																		>
+																			{{ criteria.description }}
+																		</p>
+																	}
+																</li>
+															}
+														</ul>
+													</dd>
+												} @else {
 													<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
-														@for (criteria of config.awardCriteria; track criteria.name) {
+														@for (competency of config.competencies; track competency) {
 															<li class="tw-mb-1">
 																<span class="tw-text-oebblack">{{
-																	criteria.name
+																	competency.name
 																}}</span>
-																@if (criteria.description) {
-																	<p
-																		class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1"
-																	>
-																		{{ criteria.description }}
-																	</p>
-																}
 															</li>
 														}
 													</ul>
-												</dd>
-											} @else {
-												<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
-													@for (competency of config.competencies; track competency) {
-														<li class="tw-mb-1">
-															<span class="tw-text-oebblack">{{ competency.name }}</span>
-														</li>
-													}
-												</ul>
-											}
-										</oeb-collapsible>
-									</div>
-								}
-								@if (config.version) {
-									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col tw-items-center">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'Badge.standard' | translate }}
-										</dt>
-										<dd
-											class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex tw-items-center tw-gap-1 tw-font-medium"
-										>
-											{{ config.version }}
-											<info-icon>
-												@if (config.version === '3.0') {
-													<span [innerHTML]="'Badge.standard-info-30' | translate"></span>
-												} @else {
-													<span [innerHTML]="'Badge.standard-info-20' | translate"></span>
 												}
-											</info-icon>
-										</dd>
-									</div>
-								}
-								@if (config.category) {
-									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'General.category' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-text-oebblack tw-font-medium md:tw-ml-2">
-											{{ 'Badge.categories.' + config.category | translate }}
-										</dd>
-									</div>
-								}
-								@if (config.duration) {
-									<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-darkgray">
-											{{ 'RecBadgeDetail.duration' | translate }}
-										</dt>
-										<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
-											{{ +config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
-										</dd>
-									</div>
-								}
-								@if (config.createdAt) {
-									<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-darkgray">{{ 'Badge.createdOn' | translate }}</dt>
-										<dd class="tw-font-medium md:tw-ml-2 tw-text-oebblack">
-											<time [date]="config.createdAt" format="dd.MM.y"></time>
-										</dd>
-									</div>
-								}
-								@if (config.issuedOn) {
-									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'RecBadgeDetail.issuedOn' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
-											<time [date]="config.issuedOn" format="dd.MM.y"></time>
-										</dd>
-									</div>
-								}
-								@if (config.issuedTo) {
-									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'RecBadgeDetail.awardedTo' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-break-words tw-font-medium">
-											&nbsp;{{ config.issuedTo }}
-										</dd>
-									</div>
-								}
-								@if (config.license) {
-									<div class="tw-mt-2 tw-pt-2 tw-flex tw-flex-row">
-										<dt class="tw-text-sm tw-text-darkgray">
-											{{ 'General.license' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-text-oebblack tw-ml-2 tw-flex">
-											<div
-												class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
+											</oeb-collapsible>
+										</div>
+									}
+									@if (config.version) {
+										<div
+											class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col md:tw-items-center tw-items-start"
+										>
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'Badge.standard' | translate }}
+											</dt>
+											<dd
+												class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex tw-items-center tw-gap-1 tw-font-medium"
 											>
-												<span class="tw-text-[11px]">CC</span>
-											</div>
-											<div
-												class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
-											>
-												<span class="tw-text-[11px]">0</span>
-											</div>
-											<a
-												class="tw-ml-2 tw-underline tw-text-[#1400FF]"
-												target="_blank"
-												href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.de"
-											>
-												CC0 1.0</a
-											>
-										</dd>
-									</div>
-								}
-								@if (config.tags.length > 0) {
-									<div class="tw-flex tw-items-start tw-flex-col tw-mt-4">
-										<dt class="tw-text-darkgray md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
-										<dd class="tw-text-darkgray">
-											@for (tag of config.tags; track tag; let last = $last) {
-												<div class="tag tw-border-darkgray tw-mx-2 tw-ml-0 tw-max-w-24">
-													{{ tag }}
+												{{ config.version }}
+												<info-icon>
+													@if (config.version === '3.0') {
+														<span [innerHTML]="'Badge.standard-info-30' | translate"></span>
+													} @else {
+														<span [innerHTML]="'Badge.standard-info-20' | translate"></span>
+													}
+												</info-icon>
+											</dd>
+										</div>
+									}
+									@if (config.category) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'General.category' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-text-oebblack tw-font-medium md:tw-ml-2">
+												{{ 'Badge.categories.' + config.category | translate }}
+											</dd>
+										</div>
+									}
+									@if (config.duration) {
+										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-darkgray">
+												{{ 'RecBadgeDetail.duration' | translate }}
+											</dt>
+											<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
+												{{ +config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
+											</dd>
+										</div>
+									}
+									@if (config.createdAt) {
+										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-darkgray">{{ 'Badge.createdOn' | translate }}</dt>
+											<dd class="tw-font-medium md:tw-ml-2 tw-text-oebblack">
+												<time [date]="config.createdAt" format="dd.MM.y"></time>
+											</dd>
+										</div>
+									}
+									@if (config.issuedOn) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'RecBadgeDetail.issuedOn' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+												<time [date]="config.issuedOn" format="dd.MM.y"></time>
+											</dd>
+										</div>
+									}
+									@if (config.issuedTo) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'RecBadgeDetail.awardedTo' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+												{{ config.issuedTo }}
+											</dd>
+										</div>
+									}
+									@if (config.license) {
+										<div class="tw-mt-2 tw-pt-2 tw-flex tw-flex-row">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'General.license' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-text-oebblack tw-ml-2 tw-flex">
+												<div
+													class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
+												>
+													<span class="tw-text-[11px]">CC</span>
 												</div>
-											}
-										</dd>
-									</div>
-								}
-							</dl>
+												<div
+													class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
+												>
+													<span class="tw-text-[11px]">0</span>
+												</div>
+												<a
+													class="tw-ml-2 tw-underline tw-text-[#1400FF]"
+													target="_blank"
+													href="https://creativecommons.org/publicdomain/zero/1.0/legalcode.de"
+												>
+													CC0 1.0</a
+												>
+											</dd>
+										</div>
+									}
+									@if (config.tags.length > 0) {
+										<div class="tw-flex tw-items-start tw-flex-col tw-mt-4">
+											<dt class="tw-text-darkgray md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
+											<dd class="tw-text-darkgray">
+												@for (tag of config.tags; track tag; let last = $last) {
+													<div class="tag tw-border-darkgray tw-mx-2 tw-ml-0 tw-max-w-24">
+														{{ tag }}
+													</div>
+												}
+											</dd>
+										</div>
+									}
+								</dl>
+							</div>
 						</div>
-					</div>
-					<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
-						<div class="tw-text-oebblack tw-pt-0 tw-pb-4 oeb-break-words">
-							<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">
+					</aside>
+					<!-- Main Content -->
+					<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-flex-grow">
+						<section class="tw-text-oebblack tw-mb-10 oeb-break-words">
+							<h3 hlmH3 class="tw-font-semibold tw-mb-2">
 								{{ 'CreateBadge.shortDescription' | translate }}
 							</h3>
-							<p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
-						</div>
+							<p hlmP>{{ config.badgeDescription }}</p>
+						</section>
+
 						<!-- Kompetenzen -->
 						@if (config.competencies && config.competencies.length > 0) {
-							<section class="tw-text-oebblack tw-pb-8">
-								<h3
-									class="tw-text-[22px] tw-leading-[26.4px] tw-font-semibold tw-text-oebblack u-margin-bottom2x u-margin-top4x"
-								>
+							<section class="tw-text-oebblack tw-mb-10">
+								<h3 hlmH3 class="tw-font-semibold tw-text-oebblack">
 									{{ 'RecBadgeDetail.competencies' | translate }}
 								</h3>
-								<div>
-									@for (competency of config.competencies; track competency; let i = $index) {
-										<div>
-											<competency-accordion
-												[name]="competency.name"
-												[category]="competency.category"
-												[description]="competency.description"
-												[framework]="competency.framework"
-												[framework_identifier]="competency.framework_identifier"
-												[studyload]="(competency.studyLoad | hourPipe) + ' h'"
-											></competency-accordion>
-										</div>
+								@for (competency of config.competencies; track competency; let i = $index) {
+									<competency-accordion
+										[name]="competency.name"
+										[category]="competency.category"
+										[description]="competency.description"
+										[framework]="competency.framework"
+										[framework_identifier]="competency.framework_identifier"
+										[studyload]="(competency.studyLoad | hourPipe) + ' h'"
+									></competency-accordion>
+								}
+							</section>
+						}
+
+						<section class="tw-mt-20"><ng-content /></section>
+
+						@if (getLearningPaths().length > 0) {
+							<section class="tw-mt-20">
+								<h3 hlmH3 class="tw-font-semibold tw-text-oebblack">
+									{{ 'Badge.partOfLearningPath' | translate }}
+								</h3>
+								<div class="tw-mt-4 tw-grid tw-grid-cols-learningpaths tw-gap-4">
+									@for (lp of getLearningPaths(); track lp) {
+										<bg-learningpathcard
+											[name]="lp.name"
+											[badgeImage]="lp.participationBadge_image"
+											[issuerTitle]="lp.issuer_name"
+											[description]="lp.description"
+											[slug]="lp.slug"
+											[tags]="lp.tags"
+											[studyLoad]="calculateStudyLoad(lp)"
+											[progress]="lp.progress"
+											[matchOrProgress]="calculateLearningPathStatus(lp)"
+											[requested]="lp.requested"
+											[completed]="checkCompleted(lp)"
+										/>
 									}
 								</div>
 							</section>
-						}
-						<ng-content></ng-content>
-						@if (config.learningPaths.length > 0) {
-							<div>
-								<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
-								<span
-									class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"
-								>
-									{{ 'Badge.partOfLearningPath' | translate }}
-								</span>
-								<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
-									@for (lp of getLearningPaths(); track lp) {
-										@if (lp.activated) {
-											<bg-learningpathcard
-												[name]="lp.name"
-												[badgeImage]="$any(lp).participationBadge_image"
-												[issuerTitle]="lp.issuer_name"
-												[description]="lp.description"
-												[slug]="lp.slug"
-												[tags]="lp.tags"
-												[studyLoad]="calculateStudyLoad(lp)"
-												[progress]="lp.progress"
-												[matchOrProgress]="calculateLearningPathStatus(lp)"
-												[requested]="lp.requested"
-												[completed]="checkCompleted(lp)"
-											></bg-learningpathcard>
-										}
-									}
-								</div>
-							</div>
 						}
 					</div>
 				</div>

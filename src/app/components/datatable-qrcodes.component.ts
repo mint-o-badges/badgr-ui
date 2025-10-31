@@ -34,6 +34,7 @@ import {
 import { OebCheckboxComponent } from './oeb-checkbox.component';
 import { OebTableImports } from './oeb-table';
 import { HlmButtonModule } from './spartan/ui-button-helm/src';
+import { ApiQRCode } from '~/issuer/models/qrcode-api.model';
 
 export type RequestedBadge = {
 	email: string;
@@ -183,7 +184,13 @@ export type RequestedBadge = {
 	`,
 })
 export class QrCodeDatatableComponent implements OnInit {
-	qrCodeId = input.required<string>();
+	private badgeRequestApiService = inject(BadgeRequestApiService);
+	private badgeInstanceApiService = inject(BadgeInstanceApiService);
+	private taskService = inject(TaskPollingManagerService);
+	private messageService = inject(MessageService);
+	private translate = inject(TranslateService);
+
+	qrCode = input.required<ApiQRCode>();
 	badgeSlug = input.required<string>();
 	issuerSlug = input.required<string>();
 	qrBadgeAward = output<number>();
@@ -257,16 +264,13 @@ export class QrCodeDatatableComponent implements OnInit {
 	];
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
-	constructor(
-		private badgeRequestApiService: BadgeRequestApiService,
-		private badgeInstanceApiService: BadgeInstanceApiService,
-		private taskService: TaskPollingManagerService,
-		private messageService: MessageService,
-		private translate: TranslateService,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngOnInit(): void {
-		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId()).then((response: any) => {
+		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCode().slug).then((response: any) => {
 			this.requestedBadges.set(
 				response.body.requested_badges.map((badge: ApiRequestedBadge) => this.transformRequestedBadge(badge)),
 			);
@@ -288,10 +292,15 @@ export class QrCodeDatatableComponent implements OnInit {
 		if (this.rowSelectionCount() === 0 || this.isTaskProcessing() || this.isTaskPending()) return;
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
+		const qrCode = this.qrCode();
 		const recipientProfileContextUrl =
 			'https://api.openbadges.education/static/extensions/recipientProfile/context.json';
 		Object.keys(this.rowSelection()).forEach((idx) => {
 			const b = this.requestedBadges().at(Number(idx));
+			const activityStartDate = qrCode.activity_start_date
+				? new Date(qrCode.activity_start_date).toISOString()
+				: null;
+			const activityEndDate = qrCode.activity_end_date ? new Date(qrCode.activity_end_date).toISOString() : null;
 			const name = b.firstName + ' ' + b.lastName;
 			const extensions = name
 				? {
@@ -305,6 +314,8 @@ export class QrCodeDatatableComponent implements OnInit {
 			assertions.push({
 				recipient_identifier: b.email,
 				extensions: extensions,
+				activity_start_date: activityStartDate,
+				activity_end_date: activityEndDate,
 			} satisfies BadgeInstanceBatchAssertion);
 		});
 

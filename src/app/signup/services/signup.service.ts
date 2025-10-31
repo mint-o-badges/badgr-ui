@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '../../common/app-config.service';
 import { SignupModel } from '../models/signup-model.type';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class SignupService {
+	private http = inject(HttpClient);
+	private configService = inject(AppConfigService);
+
 	baseUrl: string;
 
-	constructor(
-		private http: HttpClient,
-		private configService: AppConfigService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 

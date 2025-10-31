@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { uiTimestamp } from 'src/environments/timestamp';
 import { ServerTimestampService } from '~/common/services/server-timestamp.service';
 
@@ -14,9 +14,16 @@ import { ServerTimestampService } from '~/common/services/server-timestamp.servi
 	`,
 })
 export class VersionComponent {
+	protected serverTimestampService = inject(ServerTimestampService);
+
 	uiTimestamp = uiTimestamp;
 	serverTimestamp = '?';
-	constructor(protected serverTimestampService: ServerTimestampService) {
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+	constructor() {
+		const serverTimestampService = this.serverTimestampService;
+
 		serverTimestampService.getServerTimestamp().then(
 			(ts) => {
 				this.serverTimestamp = ts;

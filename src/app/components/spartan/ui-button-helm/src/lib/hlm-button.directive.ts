@@ -47,7 +47,7 @@ export const buttonVariants = cva(
 				default: '',
 				max_content: 'tw-w-max',
 				full_width: 'tw-w-full',
-				min_lg: 'tw-min-w-[450px]',
+				min_320: 'tw-min-w-80',
 			},
 			weight: {
 				normal: '!tw-font-normal',

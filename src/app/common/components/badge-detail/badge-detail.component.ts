@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import type { PageConfig } from './badge-detail.component.types';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
@@ -17,14 +17,13 @@ import { NgIcon } from '@ng-icons/core';
 import { InfoIcon } from '../info-icon.component';
 import { TimeComponent } from '../time.component';
 import { CompetencyAccordionComponent } from '../../../components/accordion.component';
-import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
 import { HourPipe } from '../../pipes/hourPipe';
 import { PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 import { HlmIcon } from '@spartan-ng/helm/icon';
-import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { HlmH1, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 import { HlmDialogService } from '@spartan-ng/helm/dialog';
 import {
 	ShareBadgeDialogComponent,
@@ -52,29 +51,29 @@ import {
 		TimeComponent,
 		HlmP,
 		CompetencyAccordionComponent,
-		OebSeparatorComponent,
 		BgLearningPathCard,
 		TranslatePipe,
 		HourPipe,
+		HlmH3,
 	],
 })
 export class BgBadgeDetail {
+	private dialogService = inject(HlmDialogService);
+	private translate = inject(TranslateService);
+	private recipientManager = inject(RecipientBadgeManager);
+
 	@Input() config: PageConfig;
 	@Input() awaitPromises?: Promise<any>[];
 	@Input() badge?: RecipientBadgeInstance | BadgeInstance | ApiImportedBadgeInstance;
 
-	constructor(
-		private dialogService: HlmDialogService,
-		private translate: TranslateService,
-		private recipientManager: RecipientBadgeManager,
-	) {
+	constructor() {
 		this.translate.get('Badge.categories.competency').subscribe((str) => {
 			this.competencyBadge = str;
 		});
 	}
 
 	getLearningPaths(): PublicApiLearningPath[] {
-		return this.config.learningPaths as PublicApiLearningPath[];
+		return (this.config.learningPaths as PublicApiLearningPath[]).filter((l) => l.activated);
 	}
 
 	get hasCriteria(): boolean {

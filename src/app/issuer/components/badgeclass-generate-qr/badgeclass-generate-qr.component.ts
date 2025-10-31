@@ -39,6 +39,12 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	],
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	protected badgeClassManager = inject(BadgeClassManager);
+	protected badgeRequestApiService = inject(BadgeRequestApiService);
+	protected translate = inject(TranslateService);
+	protected qrCodeApiService = inject(QrCodeApiService);
+	protected sanitizer = inject(DomSanitizer);
+
 	static datePipe = new DatePipe('de');
 
 	get issuerSlug() {
@@ -69,6 +75,9 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	creator: string;
 	valid: boolean = true;
 	validity: string;
+	course_date: string;
+	activity_start_date: string | null;
+	activity_end_date: string | null;
 	valid_from: string | null;
 	expires_at: string | null;
 	baseUrl: string;
@@ -94,16 +103,14 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		},
 	];
 
-	constructor(
-		route: ActivatedRoute,
-		router: Router,
-		sessionService: SessionService,
-		protected badgeClassManager: BadgeClassManager,
-		protected badgeRequestApiService: BadgeRequestApiService,
-		protected translate: TranslateService,
-		protected qrCodeApiService: QrCodeApiService,
-		protected sanitizer: DomSanitizer,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+		const sessionService = inject(SessionService);
+
 		super(router, route, sessionService);
 
 		this.badgeClassLoaded = this.badgeClassManager
@@ -151,8 +158,30 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
 				this.qrTitle = qrCode.title;
 				this.creator = qrCode.createdBy;
+				this.activity_start_date = qrCode.activity_start_date;
+				this.activity_end_date = qrCode.activity_end_date;
 				this.valid_from = qrCode.valid_from;
 				this.expires_at = qrCode.expires_at;
+
+				if (this.activity_start_date) {
+					if (this.activity_end_date) {
+						this.course_date =
+							BadgeClassGenerateQrComponent.datePipe.transform(
+								new Date(this.activity_start_date),
+								'dd.MM.yyyy',
+							) +
+							' - ' +
+							BadgeClassGenerateQrComponent.datePipe.transform(
+								new Date(this.activity_end_date),
+								'dd.MM.yyyy',
+							);
+					} else {
+						this.course_date = BadgeClassGenerateQrComponent.datePipe.transform(
+							new Date(this.activity_start_date),
+							'dd.MM.yyyy',
+						);
+					}
+				}
 
 				if (this.valid_from && this.expires_at) {
 					this.validity =

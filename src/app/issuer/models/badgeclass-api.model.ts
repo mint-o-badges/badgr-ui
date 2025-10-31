@@ -76,6 +76,7 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 	issuerOwnerAcceptedTos: boolean;
 	isNetworkBadge: boolean;
 	networkImage: string;
+	networkName: string;
 	sharedOnNetwork: {
 		slug: string;
 		name: string;
@@ -106,4 +107,6 @@ export interface ApiBadgeClassNetworkShare {
 		image: string;
 	};
 	is_active: boolean;
+	awarded_count_original_issuer: number;
+	recipient_count: number;
 }

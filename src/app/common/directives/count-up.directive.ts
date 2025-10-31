@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, inject } from '@angular/core';
 import { BehaviorSubject, animationFrameScheduler, interval, combineLatest, pipe } from 'rxjs';
 import { distinctUntilChanged, endWith, map, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 import { Destroy } from './destroy';
@@ -8,6 +8,10 @@ import { Destroy } from './destroy';
 	providers: [Destroy],
 })
 export class CountUpDirective {
+	private readonly elementRef = inject(ElementRef);
+	private readonly renderer = inject(Renderer2);
+	private readonly destroy$ = inject(Destroy);
+
 	@Input('countUp')
 	set count(count: number) {
 		this.count$.next(count);
@@ -18,11 +22,10 @@ export class CountUpDirective {
 		this.duration$.next(duration);
 	}
 
-	constructor(
-		private readonly elementRef: ElementRef,
-		private readonly renderer: Renderer2,
-		private readonly destroy$: Destroy,
-	) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 	private readonly count$ = new BehaviorSubject(0);
 	private readonly duration$ = new BehaviorSubject(2000);
 

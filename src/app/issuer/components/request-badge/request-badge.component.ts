@@ -39,13 +39,17 @@ import { OebSpinnerComponent } from '~/components/oeb-spinner.component';
 	],
 })
 export class RequestBadgeComponent extends BaseRoutableComponent implements OnInit {
-	constructor(
-		private translate: TranslateService,
-		private badgeRequestApiService: BadgeRequestApiService,
-		protected publicApiService: PublicApiService,
-		router: Router,
-		route: ActivatedRoute,
-	) {
+	private translate = inject(TranslateService);
+	private badgeRequestApiService = inject(BadgeRequestApiService);
+	protected publicApiService = inject(PublicApiService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
 		this.badgeClassLoaded = this.publicApiService
 			.getBadgeClass(this.badgeSlug)

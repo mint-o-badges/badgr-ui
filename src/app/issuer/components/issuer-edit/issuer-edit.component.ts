@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -20,6 +20,13 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 	imports: [FormMessageComponent, BgBreadcrumbsComponent, HlmH1, HlmP, IssuerEditFormComponent, TranslatePipe],
 })
 export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent {
+	protected profileManager = inject(UserProfileManager);
+	protected title = inject(Title);
+	protected messageService = inject(MessageService);
+	protected configService = inject(AppConfigService);
+	protected issuerManager = inject(IssuerManager);
+	protected translate = inject(TranslateService);
+
 	issuer: Issuer;
 	issuerSlug: string;
 
@@ -27,18 +34,17 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent {
 
 	editIssuerCrumbs: LinkEntry[];
 
-	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected profileManager: UserProfileManager,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected configService: AppConfigService,
-		protected issuerManager: IssuerManager,
-		protected translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route, loginService);
+		const title = this.title;
+
 		title.setTitle(`Edit Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];

@@ -1,4 +1,4 @@
-import { Injectable, SecurityContext } from '@angular/core';
+import { Injectable, SecurityContext, inject } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
@@ -11,14 +11,27 @@ import { ApiIssuer } from '../models/issuer-api.model';
 
 @Injectable({ providedIn: 'root' })
 export class QrCodeApiService extends BaseHttpApiService {
-	constructor(
-		protected loginService: SessionService,
-		protected http: HttpClient,
-		protected configService: AppConfigService,
-		protected messageService: MessageService,
-		private sanitizer: DomSanitizer,
-	) {
+	protected loginService: SessionService;
+	protected http: HttpClient;
+	protected configService: AppConfigService;
+	protected messageService: MessageService;
+	private sanitizer = inject(DomSanitizer);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const loginService = inject(SessionService);
+		const http = inject(HttpClient);
+		const configService = inject(AppConfigService);
+		const messageService = inject(MessageService);
+
 		super(loginService, http, configService, messageService);
+
+		this.loginService = loginService;
+		this.http = http;
+		this.configService = configService;
+		this.messageService = messageService;
 	}
 
 	getQrCode(qrSlug: string) {

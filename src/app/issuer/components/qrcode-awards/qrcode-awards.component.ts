@@ -5,7 +5,6 @@ import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-hel
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { BadgeRequestApiService } from '../../services/badgerequest-api.service';
@@ -23,6 +22,7 @@ import { SvgIconComponent } from '~/common/components/svg-icon.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH3 } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
+import { ApiQRCode } from '~/issuer/models/qrcode-api.model';
 
 @Component({
 	selector: 'qrcode-awards',
@@ -36,7 +36,6 @@ import { Network } from '~/issuer/network.model';
 		BrnAccordionContent,
 		RouterModule,
 		NgClass,
-		OebSeparatorComponent,
 		OebButtonComponent,
 		OebDropdownComponent,
 		QrCodeDatatableComponent,
@@ -45,12 +44,15 @@ import { Network } from '~/issuer/network.model';
 	],
 })
 export class QrCodeAwardsComponent implements OnChanges {
-	constructor(
-		private badgeRequestApiService: BadgeRequestApiService,
-		private qrCodeApiService: QrCodeApiService,
-		private router: Router,
-		private translate: TranslateService,
-	) {}
+	private badgeRequestApiService = inject(BadgeRequestApiService);
+	private qrCodeApiService = inject(QrCodeApiService);
+	private router = inject(Router);
+	private translate = inject(TranslateService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	getSvgFillColor(int: number) {
 		if (int === 0) {
@@ -60,15 +62,13 @@ export class QrCodeAwardsComponent implements OnChanges {
 		}
 	}
 
-	@Input() awards: any[];
+	@Input() awards: ApiQRCode[];
 	@Input() routerLinkText: string[];
 	@Input() issuer: Issuer | Network;
 	@Input() badgeClass: BadgeClass;
 	@Input() defaultUnfolded: boolean | undefined = false;
 	@Input() interactive = true;
 	@Output() qrBadgeAward = new EventEmitter<number>();
-
-	requestedBadges: any[] = [];
 
 	qrCodeMenus: Array<MenuItem[]> = [];
 

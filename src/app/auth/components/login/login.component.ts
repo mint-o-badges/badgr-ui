@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EmailValidator } from '../../../common/validators/email.validator';
@@ -49,6 +49,19 @@ type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 	],
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
+	private fb = inject(FormBuilder);
+	private title = inject(Title);
+	sessionService = inject(SessionService);
+	private messageService = inject(MessageService);
+	private configService = inject(AppConfigService);
+	private queryParams = inject(QueryParametersService);
+	oAuthManager = inject(OAuthManager);
+	private profileManager = inject(UserProfileManager);
+	private userProfileApiService = inject(UserProfileApiService);
+	private sanitizer = inject(DomSanitizer);
+	private http = inject(HttpClient);
+	private translate = inject(TranslateService);
+
 	get theme() {
 		return this.configService.theme;
 	}
@@ -70,23 +83,16 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 	loginFinished: Promise<unknown>;
 	baseUrl: string;
 
-	constructor(
-		private fb: FormBuilder,
-		private title: Title,
-		public sessionService: SessionService,
-		private messageService: MessageService,
-		private configService: AppConfigService,
-		private queryParams: QueryParametersService,
-		public oAuthManager: OAuthManager,
-		private profileManager: UserProfileManager,
-		private userProfileApiService: UserProfileApiService,
-		private sanitizer: DomSanitizer,
-		private http: HttpClient,
-		router: Router,
-		route: ActivatedRoute,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
+		const title = this.title;
+
 		title.setTitle(`Login - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.handleQueryParamCases();
 		this.baseUrl = this.configService.apiConfig.baseUrl;

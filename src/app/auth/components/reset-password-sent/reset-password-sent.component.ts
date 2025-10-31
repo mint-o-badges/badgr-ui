@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -12,12 +12,16 @@ import { OAuthBannerComponent } from '../../../common/components/oauth-banner.co
 	imports: [FormMessageComponent, OAuthBannerComponent],
 })
 export class ResetPasswordSent extends BaseRoutableComponent implements OnInit {
-	constructor(
-		private sessionService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		private configService: AppConfigService,
-	) {
+	private sessionService = inject(SessionService);
+	private configService = inject(AppConfigService);
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = inject(Router);
+		const route = inject(ActivatedRoute);
+
 		super(router, route);
 	}
 

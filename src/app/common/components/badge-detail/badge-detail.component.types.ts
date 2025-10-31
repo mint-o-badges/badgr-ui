@@ -71,6 +71,8 @@ export interface PageConfig {
 	updatedAt?: Date;
 	issuedOn?: Date;
 	issuedTo?: string;
+	activity_start_date?: Date;
+	activity_end_date?: Date;
 	duration?: string;
 	category: string;
 	tags: string[];
@@ -80,6 +82,7 @@ export interface PageConfig {
 	awardingIssuers?: Issuer[];
 	networkBadge?: boolean;
 	networkImage?: string;
+	networkName?: string;
 	sharedOnNetwork?: { slug: string; name: string; image: string | null; description: string | null } | null;
 	badgeLoadingImageUrl: string;
 	badgeFailedImageUrl: string;

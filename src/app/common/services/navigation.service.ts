@@ -1,13 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
+	router = inject(Router);
+
 	currentRouteData: BadgrRouteData = {};
 	browserRefresh = false;
 
-	constructor(public router: Router) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const router = this.router;
+
 		router.events.subscribe(async (e) => {
 			if (e instanceof NavigationEnd) {
 				// Clear the navigation items when finished routing

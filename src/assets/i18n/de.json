@@ -88,7 +88,10 @@
 		"oneRequest": "1 Anfrage",
 		"multiRequests": "# Anfragen",
 		"license": "Lizenz",
-		"language": { "de": "Deutsch", "en": "Englisch" },
+		"language": {
+			"de": "Deutsch",
+			"en": "Englisch"
+		},
 		"close": "Schliessen",
 		"notification": "Benachrichtigung",
 		"validationCompleteForm": "Bitte vollständig ausfüllen",
@@ -116,7 +119,9 @@
 		"website": "Webseite",
 		"organization": "Organisation",
 		"notNow": "Jetzt nicht",
-		"notFound": "Nicht gefunden"
+		"notFound": "Nicht gefunden",
+		"start": "Start",
+		"end": "Ende"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -196,6 +201,7 @@
 		"noBadges": "Keine Badges",
 		"recipient": "Empfänger:in",
 		"recipients": "Empfänger:innen",
+		"recipientsViaThisInstitution": "Empfänger:innen <span class='tw-italic tw-font-normal'>(durch diese Institution)</span>",
 		"noRecipient": "Kein Empfänger",
 		"createInstitution": "Institution erstellen",
 		"createInstitutionNow": "Jetzt Institution erstellen",
@@ -287,7 +293,7 @@
 		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Beispiel-Vorlage.csv''>Download CSV-Beispiel-Vorlage</a>",
 		"openInExcel": "Öffne sie in Excel",
 		"fillInList": "Lösche den Beispiel-Eintrag und fülle die beiden Tabellenspalten entsprechend mit <span class='tw-font-bold'>Vor- und Nachnamen*</span> sowie <span class='tw-font-bold'>E-Mail-Adressen</span> deiner Lernenden aus.",
-		"exportAsCSV": "Exportiere die Vorlage als CSV-Datei.",
+		"exportAsCSV": "Exportiere die Vorlage als CSV-Datei (Textcodierung: Unicode (UTF-8).",
 		"uploadCSV": "Lade deine CSV-Datei hoch:",
 		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
@@ -392,7 +398,12 @@
 		"partnerBadges": "Partner-Badges",
 		"bulkInvalidEmail": "1 ungültige E-Mail-Adresse gefunden. Bitte korrigiere oder entferne die rot markierte E-Mail-Adresse.",
 		"bulkInvalidEmailsPlural": "{{count}} ungültige E-Mail-Adressen gefunden. Bitte korrigiere oder entferne die rot markierten E-Mail-Adressen.",
-		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail."
+		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail.",
+		"addOptionalDetails": "Optionale Details hinzufügen",
+		"evidence": "Nachweis für erfolgreiche Teilnahme",
+		"addNewEvidence": "Weiteren Nachweis hinzufügen",
+		"evidenceUrl": "URL zum Nachweis",
+		"evidenceNarrative": "Textliches Narrativ"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
@@ -405,6 +416,7 @@
 		"addPartnerNext": "Deine Partner-Institutionen kannst du im nächsten Schritt hinzufügen.",
 		"welcomeDashboard": "Willkommen auf dem Dashboard des Netzwerks",
 		"inviteInstitutions": "Institutionen zum Netzwerk einladen",
+		"shortInviteInstitutions": "Institutionen einladen",
 		"addInstitutions": "Institutionen hinzufügen",
 		"rolesAndRights": "<span class='tw-text-link tw-underline'>Rollen und Rechte</span> übertragen sich: Die Einladungs-Mail geht an die Eigentümer:innen der Institutionen. <span class='tw-font-bold'>Diese werden innerhalb des Netzwerks entsprechende Rechte haben wie z.B. das Erstellen von Netzwerk-Badges und das Hinzufügen weiterer Partner-Organisationen</span>.",
 		"addMember_owner": "Eigentümer:in",
@@ -428,7 +440,11 @@
 		"resendInvitation": "Einladung erneut senden",
 		"invitedOn": "Eingeladen am",
 		"yourRole": "Deine Rolle: {{role}}",
-		"role": { "owner": "Eigentümer:in", "editor": "Editor:in", "staff": "Mitarbeiter:in" },
+		"role": {
+			"owner": "Eigentümer:in",
+			"editor": "Editor:in",
+			"staff": "Mitarbeiter:in"
+		},
 		"confirmNetworkInvitation": "Bestätige die <span class='tw-font-bold'>Netzwerk-Einladung von {{networkName}}</span> für deine Institution <span class='tw-italic'>{{issuerName}}</span> mit Klick auf den Button:",
 		"partnerSince": "Netzwerk-Partner:in seit",
 		"alreadyConfirmed": "Ein anderes Mitglied von <span class='tw-italic'> {{issuerName}} hat die Netzwerk-Einladung von <span class='tw-font-bold'> {{networkName}}</span> bereits bestätigt.",
@@ -649,7 +665,9 @@
 		"subjectMatter": "Schreibe, was dein Lernangebot <u>fachlich</u> vermittelt.",
 		"howLearningWorks": "Beschreibe auch, <u>wie</u> das Lernen stattfindet.",
 		"inAddition": "Oft können neben fachlichen Kompetenzen auch <u>Soft Skills</u> wie soziale, kommunikative oder Problemlösungs-Fähigkeiten erworben werden – bei Teamarbeit, Experimentieren, Planung, ...",
-		"aiAssistantNote": "Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>E-Mail</a>. <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Datenschutz bei OEB.</a>"
+		"aiAssistantNote": "Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>E-Mail</a>. <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Datenschutz bei OEB.</a>",
+		"activityEndDateRequired": "Enddatum ist erforderlich und darf nicht vor dem Startdatum liegen",
+		"activityStartDateRequired": "Startdatum ist erforderlich"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -689,7 +707,8 @@
 		"newsletterEmail": "Wir haben dir ebenfalls eine E-Mail zur Bestätigung deiner Newsletter-Anmeldung geschickt.",
 		"confirmNewsletter": "Klicke in der Newsletter-E-Mail auf <span class ='tw-font-bold'> „Newsletter-Anmeldung bestätigen” </span>, <br> um die Newsletter-Anmeldung abzuschließen.",
 		"newsletterEmailNotReceived": "Du hast keine Newsletter-E-Mail bekommen? Bitte übermittle deine Daten über <br> unser <a class='tw-underline tw-text-purple' href='public/about/newsletter'> Newsletter-Anmelde-Formular </a> oder <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>schreib uns.</a>",
-		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Ja</span>, ich möchte auf dem Laufenden bleiben und den OEB-Newsletter abonnieren."
+		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Ja</span>, ich möchte auf dem Laufenden bleiben und den OEB-Newsletter abonnieren.",
+		"signingUp": "Registrieren..."
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
@@ -721,7 +740,8 @@
 		"newPassword": "Neues Passwort",
 		"areYouNew": "Du bist neu hier?",
 		"yourEmail": "Deine E-Mail-Adresse",
-		"yourPassword": "Dein Passwort"
+		"yourPassword": "Dein Passwort",
+		"loggingIn": "Einloggen..."
 	},
 	"Legend": {
 		"legendTitle": "Legende",
@@ -836,7 +856,9 @@
 		"shareViaLink": "Per Link:",
 		"addToLinkedInProfile": "Badge zu LinkedIn-Profil hinzufügen",
 		"shareViaLinkedIn": "Auf LinkedIn:",
-		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden."
+		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden.",
+		"courseDate": "Datum der Veranstaltung",
+		"courseDateShort": "Veranstaltungs-Datum"
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
@@ -1038,7 +1060,7 @@
 		"description": "Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.",
 		"howItWorks": "So funktioniert's:",
 		"create": "QR-Code-Vergabe erstellen für",
-		"titlePlaceholder": "Badge Vergabe Juni 2024",
+		"titlePlaceholder": "Badge Vergabe Juni 2025 in Berlin",
 		"creatorName": "Name Ersteller:in",
 		"creatorNamePlaceholder": "Mein Vorname und Nachname",
 		"expiration": "Gültigkeit des QR-Codes",
@@ -1056,7 +1078,8 @@
 		"downloadPoster": "Download QR-Code-Plakat",
 		"badgeDetailPage": "Badge Detail Seite",
 		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben",
-		"invalidDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
+		"invalidExpirationDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
+		"invalidDateRange": "Das End-Datum darf nicht vor dem Start-Datum liegen",
 		"invalidDate": "Bitte gib ein Datum in der Form YYYY/mm/dd an",
 		"missingStartDate": "Bitte gib ein Start-Datum für die Gültigkeit an",
 		"expired": "QR-Code ist nicht mehr gültig."
@@ -1081,7 +1104,11 @@
 		"continue": "Weiterlernen",
 		"finished": "Abgeschlossen",
 		"includedBadges": "Enthaltene Badges",
-		"badgeTabs": { "all": "Alle", "inprogress": "Offen", "finished": "Abgeschlossen" },
+		"badgeTabs": {
+			"all": "Alle",
+			"inprogress": "Offen",
+			"finished": "Abgeschlossen"
+		},
 		"chooseBadges": "Enthaltene Badges wählen",
 		"badgeSequenceStep": "Badge-Reihenfolge",
 		"badgeSequence": "Reihenfolge der Badges im Lernpfad",
@@ -1121,13 +1148,17 @@
 		"condition": "Du musst <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Micro Degree zu erhalten.",
 		"learningPathWithMicroDegree": "Lernpfad mit Abschluss-Badge Micro Degree",
 		"confirmDelete": "Möchtest du diesen Lernpfad wirklich löschen?",
-		"deleteMd": "Lernpfad löschen"
+		"deleteMd": "Lernpfad löschen",
+		"institution": "Institution",
+		"institutions": "Institutionen"
 	},
 	"LearningPathEditor": {
 		"shortDescriptionLine1": "Zusammenfassende Beschreibung des Lernangebots.",
 		"shortDescriptionLine2": "Diese Kurz-Beschreibung wird im Abschluss-Badge Micro Degree gespeichert."
 	},
-	"OEBComponents": { "fieldIsRequired": "Dieses Feld ist erforderlich" },
+	"OEBComponents": {
+		"fieldIsRequired": "Dieses Feld ist erforderlich"
+	},
 	"ErrorDialog": {
 		"title": "Es ist ein Fehler passiert!",
 		"message": "Unten siehst du die Fehlermeldung. Wenn du glaubst, der Fehler liegt bei uns, kannst du die Fehlermeldung kopieren und uns per Mail schicken, oder du erstellst ein Issue auf GitHub.",
@@ -1136,5 +1167,9 @@
 		"createIssue": "Zu den GitHub Issues",
 		"sendEmail": "Sende eine Mail"
 	},
-	"NounProject": { "searchIcon": "Icon suchen", "loading": "Lädt...", "noIconsFoundFor": "Kein Icon gefunden für" }
+	"NounProject": {
+		"searchIcon": "Icon suchen",
+		"loading": "Lädt...",
+		"noIconsFoundFor": "Kein Icon gefunden für"
+	}
 }

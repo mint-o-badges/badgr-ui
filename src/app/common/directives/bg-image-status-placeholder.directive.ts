@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, inject } from '@angular/core';
 
 const defaultLoadingImage = '../../../breakdown/static/images/image-placeholder.svg';
 const defaultErrorImage = '../../../breakdown/static/images/image-failed.svg';
@@ -9,6 +9,8 @@ const defaultErrorImage = '../../../breakdown/static/images/image-failed.svg';
 	exportAs: 'image-status-placeholder',
 })
 export class BgImageStatusPlaceholderDirective implements OnChanges {
+	private elemRef = inject(ElementRef);
+
 	protected get loadingSrc(): string {
 		return this.loadingSrcAttr || defaultLoadingImage;
 	}
@@ -47,7 +49,10 @@ export class BgImageStatusPlaceholderDirective implements OnChanges {
 	@Input('error-src')
 	private errorSrcAttr: string;
 
-	constructor(private elemRef: ElementRef) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
 		this.image.onload = () => this.imageLoaded();
 		this.image.onerror = () => this.imageErrored();
 	}

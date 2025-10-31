@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -34,6 +34,14 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 	],
 })
 export class ChangePasswordComponent extends BaseRoutableComponent {
+	private fb = inject(FormBuilder);
+	private title = inject(Title);
+	private sessionService = inject(SessionService);
+	private profileManager = inject(UserProfileManager);
+	protected configService = inject(AppConfigService);
+	private _messageService = inject(MessageService);
+	private translate = inject(TranslateService);
+
 	changePasswordForm = typedFormGroup()
 		.addControl('password', '', [
 			Validators.required,
@@ -62,18 +70,15 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 	passwordInsecure = this.translate.instant('Profile.passwordInsecure');
 	pleaseTryAgain = this.translate.instant('Profile.pleaseTryAgain');
 
-	constructor(
-		private fb: FormBuilder,
-		private title: Title,
-		private sessionService: SessionService,
-		private profileManager: UserProfileManager,
-		route: ActivatedRoute,
-		router: Router,
-		protected configService: AppConfigService,
-		private _messageService: MessageService,
-		private translate: TranslateService,
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const route = inject(ActivatedRoute);
+		const router = inject(Router);
+
 		super(router, route);
+		const title = this.title;
 
 		title.setTitle(`Change Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 

@@ -67,6 +67,8 @@ const COPY_NOTIF_TIMEOUT_MS: number = 3000;
 	`,
 })
 export class ShareBadgeDialogComponent implements AfterViewInit {
+	private zone = inject(NgZone);
+
 	copied: WritableSignal<boolean> = signal(false);
 	hasLinkedInIdForInstitution: WritableSignal<boolean> = signal(false);
 	private readonly _dialogContext = injectBrnDialogContext<ShareBadgeDialogContext>();
@@ -74,7 +76,10 @@ export class ShareBadgeDialogComponent implements AfterViewInit {
 	private issuer: Issuer = undefined;
 	protected readonly context = this._dialogContext;
 
-	constructor(private zone: NgZone) {}
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {}
 
 	ngAfterViewInit(): void {
 		this.context.badge.issuerManager.issuerBySlug(this.context.badge.badgeClass.issuer.slug).then((i) => {
