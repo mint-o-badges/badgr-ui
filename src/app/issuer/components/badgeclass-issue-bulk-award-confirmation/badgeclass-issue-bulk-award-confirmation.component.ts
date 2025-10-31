@@ -63,7 +63,7 @@ export class BadgeclassIssueBulkAwardConformation
 {
 	protected badgeInstanceManager = inject(BadgeInstanceManager);
 	protected badgeInstanceApiService = inject(BadgeInstanceApiService);
-	protected sessionService: SessionService;
+	protected authService: SessionService;
 	protected router: Router;
 	protected route: ActivatedRoute;
 	protected messageService = inject(MessageService);
@@ -115,7 +115,7 @@ export class BadgeclassIssueBulkAwardConformation
 
 		super(router, route, sessionService);
 
-		this.sessionService = sessionService;
+		this.authService = sessionService;
 		this.router = router;
 		this.route = route;
 	}

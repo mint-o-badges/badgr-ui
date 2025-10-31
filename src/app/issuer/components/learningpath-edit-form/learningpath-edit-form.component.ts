@@ -11,10 +11,10 @@ import {
 	ViewChild,
 	OnChanges,
 	AfterViewInit,
+	Inject,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
-import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
@@ -38,7 +38,7 @@ import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { StringMatchingUtil } from '~/common/util/string-matching-util';
-import { ApiBadgeClassForCreation, BadgeClassCategory } from '~/issuer/models/badgeclass-api.model';
+import { ApiBadgeClassForCreation } from '~/issuer/models/badgeclass-api.model';
 import { base64ByteSize } from '~/common/util/file-util';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '~/common/components/formfield-image';
@@ -59,6 +59,8 @@ import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { UpperCasePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
+import { Network } from '~/issuer/network.model';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
@@ -99,7 +101,7 @@ export class LearningPathEditFormComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, OnChanges, AfterViewInit
 {
-	protected loginService: SessionService;
+	protected loginService: AuthenticationService;
 	protected messageService = inject(MessageService);
 	protected learningPathApiService = inject(LearningPathApiService);
 	protected issuerManager = inject(IssuerManager);
@@ -182,8 +184,8 @@ export class LearningPathEditFormComponent
 	focusActivation = false;
 	hasScrolled = false;
 
-	issuer: Issuer;
-	issuerLoaded: Promise<unknown>;
+	@Input()
+	issuer: Issuer | Network;
 
 	isCustomImageLarge = false;
 	maxCustomImageSize = 1024 * 250;
@@ -225,17 +227,15 @@ export class LearningPathEditFormComponent
 
 	selectMinBadgesOptions: FormFieldSelectOption[] = [];
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
 		super();
-		this.loginService = inject(SessionService);
+		this.loginService = inject(AUTH_PROVIDER);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
-		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
-			this.issuer = issuer;
-			this.badgesLoaded = this.loadBadges();
-		});
+		if (!this.issuer)
+			this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+				this.issuer = issuer;
+			});
+		this.badgesLoaded = this.loadBadges();
 	}
 	next: string;
 	previous: string;
@@ -617,8 +617,8 @@ export class LearningPathEditFormComponent
 			});
 	}
 
-	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
-	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+	readonly badgeLoadingImageUrl = 'breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = 'breakdown/static/images/badge-failed.svg';
 
 	/**
 	 * Indicates wether the existing tags are currently being loaded.
