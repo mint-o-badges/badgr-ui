@@ -18,17 +18,17 @@
 		} @else if (network().badgeClassCount >= 2) {
 			<p class="tw-text-oebblack tw-text-lg tw-mb-4">{{ 'Network.noLpsYet' | translate }}</p>
 			<oeb-button
-				[width]="'min_lg'"
+				[width]="'min_320'"
 				[text]="'Network.createLp' | translate"
 				[routerLink]="[`/issuer/issuers/${network().slug}/learningpaths/create/`]"
 			></oeb-button>
 		} @else {
 			<p class="tw-italic tw-text-purple tw-text-lg tw-mb-4" [innerHTML]="'Network.createLpInfo' | translate"></p>
 			<section class="tw-gap-2 tw-flex tw-flex-col">
-				<oeb-button [width]="'min_lg'" [text]="'Network.createBadge' | translate"> </oeb-button>
+				<oeb-button [width]="'min_320'" [text]="'Network.createBadge' | translate"> </oeb-button>
 				<oeb-button
 					variant="secondary"
-					[width]="'min_lg'"
+					[width]="'min_320'"
 					[weight]="'normal'"
 					[text]="'Badge.shareBadgeOnNetwork' | translate"
 					[routerLink]="['/issuer/issuers']"
