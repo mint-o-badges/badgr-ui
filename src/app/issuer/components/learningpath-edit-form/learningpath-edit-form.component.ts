@@ -234,8 +234,9 @@ export class LearningPathEditFormComponent
 		if (!this.issuer)
 			this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 				this.issuer = issuer;
+				this.badgesLoaded = this.loadBadges();
 			});
-		this.badgesLoaded = this.loadBadges();
+		else this.badgesLoaded = this.loadBadges();
 	}
 	next: string;
 	previous: string;
