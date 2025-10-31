@@ -450,6 +450,8 @@
 		"alreadyConfirmed": "Ein anderes Mitglied von <span class='tw-italic'> {{issuerName}} hat die Netzwerk-Einladung von <span class='tw-font-bold'> {{networkName}}</span> bereits bestätigt.",
 		"view": "Netzwerk ansehen",
 		"createBadge": "Netzwerk-Badge erstellen",
+		"createLp": "Netzwerk-Lernpfad erstellen",
+		"noLpsYet": "Es gibt noch keine Netzwerk-Lernpfade.",
 		"awardBadgeIssuer": "Über welche deiner <span class='tw-font-bold'>Institutionen</span> soll der Badge vergeben werden?",
 		"networkBadges": "Netzwerk-Badges",
 		"noPartnerBadgesYet": "Bisher hat keine Partner-Institution einen Badge für das Netzwerk freigegeben.",
@@ -458,7 +460,8 @@
 		"noBadgesYet": "Das Netzwerk <span class='tw-font-semibold'>{{network}}</span> hat noch keine eigenen Badges erstellt.",
 		"sharedBy": "Freigegeben von",
 		"sharedOn": "Freigegeben am",
-		"website": "Netzwerk-Webseite"
+		"website": "Netzwerk-Webseite",
+		"createLpInfo": "Um einen <span class='tw-font-bold'>Netzwerk-Lernpfad</span> anlegen zu können, müssen mindestens zwei Badges im Netzwerk erstellt oder von Partner-Institutionen für das Netzwerk freigegeben werden."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

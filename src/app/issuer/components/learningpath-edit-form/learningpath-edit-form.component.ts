@@ -13,7 +13,7 @@ import {
 	AfterViewInit,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
+import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors, FormControl } from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
@@ -38,7 +38,11 @@ import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { StringMatchingUtil } from '~/common/util/string-matching-util';
-import { ApiBadgeClassForCreation, BadgeClassCategory } from '~/issuer/models/badgeclass-api.model';
+import {
+	ApiBadgeClassForCreation,
+	ApiBadgeClassNetworkShare,
+	BadgeClassCategory,
+} from '~/issuer/models/badgeclass-api.model';
 import { base64ByteSize } from '~/common/util/file-util';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '~/common/components/formfield-image';
@@ -59,6 +63,10 @@ import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { UpperCasePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
+import { NetworkApiService } from '~/issuer/services/network-api.service';
+import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
@@ -93,6 +101,8 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		OebCheckboxComponent,
 		BgImageStatusPlaceholderDirective,
 		UpperCasePipe,
+		NgIcon,
+		HlmIcon,
 	],
 })
 export class LearningPathEditFormComponent
@@ -104,8 +114,10 @@ export class LearningPathEditFormComponent
 	protected learningPathApiService = inject(LearningPathApiService);
 	protected issuerManager = inject(IssuerManager);
 	protected issuerApiService = inject(IssuerApiService);
+	protected networkApiService = inject(NetworkApiService);
 	protected badgeClassService = inject(BadgeClassManager);
 	protected badgeClassApiService = inject(BadgeClassApiService);
+	protected entityManager = inject(CommonEntityManager);
 	private translate = inject(TranslateService);
 	protected badgeInstanceManager = inject(BadgeInstanceManager);
 	protected learningPathManager = inject(LearningPathManager);
@@ -206,6 +218,9 @@ export class LearningPathEditFormComponent
 	badgeResults: BadgeResult[] = null;
 	badgesFormArray: any;
 
+	badgeResultsByCategory: MatchingBadgeCategory[] = [];
+	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
+
 	selectedTag: string = null;
 	order = 'asc';
 	private _searchQuery = '';
@@ -217,6 +232,38 @@ export class LearningPathEditFormComponent
 		this.updateResults();
 	}
 
+	private _groupBy = '---';
+	get groupBy() {
+		return this._groupBy;
+	}
+	set groupBy(val: string) {
+		this._groupBy = val;
+		this.updateResults();
+	}
+
+	groupControl = new FormControl('---');
+	groupOptions = [
+		{
+			label: 'Badge.groupBy',
+			value: '---',
+		},
+		{
+			label: 'Badge.category',
+			value: 'Category',
+		},
+		{
+			label: 'Badge.issuer',
+			value: 'Issuer',
+		},
+	];
+
+	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
+		competency: '',
+		participation: '',
+		learningpath: '',
+		noCategory: '',
+	};
+
 	get imageFieldDirty() {
 		return (
 			this.learningPathForm.controls.badge_image.dirty || this.learningPathForm.controls.badge_customImage.dirty
@@ -225,15 +272,15 @@ export class LearningPathEditFormComponent
 
 	selectMinBadgesOptions: FormFieldSelectOption[] = [];
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
 		super();
 		this.loginService = inject(SessionService);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
+			if (issuer.is_network) {
+				this.learningPathForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
+			}
 			this.badgesLoaded = this.loadBadges();
 		});
 	}
@@ -270,14 +317,13 @@ export class LearningPathEditFormComponent
 	}
 
 	ngOnInit() {
+		this.groupControl.valueChanges.subscribe((value) => {
+			this.groupBy = value;
+		});
 		this.fetchTags();
 		if (!this.initialisedLearningpath) {
 			this.learningPathForm.controls.license.addFromTemplate();
 		}
-
-		// if (this.issuer.is_network) {
-		// 	this.learningPathForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
-		// }
 
 		this.draggableList = this.selectedBadges.map((badge, index) => {
 			return {
@@ -559,7 +605,23 @@ export class LearningPathEditFormComponent
 
 			const issuerBadges = badgesByIssuer[this.issuer.issuerUrl] || [];
 
-			this.badges = issuerBadges
+			let sharedBadges: ApiBadgeClassNetworkShare[] = [];
+			if (this.issuer.is_network) {
+				try {
+					const networkSlug = this.issuer.slug;
+					sharedBadges = await this.networkApiService.getNetworkSharedBadges(networkSlug);
+				} catch (e) {
+					console.warn('Failed to load network shared badges', e);
+					sharedBadges = [];
+				}
+			}
+
+			const sharedBadgeClasses: BadgeClass[] = sharedBadges.map((shared) => {
+				const badge = new BadgeClass(this.entityManager, shared.badgeclass);
+				return badge;
+			});
+
+			this.badges = [...issuerBadges, ...sharedBadgeClasses]
 				.filter(
 					(b) =>
 						b.extension['extensions:StudyLoadExtension'].StudyLoad > 0 &&
@@ -600,20 +662,71 @@ export class LearningPathEditFormComponent
 		this.order = order;
 		if (this.order === 'asc') {
 			this.badgeResults.sort((a, b) => a.name.localeCompare(b.name));
+			this.badgeResultsByIssuer
+				.sort((a, b) => a.issuerName.localeCompare(b.issuerName))
+				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
+			this.badgeResultsByCategory
+				.sort((a, b) => a.category.localeCompare(b.category))
+				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
 		} else {
 			this.badgeResults.sort((a, b) => b.name.localeCompare(a.name));
+			this.badgeResultsByIssuer
+				.sort((a, b) => b.issuerName.localeCompare(a.issuerName))
+				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
+			this.badgeResultsByCategory
+				.sort((a, b) => b.category.localeCompare(a.category))
+				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
 		}
 	}
 
 	private updateResults() {
+		// eslint-disable-next-line @typescript-eslint/no-this-alias
+		let that = this;
 		// Clear Results
 		this.badgeResults = [];
+		this.badgeResultsByIssuer = [];
+		const badgeResultsByIssuerLocal = {};
+		this.badgeResultsByCategory = [];
+		const badgeResultsByCategoryLocal = {};
+		var addBadgeToResultsByIssuer = function (item) {
+			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
+			if (!issuerResults) {
+				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
+					item.issuerName,
+					'',
+				);
+				// append result to the issuerResults array bound to the view template.
+				that.badgeResultsByIssuer.push(issuerResults);
+			}
+			issuerResults.addBadge(item);
+			return true;
+		};
+
+		var addBadgeToResultsByCategory = (item) => {
+			let itemCategory =
+				item.extension && item.extension['extensions:CategoryExtension']
+					? item.extension['extensions:CategoryExtension'].Category
+					: 'noCategory';
+			let categoryResults = badgeResultsByCategoryLocal[itemCategory];
+			if (!categoryResults) {
+				categoryResults = badgeResultsByCategoryLocal[itemCategory] = new MatchingBadgeCategory(
+					itemCategory,
+					'',
+				);
+				// append result to the categoryResults array bound to the view template.
+				this.badgeResultsByCategory.push(categoryResults);
+			}
+			categoryResults.addBadge(item);
+			return true;
+		};
 		this.badges
 			.filter(this.badgeMatcher(this.searchQuery))
 			.filter(this.badgeTagMatcher(this.selectedTag))
 			.filter((i) => !i.apiModel.source_url)
 			.forEach((item) => {
 				this.badgeResults.push(item);
+				addBadgeToResultsByIssuer(item);
+				addBadgeToResultsByCategory(item);
 			});
 	}
 
@@ -900,5 +1013,43 @@ export class LearningPathEditFormComponent
 		return this.selectedBadges.length >= 2
 			? null
 			: { minSelectedBadges: { required: 2, actual: this.selectedBadges.length } };
+	}
+}
+
+class MatchingBadgeCategory {
+	constructor(
+		public category: string,
+		public badge,
+		public badges: BadgeClass[] = [],
+	) {}
+	async addBadge(badge) {
+		if (
+			badge.extension &&
+			badge.extension['extensions:CategoryExtension'] &&
+			badge.extension['extensions:CategoryExtension'].Category === this.category
+		) {
+			if (this.badges.indexOf(badge) < 0) {
+				this.badges.push(badge);
+			}
+		} else if (!badge.extension['extensions:CategoryExtension'] && this.category == 'noCategory') {
+			if (this.badges.indexOf(badge) < 0) {
+				this.badges.push(badge);
+			}
+		}
+	}
+}
+
+class MatchingBadgeIssuer {
+	constructor(
+		public issuerName: string,
+		public badge,
+		public badges: BadgeClass[] = [],
+	) {}
+	async addBadge(badge) {
+		if (badge.issuerName === this.issuerName) {
+			if (this.badges.indexOf(badge) < 0) {
+				this.badges.push(badge);
+			}
+		}
 	}
 }

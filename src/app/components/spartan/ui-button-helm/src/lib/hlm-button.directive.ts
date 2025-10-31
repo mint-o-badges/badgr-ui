@@ -15,8 +15,7 @@ export const buttonVariants = cva(
 				red: 'tw-bg-red tw-text-white hover:tw-bg-red-300 tw-border-solid tw-border-red hover:tw-border-red-300',
 				secondary:
 					'tw-bg-white tw-text-purple hover:tw-bg-buttonhover tw-border-solid tw-border-purple hover:tw-text-white',
-				blackborder:
-					'tw-bg-white tw-text-oebblack tw-font-medium hover:tw-bg-lightpurple tw-border-solid tw-border-black',
+				blackborder: 'tw-bg-white tw-text-oebblack hover:tw-bg-lightpurple tw-border-solid tw-border-black',
 				yellow: 'tw-bg-yellow tw-text-purple hover:tw-bg-yellow hover:tw-text-purple tw-border-solid tw-border-yellow',
 				link: 'tw-underline-offset-4 tw-underline tw-text-link',
 				green: 'tw-bg-green tw-font-bold tw-text-purple tw-border-solid tw-border-purple hover:tw-bg-green-400 tw-border-solid tw-border-green hover:tw-border-green-400',
