@@ -13,7 +13,7 @@ import {
 	AfterViewInit,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
+import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors, FormControl } from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
@@ -65,6 +65,8 @@ import { UpperCasePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { NetworkApiService } from '~/issuer/services/network-api.service';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
@@ -99,6 +101,8 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		OebCheckboxComponent,
 		BgImageStatusPlaceholderDirective,
 		UpperCasePipe,
+		NgIcon,
+		HlmIcon,
 	],
 })
 export class LearningPathEditFormComponent
@@ -237,7 +241,22 @@ export class LearningPathEditFormComponent
 		this.updateResults();
 	}
 
-	groups: string[] = [];
+	groupControl = new FormControl('---');
+	groupOptions = [
+		{
+			label: 'Badge.groupBy',
+			value: '---',
+		},
+		{
+			label: 'Badge.category',
+			value: 'Category',
+		},
+		{
+			label: 'Badge.issuer',
+			value: 'Issuer',
+		},
+	];
+
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		competency: '',
 		participation: '',
@@ -251,14 +270,7 @@ export class LearningPathEditFormComponent
 		);
 	}
 
-	// getIssuerDisplayName(badge: BadgeClass): string {
-	// 	return (badge as any)._sharedIssuerName || badge.issuerName;
-	// }
-
 	selectMinBadgesOptions: FormFieldSelectOption[] = [];
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {
 		super();
@@ -305,8 +317,9 @@ export class LearningPathEditFormComponent
 	}
 
 	ngOnInit() {
-		this.groups[0] = this.translate.instant('Badge.category');
-		this.groups[1] = this.translate.instant('General.institution');
+		this.groupControl.valueChanges.subscribe((value) => {
+			this.groupBy = value;
+		});
 		this.fetchTags();
 		if (!this.initialisedLearningpath) {
 			this.learningPathForm.controls.license.addFromTemplate();
