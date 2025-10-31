@@ -29,4 +29,12 @@ export class NetworkLearningPathsComponent implements OnInit {
 				this.networkLearningPaths = lps;
 			});
 	}
+
+	calculateStudyLoad(lp: ApiLearningPath): number {
+		const totalStudyLoad = lp.badges.reduce(
+			(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
+			0,
+		);
+		return totalStudyLoad;
+	}
 }
