@@ -42,7 +42,6 @@ export class OebButtonComponent implements OnInit, OnDestroy {
 	readonly size = input<ButtonVariants['size']>('default');
 	readonly weight = input<ButtonVariants['weight']>('bold');
 	readonly width = input<ButtonVariants['width']>('default');
-	readonly weight = input<ButtonVariants['weight']>('bold');
 	readonly disabled = input<boolean>(false);
 	readonly text = input<string>();
 	readonly img = input<string>();
