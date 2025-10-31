@@ -184,26 +184,136 @@
 								</div>
 							</div>
 
-							<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
-								@for (badge of badgeResults; track badge; let i = $index) {
-									<bg-badgecard
-										[badgeTitle]="badge.name"
-										[badgeImage]="badge.image"
-										[badgeDescription]="badge.description"
-										[badgeSlug]="badge.slug"
-										[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-										[badgeIssueDate]="badge.createdAt"
-										[public]="true"
-										[publicUrl]="badge.url"
-										[issuerSlug]="badge.issuerSlug"
-										[competencies]="badge.extension['extensions:CompetencyExtension']"
-										(ngModelChange)="checkboxChange($event, badge)"
-										(checkboxChange)="checkboxChange($event, badge)"
-										[checked]="badgeChecked(badge)"
-										[showCheckbox]="true"
-									></bg-badgecard>
-								}
+							<div class="l-actionbar-x-groupby">
+								<label class="l-flex l-flex-2x">
+									<div class="forminput">
+										<div class="forminput-x-inputs">
+											<select
+												[(ngModel)]="groupBy"
+												#selectInput
+												class="border tw-font-normal"
+												[ngClass]="{ 'tw-font-bold!': groupBy !== '---' }"
+												[ngModelOptions]="{ standalone: true }"
+												id="badge-catalog-select"
+											>
+												<option [ngValue]="'---'">{{ 'Badge.groupBy' | translate }}</option>
+												@for (option of groups; track option) {
+													<option [value]="option">
+														{{ option }}
+													</option>
+												}
+											</select>
+										</div>
+									</div>
+								</label>
 							</div>
+							@if (groupBy === '---') {
+								<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
+									@for (badge of badgeResults; track badge; let i = $index) {
+										<bg-badgecard
+											[badgeTitle]="badge.name"
+											[badgeImage]="badge.image"
+											[badgeDescription]="badge.description"
+											[badgeSlug]="badge.slug"
+											[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
+											[badgeIssueDate]="badge.createdAt"
+											[public]="true"
+											[publicUrl]="badge.url"
+											[issuerSlug]="badge.issuerSlug"
+											[competencies]="badge.extension['extensions:CompetencyExtension']"
+											(ngModelChange)="checkboxChange($event, badge)"
+											(checkboxChange)="checkboxChange($event, badge)"
+											[checked]="badgeChecked(badge)"
+											[showCheckbox]="true"
+										></bg-badgecard>
+									}
+								</div>
+							}
+
+							@if (groupBy === '---') {
+								<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
+									@for (badge of badgeResults; track badge; let i = $index) {
+										<bg-badgecard
+											[badgeTitle]="badge.name"
+											[badgeImage]="badge.image"
+											[badgeDescription]="badge.description"
+											[badgeSlug]="badge.slug"
+											[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
+											[badgeIssueDate]="badge.createdAt"
+											[public]="true"
+											[publicUrl]="badge.url"
+											[issuerSlug]="badge.issuerSlug"
+											[competencies]="badge.extension['extensions:CompetencyExtension']"
+											(ngModelChange)="checkboxChange($event, badge)"
+											(checkboxChange)="checkboxChange($event, badge)"
+											[checked]="badgeChecked(badge)"
+											[showCheckbox]="true"
+										></bg-badgecard>
+									}
+								</div>
+							}
+							@if (groupBy === 'Kategorie' || groupBy === 'Category') {
+								@for (categoryGroup of badgeResultsByCategory; track categoryGroup) {
+									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+										{{ categoryOptions[categoryGroup.category] }}
+										<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+											>{{ categoryGroup.badges.length }}
+											{{ categoryGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
+										>
+									</h3>
+									<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6">
+										<!-- TODO: Fix the badgecard link for sharing and routing -->
+										@for (badge of categoryGroup.badges; track badge) {
+											<bg-badgecard
+												[badgeTitle]="badge.name"
+												[badgeImage]="badge.image"
+												[badgeDescription]="badge.description"
+												[badgeSlug]="badge.slug"
+												[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
+												[badgeIssueDate]="badge.createdAt"
+												[public]="true"
+												[publicUrl]="badge.url"
+												[competencies]="badge.extension['extensions:CompetencyExtension']"
+												[showCheckbox]="true"
+												(ngModelChange)="checkboxChange($event, badge)"
+												(checkboxChange)="checkboxChange($event, badge)"
+												[checked]="badgeChecked(badge)"
+											></bg-badgecard>
+										}
+									</div>
+								}
+							}
+							@if (groupBy === 'Issuer' || groupBy === 'Institution') {
+								@for (issuerGroup of badgeResultsByIssuer; track issuerGroup) {
+									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+										{{ issuerGroup.issuerName }}
+										<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+											>{{ issuerGroup.badges.length }}
+											{{ issuerGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
+										>
+									</h3>
+									<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
+										<!-- TODO: Fix the badgecard link for sharing and routing -->
+										@for (badge of issuerGroup.badges; track badge) {
+											<bg-badgecard
+												[badgeTitle]="badge.name"
+												[badgeImage]="badge.image"
+												[badgeDescription]="badge.description"
+												[badgeSlug]="badge.slug"
+												[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
+												[badgeIssueDate]="badge.createdAt"
+												[public]="true"
+												[publicUrl]="badge.url"
+												[competencies]="badge.extension['extensions:CompetencyExtension']"
+												[showCheckbox]="true"
+												(ngModelChange)="checkboxChange($event, badge)"
+												(checkboxChange)="checkboxChange($event, badge)"
+												[checked]="badgeChecked(badge)"
+											></bg-badgecard>
+										}
+									</div>
+								}
+							}
 							@if (selectedBadges.length === 1) {
 								<p class="tw-mt-6">
 									{{ 'LearningPath.selectedBadgesOne' | translate }}
