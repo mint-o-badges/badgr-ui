@@ -197,8 +197,8 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	],
 })
 export class BgBadgecard {
-	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
-	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+	readonly badgeLoadingImageUrl = 'breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = 'breakdown/static/images/badge-failed.svg';
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
 	@Input() publicUrl: string;

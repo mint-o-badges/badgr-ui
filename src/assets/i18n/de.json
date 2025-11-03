@@ -666,6 +666,7 @@
 		"howLearningWorks": "Beschreibe auch, <u>wie</u> das Lernen stattfindet.",
 		"inAddition": "Oft können neben fachlichen Kompetenzen auch <u>Soft Skills</u> wie soziale, kommunikative oder Problemlösungs-Fähigkeiten erworben werden – bei Teamarbeit, Experimentieren, Planung, ...",
 		"aiAssistantNote": "Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>E-Mail</a>. <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Datenschutz bei OEB.</a>",
+		"successfullyCreated": "Badge erfolgreich erstellt!",
 		"activityEndDateRequired": "Enddatum ist erforderlich und darf nicht vor dem Startdatum liegen",
 		"activityStartDateRequired": "Startdatum ist erforderlich"
 	},
@@ -1018,7 +1019,8 @@
 		"pleaseRenewPassword": "Deshalb bitten wir dich, dein Passwort zu erneuern.",
 		"pleaseRenewPasswordInfo": "Dauert nur kurz und sorgt für mehr Schutz.",
 		"dontPanic": "Keine Panik – alles ist in Ordnung!",
-		"repeatNewpassword": "Passwort wiederholen"
+		"repeatNewpassword": "Passwort wiederholen",
+		"loggingIn": "Einloggen ..."
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
