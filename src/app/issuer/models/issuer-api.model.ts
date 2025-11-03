@@ -32,12 +32,12 @@ export interface ApiBaseIssuer {
 	country?: string;
 	state?: string;
 	linkedinId: string;
+	badgeClassCount: number;
 }
 
 export interface ApiIssuer extends ApiBaseIssuer {
 	is_network: false;
 
-	badgeClassCount: number;
 	learningPathCount: number;
 	verified: boolean;
 	intendedUseVerified: boolean;
@@ -63,6 +63,7 @@ export interface ApiNetwork extends ApiBaseIssuer {
 	is_network: true;
 	partner_issuers: ApiIssuer[];
 	current_user_network_role: IssuerStaffRoleSlug | null;
+	learningPathCount: number;
 }
 
 export type ApiAnyIssuer = ApiIssuer | ApiNetwork;

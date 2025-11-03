@@ -38,9 +38,11 @@ import { AddInstitutionComponent } from '../add-institution/add-institution.comp
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 import { NetworkBadgesComponent } from '../network-badges/network-badges.component';
+import { NetworkLearningPathsComponent } from '../network-learningpaths/network-learningpaths.component';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { RouterLink } from '@angular/router';
 import { Network } from '~/issuer/network.model';
+import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
 @Component({
 	selector: 'network-dashboard',
 	templateUrl: './network-dashboard.component.html',
@@ -57,6 +59,7 @@ import { Network } from '~/issuer/network.model';
 		AddInstitutionComponent,
 		BgBreadcrumbsComponent,
 		NetworkBadgesComponent,
+		NetworkLearningPathsComponent,
 		RouterLink,
 		NgClass,
 	],
@@ -90,12 +93,14 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	issuerSearchResults = [];
 
 	rightsAndRolesExpanded = false;
+	networkBadges: ApiBadgeClass[] = [];
 
 	private _networkStaffRoleOptions: FormFieldSelectOption[];
 
 	@ViewChild('overviewTemplate', { static: true }) overviewTemplate: ElementRef;
 	@ViewChild('partnerTemplate', { static: true }) partnerTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
+	@ViewChild('learningPathsTemplate', { static: true }) learningPathsTemplate: ElementRef;
 
 	@ViewChild('headerTemplate')
 	headerTemplate: TemplateRef<void>;
@@ -166,6 +171,11 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 				key: 'badges',
 				title: 'Badges',
 				component: this.badgesTemplate,
+			},
+			{
+				key: 'learningpaths',
+				title: 'General.learningPaths',
+				component: this.learningPathsTemplate,
 			},
 		];
 	}

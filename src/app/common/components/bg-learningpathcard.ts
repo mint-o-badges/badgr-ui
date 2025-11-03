@@ -17,7 +17,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 		class: 'tw-rounded-[10px] tw-h-full tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
-		<a [routerLink]="['/public/learningpaths/', slug]">
+		<a [routerLink]="routePath">
 			<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
 				<div
 					class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative tw-h-[175px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]"
@@ -148,7 +148,6 @@ export class BgLearningPathCard {
 
 	@Input() slug: string;
 	@Input() issuerSlug: string;
-	@Input() publicUrl: string;
 	@Input() badgeImage: string;
 	@Input() name: string;
 	@Input() description: string;
@@ -156,7 +155,7 @@ export class BgLearningPathCard {
 	@Input() badgeClass: string;
 	@Input() issuerTitle: string;
 	@Input() tags: string[];
-	@Input() public: boolean = false;
+	@Input() public = true;
 	@Input() studyLoad: number;
 	@Input() completed: boolean = false;
 	@Input() requested: boolean = false;
@@ -197,5 +196,12 @@ export class BgLearningPathCard {
 			return 0;
 		}
 		return Math.floor(((this.progress ?? 0) / this.studyLoad) * 100);
+	}
+
+	get routePath(): any[] {
+		if (!this.public && this.issuerSlug) {
+			return ['/issuer/issuers/', this.issuerSlug, 'learningpaths', this.slug];
+		}
+		return ['/public/learningpaths/', this.slug];
 	}
 }
