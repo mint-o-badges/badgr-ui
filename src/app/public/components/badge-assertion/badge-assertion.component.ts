@@ -189,8 +189,10 @@ export class PublicBadgeAssertionComponent {
 				this.assertionId = paramValue;
 				const service: PublicApiService = this.injector.get(PublicApiService);
 				const assertion = await service.getBadgeAssertion(paramValue);
-				const issuer = await this.issuerManager.issuerBySlug(assertion.badge.issuer.slug);
-				this.awardingIssuers = [issuer];
+				if (this.sessionService.isLoggedIn) {
+					const issuer = await this.issuerManager.issuerBySlug(assertion.badge.issuer.slug);
+					this.awardingIssuers = [issuer];
+				}
 				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug);
 
 				const assertionVersion =
