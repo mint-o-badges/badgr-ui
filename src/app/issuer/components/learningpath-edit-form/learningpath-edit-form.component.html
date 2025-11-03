@@ -217,7 +217,7 @@
 									}
 								</div>
 							}
-							@if (groupBy === 'Kategorie' || groupBy === 'Category') {
+							@if (groupBy === 'Category') {
 								@for (categoryGroup of badgeResultsByCategory; track categoryGroup) {
 									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 										{{ categoryOptions[categoryGroup.category] }}
@@ -227,7 +227,6 @@
 										>
 									</h3>
 									<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6">
-										<!-- TODO: Fix the badgecard link for sharing and routing -->
 										@for (badge of categoryGroup.badges; track badge) {
 											<bg-badgecard
 												[badgeTitle]="badge.name"
@@ -248,7 +247,7 @@
 									</div>
 								}
 							}
-							@if (groupBy === 'Issuer' || groupBy === 'Institution') {
+							@if (groupBy === 'Issuer') {
 								@for (issuerGroup of badgeResultsByIssuer; track issuerGroup) {
 									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 										{{ issuerGroup.issuerName }}
@@ -258,7 +257,6 @@
 										>
 									</h3>
 									<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
-										<!-- TODO: Fix the badgecard link for sharing and routing -->
 										@for (badge of issuerGroup.badges; track badge) {
 											<bg-badgecard
 												[badgeTitle]="badge.name"

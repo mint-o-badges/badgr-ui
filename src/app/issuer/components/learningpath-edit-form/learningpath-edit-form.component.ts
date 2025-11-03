@@ -232,16 +232,16 @@ export class LearningPathEditFormComponent
 		this.updateResults();
 	}
 
-	private _groupBy = '---';
+	private _groupBy: '---' | 'Category' | 'Issuer' = '---';
 	get groupBy() {
 		return this._groupBy;
 	}
-	set groupBy(val: string) {
+	set groupBy(val: typeof this._groupBy) {
 		this._groupBy = val;
 		this.updateResults();
 	}
 
-	groupControl = new FormControl('---');
+	groupControl = new FormControl<typeof this._groupBy>('---');
 	groupOptions = [
 		{
 			label: 'Badge.groupBy',
