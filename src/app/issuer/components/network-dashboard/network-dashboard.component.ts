@@ -42,6 +42,7 @@ import { NetworkLearningPathsComponent } from '../network-learningpaths/network-
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { RouterLink } from '@angular/router';
 import { Network } from '~/issuer/network.model';
+import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
 @Component({
 	selector: 'network-dashboard',
 	templateUrl: './network-dashboard.component.html',
@@ -92,6 +93,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	issuerSearchResults = [];
 
 	rightsAndRolesExpanded = false;
+	networkBadges: ApiBadgeClass[] = [];
 
 	private _networkStaffRoleOptions: FormFieldSelectOption[];
 

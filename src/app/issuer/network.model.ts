@@ -80,6 +80,23 @@ export class Network extends ManagedEntity<ApiNetwork, IssuerRef> {
 		return filteredBadges.length;
 	}
 
+	get learningpathCount(): number {
+		const lps = this.commonManager.learningpathManager.learningPathList;
+
+		if (!lps.loaded) {
+			return this.apiModel.learningPathCount;
+		}
+
+		const filteredLps = lps.entities?.filter((lp) => lp.issuer_id === this.slug) || [];
+
+		// If no lps found but API says there should be some, use API value
+		if (filteredLps.length === 0 && this.apiModel.learningPathCount > 0) {
+			return this.apiModel.learningPathCount;
+		}
+
+		return filteredLps.length;
+	}
+
 	get is_network(): boolean {
 		return true;
 	}

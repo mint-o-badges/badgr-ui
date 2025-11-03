@@ -32,25 +32,33 @@
 					<div class="tw-ml-auto">
 						@switch (activeTab) {
 							@case ('badges') {
-								<oeb-button
-									variant="secondary"
-									[text]="'Network.createBadge' | translate"
-									[routerLink]="['/issuer/issuers', network().slug, 'badges/select']"
-								>
-								</oeb-button>
+								@if (network().badgeClassCount) {
+									<oeb-button
+										variant="secondary"
+										[text]="'Network.createBadge' | translate"
+										[routerLink]="[`/issuer/issuers/${network().slug}/badges/select`]"
+									>
+									</oeb-button>
+								}
 							}
 							@case ('learningpaths') {
-								<oeb-button
-									variant="secondary"
-									[text]="'Network.createLp' | translate"
-									[routerLink]="[`/issuer/issuers/${network().slug}/learningpaths/create/`]"
-								>
-								</oeb-button>
+								@if (network().learningpathCount) {
+									<oeb-button
+										variant="secondary"
+										[text]="'Network.createLp' | translate"
+										[routerLink]="[`/issuer/issuers/${network().slug}/learningpaths/create/`]"
+									>
+									</oeb-button>
+								}
 							}
 						}
 					</div>
 				}
-				@if (activeTab === 'partners' && network().current_user_network_role !== 'staff') {
+				@if (
+					activeTab === 'partners' &&
+					network().current_user_network_role !== 'staff' &&
+					networkInvites().length
+				) {
 					<div class="tw-ml-auto">
 						<oeb-button
 							[text]="'Network.shortInviteInstitutions' | translate"
