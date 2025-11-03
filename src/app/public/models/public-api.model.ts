@@ -88,6 +88,9 @@ export interface PublicApiBadgeClass {
 	badge?: any;
 	copy_permissions?: BadgeClassCopyPermissions[];
 	awardCriteria?: Array<{ name: string; description: string }>;
+	isNetworkBadge: boolean;
+	networkImage: string;
+	networkName: string;
 }
 export interface PublicApiBadgeClassWithIssuer extends PublicApiBadgeClass {
 	issuer: PublicApiIssuer;

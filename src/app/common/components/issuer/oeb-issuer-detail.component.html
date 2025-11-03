@@ -212,7 +212,7 @@
 	></oeb-tabs>
 
 	<ng-template #badgesTemplate>
-		@if (env.networksEnabled) {
+		@if (env.networksEnabled && !public) {
 			<div class="tw-mt-12">
 				<oeb-tabs
 					[variant]="'bluebackground'"
@@ -225,7 +225,6 @@
 				</oeb-tabs>
 			</div>
 		}
-
 		@switch (activeTabBadgeTemplate) {
 			@case ('issuer-badges') {
 				<ng-container *ngTemplateOutlet="issuerBadgesTemplate"></ng-container>
@@ -394,8 +393,8 @@
 			</div>
 		}
 		@if (networkBadgeInstanceResults.length) {
-			<div class="tw-mt-12 tw-bg-[#F8F6FC]">
-				<div class="tw-px-2 tw-py-4 tw-flex tw-gap-1 tw-text-purple tw-text-lg tw-leading-[130%]">
+			<div class="tw-mt-12 tw-bg-[#F8F6FC] tw-px-2 tw-py-4 tw-rounded-[5px]">
+				<div class="tw-flex tw-gap-1 tw-text-purple tw-text-lg tw-leading-[130%]">
 					<span class="tw-font-bold">2. {{ 'Issuer.networkBadges' | translate }}:</span>
 					<span [innerHTML]="'Issuer.awardedNetworkBadges' | translate: { issuer: issuer.name }"></span>
 				</div>

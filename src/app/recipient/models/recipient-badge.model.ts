@@ -46,6 +46,18 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 			: (this._expiresDate = (this.apiModel.json.expires && new Date(this.apiModel.json.expires)) || null);
 	}
 
+	get activityStartDate(): Date | undefined {
+		return this.apiModel.json.credentialSubject.activityStartDate
+			? new Date(this.apiModel.json.credentialSubject.activityStartDate)
+			: undefined;
+	}
+
+	get activityEndDate(): Date | undefined {
+		return this.apiModel.json.credentialSubject.activityEndDate
+			? new Date(this.apiModel.json.credentialSubject.activityEndDate)
+			: undefined;
+	}
+
 	get shareUrl(): string {
 		return this.apiModel.shareUrl;
 	}

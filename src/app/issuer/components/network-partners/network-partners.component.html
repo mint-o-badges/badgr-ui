@@ -1,5 +1,5 @@
 <ng-container>
-	@if (!issuers().length) {
+	@if (!issuers().length && !networkInvites().length) {
 		<span class="tw-mt-12 tw-mb-4 tw-text-oebblack tw-text-lg tw-block">{{
 			'Network.noInstitutionAddedYet' | translate
 		}}</span>

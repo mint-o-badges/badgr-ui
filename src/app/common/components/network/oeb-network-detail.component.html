@@ -3,43 +3,70 @@
 		<bg-breadcrumbs [linkentries]="linkentries"></bg-breadcrumbs>
 	</nav>
 
-	<header class="tw-relative">
-		<h2 class="tw-text-purple tw-mt-20 tw-mb-8 tw-uppercase tw-text-[22px] tw-font-bold tw-leading-[120%]">
+	<header class="tw-relative tw-mt-20">
+		<h2 class="tw-text-purple tw-mb-8 tw-uppercase tw-text-[22px] tw-font-bold tw-leading-[120%]">
 			{{ 'General.network' | translate }}
 		</h2>
 
-		<section class="tw-flex tw-justify-between tw-gap-6 oeb" aria-labelledby="network-info">
-			<div class="tw-flex md:tw-max-w-[70%]">
-				<figure class="tw-relative">
-					<img
-						[loaded-src]="network?.image"
-						[loading-src]="networkPlaceholderSrc"
-						[error-src]="networkPlaceholderSrc"
-						alt="{{ network.name }} logo"
-						class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
-					/>
-				</figure>
+		<div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-[1fr_340px] tw-gap-x-6">
+			<!-- Left column: Main content -->
+			<div class="tw-col-start-1">
+				<section class="tw-flex tw-gap-6 oeb" aria-labelledby="network-info">
+					<figure class="tw-relative">
+						<img
+							[loaded-src]="network?.image"
+							[loading-src]="networkPlaceholderSrc"
+							[error-src]="networkPlaceholderSrc"
+							alt="{{ network.name }} logo"
+							class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
+						/>
+					</figure>
 
-				<hgroup class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%] oeb-break-words">
-					<h1
-						id="network-info"
-						hlmH1
-						class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]"
-					>
-						{{ network.name }}
-					</h1>
-					@if (public && network.url) {
-						<p hlmP size="sm">
-							<a hlmA target="_blank" [href]="network.url" rel="noopener noreferrer">
-								{{ network.url }}
-							</a>
-						</p>
-					}
-				</hgroup>
+					<hgroup class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%] oeb-break-words">
+						<h1
+							id="network-info"
+							hlmH1
+							class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]"
+						>
+							{{ network.name }}
+						</h1>
+						@if (public && network.url) {
+							<p hlmP size="sm">
+								<a hlmA target="_blank" [href]="network.url" rel="noopener noreferrer">
+									{{ network.url }}
+								</a>
+							</p>
+						}
+					</hgroup>
+				</section>
+
+				<section aria-labelledby="description-heading" class="tw-mt-4">
+					<h2 id="description-heading" class="tw-sr-only">Network Description</h2>
+					<p class="tw-text-oebblack tw-text-lg oeb-break-words">
+						{{ network.description }}
+					</p>
+				</section>
+
+				<ng-container>
+					<div class="tw-my-12">
+						<oeb-tabs
+							[variant]="'bluebackground'"
+							(onTabChanged)="onTabChange($event)"
+							[activeTab]="activeTab"
+							[tabs]="tabs"
+							countStyle="parentheses"
+						></oeb-tabs>
+					</div>
+				</ng-container>
+
+				<ng-container
+					[ngTemplateOutlet]="activeTab === 'network' ? networkTemplate : partnerTemplate"
+				></ng-container>
 			</div>
 
+			<!-- Right column: Sidebar -->
 			<aside
-				class="tw-w-auto tw-hidden md:tw-grid !tw-content-center tw-absolute tw-right-0 tw-top-8"
+				class="tw-hidden lg:tw-block tw-row-start-1 tw-col-start-2 tw-sticky tw-top-8 tw-self-start"
 				aria-label="Network actions and partners"
 			>
 				@if (public) {
@@ -51,14 +78,16 @@
 							[text]="'Network.website' | translate"
 						>
 						</oeb-button>
-						<oeb-button
-							(click)="routeToMemberView()"
-							class="tw-whitespace-nowrap"
-							[text]="'Issuer.memberView' | translate"
-							variant="secondary"
-							width="min_320"
-						>
-						</oeb-button>
+						@if (userIsMember) {
+							<oeb-button
+								(click)="routeToMemberView()"
+								class="tw-whitespace-nowrap"
+								[text]="'Issuer.memberView' | translate"
+								variant="secondary"
+								width="min_320"
+							>
+							</oeb-button>
+						}
 					</nav>
 				}
 
@@ -90,27 +119,8 @@
 					</ul>
 				</section>
 			</aside>
-		</section>
-	</header>
-
-	<section aria-labelledby="description-heading" class="tw-mt-4 tw-pr-[280px]">
-		<h2 id="description-heading" class="tw-sr-only">Network Description</h2>
-		<p class="tw-text-oebblack tw-text-lg oeb-break-words tw-max-w-[80%]">
-			{{ network.description }}
-		</p>
-	</section>
-
-	<ng-container>
-		<div class="tw-my-12">
-			<oeb-tabs
-				[variant]="'bluebackground'"
-				(onTabChanged)="onTabChange($event)"
-				[activeTab]="activeTab"
-				[tabs]="tabs"
-				countStyle="parentheses"
-			></oeb-tabs>
 		</div>
-	</ng-container>
+	</header>
 </main>
 
 <ng-template #networkTemplate>

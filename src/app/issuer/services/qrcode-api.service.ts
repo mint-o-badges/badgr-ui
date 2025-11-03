@@ -1,17 +1,17 @@
-import { Injectable, SecurityContext, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
-import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { ApiQRCode } from '../models/qrcode-api.model';
 import { MessageService } from '../../common/services/message.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ApiIssuer } from '../models/issuer-api.model';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class QrCodeApiService extends BaseHttpApiService {
-	protected loginService: SessionService;
+	protected loginService: AuthenticationService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -21,7 +21,7 @@ export class QrCodeApiService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const loginService = inject(SessionService);
+		const loginService = inject(AUTH_PROVIDER);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);

@@ -207,7 +207,7 @@ export class NetworkSharedBadgesDatatableComponent {
 		{
 			id: 'Issuer.recipients',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.badgeclass.recipient_count,
+			accessorFn: (row) => row.recipient_count,
 			cell: (info) => info.getValue(),
 		},
 		{

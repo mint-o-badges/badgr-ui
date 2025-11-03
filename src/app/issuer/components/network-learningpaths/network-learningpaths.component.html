@@ -1,0 +1,45 @@
+<ng-container>
+	<div class="tw-my-12" [ngClass]="{ 'md:tw-w-1/2': network().badgeClassCount < 2 }">
+		<ng-template [showLoader]="true" [bgAwaitPromises]="[learningPathsLoaded]">
+			@if (networkLearningPaths.length) {
+				<div class="tw-grid tw-grid-cols-learningpaths tw-gap-6">
+					@for (lp of networkLearningPaths; track lp.slug) {
+						<bg-learningpathcard
+							[badgeImage]="lp.participationBadge_image"
+							[name]="lp.name"
+							[issuerTitle]="lp.issuer_name"
+							[description]="lp.description"
+							[tags]="lp.tags"
+							[slug]="lp.slug"
+							[studyLoad]="calculateStudyLoad(lp)"
+							[issuerSlug]="lp.issuer_id"
+							[public]="false"
+						></bg-learningpathcard>
+					}
+				</div>
+			} @else if (network().badgeClassCount >= 2) {
+				<p class="tw-text-oebblack tw-text-lg tw-mb-4">{{ 'Network.noLpsYet' | translate }}</p>
+				<oeb-button
+					[width]="'min_320'"
+					[text]="'Network.createLp' | translate"
+					[routerLink]="[`/issuer/issuers/${network().slug}/learningpaths/create/`]"
+				></oeb-button>
+			} @else {
+				<p
+					class="tw-italic tw-text-purple tw-text-lg tw-mb-4"
+					[innerHTML]="'Network.createLpInfo' | translate"
+				></p>
+				<section class="tw-gap-2 tw-flex tw-flex-col tw-w-max">
+					<oeb-button [width]="'full_width'" [text]="'Network.createBadge' | translate"> </oeb-button>
+					<oeb-button
+						variant="secondary"
+						[width]="'full_width'"
+						[weight]="'normal'"
+						[text]="'Badge.shareBadgeOnNetwork' | translate"
+						[routerLink]="['/issuer/issuers']"
+					></oeb-button>
+				</section>
+			}
+		</ng-template>
+	</div>
+</ng-container>
