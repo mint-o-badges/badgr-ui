@@ -11,12 +11,9 @@ import {
 	ViewChild,
 	OnChanges,
 	AfterViewInit,
-	Inject,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors, FormControl } from '@angular/forms';
-import { SessionService } from '../../../common/services/session.service';
-import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
@@ -45,7 +42,6 @@ import {
 	ApiBadgeClassNetworkShare,
 	BadgeClassCategory,
 } from '~/issuer/models/badgeclass-api.model';
-import { ApiBadgeClassForCreation } from '~/issuer/models/badgeclass-api.model';
 import { base64ByteSize } from '~/common/util/file-util';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '~/common/components/formfield-image';
