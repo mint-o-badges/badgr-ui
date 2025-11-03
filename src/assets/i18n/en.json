@@ -451,6 +451,8 @@
 		"alreadyConfirmed": "Another member of <span class='tw-italic'> {{issuerName}} has already accepted the network invitation from <span class='tw-font-bold'> {{networkName}}</span>.",
 		"view": "View network",
 		"createBadge": "Create network badge",
+		"createLp": "Create network learningpath",
+		"noLpsYet": "There are no network learning paths yet.",
 		"awardBadgeIssuer": "Which of your <span class='tw-font-bold'>institutions</span> should the badge be awarded to?",
 		"networkBadges": "Network badges",
 		"noPartnerBadgesYet": "So far, no partner institution has released a badge for the network.",
@@ -459,7 +461,8 @@
 		"noBadgesYet": "The network <span class='tw-font-semibold'>{{network}}</span> has not created any badges yet.",
 		"sharedBy": "Shared by",
 		"sharedOn": "Shared on",
-		"website": "Network website"
+		"website": "Network website",
+		"createLpInfo": "To create a <span class='tw-font-bold'>network learning path</span>, at least two badges must be created in the network or approved for the network by partner institutions."
 	},
 	"Badge": {
 		"groupBy": "Group by",
