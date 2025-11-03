@@ -146,7 +146,7 @@
 		"prettier": "^3.6.2",
 		"remap-istanbul": "0.13.0",
 		"rimraf": "^6.0.1",
-		"sass": "^1.49.9",
+		"sass": "^1.93.3",
 		"shelljs": "^0.8.5",
 		"tailwind-merge": "^2.2.0",
 		"tailwindcss-animate": "^1.0.6",
