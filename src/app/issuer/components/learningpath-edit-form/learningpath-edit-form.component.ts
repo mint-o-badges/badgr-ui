@@ -680,15 +680,13 @@ export class LearningPathEditFormComponent
 	}
 
 	private updateResults() {
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
-		let that = this;
 		// Clear Results
 		this.badgeResults = [];
 		this.badgeResultsByIssuer = [];
 		const badgeResultsByIssuerLocal = {};
 		this.badgeResultsByCategory = [];
 		const badgeResultsByCategoryLocal = {};
-		var addBadgeToResultsByIssuer = function (item) {
+		const addBadgeToResultsByIssuer = (item) => {
 			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
 			if (!issuerResults) {
 				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
@@ -696,13 +694,13 @@ export class LearningPathEditFormComponent
 					'',
 				);
 				// append result to the issuerResults array bound to the view template.
-				that.badgeResultsByIssuer.push(issuerResults);
+				this.badgeResultsByIssuer.push(issuerResults);
 			}
 			issuerResults.addBadge(item);
 			return true;
 		};
 
-		var addBadgeToResultsByCategory = (item) => {
+		const addBadgeToResultsByCategory = (item) => {
 			let itemCategory =
 				item.extension && item.extension['extensions:CategoryExtension']
 					? item.extension['extensions:CategoryExtension'].Category
