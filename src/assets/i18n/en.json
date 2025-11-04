@@ -358,7 +358,7 @@
 		"websiteUrl": "Website-URL",
 		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
 		"universityLabel": "University (universities, universities of applied sciences, ...)",
-		"othersLabel": "Others (libraries, museums, FabLabs, companies, associations, ...)",
+		"othersLabel": "Other educational providers (libraries, makerspaces, museums, associations, companies, etc.)",
 		"imageRequiredError": "Please choose an image.",
 		"csvPreview": "Here you can see a preview of the first",
 		"rowsOfYourFile": "rows of your file.",
