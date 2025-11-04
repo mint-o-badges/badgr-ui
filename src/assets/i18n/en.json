@@ -403,7 +403,8 @@
 		"evidence": "Proof of successful participation",
 		"addNewEvidence": "Add another evidence",
 		"evidenceUrl": "Evidence URL",
-		"evidenceNarrative": "Textual narrative"
+		"evidenceNarrative": "Textual narrative",
+		"youthWelfare": "Independent youth welfare organization"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",

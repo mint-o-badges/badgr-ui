@@ -403,7 +403,8 @@
 		"evidence": "Nachweis für erfolgreiche Teilnahme",
 		"addNewEvidence": "Weiteren Nachweis hinzufügen",
 		"evidenceUrl": "URL zum Nachweis",
-		"evidenceNarrative": "Textliches Narrativ"
+		"evidenceNarrative": "Textliches Narrativ",
+		"youthWelfare": "Freier Träger der Jugendhilfe"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
