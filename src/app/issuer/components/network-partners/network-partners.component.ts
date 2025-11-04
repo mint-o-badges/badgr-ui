@@ -51,9 +51,6 @@ export class NetworkPartnersComponent {
 
 	@ViewChild('issuerSearchInputPartnerModel') issuerSearchInputPartnerModel: NgModel;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
 		effect(() => {
 			const invites = this.networkInvites();
@@ -76,6 +73,10 @@ export class NetworkPartnersComponent {
 			},
 		});
 		this.dialogRefPartner = dialogRef;
+
+		dialogRef.closed$.subscribe((result) => {
+			if (result === 'continue') dialogRef.close();
+		});
 
 		setTimeout(() => {
 			if (this.issuerSearchInputPartnerModel) {
