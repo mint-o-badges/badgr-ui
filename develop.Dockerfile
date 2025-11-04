@@ -7,7 +7,7 @@ COPY . .
 RUN npm ci
 
 RUN npm run build:develop
-RUN npm run build:web-components
+RUN npm run build:web-components:develop
 
 # Serve Application using Nginx Server
 
