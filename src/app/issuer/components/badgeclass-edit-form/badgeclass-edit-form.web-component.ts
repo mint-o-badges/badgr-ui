@@ -24,8 +24,6 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 		provideHttpClient(withInterceptors([authTokenInterceptor])),
 		importProvidersFrom(BrowserModule, TranslateModule.forRoot()),
 		provideAppInitializer(() => {
-			const configService = inject(AppConfigService);
-
 			const translate = inject(TranslateService);
 			translate.setTranslation('en', translationsEn);
 			translate.setTranslation('de', translationsDe);
@@ -33,6 +31,7 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 			const lang = inject(LanguageService);
 			useWebComponentLanguageSetting(lang);
 
+			const configService = inject(AppConfigService);
 			return configService.initializeConfig();
 		}),
 		provideRouter([] as Routes),
