@@ -435,6 +435,7 @@
 		"networksRegistered": "Netzwerke sind auf OEB registriert",
 		"partner": "Mitglieder des Netzwerks",
 		"noInstitutionAddedYet": "Du hast noch keine Institutionen zu deinem Netzwerk hinzugefügt.",
+		"addInstitutionToIssue": "Das Netzwerk selbst vergibt keine Badges. Füge Institutionen zu deinem Netzwerk hinzu, um Badges zu vergeben.",
 		"partnerIssuers": "Partner:innen",
 		"notifiedIssuerOwners": "Wir haben die Eigentümer:innen der Institutionen per E-Mail benachrichtigt.",
 		"visibleAfterConfirmation": "Sobald sie die Einladung bestätigt haben, sind sie auf der Partner:innen-Seite sichtbar.",

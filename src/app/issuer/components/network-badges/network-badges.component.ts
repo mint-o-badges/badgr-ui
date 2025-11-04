@@ -264,7 +264,7 @@ export class NetworkBadgesComponent {
 			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 				context: {
 					variant: 'failure',
-					text: this.translate.instant('Network.noInstitutionAddedYet'),
+					text: this.translate.instant('Network.addInstitutionToIssue'),
 				},
 			});
 		} else {
@@ -286,7 +286,7 @@ export class NetworkBadgesComponent {
 			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 				context: {
 					variant: 'failure',
-					text: this.translate.instant('Network.noInstitutionAddedYet'),
+					text: this.translate.instant('Network.addInstitutionToIssue'),
 				},
 			});
 		} else {
