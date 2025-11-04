@@ -400,8 +400,10 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	async ngOnInit() {
 		// initialize counts as 0 and update after data has loaded
-		if (this.sessionService.isLoggedIn && this.issuer instanceof Issuer && this.issuer.currentUserStaffMember) {
-			await this.getLearningPathsForIssuerApi(this.issuer.slug);
+		if (this.sessionService.isLoggedIn) {
+			if (this.issuer instanceof Issuer && this.issuer.currentUserStaffMember) {
+				await this.getLearningPathsForIssuerApi(this.issuer.slug);
+			}
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
 				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
 			});
