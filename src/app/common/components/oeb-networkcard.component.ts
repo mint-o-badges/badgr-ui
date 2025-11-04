@@ -43,6 +43,7 @@ import { Network } from '~/issuer/network.model';
 							<oeb-button
 								variant="secondary"
 								width="full_width"
+								weight="medium"
 								[text]="'Issuer.createBadge' | translate"
 								[routerLink]="['/issuer/networks', network.slug]"
 								[queryParams]="{ tab: 'badges' }"
