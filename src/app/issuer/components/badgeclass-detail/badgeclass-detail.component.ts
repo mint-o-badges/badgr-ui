@@ -350,6 +350,13 @@ export class BadgeClassDetailComponent
 						text: this.translate.instant('Network.addInstitutionToIssue'),
 					},
 				});
+			} else {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Issuer.notNetworkPartnerYet'),
+					},
+				});
 			}
 			return;
 		}
