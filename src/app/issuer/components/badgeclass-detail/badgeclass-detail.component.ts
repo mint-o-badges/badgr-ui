@@ -326,27 +326,40 @@ export class BadgeClassDetailComponent
 	}
 
 	shareOnNetwork() {
-		if (
-			!(this.issuer instanceof Issuer) ||
-			!this.issuer.networks ||
-			this.issuer.networks.length === 0 ||
-			this.badgeClass.copyPermissions.includes('none')
-		) {
+		if (this.badgeClass.sharedOnNetwork) {
 			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 				context: {
 					variant: 'failure',
-					text: this.translate.instant('Network.addInstitutionToIssue'),
+					text: this.translate.instant('Badge.alreadyShared'),
 				},
 			});
-		} else {
-			const dialogRef = this._hlmDialogService.open(DialogComponent, {
-				context: {
-					headerTemplate: this.networkSelectionHeader,
-					content: this.networkSelection,
-				},
-			});
-			this.dialogRef = dialogRef;
+			return;
 		}
+
+		const cannotShare =
+			!(this.issuer instanceof Issuer) ||
+			!this.issuer.networks ||
+			this.issuer.networks.length === 0 ||
+			this.badgeClass.copyPermissions.includes('none');
+
+		if (cannotShare) {
+			if (this.issuer.is_network) {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Network.addInstitutionToIssue'),
+					},
+				});
+			}
+			return;
+		}
+
+		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.networkSelectionHeader,
+				content: this.networkSelection,
+			},
+		});
 	}
 
 	copyBadge() {

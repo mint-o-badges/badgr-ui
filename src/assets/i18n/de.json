@@ -558,7 +558,8 @@
 		"allNetworkMembersGetBadge": "Alle Mitglieder des gewählten Netzwerks können den Badge über ihre Institution vergeben.",
 		"networkAssertionsGetTracked": "Alle Vergaben des Badges fliessen in die Daten-Auswertung des Netzwerks ein.",
 		"cantRemoveFromNetwork": "Der Badge kann NICHT wieder aus dem Netzwerk entfernt werden.",
-		"shareBadgeOnNetwork": "Badge für Netzwerk freigeben"
+		"shareBadgeOnNetwork": "Badge für Netzwerk freigeben",
+		"alreadyShared": "Der Badge wurde bereits für ein Netzwerk freigegeben."
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
