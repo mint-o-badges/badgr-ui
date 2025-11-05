@@ -39,16 +39,18 @@
 							<strong>{{ 'Badge.categories.competency' | translate }}</strong>
 							<p [innerHTML]="'Badge.competencyBadgeInfo' | translate"></p>
 						</a>
-						<a
-							[routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']"
-							[state]="{ issuer: issuer }"
-							[attr.data-umami-event]="'create-micro-degree-1'"
-						>
-							<img src="breakdown/static/badgestudio/shapes/learningpath.svg" />
+						@if (canCreateLp) {
+							<a
+								[routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']"
+								[state]="{ issuer: issuer }"
+								[attr.data-umami-event]="'create-micro-degree-1'"
+							>
+								<img src="breakdown/static/badgestudio/shapes/learningpath.svg" />
 
-							<strong>{{ 'Badge.categories.learningpath' | translate }}</strong>
-							<p [innerHTML]="'Badge.learningPathBadgeInfo' | translate"></p>
-						</a>
+								<strong>{{ 'Badge.categories.learningpath' | translate }}</strong>
+								<p [innerHTML]="'Badge.learningPathBadgeInfo' | translate"></p>
+							</a>
+						}
 					</div>
 				</div>
 			</ng-template>
