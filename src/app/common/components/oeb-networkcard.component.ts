@@ -14,7 +14,7 @@ import { Network } from '~/issuer/network.model';
 		<div class="tw-flex tw-flex-col tw-h-full">
 			<div class="tw-flex-row tw-flex tw-items-center">
 				<div
-					class="tw-bg-white tw-w-[100px] tw-h-[100px] tw-flex tw-items-center tw-justify-center tw-rounded-[10px]"
+					class="tw-bg-white tw-w-[100px] tw-h-[100px] tw-flex tw-flex-shrink-0 tw-items-center tw-justify-center tw-rounded-[10px]"
 				>
 					<img [src]="network.image" class="tw-aspect-square" width="80" />
 				</div>
@@ -43,6 +43,7 @@ import { Network } from '~/issuer/network.model';
 							<oeb-button
 								variant="secondary"
 								width="full_width"
+								weight="medium"
 								[text]="'Issuer.createBadge' | translate"
 								[routerLink]="['/issuer/networks', network.slug]"
 								[queryParams]="{ tab: 'badges' }"

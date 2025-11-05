@@ -112,7 +112,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 				<oeb-button
 					size="xs"
 					variant="secondary"
-					text="{{ 'General.revoke' | translate }}"
+					text="{{ 'General.withdraw' | translate }}"
 					(click)="revokeInvitation(context.row.original)"
 				/>
 			</div>
@@ -133,14 +133,14 @@ export class NetworkInvitesDatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'General.name',
+			id: 'Network.pendingInvites',
 			desc: false,
 		},
 	]);
 
 	private readonly tableColumnDefinition: ColumnDef<ApiNetworkInvitation>[] = [
 		{
-			id: 'General.name',
+			id: 'Network.pendingInvites',
 			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => row.issuer.name,
 			cell: (ctx) => ctx.getValue(),

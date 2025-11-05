@@ -37,4 +37,8 @@ export class NetworkLearningPathsComponent implements OnInit {
 		);
 		return totalStudyLoad;
 	}
+
+	get canCreateNetworkLp(): boolean {
+		return this.network().badgeClassCount + this.network().partnerBadgesCount >= 2;
+	}
 }

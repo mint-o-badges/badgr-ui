@@ -137,6 +137,9 @@ export class BadgeClassManager extends BaseHttpApiService {
 		return this.badgeClassApi.deleteBadgeClass(badge.issuerSlug, badge.slug).then((response) => {
 			this.allBadgesList.remove(badge);
 			this.badgesList.remove(badge);
+			this._networkBadgesBySlug.forEach((entitySet) => {
+				entitySet.remove(badge);
+			});
 			return response;
 		});
 	}

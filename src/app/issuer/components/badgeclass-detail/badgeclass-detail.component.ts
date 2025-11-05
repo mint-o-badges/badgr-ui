@@ -326,13 +326,47 @@ export class BadgeClassDetailComponent
 	}
 
 	shareOnNetwork() {
-		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+		if (this.badgeClass.sharedOnNetwork) {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					variant: 'failure',
+					text: this.translate.instant('Badge.alreadyShared'),
+				},
+			});
+			return;
+		}
+
+		const cannotShare =
+			!(this.issuer instanceof Issuer) ||
+			!this.issuer.networks ||
+			this.issuer.networks.length === 0 ||
+			this.badgeClass.copyPermissions.includes('none');
+
+		if (cannotShare) {
+			if (this.issuer.is_network) {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Network.addInstitutionToIssue'),
+					},
+				});
+			} else {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Issuer.notNetworkPartnerYet'),
+					},
+				});
+			}
+			return;
+		}
+
+		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.networkSelectionHeader,
 				content: this.networkSelection,
 			},
 		});
-		this.dialogRef = dialogRef;
 	}
 
 	copyBadge() {
@@ -415,7 +449,6 @@ export class BadgeClassDetailComponent
 			headerButton: {
 				title: 'Badge.award',
 				action: () => this.routeToBadgeAward(badgeClass, this.issuer),
-				disabled: this.issuer.is_network && !this.networkUserIssuers().length,
 			},
 			issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 			qrCodeButton: {
@@ -451,10 +484,6 @@ export class BadgeClassDetailComponent
 					title: 'Badge.shareOnNetwork',
 					action: this.shareOnNetwork.bind(this),
 					icon: 'lucideShare2',
-					disabled:
-						(this.issuer instanceof Issuer
-							? !(this.issuer.networks && this.issuer.networks.length > 0)
-							: true) || badgeClass.copyPermissions.includes('none'),
 				},
 				{
 					title: badgeClass.copyPermissions.includes('others') ? 'General.copy' : 'Badge.copyThisIssuer',
@@ -773,23 +802,33 @@ export class BadgeClassDetailComponent
 						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 				});
 			} else if (this.issuer.is_network) {
-				const dialogRef = this._hlmDialogService.open(DialogComponent, {
-					context: {
-						headerTemplate: this.networkIssuerSelectionHeader,
-						content: this.networkIssuerSelection,
-					},
-				});
-				this.dialogRef = dialogRef;
-				this.dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue')
-						this.router.navigate([
-							'/issuer/issuers/',
-							this.selectedNetworkIssuer.slug,
-							'badges',
-							badge.slug,
-							'issue',
-						]);
-				});
+				if (!this.networkUserIssuers().length) {
+					this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							variant: 'failure',
+							text: this.translate.instant('Network.addInstitutionToIssue'),
+						},
+					});
+				} else {
+					const dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							headerTemplate: this.networkIssuerSelectionHeader,
+							content: this.networkIssuerSelection,
+						},
+					});
+
+					this.dialogRef = dialogRef;
+					this.dialogRef.closed$.subscribe((result) => {
+						if (result === 'continue')
+							this.router.navigate([
+								'/issuer/issuers/',
+								this.selectedNetworkIssuer.slug,
+								'badges',
+								badge.slug,
+								'issue',
+							]);
+					});
+				}
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 			}
@@ -814,23 +853,32 @@ export class BadgeClassDetailComponent
 						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 				});
 			} else if (this.issuer.is_network) {
-				const dialogRef = this._hlmDialogService.open(DialogComponent, {
-					context: {
-						headerTemplate: this.networkIssuerSelectionHeader,
-						content: this.networkIssuerSelection,
-					},
-				});
-				this.dialogRef = dialogRef;
-				this.dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue')
-						this.router.navigate([
-							'/issuer/issuers/',
-							this.selectedNetworkIssuer.slug,
-							'badges',
-							badge.slug,
-							'qr',
-						]);
-				});
+				if (!this.networkUserIssuers().length) {
+					this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							variant: 'failure',
+							text: this.translate.instant('Network.addInstitutionToIssue'),
+						},
+					});
+				} else {
+					const dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							headerTemplate: this.networkIssuerSelectionHeader,
+							content: this.networkIssuerSelection,
+						},
+					});
+					this.dialogRef = dialogRef;
+					this.dialogRef.closed$.subscribe((result) => {
+						if (result === 'continue')
+							this.router.navigate([
+								'/issuer/issuers/',
+								this.selectedNetworkIssuer.slug,
+								'badges',
+								badge.slug,
+								'qr',
+							]);
+					});
+				}
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 			}
