@@ -59,6 +59,7 @@
 					<oeb-button
 						class="tw-whitespace-nowrap"
 						*ngIf="public"
+						[width]="'full_width'"
 						(click)="routeToUrl(issuer.url)"
 						[text]="'General.website' | translate"
 					>
@@ -147,7 +148,7 @@
 	</div>
 </header>
 
-<section aria-labelledby="description-heading" class="tw-mt-4 md:tw-pr-[280px]">
+<section aria-labelledby="description-heading" class="tw-mt-4 md:tw-pr-[350px]">
 	<h2 id="description-heading" class="tw-sr-only">Issuer Description</h2>
 	<p class="tw-text-oebblack tw-text-lg oeb-break-words">{{ issuer.description }}</p>
 </section>
@@ -203,7 +204,7 @@
 	</div>
 </div>
 
-<div class="oeb-section-sm md:tw-pr-[280px]">
+<div class="oeb-section-sm md:tw-pr-[350px]">
 	<oeb-tabs
 		[variant]="'lightpurple'"
 		(onTabChanged)="onTabChange($event)"
