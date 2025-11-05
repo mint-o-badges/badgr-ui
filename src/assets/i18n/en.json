@@ -84,6 +84,7 @@
 		"place": "place",
 		"forwarded": "forwarded",
 		"revoke": "revoke",
+		"withdraw": "Withdraw",
 		"confirm": "Confirm",
 		"noRequests": "No requests",
 		"oneRequest": "1 request",
@@ -372,6 +373,7 @@
 		"creatingBadge": "Creating Badge",
 		"memberView": "Member view",
 		"partOfNetwork": "Part of the network",
+		"notNetworkPartnerYet": "The institution is not yet part of a network.",
 		"contract26": "By clicking on “Create institution,” the agreement <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/EN-Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>available here</a> pursuant to Article 26(1) GDPR on the joint data protection responsibility of the institution with its partners becomes effective.",
 		"linkedInId": "<span class=\"tw-italic tw-font-normal\">Optional: </span> LinkedIn-ID",
 		"linkedInIdUse1": "For ",
@@ -437,6 +439,7 @@
 		"networksRegistered": "networks are registered on OEB",
 		"partners": "Network members",
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
+		"addInstitutionToIssue": "The network itself does not award badges. Add institutions to your network to award badges.",
 		"partnerIssuers": "Partners",
 		"notifiedIssuerOwners": "We have notified the owners of the institutions by email.",
 		"visibleAfterConfirmation": "Once they have confirmed the invitation, they will be visible on the partner page.",
@@ -465,7 +468,8 @@
 		"sharedBy": "Shared by",
 		"sharedOn": "Shared on",
 		"website": "Network website",
-		"createLpInfo": "To create a <span class='tw-font-bold'>network learning path</span>, at least two badges must be created in the network or approved for the network by partner institutions."
+		"createLpInfo": "To create a <span class='tw-font-bold'>network learning path</span>, at least two badges must be created in the network or approved for the network by partner institutions.",
+		"pendingInvites": "Unconfirmed invitations"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -559,7 +563,8 @@
 		"allNetworkMembersGetBadge": "All members of the selected network can award the badge via their institution.",
 		"networkAssertionsGetTracked": "All badge awards are included in the network's data evaluation.",
 		"cantRemoveFromNetwork": "The badge CANNOT be removed from the network.",
-		"shareBadgeOnNetwork": "Share badge on network"
+		"shareBadgeOnNetwork": "Share badge on network",
+		"alreadyShared": "The badge was already shared on a network."
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
