@@ -8,6 +8,7 @@ import { ApiLearningPath } from '~/common/model/learningpath-api.model';
 import { BgLearningPathCard } from '~/common/components/bg-learningpathcard';
 import { NgClass } from '@angular/common';
 import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'network-learningpaths',
@@ -17,6 +18,7 @@ import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 export class NetworkLearningPathsComponent implements OnInit {
 	constructor() {}
 	private learningPathApiService = inject(LearningPathApiService);
+	private router = inject(Router);
 	network = input.required<Network>();
 	learningPathsLoaded: Promise<unknown>;
 
@@ -40,5 +42,15 @@ export class NetworkLearningPathsComponent implements OnInit {
 
 	get canCreateNetworkLp(): boolean {
 		return this.network().badgeClassCount + this.network().partnerBadgesCount >= 2;
+	}
+
+	routeToLpCreation() {
+		if (!this.canCreateNetworkLp) return;
+		this.router.navigate([`/issuer/issuers/${this.network().slug}/learningpaths/create/`]);
+	}
+
+	routeToBadgeCreation() {
+		if (!this.canCreateNetworkLp) return;
+		this.router.navigate([`/issuer/issuers/${this.network().slug}/badges/select`]);
 	}
 }
