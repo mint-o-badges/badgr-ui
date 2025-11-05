@@ -37,6 +37,13 @@ export class UserProfile extends ManagedEntity<ApiUserProfile, UserProfileRef> {
 		this.apiModel.last_name = lastName;
 	}
 
+	get zipCode() {
+		return this.apiModel.zip_code;
+	}
+	set zipCode(zipCode: string) {
+		this.apiModel.zip_code = zipCode;
+	}
+
 	get agreedTermsVersion() {
 		return this.apiModel.agreed_terms_version;
 	}

@@ -34,6 +34,7 @@
 		"address": "Adresse",
 		"street": "Strasse",
 		"postalCode": "Postleitzahl",
+		"optionalPostalCode": "<span class=\"tw-italic tw-font-normal\">Optional: </span> Postleitzahl",
 		"description": "Beschreibung",
 		"city": "Stadt",
 		"member": "Mitglied",
@@ -313,6 +314,7 @@
 			"allCategories": "Alle Kategorien",
 			"schule": "Schule",
 			"hochschule": "Hochschule",
+			"jugendhilfe": "Freier Träger der Jugendhilfe",
 			"andere": "andere"
 		},
 		"learningPathParticipants": "Teilnehmer:innen",
@@ -358,7 +360,7 @@
 		"websiteUrl": "Webseiten-URL",
 		"schoolLabel": "Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)",
 		"universityLabel": "Hochschule (Universitäten. Fachhochschulen, ...)",
-		"othersLabel": "Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)",
+		"othersLabel": "Anderer Bildungsanbieter (Bibliotheken, Makerspaces, Museen, Vereine, Unternehmen, ...)",
 		"imageRequiredError": "Bitte wähle ein Bild aus.",
 		"csvPreview": "Hier siehst du eine Vorschau der ersten",
 		"rowsOfYourFile": "Zeilen deiner Datei.",
@@ -403,7 +405,8 @@
 		"evidence": "Nachweis für erfolgreiche Teilnahme",
 		"addNewEvidence": "Weiteren Nachweis hinzufügen",
 		"evidenceUrl": "URL zum Nachweis",
-		"evidenceNarrative": "Textliches Narrativ"
+		"evidenceNarrative": "Textliches Narrativ",
+		"youthWelfare": "Freier Träger der Jugendhilfe"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
