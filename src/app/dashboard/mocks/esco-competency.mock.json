@@ -1,0 +1,6 @@
+{
+  "description": "ESCO Competency Distribution - Chart data showing competency distribution by ESCO categories",
+  "labels": ["IT & Digital", "Soziale Kompetenzen", "Sprachen", "Handwerk", "Management", "Andere"],
+  "values": [28.5, 22.1, 18.3, 12.7, 10.8, 7.6],
+  "backgroundColor": ["#492E98", "#492E98", "#93F993", "#CCD7FF", "#E4FFE4", "#757575"]
+}

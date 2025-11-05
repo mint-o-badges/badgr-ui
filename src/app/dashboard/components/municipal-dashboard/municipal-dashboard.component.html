@@ -1,0 +1,190 @@
+<div class="tw-container tw-mx-auto tw-p-6 tw-max-w-7xl">
+	<!-- Loading Spinner -->
+	@if (loading.overview) {
+		<div class="tw-flex tw-items-center tw-justify-center tw-min-h-[400px]">
+			<div class="tw-text-center">
+				<div class="tw-animate-spin tw-rounded-full tw-h-16 tw-w-16 tw-border-b-2 tw-mx-auto tw-mb-4" style="border-color: var(--color-purple);"></div>
+				<p class="tw-text-gray-600">Dashboard wird geladen...</p>
+			</div>
+		</div>
+	}
+
+	<!-- Error Message -->
+	@if (errorState && !loading.overview) {
+		<div class="tw-bg-red-50 tw-border-2 tw-border-red-200 tw-rounded-lg tw-p-6 tw-mb-8">
+			<div class="tw-flex tw-items-center tw-justify-between">
+				<div class="tw-flex tw-items-center tw-space-x-3">
+					<div class="tw-w-12 tw-h-12 tw-bg-red-100 tw-rounded-full tw-flex tw-items-center tw-justify-center">
+						<svg class="tw-w-6 tw-h-6 tw-text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+						</svg>
+					</div>
+					<div>
+						<h3 class="tw-text-lg tw-font-semibold tw-text-red-900">Fehler beim Laden</h3>
+						<p class="tw-text-red-700">{{ errorState }}</p>
+					</div>
+				</div>
+				<button
+					(click)="refreshDashboard()"
+					class="tw-px-4 tw-py-2 tw-bg-red-600 tw-text-white tw-rounded-lg hover:tw-bg-red-700 tw-transition-colors">
+					Erneut versuchen
+				</button>
+			</div>
+		</div>
+	}
+
+	<!-- Dashboard Content -->
+	@if (!loading.overview) {
+		<!-- Header with Region Info -->
+		<div class="tw-mb-8">
+		<div class="tw-flex tw-items-start tw-justify-between tw-gap-4">
+			<div class="tw-flex-1">
+				<h1 class="tw-text-3xl tw-font-bold tw-mb-2" style="color: var(--color-purple);">
+					OEB Dashboard
+				</h1>
+				<p class="tw-text-gray-600 tw-text-lg">
+					Übersicht über Kompetenzen, Badges und Bildungsangebote in Ihrer Region
+				</p>
+			</div>
+			@if (selectedRegion) {
+				<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-4 tw-border-2 tw-min-w-[280px]" style="border-color: var(--color-purple);">
+					<div class="tw-flex tw-items-center tw-justify-between tw-gap-3">
+						<div class="tw-flex-1">
+							<p class="tw-text-xs tw-font-medium tw-text-gray-500 tw-mb-1">Ausgewählte Region</p>
+							<p class="tw-text-base tw-font-bold" style="color: var(--color-purple);">
+								{{ selectedRegion.name }}
+							</p>
+							<p class="tw-text-xs tw-text-gray-600">
+								{{ selectedRegion.type === 'kreisfreie-stadt' ? 'Kreisfreie Stadt' : 'Landkreis' }} • {{ selectedRegion.state }}
+							</p>
+						</div>
+						<button
+							(click)="changeRegion()"
+							class="tw-px-3 tw-py-2 tw-rounded-lg tw-text-sm tw-font-medium tw-transition-colors"
+							style="color: var(--color-purple); border: 1px solid var(--color-purple);"
+							onmouseover="this.style.backgroundColor='var(--color-lavender)'"
+							onmouseout="this.style.backgroundColor='transparent'">
+							Ändern
+						</button>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+
+	<!-- Top 3 Key Metrics (Highlighted Blue Row) -->
+	<div class="tw-mb-8 tw-rounded-lg tw-p-6 tw-text-white" style="background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-brightpurple) 100%);">
+		<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-gap-6">
+			@for (kpi of topKpis; track kpi.label) {
+				<div class="tw-text-center">
+					<div class="tw-flex tw-items-center tw-justify-center tw-mb-2">
+						<h3 class="tw-text-sm tw-font-medium tw-opacity-90">{{ kpi.label }}</h3>
+						@if (kpi.tooltip) {
+							<div class="tw-ml-2 tw-relative tw-group">
+								<svg class="tw-w-4 tw-h-4 tw-cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+								</svg>
+								<div class="tw-absolute tw-bottom-full tw-left-1/2 tw-transform -tw-translate-x-1/2 tw-mb-2 tw-px-3 tw-py-2 tw-bg-gray-900 tw-text-white tw-text-xs tw-rounded tw-opacity-0 tw-invisible group-hover:tw-opacity-100 group-hover:tw-visible tw-transition-all tw-whitespace-nowrap tw-z-10">
+									{{ kpi.tooltip }}
+									<div class="tw-absolute tw-top-full tw-left-1/2 tw-transform -tw-translate-x-1/2 tw-w-0 tw-h-0 tw-border-l-4 tw-border-r-4 tw-border-t-4 tw-border-l-transparent tw-border-r-transparent tw-border-t-gray-900"></div>
+								</div>
+							</div>
+						}
+					</div>
+					<div class="tw-text-4xl tw-font-bold tw-mb-2">{{ kpi.value }}</div>
+					@if (kpi.unit) {
+						<div class="tw-text-sm tw-opacity-75 tw-mb-3">{{ kpi.unit }}</div>
+					}
+					@if (kpi.trendLabel) {
+						<div class="tw-flex tw-items-center tw-justify-center tw-text-sm tw-opacity-90">
+							<span class="tw-mr-1">{{ kpi.trend === 'up' ? '↗' : kpi.trend === 'down' ? '↘' : '→' }}</span>
+							<span>{{ kpi.trendLabel }}</span>
+						</div>
+					}
+				</div>
+			}
+		</div>
+	</div>
+
+	<!-- Secondary KPI Cards Grid -->
+	<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 xl:tw-grid-cols-3 tw-gap-6 tw-mb-8">
+		@for (kpi of kpis; track kpi.label) {
+			<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2 hover:tw-shadow-lg tw-transition-shadow" style="border-color: var(--color-midgrey);">
+				<div class="tw-flex tw-items-center tw-justify-between tw-mb-4">
+					<div class="tw-flex tw-items-center tw-space-x-3">
+						<div class="tw-p-2 tw-rounded-lg" style="background-color: var(--color-lavender);">
+							<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+						</div>
+					</div>
+				</div>
+				<div class="tw-mb-2">
+					<h3 class="tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1">{{ kpi.label }}</h3>
+					<p class="tw-text-2xl tw-font-bold" style="color: var(--color-black);">
+						{{ kpi.value }}
+						@if (kpi.unit) {
+							<span class="tw-text-sm tw-font-normal tw-text-gray-500 tw-ml-1">{{ kpi.unit }}</span>
+						}
+					</p>
+				</div>
+				@if (kpi.trendLabel) {
+					<div class="tw-flex tw-items-center tw-space-x-1 tw-text-gray-600 tw-text-sm tw-mt-2">
+						<span class="tw-text-xs" [style.color]="kpi.trend === 'up' ? 'var(--color-green)' : kpi.trend === 'down' ? 'var(--color-red)' : 'var(--color-darkgray)'">
+							{{ kpi.trend === 'up' ? '↗' : kpi.trend === 'down' ? '↘' : '→' }}
+						</span>
+						<span>{{ kpi.trendLabel }}</span>
+					</div>
+				}
+			</div>
+		}
+	</div>
+
+	<!-- Kompetenzen-Tracking Section -->
+	<div class="tw-mb-8">
+		<h2 class="tw-text-2xl tw-font-bold tw-mb-4" style="color: var(--color-purple);">KOMPETENZEN-TRACKING</h2>
+		<app-kompetenzen-tracking
+			[genderCompetencyData]="genderCompetencyData"
+			[competencyBubbleData]="competencyBubbleData"
+			[escoCompetencyData]="escoCompetencyData">
+		</app-kompetenzen-tracking>
+	</div>
+
+	<!-- Badge-Analyse Section -->
+	<div class="tw-mb-8">
+		<h2 class="tw-text-2xl tw-font-bold tw-mb-4" style="color: var(--color-purple);">BADGE-ANALYSE</h2>
+		<app-badge-analyse
+			[badgeAwardsByTime]="badgeAwardsByTime"
+			[badgeTypeStats]="badgeTypeStats"
+			[recentActivities]="recentActivities">
+		</app-badge-analyse>
+	</div>
+
+
+	<!-- PLZ Distribution and Recent Activities -->
+	<div class="tw-mb-8">
+		<!-- PLZ Distribution Map (Full Width) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">Letzte Aktivitäten</h2>
+			</div>
+			<div class="tw-mb-8">
+				@for (activity of recentActivities; track activity.title) {
+					<div class="tw-flex tw-items-start tw-space-x-3 tw-p-3 tw-rounded-lg" style="background-color: var(--color-lavender);">
+						<div class="tw-p-2 tw-rounded-lg tw-bg-white tw-shadow-sm">
+							<div class="tw-w-4 tw-h-4 tw-rounded" style="background-color: var(--color-purple);"></div>
+						</div>
+						<div class="tw-flex-1 tw-min-w-0">
+							<p class="tw-text-sm tw-font-medium tw-text-gray-900 tw-mb-1">{{ activity.title }}</p>
+							<p class="tw-text-xs tw-text-gray-500">
+								{{ activity.count }} Einträge • {{ formatDate(activity.date) }}
+							</p>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+
+	<!-- Note: Summary stats removed as they are now in the top row (topKpis) -->
+	}
+</div>

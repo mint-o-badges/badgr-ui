@@ -61,6 +61,11 @@ export const ROUTE_CONFIG: Routes = [
 		path: 'catalog',
 		loadChildren: () => import('./catalog/catalog.routes').then((m) => m.routes),
 	},
+	{
+		path: 'dashboard',
+		loadChildren: () => import('./dashboard/dashboard.routes').then((m) => m.routes),
+		canActivate: [AuthGuard],
+	},
 	...(environment.config.api?.baseUrl != 'https://api.openbadges.education'
 		? [
 				{

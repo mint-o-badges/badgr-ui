@@ -1,0 +1,33 @@
+{
+  "description": "Recent Activities Feed - Latest activities in the dashboard",
+  "data": [
+    {
+      "type": "badge",
+      "title": "Neue Digital Marketing Badges vergeben",
+      "count": 23,
+      "date": "2024-03-15T00:00:00.000Z",
+      "icon": "lucideAward"
+    },
+    {
+      "type": "esco",
+      "title": "Kompetenzen aktualisiert",
+      "count": 8,
+      "date": "2024-03-14T00:00:00.000Z",
+      "icon": "lucideRefreshCw"
+    },
+    {
+      "type": "badge",
+      "title": "Neue Badges in der Region hinzugefügt",
+      "count": 12,
+      "date": "2024-03-13T00:00:00.000Z",
+      "icon": "lucideBookOpen"
+    },
+    {
+      "type": "institution",
+      "title": "Bildungseinrichtungen beigetreten",
+      "count": 3,
+      "date": "2024-03-12T00:00:00.000Z",
+      "icon": "lucideBuilding"
+    }
+  ]
+}
