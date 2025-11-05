@@ -64,6 +64,7 @@ export interface ApiNetwork extends ApiBaseIssuer {
 	partner_issuers: ApiIssuer[];
 	current_user_network_role: IssuerStaffRoleSlug | null;
 	learningPathCount: number;
+	partnerBadgesCount: number;
 }
 
 export type ApiAnyIssuer = ApiIssuer | ApiNetwork;

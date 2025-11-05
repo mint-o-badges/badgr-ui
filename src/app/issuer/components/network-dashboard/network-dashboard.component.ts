@@ -220,6 +220,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		this.networkApiService.getNetworkInvites(this.networkSlug).then((invites) => {
 			this.networkInvites.set(invites);
 		});
+		this.activeTab = 'partners';
 		if (this.dialogRef) {
 			this.dialogRef.close();
 		}

@@ -16,7 +16,7 @@
 				</h1>
 				<ng-container *ngIf="!public && isFullIssuer(issuer)">
 					<p
-						class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+						class="tw-text-oebblack tw-mt-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
 					>
 						{{ 'Issuer.yourRole' | translate }}
 						{{ issuer.currentUserStaffMember?.roleInfo.label | translate }}
@@ -380,7 +380,7 @@
 							[recipientTranslation]="'Issuer.recipientsViaThisInstitution'"
 							(directBadgeAward)="routeToBadgeAward($event, issuer)"
 							(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-							(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.focusRequests)"
+							(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
 						></badges-datatable>
 					</div>
 				}

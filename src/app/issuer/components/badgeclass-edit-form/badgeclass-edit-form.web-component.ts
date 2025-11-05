@@ -17,6 +17,7 @@ import { OebBadgeClassEditForm } from './oeb-badgeclass-edit-form.component';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { authTokenInterceptor, TokenAuthService } from '~/common/services/token-auth.service';
 import { IconsProvider } from '~/icons-provider';
+import { AppConfigService } from '~/common/app-config.service';
 
 createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 	providers: [
@@ -29,6 +30,9 @@ createWebcomponent(OebBadgeClassEditForm, 'oeb-badgeclass-edit-form', {
 
 			const lang = inject(LanguageService);
 			useWebComponentLanguageSetting(lang);
+
+			const configService = inject(AppConfigService);
+			return configService.initializeConfig();
 		}),
 		provideRouter([] as Routes),
 		{

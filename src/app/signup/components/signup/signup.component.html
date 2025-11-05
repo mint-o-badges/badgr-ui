@@ -127,6 +127,13 @@
 								[fieldType]="'password'"
 							></oeb-input>
 
+							<oeb-input
+								label="{{ 'General.optionalPostalCode' | translate }}"
+								[control]="signupForm.rawControlMap.zipCode"
+								[fieldType]="'number'"
+								errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
+							></oeb-input>
+
 							<div class="tw-mt-6 md:tw-mt-7">
 								<oeb-checkbox
 									id="terms"

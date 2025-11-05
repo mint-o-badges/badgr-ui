@@ -34,6 +34,7 @@
 		"address": "Adresse",
 		"street": "Strasse",
 		"postalCode": "Postleitzahl",
+		"optionalPostalCode": "<span class=\"tw-italic tw-font-normal\">Optional: </span> Postleitzahl",
 		"description": "Beschreibung",
 		"city": "Stadt",
 		"member": "Mitglied",
@@ -83,6 +84,7 @@
 		"place": "stellen",
 		"forwarded": "weitergeleitet",
 		"revoke": "zurücknehmen",
+		"withdraw": "Zurückziehen",
 		"confirm": "Bestätigen",
 		"noRequests": "Keine Anfragen",
 		"oneRequest": "1 Anfrage",
@@ -313,6 +315,7 @@
 			"allCategories": "Alle Kategorien",
 			"schule": "Schule",
 			"hochschule": "Hochschule",
+			"jugendhilfe": "Freier Träger der Jugendhilfe",
 			"andere": "andere"
 		},
 		"learningPathParticipants": "Teilnehmer:innen",
@@ -358,7 +361,7 @@
 		"websiteUrl": "Webseiten-URL",
 		"schoolLabel": "Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)",
 		"universityLabel": "Hochschule (Universitäten. Fachhochschulen, ...)",
-		"othersLabel": "Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)",
+		"othersLabel": "Anderer Bildungsanbieter (Bibliotheken, Makerspaces, Museen, Vereine, Unternehmen, ...)",
 		"imageRequiredError": "Bitte wähle ein Bild aus.",
 		"csvPreview": "Hier siehst du eine Vorschau der ersten",
 		"rowsOfYourFile": "Zeilen deiner Datei.",
@@ -370,6 +373,7 @@
 		"creatingBadge": "Erstelle Badge",
 		"memberView": "Mitglieds-Ansicht",
 		"partOfNetwork": "Teil vom Netzwerk",
+		"notNetworkPartnerYet": "Die Institution ist noch nicht Teil eines Netzwerks.",
 		"contract26": "Mit einem Klick auf „Institution erstellen“ wird die <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>hier abrufbare</a> Vereinbarung gemäß Artikel 26 Abs. 1 DSGVO über die gemeinsame datenschutzrechtliche Verantwortung der Institution mit den Verbundpartnerinnen wirksam.",
 		"linkedInId": "<span class=\"tw-italic tw-font-normal\">Optional: </span> LinkedIn-ID",
 		"linkedInIdUse1": "Für die ",
@@ -403,7 +407,8 @@
 		"evidence": "Nachweis für erfolgreiche Teilnahme",
 		"addNewEvidence": "Weiteren Nachweis hinzufügen",
 		"evidenceUrl": "URL zum Nachweis",
-		"evidenceNarrative": "Textliches Narrativ"
+		"evidenceNarrative": "Textliches Narrativ",
+		"youthWelfare": "Freier Träger der Jugendhilfe"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
@@ -434,6 +439,7 @@
 		"networksRegistered": "Netzwerke sind auf OEB registriert",
 		"partner": "Mitglieder des Netzwerks",
 		"noInstitutionAddedYet": "Du hast noch keine Institutionen zu deinem Netzwerk hinzugefügt.",
+		"addInstitutionToIssue": "Das Netzwerk selbst vergibt keine Badges. Füge Institutionen zu deinem Netzwerk hinzu, um Badges zu vergeben.",
 		"partnerIssuers": "Partner:innen",
 		"notifiedIssuerOwners": "Wir haben die Eigentümer:innen der Institutionen per E-Mail benachrichtigt.",
 		"visibleAfterConfirmation": "Sobald sie die Einladung bestätigt haben, sind sie auf der Partner:innen-Seite sichtbar.",
@@ -461,7 +467,8 @@
 		"sharedBy": "Freigegeben von",
 		"sharedOn": "Freigegeben am",
 		"website": "Netzwerk-Webseite",
-		"createLpInfo": "Um einen <span class='tw-font-bold'>Netzwerk-Lernpfad</span> anlegen zu können, müssen mindestens zwei Badges im Netzwerk erstellt oder von Partner-Institutionen für das Netzwerk freigegeben werden."
+		"createLpInfo": "Um einen <span class='tw-font-bold'>Netzwerk-Lernpfad</span> anlegen zu können, müssen mindestens zwei Badges im Netzwerk erstellt oder von Partner-Institutionen für das Netzwerk freigegeben werden.",
+		"pendingInvites": "Unbestätigte Einladungen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -555,7 +562,8 @@
 		"allNetworkMembersGetBadge": "Alle Mitglieder des gewählten Netzwerks können den Badge über ihre Institution vergeben.",
 		"networkAssertionsGetTracked": "Alle Vergaben des Badges fliessen in die Daten-Auswertung des Netzwerks ein.",
 		"cantRemoveFromNetwork": "Der Badge kann NICHT wieder aus dem Netzwerk entfernt werden.",
-		"shareBadgeOnNetwork": "Badge für Netzwerk freigeben"
+		"shareBadgeOnNetwork": "Badge für Netzwerk freigeben",
+		"alreadyShared": "Der Badge wurde bereits für ein Netzwerk freigegeben."
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",

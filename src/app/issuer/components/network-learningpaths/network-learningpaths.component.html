@@ -17,11 +17,12 @@
 						></bg-learningpathcard>
 					}
 				</div>
-			} @else if (network().badgeClassCount >= 2) {
+			} @else if (!canCreateNetworkLp) {
 				<p class="tw-text-oebblack tw-text-lg tw-mb-4">{{ 'Network.noLpsYet' | translate }}</p>
 				<oeb-button
 					[width]="'min_320'"
 					[text]="'Network.createLp' | translate"
+					[disabled]="!canCreateNetworkLp"
 					[routerLink]="[`/issuer/issuers/${network().slug}/learningpaths/create/`]"
 				></oeb-button>
 			} @else {
@@ -30,7 +31,13 @@
 					[innerHTML]="'Network.createLpInfo' | translate"
 				></p>
 				<section class="tw-gap-2 tw-flex tw-flex-col tw-w-max">
-					<oeb-button [width]="'full_width'" [text]="'Network.createBadge' | translate"> </oeb-button>
+					<oeb-button
+						[width]="'full_width'"
+						[disabled]="!canCreateNetworkLp"
+						[routerLink]="[`/issuer/issuers/${network().slug}/badges/select`]"
+						[text]="'Network.createBadge' | translate"
+					>
+					</oeb-button>
 					<oeb-button
 						variant="secondary"
 						[width]="'full_width'"

@@ -97,6 +97,10 @@ export class Network extends ManagedEntity<ApiNetwork, IssuerRef> {
 		return filteredLps.length;
 	}
 
+	get partnerBadgesCount(): number {
+		return this.apiModel.partnerBadgesCount;
+	}
+
 	get is_network(): boolean {
 		return true;
 	}
