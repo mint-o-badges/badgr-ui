@@ -34,6 +34,7 @@
 		"address": "Address",
 		"street": "Street",
 		"postalCode": "Postal Code",
+		"optionalPostalCode": "<span class=\"tw-italic tw-font-normal\">Optional: </span> Postal Code",
 		"description": "Description",
 		"city": "City",
 		"member": "Member",
@@ -314,6 +315,7 @@
 			"allCategories": "All categories",
 			"schule": "School",
 			"hochschule": "College",
+			"jugendhilfe": "Youth Welfare Organization",
 			"andere": "Others"
 		},
 		"learningPathParticipants": "Participants",
@@ -359,7 +361,7 @@
 		"websiteUrl": "Website-URL",
 		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
 		"universityLabel": "University (universities, universities of applied sciences, ...)",
-		"othersLabel": "Others (libraries, museums, FabLabs, companies, associations, ...)",
+		"othersLabel": "Other educational providers (libraries, makerspaces, museums, associations, companies, etc.)",
 		"imageRequiredError": "Please choose an image.",
 		"csvPreview": "Here you can see a preview of the first",
 		"rowsOfYourFile": "rows of your file.",
@@ -405,7 +407,8 @@
 		"evidence": "Proof of successful participation",
 		"addNewEvidence": "Add another evidence",
 		"evidenceUrl": "Evidence URL",
-		"evidenceNarrative": "Textual narrative"
+		"evidenceNarrative": "Textual narrative",
+		"youthWelfare": "Independent youth welfare organization"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",

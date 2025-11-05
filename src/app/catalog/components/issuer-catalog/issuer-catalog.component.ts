@@ -8,7 +8,6 @@ import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
@@ -27,8 +26,6 @@ import { IssuerCardComponent } from '../../../components/issuer-card/issuer-card
 import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
-import { HlmH1 } from '@spartan-ng/helm/typography';
-import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 import { OebHeaderText } from '~/components/oeb-header-text.component';
 
@@ -91,6 +88,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		{
 			label: 'Issuer.categories.hochschule',
 			value: 'hochschule',
+		},
+		{
+			label: 'Issuer.categories.youthWelfare',
+			value: 'jugendhilfe',
 		},
 		{
 			label: 'Issuer.categories.andere',
@@ -365,6 +366,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 						'#fbb03b',
 						'hochschule',
 						'#e55e5e',
+						'jugendhilfe',
+						'#7e73ff',
 						'andere',
 						'#3bb2d0',
 						'n/a',
@@ -394,6 +397,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 						'#fbb03b',
 						'hochschule',
 						'#e55e5e',
+						'jugendhilfe',
+						'#7e73ff',
 						'andere',
 						'#3bb2d0',
 						'n/a',
@@ -502,9 +507,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	prepareTexts() {
 		this.issuerKeys = {
-			schule: 'Schulen',
-			hochschule: 'Hochschulen und Universitäten',
-			andere: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
+			schule: this.translate.get('Issuer.schoolLabel'),
+			hochschule: this.translate.get('Issuer.universityLabel'),
+			jugendhilfe: this.translate.get('Issuer.youthWelfare'),
+			andere: this.translate.get('Issuer.othersLabel'),
 			'n/a': 'Keine Angabe',
 		};
 		this.plural = {
