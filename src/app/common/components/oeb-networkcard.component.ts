@@ -21,15 +21,17 @@ import { Network } from '~/issuer/network.model';
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
 					<div class="!tw-text-3xl tw-font-bold tw-leading-[120%] tw-text-white">{{ network.name }}</div>
 					@if (!public) {
-						<span class="tw-text-white tw-text-lg"
-							>{{
+						<p
+							class="tw-text-white tw-pb-2 tw-mt-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+						>
+							{{
 								'Network.yourRole'
 									| translate
 										: {
 												role: 'Network.role.' + network.current_user_network_role | translate,
 										  }
 							}}
-						</span>
+						</p>
 					}
 				</div>
 			</div>

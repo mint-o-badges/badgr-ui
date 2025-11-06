@@ -87,4 +87,11 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 	ngOnInit() {
 		super.ngOnInit();
 	}
+
+	get canCreateLp(): boolean {
+		return (
+			!this.issuer.is_network ||
+			(this.issuer instanceof Network && this.issuer.partnerBadgesCount + this.issuer.badgeClassCount >= 2)
+		);
+	}
 }

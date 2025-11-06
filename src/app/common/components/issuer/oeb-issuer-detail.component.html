@@ -1,5 +1,5 @@
 <header class="tw-relative">
-	<div class="tw-flex tw-justify-between tw-gap-6">
+	<div class="tw-flex tw-justify-between tw-gap-6 tw-items-center">
 		<div class="tw-flex oeb-section-sm md:tw-max-w-[70%]">
 			<figure class="tw-relative">
 				<img
@@ -25,7 +25,7 @@
 			</hgroup>
 		</div>
 
-		<aside class="tw-w-auto tw-hidden md:tw-grid !tw-content-center tw-absolute tw-right-0 tw-top-0">
+		<aside class="tw-w-auto tw-hidden md:tw-grid !tw-content-center tw-absolute tw-right-0 tw-top-[17.5%]">
 			<p
 				*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
 				class="u-margin-top1x u-width-paragraph"
@@ -59,6 +59,7 @@
 					<oeb-button
 						class="tw-whitespace-nowrap"
 						*ngIf="public"
+						[width]="'full_width'"
 						(click)="routeToUrl(issuer.url)"
 						[text]="'General.website' | translate"
 					>
@@ -136,7 +137,7 @@
 				></oeb-dropdown>
 				<ng-template #svgTrigger>
 					<svg
-						class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+						class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[62px] md:tw-h-[62px]"
 						fill="var(--color-purple)"
 						icon="icon_more"
 					></svg>
@@ -147,7 +148,7 @@
 	</div>
 </header>
 
-<section aria-labelledby="description-heading" class="tw-mt-4 md:tw-pr-[280px]">
+<section aria-labelledby="description-heading" class="tw-mt-4 md:tw-pr-[350px]">
 	<h2 id="description-heading" class="tw-sr-only">Issuer Description</h2>
 	<p class="tw-text-oebblack tw-text-lg oeb-break-words">{{ issuer.description }}</p>
 </section>
@@ -203,7 +204,7 @@
 	</div>
 </div>
 
-<div class="oeb-section-sm md:tw-pr-[280px]">
+<div class="oeb-section-sm md:tw-pr-[350px]">
 	<oeb-tabs
 		[variant]="'lightpurple'"
 		(onTabChanged)="onTabChange($event)"
