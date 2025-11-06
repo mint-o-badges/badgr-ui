@@ -102,6 +102,23 @@ import { Issuer } from '../issuer/models/issuer.model';
 			{{ context.header.id | translate | titlecase }}
 		</ng-template>
 
+		<ng-template #inviteCellTemplate let-context>
+			<div
+				class="tw-flex tw-flex-row tw-items-center tw-leading-7 tw-gap-2 tw-cursor-pointer"
+				(click)="redirectToIssuerDetail.emit(context.row.original)"
+			>
+				<div>
+					<img
+						class=""
+						src="{{ context.row.original.issuer.image }}"
+						alt="{{ context.row.original.issuer.name }}"
+						width="40"
+					/>
+				</div>
+				<p>{{ context.getValue() }}</p>
+			</div>
+		</ng-template>
+
 		<ng-template #issuerActionsCellTemplate let-context>
 			<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-1 md:tw-gap-2 tw-leading-relaxed md:tw-justify-end">
 				<oeb-button
@@ -127,9 +144,11 @@ export class NetworkInvitesDatatableComponent {
 	actionElement = output<ApiNetworkInvitation>();
 
 	inviteRevoked = output<ApiNetworkInvitation>();
+	redirectToIssuerDetail = output<Issuer>();
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	issuerActionsTemplate = viewChild.required<TemplateRef<any>>('issuerActionsCellTemplate');
+	inviteCellTemplate = viewChild.required<TemplateRef<any>>('inviteCellTemplate');
 
 	readonly tableSorting = signal<SortingState>([
 		{
@@ -143,7 +162,7 @@ export class NetworkInvitesDatatableComponent {
 			id: 'Network.pendingInvites',
 			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => row.issuer.name,
-			cell: (ctx) => ctx.getValue(),
+			cell: (ctx) => this.inviteCellTemplate(),
 			sortDescFirst: false,
 		},
 		{

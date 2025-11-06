@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, model, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -389,7 +389,7 @@ export class BadgeClassDetailComponent
 
 	closeDialog(result = '') {
 		if (this.dialogRef) {
-			if ((result = 'continue')) {
+			if (result === 'continue') {
 				this.dialogRef.close('continue');
 			} else {
 				this.dialogRef.close();
@@ -484,6 +484,7 @@ export class BadgeClassDetailComponent
 					title: 'Badge.shareOnNetwork',
 					action: this.shareOnNetwork.bind(this),
 					icon: 'lucideShare2',
+					disabled: this.issuer.is_network || badgeClass.copyPermissions.includes('none'),
 				},
 				{
 					title: badgeClass.copyPermissions.includes('others') ? 'General.copy' : 'Badge.copyThisIssuer',

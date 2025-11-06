@@ -5,11 +5,15 @@
 		@if (issuer && issuer.is_network) {
 			@if (!networkQrCodeApiAwards.length) {
 				<qrcode-awards
+					[(selectedNetworkIssuer)]="selectedNetworkIssuer"
 					(qrBadgeAward)="onQrBadgeAward($event)"
 					[awards]="[]"
 					[badgeClass]="badgeClass"
-					[issuer]=""
+					[issuer]="issuer"
 					[routerLinkText]="config?.issueQrRouterLink"
+					[networkUserIssuers]="networkUserIssuers()"
+					[networkIssuerSelection]="networkIssuerSelection"
+					[networkIssuerSelectionHeader]="networkIssuerSelectionHeader"
 				></qrcode-awards>
 			}
 			@for (qrGroup of networkQrCodeApiAwards; track qrGroup.issuer.slug) {
@@ -136,7 +140,7 @@
 		></h2>
 	</div>
 </ng-template>
-<ng-template #networkIssuerSelection>
+<ng-template #networkIssuerSelection let-closeDialog="closeDialog">
 	<div class="tw-mb-6 tw-px-4">
 		@if (isLoadingIssuers()) {
 			<div>{{ 'General.loading' | translate }}</div>
