@@ -9,13 +9,16 @@
 			@if (showExpiration && hasControl('valid_from') && hasControl('expires_at')) {
 				<li>
 					<ng-template #collapseExpirationTrigger>
-						<ng-icon size="24px" hlm name="lucideClockFading" class="tw-mr-1"></ng-icon>
+						<ng-icon size="24px" hlm name="lucideClockFading" class="tw-mr-1 tw-text-oebblack"></ng-icon>
 						<span
-							class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
+							[class.tw-font-semibold]="expirationCollapsible.expanded"
+							[class.tw-font-normal]="!expirationCollapsible.expanded"
+							class="tw-text-lg tw-text-oebblack tw-mr-auto"
 							[innerHTML]="'QrCode.expiration' | translate"
 						></span>
 					</ng-template>
 					<oeb-collapsible
+						#expirationCollapsible
 						[trigger]="collapseExpirationTrigger"
 						[defaultOpen]="false"
 						[closeIcon]="'lucideChevronDown'"
@@ -58,11 +61,14 @@
 				<li>
 					<ng-template #collapseEvidenceTrigger>
 						<span
-							class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
+							[class.tw-font-semibold]="evidenceCollapsible.expanded"
+							[class.tw-font-normal]="!evidenceCollapsible.expanded"
+							class="tw-text-lg tw-text-oebblack tw-mr-auto"
 							[innerHTML]="'Issuer.evidence' | translate"
 						></span>
 					</ng-template>
 					<oeb-collapsible
+						#evidenceCollapsible
 						[trigger]="collapseEvidenceTrigger"
 						[closeIcon]="'lucideChevronDown'"
 						[iconStyle]="'tw-text-oebblack'"
@@ -142,12 +148,15 @@
 					<ng-template #collapseCourseDateTrigger>
 						<ng-icon size="24px" hlm name="lucideCalendarDays" class="tw-mr-1"></ng-icon>
 						<span
+							[class.tw-font-semibold]="courseDateCollapsible.expanded"
+							[class.tw-font-normal]="!courseDateCollapsible.expanded"
 							class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
 							[innerHTML]="'RecBadge.courseDate' | translate"
 						></span>
 					</ng-template>
 
 					<oeb-collapsible
+						#courseDateCollapsible
 						[trigger]="collapseCourseDateTrigger"
 						[defaultOpen]="false"
 						[closeIcon]="'lucideChevronDown'"
@@ -188,11 +197,14 @@
 					<ng-template #venueTrigger>
 						<ng-icon size="24px" hlm name="lucideMapPin" class="tw-mr-1"></ng-icon>
 						<span
-							class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
+							[class.tw-font-semibold]="activityPlaceCollapsible.expanded"
+							[class.tw-font-normal]="!activityPlaceCollapsible.expanded"
+							class="tw-text-lg tw-text-oebblack tw-mr-auto"
 							[innerHTML]="'RecBadge.venue' | translate"
 						></span>
 					</ng-template>
 					<oeb-collapsible
+						#activityPlaceCollapsible
 						[trigger]="venueTrigger"
 						[defaultOpen]="false"
 						[closeIcon]="'lucideChevronDown'"
