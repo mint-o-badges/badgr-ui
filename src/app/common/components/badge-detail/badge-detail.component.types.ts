@@ -74,6 +74,7 @@ export interface PageConfig {
 	activity_start_date?: Date;
 	activity_end_date?: Date;
 	duration?: string;
+	activity_city?: string;
 	category: string;
 	tags: string[];
 	issuerName: string;

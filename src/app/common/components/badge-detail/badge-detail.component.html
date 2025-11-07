@@ -312,6 +312,18 @@
 											</dd>
 										</div>
 									}
+
+									@if (config.activity_city) {
+										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-darkgray">
+												{{ 'RecBadgeDetail.place' | translate }}
+											</dt>
+											<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
+												{{ config.activity_city }}
+											</dd>
+										</div>
+									}
+
 									@if (config.createdAt) {
 										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
 											<dt class="tw-text-darkgray">{{ 'Badge.createdOn' | translate }}</dt>
