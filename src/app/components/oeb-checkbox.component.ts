@@ -31,7 +31,6 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			(changed)="onChange($event)"
 			[formControl]="control"
 			[class.tw-mr-2]="!noMargin"
-			[disabled]="disabled"
 			class="tw-mt-[1px]"
 		/>
 		<div class="tw-flex tw-flex-col">
@@ -55,7 +54,6 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() ngModel: boolean;
 	@Input() value: string;
 	@Input() checked = false;
-	@Input() disabled = false;
 	@Input() error: string;
 	@Input() errorMessage: CustomValidatorMessages;
 	@Input() label: string;
