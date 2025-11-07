@@ -96,132 +96,197 @@
 					</div>
 				</div>
 
-				<div class="tw-border-purple tw-border-solid tw-border tw-px-4 tw-py-6 tw-rounded-[15px] tw-mb-8">
-					<!-- Add Optional Details -->
-					<div class="!tw-shadow-none tw-p-6" role="group" aria-labelledby="heading-addoptionaldetails">
+				<oeb-optional-details
+					[parentForm]="issueForm"
+					[showEvidence]="false"
+					[showVenue]="true"
+					[showCourseDate]="true"
+				>
+				</oeb-optional-details>
+
+				<!-- <div class="tw-border-purple tw-border-solid tw-border tw-px-4 tw-py-6 tw-rounded-[15px] tw-mb-8"> -->
+				<!-- Add Optional Details -->
+				<!-- <div class="!tw-shadow-none tw-p-6" role="group" aria-labelledby="heading-addoptionaldetails">
 						<h3
 							class="tw-uppercase tw-text-lg tw-font-semibold tw-text-oebblack tw-mb-4"
 							id="heading-addoptionaldetails"
 						>
 							{{ 'Issuer.addOptionalDetails' | translate }}
-						</h3>
+						</h3> -->
 
-						<div class="tw-flex tw-flex-col tw-space-y-4">
-							<ng-template #collapseEvidenceTrigger>
-								<span
-									class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
-									[innerHTML]="'Issuer.evidence' | translate"
-								></span>
-							</ng-template>
-							<oeb-collapsible
-								[trigger]="collapseEvidenceTrigger"
-								[closeIcon]="'lucideChevronDown'"
-								[iconStyle]="'tw-text-oebblack'"
-								[iconSize]="'lg'"
-							>
-								<div class="tw-space-y-4">
-									@for (
-										evidence of issueForm.controls.evidence_items.rawControl.controls;
-										let i = $index;
-										track i;
-										let isLast = $last
-									) {
-										<div class="tw-mb-4">
-											<div class="tw-flex tw-flex-col tw-gap-4">
-												<oeb-input
-													[control]="evidence.get('evidence_url')"
-													[label]="'Issuer.evidenceUrl' | translate"
-													[labelStyle]="'tw-text-oebblack tw-text-lg tw-font-normal'"
-													[placeholder]="'https://example.com'"
-													[noTopMargin]="true"
-													[urlField]="true"
-													[fieldType]="'url'"
-													errorMessage="{{ 'Issuer.enterURL' | translate }}"
-												></oeb-input>
-												<oeb-input
-													[control]="evidence.get('narrative')"
-													[label]="'Issuer.evidenceNarrative' | translate"
-													[labelStyle]="'tw-text-oebblack tw-text-lg tw-font-normal'"
-													[noTopMargin]="true"
-													fieldType="textarea"
-													[size]="'lg'"
-												></oeb-input>
-											</div>
+				<!-- <ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-flex-col"> -->
+				<!-- Evidence Item -->
+				<!-- <li>
+								<ng-template #collapseEvidenceTrigger>
+									<span
+										class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
+										[innerHTML]="'Issuer.evidence' | translate"
+									></span>
+								</ng-template>
+								<oeb-collapsible
+									[trigger]="collapseEvidenceTrigger"
+									[closeIcon]="'lucideChevronDown'"
+									[iconStyle]="'tw-text-oebblack'"
+									[iconSize]="'lg'"
+								>
+									<div class="tw-space-y-4 tw-pt-4">
+										@for (
+											evidence of issueForm.controls.evidence_items.rawControl.controls;
+											let i = $index;
+											track i;
+											let isLast = $last
+										) {
+											<div class="tw-mb-4">
+												<div class="tw-flex tw-flex-col tw-gap-4">
+													<oeb-input
+														[control]="evidence.get('evidence_url')"
+														[label]="'Issuer.evidenceUrl' | translate"
+														[labelStyle]="'tw-text-oebblack tw-text-lg tw-font-normal'"
+														[placeholder]="'https://example.com'"
+														[noTopMargin]="true"
+														[urlField]="true"
+														[fieldType]="'url'"
+														errorMessage="{{ 'Issuer.enterURL' | translate }}"
+													></oeb-input>
+													<oeb-input
+														[control]="evidence.get('narrative')"
+														[label]="'Issuer.evidenceNarrative' | translate"
+														[labelStyle]="'tw-text-oebblack tw-text-lg tw-font-normal'"
+														[noTopMargin]="true"
+														fieldType="textarea"
+														[size]="'lg'"
+													></oeb-input>
+												</div>
 
-											<div class="tw-flex tw-justify-between tw-items-center tw-mt-3">
-												@if (isLast) {
+												<div class="tw-flex tw-justify-between tw-items-center tw-mt-3">
+													@if (isLast) {
+														<oeb-button
+															[text]="'Issuer.addNewEvidence' | translate"
+															variant="secondary"
+															[weight]="'normal'"
+															size="sm"
+															(click)="addEvidence(); $event.stopPropagation()"
+														>
+														</oeb-button>
+													}
 													<oeb-button
-														[text]="'Issuer.addNewEvidence' | translate"
-														variant="secondary"
-														[weight]="'normal'"
+														[text]="'General.remove' | translate"
+														type="button"
+														(click)="removeEvidence(i); $event.stopPropagation()"
+														variant="destructive"
 														size="sm"
-														(click)="addEvidence(); $event.stopPropagation()"
+														weight="normal"
+														class="tw-ml-auto"
 													>
 													</oeb-button>
-												}
-												<oeb-button
-													[text]="'General.remove' | translate"
-													type="button"
-													(click)="removeEvidence(i); $event.stopPropagation()"
-													variant="destructive"
-													size="sm"
-													weight="normal"
-													class="tw-ml-auto"
-												>
-												</oeb-button>
+												</div>
 											</div>
+										}
+
+										@if (issueForm.controls.evidence_items.rawControl.controls.length === 0) {
+											<oeb-button
+												[text]="'Issuer.addNewEvidence' | translate"
+												variant="secondary"
+												weight="normal"
+												size="sm"
+												(click)="addEvidence(); $event.stopPropagation()"
+											>
+											</oeb-button>
+										}
+									</div>
+								</oeb-collapsible>
+							</li>
+
+							<oeb-separator
+								[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed tw-border-darkgrey'"
+							></oeb-separator> -->
+
+				<!-- Course Date Item -->
+				<!-- <li>
+								<ng-template #collapseCourseDateTrigger>
+									<ng-icon size="24px" hlm name="lucideCalendarDays" class="tw-mr-1"></ng-icon>
+									<span
+										class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
+										[innerHTML]="'RecBadge.courseDate' | translate"
+									></span>
+								</ng-template>
+
+								<oeb-collapsible
+									[trigger]="collapseCourseDateTrigger"
+									[defaultOpen]="false"
+									[closeIcon]="'lucideChevronDown'"
+									[iconStyle]="'tw-text-oebblack'"
+									[iconSize]="'lg'"
+								>
+									<div class="tw-flex tw-gap-4 tw-pt-4">
+										<oeb-input
+											[control]="issueForm.controls.activity_start_date.rawControl"
+											[label]="'General.start' | translate"
+											[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
+											fieldType="date"
+											[noTopMargin]="true"
+											[errorMessage]="'CreateBadge.activityStartDateRequired' | translate"
+										></oeb-input>
+										<oeb-input
+											[control]="issueForm.controls.activity_end_date.rawControl"
+											[label]="'General.end' | translate"
+											[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
+											fieldType="date"
+											[noTopMargin]="true"
+											[errorMessage]="'CreateBadge.activityEndDateRequired' | translate"
+										></oeb-input>
+									</div>
+								</oeb-collapsible>
+							</li>
+
+							<oeb-separator
+								[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed tw-border-darkgrey'"
+							></oeb-separator> -->
+
+				<!-- Venue Item -->
+				<!-- <li>
+								<ng-template #venueTrigger>
+									<ng-icon size="24px" hlm name="lucideMapPin" class="tw-mr-1"></ng-icon>
+									<span
+										class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
+										[innerHTML]="'RecBadge.venue' | translate"
+									></span>
+								</ng-template>
+								<oeb-collapsible
+									[trigger]="venueTrigger"
+									[defaultOpen]="false"
+									[closeIcon]="'lucideChevronDown'"
+									[iconStyle]="'tw-text-oebblack'"
+									[iconSize]="'lg'"
+								>
+									<section class="tw-flex tw-flex-col tw-gap-4 tw-pt-4">
+										<div class="tw-flex tw-gap-4">
+											<oeb-input
+												[control]="issueForm.controls.activity_zip.rawControl"
+												[label]="'General.postalCode' | translate"
+												[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
+												[noTopMargin]="true"
+												fieldType="number"
+											></oeb-input>
+											<oeb-input
+												[control]="issueForm.controls.activity_city.rawControl"
+												[label]="'RecBadgeDetail.place' | translate"
+												[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
+												[noTopMargin]="true"
+											></oeb-input>
 										</div>
-									}
-
-									@if (issueForm.controls.evidence_items.rawControl.controls.length === 0) {
-										<oeb-button
-											[text]="'Issuer.addNewEvidence' | translate"
-											variant="secondary"
-											weight="normal"
-											size="sm"
-											(click)="addEvidence(); $event.stopPropagation()"
+										<span class="tw-text-lg tw-text-oebblack">{{ 'General.or' | translate }}</span>
+										<oeb-checkbox
+											[text]="'Online'"
+											[control]="issueForm.controls.activity_online.rawControl"
 										>
-										</oeb-button>
-									}
-								</div>
-							</oeb-collapsible>
-
-							<ng-template #collapseCourseDateTrigger>
-								<span
-									class="tw-text-lg tw-font-normal tw-text-oebblack tw-mr-auto"
-									[innerHTML]="'RecBadge.courseDate' | translate"
-								></span>
-							</ng-template>
-
-							<oeb-collapsible
-								[trigger]="collapseCourseDateTrigger"
-								[defaultOpen]="false"
-								[closeIcon]="'lucideChevronDown'"
-								[iconStyle]="'tw-text-oebblack'"
-								[iconSize]="'lg'"
-							>
-								<div class="tw-flex tw-gap-4">
-									<oeb-input
-										[control]="issueForm.controls.activity_start_date.rawControl"
-										[label]="'General.start' | translate"
-										[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
-										fieldType="date"
-										[noTopMargin]="true"
-										[errorMessage]="'CreateBadge.activityStartDateRequired' | translate"
-									></oeb-input>
-									<oeb-input
-										[control]="issueForm.controls.activity_end_date.rawControl"
-										[label]="'General.end' | translate"
-										[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
-										fieldType="date"
-										[noTopMargin]="true"
-										[errorMessage]="'CreateBadge.activityEndDateRequired' | translate"
-									></oeb-input>
-								</div>
-							</oeb-collapsible>
-						</div>
+										</oeb-checkbox>
+									</section>
+								</oeb-collapsible>
+							</li>
+						</ul>
 					</div>
-				</div>
+				</div> -->
 				<span class="tw-text-oebblack tw-mt-10 tw-mb-4 tw-text-right tw-text-lg tw-block">
 					{{ 'Issuer.receivesBadgeByEmail' | translate }}</span
 				>

@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -23,6 +23,8 @@ import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { environment } from '../../../../environments/environment';
 import { DateRangeValidator } from '~/common/validators/date-range.validator';
+import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
+import { activityPlaceValidator } from '~/common/validators/activity-place.validator';
 
 @Component({
 	selector: 'edit-qr-form',
@@ -36,9 +38,10 @@ import { DateRangeValidator } from '~/common/validators/date-range.validator';
 		OebCheckboxComponent,
 		OebButtonComponent,
 		TranslatePipe,
+		OptionalDetailsComponent,
 	],
 })
-export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
+export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	protected translate = inject(TranslateService);
 	protected qrCodeApiService = inject(QrCodeApiService);
 	protected badgeClassManager = inject(BadgeClassManager);
@@ -83,7 +86,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	issuerLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
 
-	qrForm = typedFormGroup(this.missingStartDate.bind(this))
+	qrForm = typedFormGroup([this.missingStartDate.bind(this), activityPlaceValidator.bind(this)])
 		.addControl('title', '', Validators.required)
 		.addControl('createdBy', '', Validators.required)
 		.addControl('activity_start_date', '', DateValidator.validDate, (control) => {
@@ -96,14 +99,14 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 			DateValidator.validDate,
 			DateRangeValidator.endDateAfterStartDate('activity_start_date', 'activityEndBeforeStart'),
 		])
+		.addControl('activity_zip', '')
+		.addControl('activity_city', '')
+		.addControl('activity_online', false)
 		.addControl('valid_from', '', DateValidator.validDate)
 		.addControl('expires_at', '', [DateValidator.validDate, this.validDateRange.bind(this)])
 		.addControl('badgeclass_id', '', Validators.required)
 		.addControl('issuer_id', '', Validators.required)
 		.addControl('notifications', false);
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {
 		const route = inject(ActivatedRoute);
@@ -163,6 +166,9 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					activity_end_date: qrCode.activity_end_date
 						? EditQrFormComponent.datePipe.transform(new Date(qrCode.activity_end_date), 'yyyy-MM-dd')
 						: '',
+					activity_zip: qrCode.activity_zip,
+					activity_city: qrCode.activity_city,
+					activity_online: qrCode.activity_online,
 					valid_from: qrCode.valid_from
 						? EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd')
 						: undefined,
@@ -192,6 +198,10 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		});
 	}
 
+	ngOnInit() {
+		this.setupOnlineCheckboxWatcher();
+	}
+
 	previousPage() {
 		this._location.back();
 	}
@@ -219,6 +229,47 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		return null;
 	}
 
+	private setupOnlineCheckboxWatcher() {
+		const zipControl = this.qrForm.controls.activity_zip.rawControl;
+		const cityControl = this.qrForm.controls.activity_city.rawControl;
+		const onlineControl = this.qrForm.controls.activity_online.rawControl;
+
+		zipControl!.valueChanges.subscribe(() => this.updateOnlineCheckboxState());
+		cityControl!.valueChanges.subscribe(() => this.updateOnlineCheckboxState());
+
+		onlineControl!.valueChanges.subscribe(() => this.updateAddressState());
+
+		this.updateOnlineCheckboxState();
+	}
+
+	private updateOnlineCheckboxState() {
+		const zipControl = this.qrForm.controls.activity_zip.rawControl;
+		const cityControl = this.qrForm.controls.activity_city.rawControl;
+		const onlineControl = this.qrForm.controls.activity_online.rawControl;
+
+		const hasAddressData = zipControl.value.length > 0 || cityControl.value.length > 0;
+
+		if (hasAddressData) {
+			onlineControl?.disable({ emitEvent: false });
+		} else {
+			onlineControl?.enable({ emitEvent: false });
+		}
+	}
+
+	private updateAddressState() {
+		const zipControl = this.qrForm.controls.activity_zip.rawControl;
+		const cityControl = this.qrForm.controls.activity_city.rawControl;
+		const onlineControl = this.qrForm.controls.activity_online.rawControl;
+
+		if (onlineControl.value === true) {
+			zipControl?.disable({ emitEvent: false });
+			cityControl?.disable({ emitEvent: false });
+		} else {
+			zipControl?.enable({ emitEvent: false });
+			cityControl?.enable({ emitEvent: false });
+		}
+	}
+
 	onSubmit() {
 		if (!this.qrForm.markTreeDirtyAndValidate()) {
 			return;
@@ -237,6 +288,9 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 						formState.activity_end_date && formState.activity_start_date !== formState.activity_end_date
 							? new Date(formState.activity_end_date).toISOString()
 							: null,
+					activity_zip: formState.activity_zip,
+					activity_online: formState.activity_online,
+					activity_city: formState.activity_city,
 					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : null,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : null,
 					badgeclass_id: this.badgeSlug,
@@ -270,6 +324,9 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					activity_end_date: formState.activity_end_date
 						? new Date(formState.activity_end_date).toISOString()
 						: undefined,
+					activity_zip: formState.activity_zip,
+					activity_online: formState.activity_online,
+					activity_city: formState.activity_city,
 					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 					notifications: formState.notifications,

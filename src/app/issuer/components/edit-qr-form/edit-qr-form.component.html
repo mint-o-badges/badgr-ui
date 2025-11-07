@@ -27,7 +27,7 @@
 					{{ 'QrCode.create' | translate }} <br />
 					<span class="tw-font-black tw-text-purple tw-uppercase">{{ badgeClass.name }}</span>
 				</h2>
-				@if (environment.networksEnabled) {
+				@if (issuer.is_network) {
 					<div class="tw-flex tw-gap-2 tw-items-center md:tw-mt-7 tw-mt-6">
 						<div class="tw-bg-white tw-w-[60px] tw-h-[60px] tw-flex tw-justify-center tw-items-center">
 							<img width="" [src]="issuer.image" alt="Issuer image" />
@@ -53,8 +53,17 @@
 				<input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
 				<input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
 
+				<oeb-optional-details
+					[parentForm]="qrForm"
+					[showExpiration]="true"
+					[showEvidence]="false"
+					[showVenue]="true"
+					[showCourseDate]="true"
+				>
+				</oeb-optional-details>
+
 				<!-- Activity/Course Dates Section -->
-				<div class="tw-mt-6 md:tw-mt-8 tw-flex tw-bg-white tw-rounded-[5px] tw-p-4 tw-flex-col tw-gap-2">
+				<!-- <div class="tw-mt-6 md:tw-mt-8 tw-flex tw-bg-white tw-rounded-[5px] tw-p-4 tw-flex-col tw-gap-2">
 					<span
 						class="tw-mb-2 tw-text-oebblack tw-text-lg tw-uppercase tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
 					>
@@ -92,10 +101,10 @@
 					<p id="noStartDateError" [hidden]="!qrForm.hasError('noStartDate')" class="tw-text-red tw-mb-2">
 						{{ 'QrCode.missingStartDate' | translate }}
 					</p>
-				}
+				} -->
 
 				<!-- QR Code Expiration -->
-				<div class="tw-mt-6 md:tw-mt-8 tw-flex tw-bg-white tw-rounded-[5px] tw-p-4 tw-flex-col tw-gap-2">
+				<!-- <div class="tw-mt-6 md:tw-mt-8 tw-flex tw-bg-white tw-rounded-[5px] tw-p-4 tw-flex-col tw-gap-2">
 					<span
 						class="tw-text-oebblack tw-text-lg tw-uppercase tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
 					>
@@ -127,7 +136,7 @@
 							fieldType="date"
 						></oeb-input>
 					</div>
-				</div>
+				</div> -->
 
 				<!-- Notifications Section -->
 				@if (editing) {

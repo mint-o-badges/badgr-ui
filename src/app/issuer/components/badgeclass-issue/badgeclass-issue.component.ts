@@ -42,6 +42,9 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { OebCollapsibleComponent } from '~/components/oeb-collapsible.component';
 import { DateRangeValidator } from '~/common/validators/date-range.validator';
+import { NgIcon } from '@ng-icons/core';
+import { OebSeparatorComponent } from '~/components/oeb-separator.component';
+import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -76,6 +79,9 @@ import { DateRangeValidator } from '~/common/validators/date-range.validator';
 		DatePipe,
 		TranslatePipe,
 		OebCollapsibleComponent,
+		NgIcon,
+		OebSeparatorComponent,
+		OptionalDetailsComponent,
 	],
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -166,6 +172,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			DateValidator.validDate,
 			DateRangeValidator.endDateAfterStartDate('activity_start_date', 'activityEndBeforeStart'),
 		])
+		.addControl('activity_zip', '')
+		.addControl('activity_city', '')
+		.addControl('activity_online', false)
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',
@@ -253,6 +262,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		}
 
 		const formState = this.issueForm.value;
+		console.log('formState', formState);
 		const cleanedEvidence = formState.evidence_items.filter((e) => e.narrative !== '' || e.evidence_url !== '');
 		const cleanedName = striptags(formState.recipientprofile_name);
 
@@ -299,6 +309,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				extensions,
 				activity_start_date: activityStartDate,
 				activity_end_date: activityEndDate,
+				activity_zip: formState.activity_zip,
+				activity_city: formState.activity_city,
+				activity_online: formState.activity_online,
 			})
 			.then(() => this.badgeClass.update())
 			.then(
