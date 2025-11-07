@@ -45,6 +45,7 @@ import { OebSeparatorComponent } from '~/components/oeb-separator.component';
 import { OebCollapsibleComponent } from '~/components/oeb-collapsible.component';
 import { NgIcon } from '@ng-icons/core';
 import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
+import { setupActivityOnlineSync } from '~/common/util/activity-place-sync-helper';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -111,6 +112,8 @@ export class BadgeclassIssueBulkAwardConformation
 
 	issueBadgeFinished: Promise<unknown>;
 
+	subscriptions: Subscription[] = [];
+
 	private taskSubscription: Subscription | null = null;
 	currentTaskStatus: TaskResult | null = null;
 
@@ -130,12 +133,14 @@ export class BadgeclassIssueBulkAwardConformation
 
 	ngOnInit(): void {
 		this.enableActionButton();
+		this.subscriptions.push(...setupActivityOnlineSync(this.optionalDetailsForm));
 	}
 
 	ngOnDestroy() {
 		if (this.taskSubscription) {
 			this.taskSubscription.unsubscribe();
 		}
+		this.subscriptions.forEach((s) => s.unsubscribe());
 	}
 
 	enableActionButton() {

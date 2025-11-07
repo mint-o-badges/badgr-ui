@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -45,6 +45,8 @@ import { DateRangeValidator } from '~/common/validators/date-range.validator';
 import { NgIcon } from '@ng-icons/core';
 import { OebSeparatorComponent } from '~/components/oeb-separator.component';
 import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
+import { setupActivityOnlineSync } from '~/common/util/activity-place-sync-helper';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -84,7 +86,7 @@ import { OptionalDetailsComponent } from '../optional-details/optional-details.c
 		OptionalDetailsComponent,
 	],
 })
-export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	protected title = inject(Title);
 	protected messageService = inject(MessageService);
 	protected eventsService = inject(EventsService);
@@ -188,6 +190,8 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	previewB64Img: string;
 
+	subscriptions: Subscription[] = [];
+
 	issueBadgeFinished: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
 	badgeClassLoaded: Promise<unknown>;
@@ -250,6 +254,11 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.subscriptions.push(...setupActivityOnlineSync(this.issueForm));
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach((s) => s.unsubscribe());
 	}
 
 	addEvidence() {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, OnDestroy } from '@angular/core';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -25,6 +25,8 @@ import { environment } from '../../../../environments/environment';
 import { DateRangeValidator } from '~/common/validators/date-range.validator';
 import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
 import { activityPlaceValidator } from '~/common/validators/activity-place.validator';
+import { setupActivityOnlineSync } from '~/common/util/activity-place-sync-helper';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'edit-qr-form',
@@ -41,7 +43,7 @@ import { activityPlaceValidator } from '~/common/validators/activity-place.valid
 		OptionalDetailsComponent,
 	],
 })
-export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	protected translate = inject(TranslateService);
 	protected qrCodeApiService = inject(QrCodeApiService);
 	protected badgeClassManager = inject(BadgeClassManager);
@@ -85,6 +87,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 	badgeClassLoaded: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
+
+	subscriptions: Subscription[] = [];
 
 	qrForm = typedFormGroup([this.missingStartDate.bind(this), activityPlaceValidator.bind(this)])
 		.addControl('title', '', Validators.required)
@@ -199,7 +203,10 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	ngOnInit() {
-		this.setupOnlineCheckboxWatcher();
+		this.subscriptions.push(...setupActivityOnlineSync(this.qrForm));
+	}
+	ngOnDestroy() {
+		this.subscriptions.forEach((s) => s.unsubscribe());
 	}
 
 	previousPage() {
@@ -227,47 +234,6 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 		}
 
 		return null;
-	}
-
-	private setupOnlineCheckboxWatcher() {
-		const zipControl = this.qrForm.controls.activity_zip.rawControl;
-		const cityControl = this.qrForm.controls.activity_city.rawControl;
-		const onlineControl = this.qrForm.controls.activity_online.rawControl;
-
-		zipControl!.valueChanges.subscribe(() => this.updateOnlineCheckboxState());
-		cityControl!.valueChanges.subscribe(() => this.updateOnlineCheckboxState());
-
-		onlineControl!.valueChanges.subscribe(() => this.updateAddressState());
-
-		this.updateOnlineCheckboxState();
-	}
-
-	private updateOnlineCheckboxState() {
-		const zipControl = this.qrForm.controls.activity_zip.rawControl;
-		const cityControl = this.qrForm.controls.activity_city.rawControl;
-		const onlineControl = this.qrForm.controls.activity_online.rawControl;
-
-		const hasAddressData = zipControl.value.length > 0 || cityControl.value.length > 0;
-
-		if (hasAddressData) {
-			onlineControl?.disable({ emitEvent: false });
-		} else {
-			onlineControl?.enable({ emitEvent: false });
-		}
-	}
-
-	private updateAddressState() {
-		const zipControl = this.qrForm.controls.activity_zip.rawControl;
-		const cityControl = this.qrForm.controls.activity_city.rawControl;
-		const onlineControl = this.qrForm.controls.activity_online.rawControl;
-
-		if (onlineControl.value === true) {
-			zipControl?.disable({ emitEvent: false });
-			cityControl?.disable({ emitEvent: false });
-		} else {
-			zipControl?.enable({ emitEvent: false });
-			cityControl?.enable({ emitEvent: false });
-		}
 	}
 
 	onSubmit() {
