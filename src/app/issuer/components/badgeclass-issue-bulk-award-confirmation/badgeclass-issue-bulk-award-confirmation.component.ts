@@ -206,7 +206,7 @@ export class BadgeclassIssueBulkAwardConformation
 		const recipientProfileContextUrl =
 			'https://api.openbadges.education/static/extensions/recipientProfile/context.json';
 
-		const formState = this.optionalDetailsForm.value;
+		const formState = this.optionalDetailsForm.rawControl.getRawValue();
 		const activityStartDate = formState.activity_start_date
 			? new Date(formState.activity_start_date).toISOString()
 			: null;
