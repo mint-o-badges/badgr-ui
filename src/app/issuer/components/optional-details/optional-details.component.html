@@ -184,15 +184,15 @@
 					</oeb-collapsible>
 				</li>
 
-				@if (showVenue && hasControl('activity_zip')) {
+				@if (showLocation && hasControl('activity_zip')) {
 					<oeb-separator
 						[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed tw-border-darkgrey'"
 					></oeb-separator>
 				}
 			}
 
-			<!-- Venue Item -->
-			@if (showVenue && hasControl('activity_zip')) {
+			<!-- Location Item -->
+			@if (showLocation && hasControl('activity_zip')) {
 				<li>
 					<ng-template #venueTrigger>
 						<ng-icon size="24px" hlm name="lucideMapPin" class="tw-mr-1"></ng-icon>

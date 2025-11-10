@@ -29,7 +29,7 @@ export class OptionalDetailsComponent implements OnInit {
 	@Input() parentForm!: TypedFormGroup<any, any>;
 	@Input() showExpiration: boolean = false;
 	@Input() showEvidence: boolean = false;
-	@Input() showVenue: boolean = false;
+	@Input() showLocation: boolean = false;
 	@Input() showCourseDate: boolean = false;
 	@Input() isOptional: boolean = true;
 
