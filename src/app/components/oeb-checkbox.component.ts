@@ -64,9 +64,6 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 
 	@Output() ngModelChange = new EventEmitter<boolean>();
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {}
 
 	onChange(event) {
@@ -107,9 +104,10 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	private cachedErrorState = null;
 
 	get controlErrorState() {
-		if (this.control) {
+		if (this.control && this.control.hasError('required')) {
 			return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
 		}
+		return false;
 	}
 
 	get isErrorState() {
