@@ -24,7 +24,6 @@ import { Issuer } from '~/issuer/models/issuer.model';
 import { environment } from '../../../../environments/environment';
 import { DateRangeValidator } from '~/common/validators/date-range.validator';
 import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
-import { activityPlaceValidator } from '~/common/validators/activity-place.validator';
 import { setupActivityOnlineSync } from '~/common/util/activity-place-sync-helper';
 import { Subscription } from 'rxjs';
 
@@ -90,7 +89,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 
 	subscriptions: Subscription[] = [];
 
-	qrForm = typedFormGroup([this.missingStartDate.bind(this), activityPlaceValidator.bind(this)])
+	qrForm = typedFormGroup([this.missingStartDate.bind(this)])
 		.addControl('title', '', Validators.required)
 		.addControl('createdBy', '', Validators.required)
 		.addControl('activity_start_date', '', DateValidator.validDate, (control) => {
