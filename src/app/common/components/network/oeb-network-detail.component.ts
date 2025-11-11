@@ -126,13 +126,13 @@ export class OebNetworkDetailComponent {
 				title: 'Network.networkBadges',
 				icon: 'lucideShipWheel',
 				count: this.partnerBadges.length,
-				component: this.networkTemplate,
+				component: null, //rendered via templateOutlet
 			},
 			{
 				key: 'partner',
 				title: 'Issuer.partnerBadges',
 				icon: 'lucideHexagon',
-				component: this.partnerTemplate,
+				component: null, // rendered via templateOutlet
 				count: this.partnerBadges.length,
 			},
 		];
