@@ -678,7 +678,8 @@
 		"activityEndDateRequired": "Enddatum ist erforderlich und darf nicht vor dem Startdatum liegen",
 		"activityStartDateRequired": "Startdatum ist erforderlich",
 		"selectIssuer": "Für welche deiner Institutionen soll der Badge erstellt bzw. editiert werden?",
-		"noIssuersAvailable": "Du bist nicht Teil einer Institution und kannst daher keine Badges erstellen oder editieren."
+		"noIssuersAvailable": "Du bist nicht Teil einer Institution und kannst daher keine Badges erstellen oder editieren.",
+		"selectBadge": "Wähle den zu bearbeitenden Badge oder erstelle einen Neuen"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",

@@ -22,6 +22,9 @@ import { LoadingDotsComponent } from '~/common/components/loading-dots.component
 import { OebButtonComponent } from '~/components/oeb-button.component';
 import { FormsModule } from '@angular/forms';
 import { HlmP } from '@spartan-ng/helm/typography';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { first, from, mergeMap } from 'rxjs';
+import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
@@ -32,7 +35,35 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		@if (authService.isLoggedIn$ | async) {
 			@if (issuer()) {
 				@switch (currentRoute()) {
-					@case ('select-action') {}
+					@case ('select-action') {
+						<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'CreateBadge.selectBadge' | translate }}</h2>
+						<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
+							@if (userBadges()) {
+								@for (b of userBadges(); track b) {
+									<label class="radio tw-mb-2">
+										<input type="radio" [(ngModel)]="badgeSelection" [value]="b" />
+										<span class="radio-x-text">{{ b.name }}</span>
+									</label>
+								}
+								<oeb-button
+									type="button"
+									[variant]="'secondary'"
+									(click)="onChooseCreateNewBadge()"
+									size="sm"
+									[text]="'Issuer.createBadge' | translate"
+								/>
+								<oeb-button
+									type="button"
+									[disabled]="!badgeSelection"
+									(click)="onChooseBadge()"
+									size="sm"
+									[text]="'General.next' | translate"
+								/>
+							} @else {
+								<loading-dots />
+							}
+						</div>
+					}
 					@case ('select') {
 						<badgeclass-select-type />
 					}
@@ -197,14 +228,18 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	}>();
 
 	readonly badge = computed(() => {
+		if (this.config()?.showBadgeSelection) return this.chosenBadge();
 		if (this.config()?.badge) return new BadgeClass(this.entityManager, this.config().badge);
 		else return undefined;
 	});
+	readonly userBadges = signal<BadgeClass[]>(undefined);
+	readonly chosenBadge = signal<BadgeClass | undefined>(undefined);
 
 	readonly issuer = computed(() => {
 		if (this.config()?.issuer) return this.config()?.issuer;
 		else return this.chosenIssuer();
 	});
+	readonly issuer$ = toObservable(this.issuer);
 	readonly userIssuers = signal<Issuer[]>(undefined);
 	readonly chosenIssuer = signal<Issuer | Network | undefined>(undefined);
 	readonly category = signal<string>('participation');
@@ -218,11 +253,13 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly activatedRoute = inject(ActivatedRoute);
 	readonly entityManager = inject(CommonEntityManager);
 	readonly issuerManager = inject(IssuerManager);
+	readonly badgeClassApi = inject(BadgeClassApiService);
 	readonly currentRoute = signal<
 		'initial' | 'select-action' | 'select' | 'create' | 'create-lp' | 'finished' | 'error' | 'unknown'
 	>('initial');
 
 	issuerSelection: Issuer | Network | undefined = undefined;
+	badgeSelection: BadgeClass | undefined = undefined;
 
 	private signInEffect = effect(() => {
 		const t = this.token();
@@ -261,6 +298,23 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 				this.currentRoute.set(routeForUrl(url));
 			}
 		});
+
+		this.issuer$
+			.pipe(
+				first((i) => i !== undefined),
+				mergeMap((i) => from(this.badgeClassApi.getBadgesForIssuer(i.slug))),
+			)
+			.subscribe({
+				next: (b) => {
+					if (b.length === 0) this.currentRoute.set('select');
+					else this.userBadges.set(b.map((badge) => new BadgeClass(this.entityManager, badge)));
+				},
+				error: (err) => {
+					this.errorContextInfo.set(err);
+					this.currentRoute.set('error');
+					this.finished.emit(false);
+				},
+			});
 	}
 
 	ngAfterViewInit(): void {
@@ -289,5 +343,16 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 
 	onChooseIssuer() {
 		if (this.issuerSelection) this.chosenIssuer.set(this.issuerSelection);
+	}
+
+	onChooseCreateNewBadge() {
+		this.currentRoute.set('select');
+	}
+
+	onChooseBadge() {
+		if (this.badgeSelection) {
+			this.chosenBadge.set(this.badgeSelection);
+			this.currentRoute.set('select');
+		}
 	}
 }
