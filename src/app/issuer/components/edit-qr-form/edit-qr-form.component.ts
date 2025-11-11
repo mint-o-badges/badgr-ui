@@ -153,7 +153,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		}
 
 		if (this.qrSlug) {
-			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+			this.qrCodeApiService.getQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug).then((qrCode) => {
 				this.qrForm.setValue({
 					title: qrCode.title,
 					createdBy: qrCode.createdBy,
