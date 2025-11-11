@@ -30,7 +30,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		<confirm-dialog #confirmDialog></confirm-dialog>
 		<nounproject-dialog #nounprojectDialog></nounproject-dialog>
 		@if (authService.isLoggedIn$ | async) {
-			@if (config()?.issuer) {
+			@if (issuer()) {
 				@switch (currentRoute()) {
 					@case ('select-action') {}
 					@case ('select') {
