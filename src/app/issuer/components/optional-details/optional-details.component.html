@@ -232,7 +232,9 @@
 								}
 							</div>
 							@if (hasControl('activity_online')) {
-								<span class="tw-text-lg tw-text-oebblack">{{ 'General.or' | translate }}</span>
+								<span class="tw-text-lg tw-text-oebblack tw-italic">{{
+									'General.or' | translate
+								}}</span>
 								<oeb-checkbox [text]="'Online'" [control]="getRawControl('activity_online')">
 								</oeb-checkbox>
 							}
