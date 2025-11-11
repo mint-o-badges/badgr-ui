@@ -12,6 +12,7 @@
 		"build:web-components:prod": "npm run build:web-components -- production",
 		"build:web-components:staging": "npm run build:web-components -- staging",
 		"build:web-components:develop": "npm run build:web-components -- develop",
+		"build:web-components:local": "npm run build:web-components -- local",
 		"build:web-components": "node ./webcomponents/build-webcomponents.js",
 		"build:app": "ng build badgr-ui-cli --output-hashing=all --aot --configuration production && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",
 		"build:staging": "ng build badgr-ui-cli --output-hashing=all --aot --configuration staging && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",
