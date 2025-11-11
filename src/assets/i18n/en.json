@@ -457,7 +457,7 @@
 		"alreadyConfirmed": "Another member of <span class='tw-italic'> {{issuerName}} has already accepted the network invitation from <span class='tw-font-bold'> {{networkName}}</span>.",
 		"view": "View network",
 		"createBadge": "Create network badge",
-		"createLp": "Create network learningpath",
+		"createLp": "Create network learning path",
 		"noLpsYet": "There are no network learning paths yet.",
 		"awardBadgeIssuer": "Which of your <span class='tw-font-bold'>institutions</span> should the badge be awarded to?",
 		"networkBadges": "Network badges",
@@ -1096,6 +1096,7 @@
 		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
+		"learningpathSingular": "Learning path",
 		"learningpathsPlural": "Learning paths",
 		"learningpathsNav": "Learning Paths A-Z",
 		"catalogHeadline": "All learning paths at a glance",

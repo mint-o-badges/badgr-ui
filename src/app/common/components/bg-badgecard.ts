@@ -88,7 +88,9 @@ import { HlmP } from '@spartan-ng/helm/typography';
 								variant="light"
 								class="badgecard-x-issuer text-clamp issuer-clamp"
 								[title]="issuerTitle"
-								[routerLink]="['../../public/issuers', issuerSlug]"
+								[routerLink]="
+									network ? ['/public/networks', issuerSlug] : ['/public/issuers', issuerSlug]
+								"
 								>{{ issuerTitle }}</a
 							>
 						} @else {
@@ -210,6 +212,7 @@ export class BgBadgecard {
 	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | 'imported' | undefined;
 	@Input() verifyUrl: string;
 	@Input() public = false;
+	@Input() network = false;
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: FormControl;
 	@Input() showCheckbox = false;

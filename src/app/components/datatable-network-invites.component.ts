@@ -99,7 +99,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 		</div>
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate | titlecase }}
+			{{ context.header.id | translate }}
 		</ng-template>
 
 		<ng-template #inviteCellTemplate let-context>

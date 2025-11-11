@@ -149,7 +149,7 @@ export class LearningPathDatatableComponent {
 
 	private readonly tableColumnDefinition: ColumnDef<ApiLearningPath>[] = [
 		{
-			id: 'General.learningPath',
+			id: 'LearningPath.learningpathSingular',
 			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => row.name,
 			cell: () => this.badgeCellTemplate(),
