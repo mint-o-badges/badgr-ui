@@ -21,7 +21,7 @@ import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { LoadingDotsComponent } from '~/common/components/loading-dots.component';
 import { OebButtonComponent } from '~/components/oeb-button.component';
 import { FormsModule } from '@angular/forms';
-import { HlmP } from '@spartan-ng/helm/typography';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { first, from, mergeMap } from 'rxjs';
 import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
@@ -36,39 +36,47 @@ import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 			@if (issuer()) {
 				@switch (currentRoute()) {
 					@case ('select-action') {
-						<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'CreateBadge.selectBadge' | translate }}</h2>
-						<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
-							@if (userBadges()) {
-								@for (b of userBadges(); track b) {
-									<label class="radio tw-mb-2">
-										<input type="radio" [(ngModel)]="badgeSelection" [value]="b" />
-										<span class="radio-x-text">{{ b.name }}</span>
-									</label>
+						<div class="oeb-section-sm">
+							<div class="oeb-headline-container-sm">
+								<h1 hlmH1 class="tw-text-purple tw-font-black">
+									{{ 'CreateBadge.selectBadge' | translate }}
+								</h1>
+							</div>
+							<div class="md:tw-w-[530px] tw-w-[98%] tw-p-10">
+								@if (userBadges()) {
+									@for (b of userBadges(); track b) {
+										<label class="radio tw-mb-2">
+											<input type="radio" [(ngModel)]="badgeSelection" [value]="b" />
+											<span class="radio-x-text">{{ b.name }}</span>
+										</label>
+									}
+									<oeb-button
+										type="button"
+										[variant]="'secondary'"
+										(click)="onChooseCreateNewBadge()"
+										size="sm"
+										[text]="'Issuer.createBadge' | translate"
+										class="tw-inline-block tw-mr-4 tw-mt-4"
+									/>
+									<oeb-button
+										type="button"
+										[disabled]="!badgeSelection"
+										(click)="onChooseBadge()"
+										size="sm"
+										[text]="'General.next' | translate"
+										class="tw-inline-block tw-mt-4"
+									/>
+								} @else {
+									<loading-dots />
 								}
-								<oeb-button
-									type="button"
-									[variant]="'secondary'"
-									(click)="onChooseCreateNewBadge()"
-									size="sm"
-									[text]="'Issuer.createBadge' | translate"
-								/>
-								<oeb-button
-									type="button"
-									[disabled]="!badgeSelection"
-									(click)="onChooseBadge()"
-									size="sm"
-									[text]="'General.next' | translate"
-								/>
-							} @else {
-								<loading-dots />
-							}
+							</div>
 						</div>
 					}
 					@case ('select') {
 						<badgeclass-select-type />
 					}
 					@case ('create') {
-						@if (config().badge) {
+						@if (badge()) {
 							<badgeclass-edit-form
 								(save)="onBadgeClassCreated()"
 								(cancelEdit)="onCancel()"
@@ -102,7 +110,7 @@ import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 
 							<p
 								[innerHTML]="
-									config().badge
+									badge()
 										? ('LearningPath.savedSuccessfully' | translate)
 										: ('CreateBadge.successfullyCreated' | translate)
 								"
@@ -142,28 +150,33 @@ import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 					}
 				}
 			} @else {
-				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'CreateBadge.selectIssuer' | translate }}</h2>
-				<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
-					@if (userIssuers()) {
-						@for (i of userIssuers(); track i) {
-							<label class="radio tw-mb-2">
-								<input type="radio" [(ngModel)]="issuerSelection" [value]="i" />
-								<span class="radio-x-text">{{ i.name }}</span>
-							</label>
+				<div class="oeb-section-sm">
+					<div class="oeb-headline-container-sm">
+						<h1 hlmH1 class="tw-text-purple tw-font-black">{{ 'CreateBadge.selectIssuer' | translate }}</h1>
+					</div>
+					<div class="md:tw-w-[530px] tw-w-[98%] tw-p-10">
+						@if (userIssuers()) {
+							@for (i of userIssuers(); track i) {
+								<label class="radio tw-mb-2">
+									<input type="radio" [(ngModel)]="issuerSelection" [value]="i" />
+									<span class="radio-x-text">{{ i.name }}</span>
+								</label>
+							}
+							@if (userIssuers().length === 0) {
+								<p hlmP>{{ 'CreateBadge.noIssuersAvailable' | translate }}</p>
+							}
+							<oeb-button
+								type="button"
+								[disabled]="!issuerSelection"
+								(click)="onChooseIssuer()"
+								size="sm"
+								[text]="'General.next' | translate"
+								class="tw-inline-block tw-mt-4"
+							/>
+						} @else {
+							<loading-dots />
 						}
-						@if (userIssuers().length === 0) {
-							<p hlmP>{{ 'CreateBadge.noIssuersAvailable' | translate }}</p>
-						}
-						<oeb-button
-							type="button"
-							[disabled]="!issuerSelection"
-							(click)="onChooseIssuer()"
-							size="sm"
-							[text]="'General.next' | translate"
-						/>
-					} @else {
-						<loading-dots />
-					}
+					</div>
 				</div>
 			}
 		} @else {
@@ -193,6 +206,7 @@ import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 		OebButtonComponent,
 		FormsModule,
 		HlmP,
+		HlmH1,
 	],
 })
 export class OebBadgeClassEditForm implements AfterViewInit {
@@ -356,7 +370,13 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	onChooseBadge() {
 		if (this.badgeSelection) {
 			this.chosenBadge.set(this.badgeSelection);
-			this.currentRoute.set('select');
+
+			if (
+				this.badgeSelection.hasExtension('extensions:CategoryExtension') &&
+				this.badgeSelection.extension['extensions:CategoryExtension'].category === 'learningpath'
+			)
+				this.currentRoute.set('create-lp');
+			else this.currentRoute.set('create');
 		}
 	}
 }
