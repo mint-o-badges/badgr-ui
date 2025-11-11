@@ -1095,6 +1095,7 @@
 		"expired": "QR-Code ist nicht mehr gültig."
 	},
 	"LearningPath": {
+		"learningpathSingular": "Lernpfad",
 		"learningpathsPlural": "Lernpfade",
 		"learningpathsNav": "Lernpfade A-Z",
 		"catalogHeadline": "Alle Lernpfade in der Übersicht",
