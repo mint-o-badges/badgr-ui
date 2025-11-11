@@ -272,7 +272,8 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	private initialRouteEffect = effect(
 		() => {
 			if (this.config()) {
-				this.activatedRoute.snapshot.params['issuerSlug'] = this.config().issuer.slug;
+				if (this.config()?.issuer)
+					this.activatedRoute.snapshot.params['issuerSlug'] = this.config().issuer.slug;
 				if (this.config()?.showBadgeSelection) this.currentRoute.set('select-action');
 				else this.currentRoute.set(this.config().badge ? 'create' : 'select');
 				// Run the initial routing only once -> destroy it here and use manualCleanup
@@ -342,7 +343,10 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	}
 
 	onChooseIssuer() {
-		if (this.issuerSelection) this.chosenIssuer.set(this.issuerSelection);
+		if (this.issuerSelection) {
+			this.activatedRoute.snapshot.params['issuerSlug'] = this.issuerSelection.slug;
+			this.chosenIssuer.set(this.issuerSelection);
+		}
 	}
 
 	onChooseCreateNewBadge() {
