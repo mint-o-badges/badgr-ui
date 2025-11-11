@@ -13,7 +13,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	imports: [HlmInput, HlmP, OebInputErrorComponent, NgClass, ReactiveFormsModule, NgIcon, NgTemplateOutlet],
 	styleUrls: ['./input.component.scss'],
 	template: ` <div
-		[ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
+		[ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
 	>
 		<div class="tw-flex tw-justify-between">
 			@if (label) {

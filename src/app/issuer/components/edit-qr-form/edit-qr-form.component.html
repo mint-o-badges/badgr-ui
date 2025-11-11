@@ -27,7 +27,7 @@
 					{{ 'QrCode.create' | translate }} <br />
 					<span class="tw-font-black tw-text-purple tw-uppercase">{{ badgeClass.name }}</span>
 				</h2>
-				@if (environment.networksEnabled) {
+				@if (issuer && issuer.is_network) {
 					<div class="tw-flex tw-gap-2 tw-items-center md:tw-mt-7 tw-mt-6">
 						<div class="tw-bg-white tw-w-[60px] tw-h-[60px] tw-flex tw-justify-center tw-items-center">
 							<img width="" [src]="issuer.image" alt="Issuer image" />
@@ -53,80 +53,15 @@
 				<input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
 				<input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
 
-				<!-- Activity/Course Dates Section -->
-				<div class="tw-mt-6 md:tw-mt-8 tw-flex tw-bg-white tw-rounded-[5px] tw-p-4 tw-flex-col tw-gap-2">
-					<span
-						class="tw-mb-2 tw-text-oebblack tw-text-lg tw-uppercase tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+				<div class="tw-py-10">
+					<oeb-optional-details
+						[parentForm]="qrForm"
+						[showExpiration]="true"
+						[showEvidence]="false"
+						[showLocation]="true"
+						[showCourseDate]="true"
 					>
-						@if (!editing) {
-							<span class="tw-font-normal tw-italic">Optional:</span>
-						}
-						{{ 'RecBadge.courseDate' | translate }}
-					</span>
-					<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4">
-						<oeb-input
-							[noTopMargin]="true"
-							labelStyle="tw-text-oebblack"
-							[label]="'General.start' | translate"
-							[errorMessage]="{
-								invalidDate: 'QrCode.invalidDate' | translate,
-							}"
-							[control]="qrForm.rawControlMap.activity_start_date"
-							fieldType="date"
-						></oeb-input>
-						<oeb-input
-							[noTopMargin]="true"
-							labelStyle="tw-text-oebblack"
-							[label]="'General.end' | translate"
-							[errorMessage]="{
-								activityEndBeforeStart: 'QrCode.invalidDateRange' | translate,
-								invalidDate: 'QrCode.invalidDate' | translate,
-							}"
-							[control]="qrForm.rawControlMap.activity_end_date"
-							fieldType="date"
-						></oeb-input>
-					</div>
-				</div>
-
-				@if (qrForm.hasError('noStartDate')) {
-					<p id="noStartDateError" [hidden]="!qrForm.hasError('noStartDate')" class="tw-text-red tw-mb-2">
-						{{ 'QrCode.missingStartDate' | translate }}
-					</p>
-				}
-
-				<!-- QR Code Expiration -->
-				<div class="tw-mt-6 md:tw-mt-8 tw-flex tw-bg-white tw-rounded-[5px] tw-p-4 tw-flex-col tw-gap-2">
-					<span
-						class="tw-text-oebblack tw-text-lg tw-uppercase tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
-					>
-						@if (!editing) {
-							<span class="tw-font-normal tw-italic">Optional:</span>
-						}
-						{{ 'QrCode.expiration' | translate }}
-					</span>
-					<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4">
-						<oeb-input
-							[noTopMargin]="true"
-							labelStyle="tw-text-oebblack"
-							[label]="'QrCode.expirationStart' | translate"
-							[errorMessage]="{
-								invalidDate: 'QrCode.invalidDate' | translate,
-							}"
-							[control]="qrForm.rawControlMap.valid_from"
-							fieldType="date"
-						></oeb-input>
-						<oeb-input
-							[noTopMargin]="true"
-							labelStyle="tw-text-oebblack"
-							[label]="'QrCode.expirationEnd' | translate"
-							[errorMessage]="{
-								expiresBeforeValidFrom: ('QrCode.invalidExpirationDateRange' | translate),
-								invalidDate: ('QrCode.invalidDate' | translate),
-							}"
-							[control]="qrForm.rawControlMap.expires_at"
-							fieldType="date"
-						></oeb-input>
-					</div>
+					</oeb-optional-details>
 				</div>
 
 				<!-- Notifications Section -->
@@ -139,9 +74,7 @@
 				}
 
 				<oeb-checkbox
-					[class]="
-						editing ? 'oeb-standard-padding-bottom' : 'oeb-standard-padding-bottom md:tw-mt-10 tw-mt-6'
-					"
+					[class]="editing ? 'oeb-standard-padding-bottom' : 'oeb-standard-padding-bottom'"
 					type="checkbox"
 					[text]="'QrCode.receiveEmails' | translate"
 					[control]="qrForm.rawControlMap.notifications"
