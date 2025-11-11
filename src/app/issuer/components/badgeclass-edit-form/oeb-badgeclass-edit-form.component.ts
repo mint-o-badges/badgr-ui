@@ -32,6 +32,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		@if (authService.isLoggedIn$ | async) {
 			@if (config()?.issuer) {
 				@switch (currentRoute()) {
+					@case ('select-action') {}
 					@case ('select') {
 						<badgeclass-select-type />
 					}
@@ -40,7 +41,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 							<badgeclass-edit-form
 								(save)="onBadgeClassCreated()"
 								(cancelEdit)="onCancel()"
-								[issuer]="config().issuer"
+								[issuer]="issuer()"
 								[badgeClass]="badge()"
 								isForked="false"
 							/>
@@ -48,7 +49,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 							<badgeclass-edit-form
 								(save)="onBadgeClassCreated()"
 								(cancelEdit)="onCancel()"
-								[issuer]="config().issuer"
+								[issuer]="issuer()"
 								[category]="category()"
 								[isForked]="false"
 								[initBadgeClass]="null"
@@ -59,7 +60,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 						<learningpath-edit-form
 							(save)="onBadgeClassCreated()"
 							(cancelEdit)="onCancel()"
-							[issuer]="config().issuer"
+							[issuer]="issuer()"
 						/>
 					}
 					@case ('finished') {
@@ -185,11 +186,14 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	 * When passing undefined for the issuer, the web component will allow
 	 * the user to choose an issuer before proceeding.
 	 * When passing undefined for the badge, the web component assumes that
-	 * a bade is to be created.
+	 * a bade is to be created. If instead a badge selection should be shown,
+	 * set showBadgeSelection to true. When ture, this option will override
+	 * any option you will set for the badge parameter.
 	 */
 	readonly config = input<{
 		issuer: Issuer | Network | undefined;
 		badge: ApiBadgeClass | undefined;
+		showBadgeSelection: boolean | undefined;
 	}>();
 
 	readonly badge = computed(() => {
@@ -214,9 +218,9 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly activatedRoute = inject(ActivatedRoute);
 	readonly entityManager = inject(CommonEntityManager);
 	readonly issuerManager = inject(IssuerManager);
-	readonly currentRoute = signal<'initial' | 'select' | 'create' | 'create-lp' | 'finished' | 'error' | 'unknown'>(
-		'initial',
-	);
+	readonly currentRoute = signal<
+		'initial' | 'select-action' | 'select' | 'create' | 'create-lp' | 'finished' | 'error' | 'unknown'
+	>('initial');
 
 	issuerSelection: Issuer | Network | undefined = undefined;
 
@@ -232,7 +236,8 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 		() => {
 			if (this.config()) {
 				this.activatedRoute.snapshot.params['issuerSlug'] = this.config().issuer.slug;
-				this.currentRoute.set(this.config().badge ? 'create' : 'select');
+				if (this.config()?.showBadgeSelection) this.currentRoute.set('select-action');
+				else this.currentRoute.set(this.config().badge ? 'create' : 'select');
 				// Run the initial routing only once -> destroy it here and use manualCleanup
 				this.initialRouteEffect.destroy();
 			}
