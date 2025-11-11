@@ -125,7 +125,7 @@ export class OebNetworkDetailComponent {
 				key: 'network',
 				title: 'Network.networkBadges',
 				icon: 'lucideShipWheel',
-				count: this.partnerBadges.length,
+				count: this.networkBadges.length,
 				component: null, //rendered via templateOutlet
 			},
 			{
