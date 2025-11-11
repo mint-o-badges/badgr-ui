@@ -17,6 +17,11 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IssuerManager } from '~/issuer/services/issuer-manager.service';
+import { LoadingDotsComponent } from '~/common/components/loading-dots.component';
+import { OebButtonComponent } from '~/components/oeb-button.component';
+import { FormsModule } from '@angular/forms';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-badgeclass-edit-form',
@@ -104,6 +109,30 @@ import { TranslatePipe } from '@ngx-translate/core';
 						</div>
 					}
 				}
+			} @else {
+				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'CreateBadge.selectIssuer' | translate }}</h2>
+				<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
+					@if (userIssuers()) {
+						@for (i of userIssuers(); track i) {
+							<label class="radio tw-mb-2">
+								<input type="radio" [(ngModel)]="issuerSelection" [value]="i" />
+								<span class="radio-x-text">{{ i.name }}</span>
+							</label>
+						}
+						@if (userIssuers().length === 0) {
+							<p hlmP>{{ 'CreateBadge.noIssuersAvailable' | translate }}</p>
+						}
+						<oeb-button
+							type="button"
+							[disabled]="!issuerSelection"
+							(click)="onChooseIssuer()"
+							size="sm"
+							[text]="'General.next' | translate"
+						/>
+					} @else {
+						<loading-dots />
+					}
+				</div>
 			}
 		} @else {
 			<div class="tw-flex tw-items-center tw-gap-[20px] md:tw-w-[530px] tw-w-[98%] tw-p-10">
@@ -128,20 +157,52 @@ import { TranslatePipe } from '@ngx-translate/core';
 		NgIcon,
 		HlmIcon,
 		TranslatePipe,
+		LoadingDotsComponent,
+		OebButtonComponent,
+		FormsModule,
+		HlmP,
 	],
 })
 export class OebBadgeClassEditForm implements AfterViewInit {
+	/**
+	 * Output fired when the badge creation/editing process finishes
+	 * and there is nothing left for the user to do. The boolean indicates
+	 * whether the process was successful or not.
+	 */
 	readonly finished = output<boolean>();
+
+	/** URL of the server hosting the web component */
 	readonly baseurl = input.required<SafeResourceUrl, string>({
 		transform: (url: string | undefined) =>
 			url ? this.domSanitizer.bypassSecurityTrustResourceUrl(url) : this.domSanitizer.bypassSecurityTrustHtml(''),
 	});
+
+	/** Authorization token to be used for communication with the server */
 	readonly token = input.required<string>();
-	readonly config = input<{ issuer: Issuer | Network; badge: ApiBadgeClass | undefined }>();
+
+	/**
+	 * Configuration object for the process.
+	 * When passing undefined for the issuer, the web component will allow
+	 * the user to choose an issuer before proceeding.
+	 * When passing undefined for the badge, the web component assumes that
+	 * a bade is to be created.
+	 */
+	readonly config = input<{
+		issuer: Issuer | Network | undefined;
+		badge: ApiBadgeClass | undefined;
+	}>();
+
 	readonly badge = computed(() => {
 		if (this.config()?.badge) return new BadgeClass(this.entityManager, this.config().badge);
 		else return undefined;
 	});
+
+	readonly issuer = computed(() => {
+		if (this.config()?.issuer) return this.config()?.issuer;
+		else return this.chosenIssuer();
+	});
+	readonly userIssuers = signal<Issuer[]>(undefined);
+	readonly chosenIssuer = signal<Issuer | Network | undefined>(undefined);
 	readonly category = signal<string>('participation');
 	readonly errorContextInfo = signal<string>('');
 	readonly domSanitizer = inject(DomSanitizer);
@@ -152,9 +213,12 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	readonly router = inject(Router);
 	readonly activatedRoute = inject(ActivatedRoute);
 	readonly entityManager = inject(CommonEntityManager);
+	readonly issuerManager = inject(IssuerManager);
 	readonly currentRoute = signal<'initial' | 'select' | 'create' | 'create-lp' | 'finished' | 'error' | 'unknown'>(
 		'initial',
 	);
+
+	issuerSelection: Issuer | Network | undefined = undefined;
 
 	private signInEffect = effect(() => {
 		const t = this.token();
@@ -201,6 +265,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	async handleSignInWithToken(token: string) {
 		try {
 			await this.authService.validateToken(token);
+			this.issuerManager.myIssuers$.subscribe((issuers) => this.userIssuers.set(issuers));
 		} catch {
 			this.currentRoute.set('error');
 			this.errorContextInfo.set('AUTH_FAILED');
@@ -215,5 +280,9 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 	onBadgeClassCreated() {
 		this.currentRoute.set('finished');
 		this.finished.emit(true);
+	}
+
+	onChooseIssuer() {
+		if (this.issuerSelection) this.chosenIssuer.set(this.issuerSelection);
 	}
 }
