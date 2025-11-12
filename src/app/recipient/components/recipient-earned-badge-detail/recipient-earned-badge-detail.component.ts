@@ -110,6 +110,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					Array.isArray(context) && context.some((c) => c.indexOf('purl.imsglobal.org/spec/ob/v3p0') != -1)
 						? '3.0'
 						: '2.0';
+				console.log('expires date', this.badge.expiresDate);
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badge.badgeClass.name,
@@ -155,6 +156,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
+					validUntil: this.badge.expiresDate,
 					activity_start_date: this.badge.activityStartDate,
 					activity_end_date: this.badge.activityEndDate,
 					category: this.category['Category'],

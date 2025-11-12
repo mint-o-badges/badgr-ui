@@ -887,6 +887,7 @@
 		"delete": "Delete",
 		"issuedBy": "Issued by",
 		"issuedOn": "Issued on",
+		"validUntil": "Valid until",
 		"awardedTo": "Awarded to",
 		"more": "More",
 		"criteria": "Criteria",

@@ -30,7 +30,6 @@ import {
 	ApiBadgeClassForCreation,
 	BadgeClassCategory,
 	BadgeClassCopyPermissions,
-	BadgeClassExpiresDuration,
 	BadgeClassLevel,
 } from '../../models/badgeclass-api.model';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -378,6 +377,7 @@ export class BadgeClassEditFormComponent
 				.addControl('target_framework', '')
 				.addControl('target_code', ''),
 		)
+		.addControl('expiration', null, [this.positiveIntegerOrNull()])
 
 		.addArray('criteria', this.criteriaForm)
 
@@ -437,20 +437,6 @@ export class BadgeClassEditFormComponent
 	tags = new Set<string>();
 
 	collapsedCompetenciesOpen = false;
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Expiration
-	expirationEnabled = false;
-	expirationForm = typedFormGroup()
-		.addControl('expires_amount', '', [Validators.required, this.positiveInteger, Validators.max(1000)])
-		.addControl('expires_duration', '', Validators.required);
-
-	durationOptions: { [key in BadgeClassExpiresDuration]: string } = {
-		days: this.translate.instant('General.days'),
-		weeks: this.translate.instant('General.weeks'),
-		months: this.translate.instant('General.months'),
-		years: this.translate.instant('General.years'),
-	};
 
 	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
@@ -586,6 +572,7 @@ export class BadgeClassEditFormComponent
 				target_framework: alignment.target_framework,
 				target_code: alignment.target_code,
 			})),
+			expiration: badgeClass.expiration,
 			criteria: badgeClass.apiModel.criteria,
 			copy_permissions_allow_others: this.existing ? badgeClass.canCopy('others') : false,
 		});
@@ -610,9 +597,6 @@ export class BadgeClassEditFormComponent
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
 
 		this.alignmentsEnabled = this.badgeClass.alignments.length > 0;
-		if (badgeClass.expiresAmount && badgeClass.expiresDuration) {
-			this.enableExpiration();
-		}
 	}
 
 	ngOnInit() {
@@ -951,23 +935,6 @@ export class BadgeClassEditFormComponent
 
 	removeTag(tag: string) {
 		this.tags.delete(tag);
-	}
-
-	enableExpiration() {
-		const initialAmount = this.badgeClass ? this.badgeClass.expiresAmount : '';
-		const initialDuration = this.badgeClass ? this.badgeClass.expiresDuration || '' : '';
-
-		this.expirationEnabled = true;
-
-		this.expirationForm.setValue({
-			expires_amount: initialAmount.toString(),
-			expires_duration: initialDuration.toString(),
-		});
-	}
-
-	disableExpiration() {
-		this.expirationEnabled = false;
-		this.expirationForm.reset();
 	}
 
 	enableAlignments() {
@@ -1332,11 +1299,8 @@ export class BadgeClassEditFormComponent
 			}
 
 			this.badgeClassForm.markTreeDirty();
-			if (this.expirationEnabled) {
-				this.expirationForm.markTreeDirty();
-			}
 
-			if (!this.badgeClassForm.valid || (this.expirationEnabled && !this.expirationForm.valid)) {
+			if (!this.badgeClassForm.valid) {
 				const firstInvalidInput = this.formElem.nativeElement.querySelector(
 					'.ng-invalid,.dropzone-is-error,.u-text-error',
 				);
@@ -1363,8 +1327,6 @@ export class BadgeClassEditFormComponent
 			}
 
 			const formState = this.badgeClassForm.value;
-
-			const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
 
 			const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
 			const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
@@ -1395,6 +1357,7 @@ export class BadgeClassEditFormComponent
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);
 				this.existingBadgeClass.criteria = formState.criteria;
+				this.existingBadgeClass.expiration = formState.expiration;
 				this.existingBadgeClass.criteria_text = '';
 				this.existingBadgeClass.extension = {
 					...this.existingBadgeClass.extension,
@@ -1437,13 +1400,6 @@ export class BadgeClassEditFormComponent
 						},
 					};
 				}
-				if (this.expirationEnabled) {
-					this.existingBadgeClass.expiresDuration =
-						expirationState.expires_duration as BadgeClassExpiresDuration;
-					this.existingBadgeClass.expiresAmount = parseInt(expirationState.expires_amount, 10);
-				} else {
-					this.existingBadgeClass.clearExpires();
-				}
 				this.existingBadgeClass.copyPermissions = copy_permissions;
 
 				this.savePromise = this.existingBadgeClass.save();
@@ -1456,6 +1412,7 @@ export class BadgeClassEditFormComponent
 					imageFrame: imageFrame,
 					tags: Array.from(this.tags),
 					alignment: this.alignmentsEnabled ? formState.alignments : [],
+					expiration: formState.expiration,
 					criteria: formState.criteria,
 					extensions: {
 						'extensions:StudyLoadExtension': {
@@ -1502,12 +1459,6 @@ export class BadgeClassEditFormComponent
 							type: ['Extension', 'extensions:OrgImageExtension'],
 							OrgImage: this.currentImage,
 						},
-					};
-				}
-				if (this.expirationEnabled) {
-					badgeClassData.expires = {
-						duration: expirationState.expires_duration as BadgeClassExpiresDuration,
-						amount: parseInt(expirationState.expires_amount, 10),
 					};
 				}
 				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuer.slug, badgeClassData);

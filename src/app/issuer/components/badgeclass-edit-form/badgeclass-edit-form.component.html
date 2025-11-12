@@ -1131,7 +1131,7 @@
 							<div class="tw-w-fit tw-flex tw-gap-6">
 								<oeb-input
 									id="duration-number"
-									[control]="expirationForm.rawControlMap.expires_amount"
+									[control]="badgeClassForm.rawControlMap.expiration"
 									[label]="count"
 									[fieldType]="'number'"
 									[max]="1000"
@@ -1141,14 +1141,6 @@
 										max: maxValue1000,
 									}"
 								></oeb-input>
-								<oeb-select
-									[id]="'duration-type'"
-									ariaLabel="chooseDuration"
-									[control]="expirationForm.rawControlMap.expires_duration"
-									[label]="duration"
-									[placeholder]="chooseDuration"
-									[optionMap]="durationOptions"
-								></oeb-select>
 							</div>
 						</div>
 						<!-- <div class="tw-mt-2 tw-mb-2 tw-flex tw-gap-2"> -->
