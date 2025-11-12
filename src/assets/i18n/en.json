@@ -624,7 +624,7 @@
 		"alignEducationalFramework": "Link to educational standards",
 		"frame": "Frame",
 		"expiration": "Validity",
-		"expirationInfo": "Describe how long this badge is generally valid. This information can also be changed when awarding the badge. Badges are marked as expired after their validity period has expired.",
+		"expirationInfo": "Describe how long this badge is generally valid. Badges are marked as expired after their validity period has expired.",
 		"validUntil": "The badge is valid until ",
 		"chooseDuration": "Choose duration",
 		"durationPositive": "Please enter a positive number or 0",

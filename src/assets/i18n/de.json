@@ -623,7 +623,7 @@
 		"alignEducationalFramework": "Verknüpfung zu Bildungs-Standards",
 		"frame": "Rahmen",
 		"expiration": "Gültigkeit",
-		"expirationInfo": "Diese Information kann auch bei der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
+		"expirationInfo": "Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
 		"validUntil": "Der Badge ist gültig bis ",
 		"chooseDuration": "Wähle Dauer",
 		"durationPositive": "Bitte gib eine positive Zahl oder 0 ein",
