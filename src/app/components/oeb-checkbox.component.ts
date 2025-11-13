@@ -22,8 +22,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	],
 	template: `<label
 		[ngClass]="multiLineText ? 'tw-items-start' : 'tw-items-center'"
-		class="tw-flex tw-mt-[0.25rem]"
-		hlmP
+		class="tw-flex tw-mt-[0.25rem] md:tw-text-lg"
 	>
 		<hlm-checkbox
 			[name]="name"

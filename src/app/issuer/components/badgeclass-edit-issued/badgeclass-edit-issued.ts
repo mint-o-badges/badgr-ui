@@ -19,7 +19,9 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmH2 } from '@spartan-ng/helm/typography';
+import { HlmP } from '@spartan-ng/helm/typography';
 import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
+import { OebInputComponent } from '~/components/input.component';
 
 @Component({
 	templateUrl: 'badgeclass-edit-issued.component.html',
@@ -34,6 +36,8 @@ import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-int
 		OebCheckboxComponent,
 		OebButtonComponent,
 		TranslatePipe,
+		HlmP,
+		OebInputComponent,
 	],
 })
 export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -128,10 +132,12 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 
 	async onSubmit() {
 		const formState = this.badgeClassForm.value;
+		console.log('formState');
 		const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
 		if (formState.copy_permissions_allow_others) {
 			copy_permissions.push('others');
 		}
+		this.badgeClass.expiration = formState.expiration;
 		this.badgeClass.copyPermissions = copy_permissions;
 		try {
 			this.savePromise = this.badgeClass.save();
