@@ -867,7 +867,8 @@
 		"shareViaLinkedIn": "Auf LinkedIn:",
 		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden.",
 		"courseDate": "Datum der Veranstaltung",
-		"courseDateShort": "Veranstaltungs-Datum"
+		"courseDateShort": "Veranstaltungs-Datum",
+		"venue": "Ort der Veranstaltung"
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
@@ -919,7 +920,8 @@
 		"confirmRemove": "Entfernen bestätigen",
 		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?",
 		"pdfDownload": "PDF-Zertifikat herunterladen",
-		"downloadMicroDegree": "Micro Degree herunterladen"
+		"downloadMicroDegree": "Micro Degree herunterladen",
+		"place": "Ort"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
@@ -1095,6 +1097,7 @@
 		"expired": "QR-Code ist nicht mehr gültig."
 	},
 	"LearningPath": {
+		"learningpathSingular": "Lernpfad",
 		"learningpathsPlural": "Lernpfade",
 		"learningpathsNav": "Lernpfade A-Z",
 		"catalogHeadline": "Alle Lernpfade in der Übersicht",

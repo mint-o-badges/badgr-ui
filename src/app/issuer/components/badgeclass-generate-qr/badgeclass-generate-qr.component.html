@@ -67,6 +67,12 @@
 							<span>{{ validity }}</span>
 						</div>
 					}
+					@if (activity_place) {
+						<div class="tw-flex tw-flex-col">
+							<span class="tw-font-bold">{{ 'RecBadge.venue' | translate }}</span>
+							<span>{{ activity_place }}</span>
+						</div>
+					}
 				</div>
 			</div>
 			<div class="tw-max-w-[630px]">

@@ -31,7 +31,6 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			(changed)="onChange($event)"
 			[formControl]="control"
 			[class.tw-mr-2]="!noMargin"
-			[disabled]="disabled"
 			class="tw-mt-[1px]"
 		/>
 		<div class="tw-flex tw-flex-col">
@@ -55,7 +54,6 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() ngModel: boolean;
 	@Input() value: string;
 	@Input() checked = false;
-	@Input() disabled = false;
 	@Input() error: string;
 	@Input() errorMessage: CustomValidatorMessages;
 	@Input() label: string;
@@ -65,9 +63,6 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() multiLineText = false;
 
 	@Output() ngModelChange = new EventEmitter<boolean>();
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {}
 
@@ -109,9 +104,10 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	private cachedErrorState = null;
 
 	get controlErrorState() {
-		if (this.control) {
+		if (this.control && this.control.hasError('required')) {
 			return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
 		}
+		return false;
 	}
 
 	get isErrorState() {
