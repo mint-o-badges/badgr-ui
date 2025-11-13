@@ -23,7 +23,7 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 import { FormsModule } from '@angular/forms';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { first, from, mergeMap } from 'rxjs';
+import { concat, concatMap, first, from, mergeMap } from 'rxjs';
 import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 
 @Component({
@@ -314,10 +314,15 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 			}
 		});
 
-		this.issuer$
+		this.authService.isLoggedIn$
 			.pipe(
-				first((i) => i !== undefined),
-				mergeMap((i) => from(this.badgeClassApi.getBadgesForIssuer(i.slug))),
+				first((loggedIn) => loggedIn === true),
+				concatMap((_) =>
+					this.issuer$.pipe(
+						first((i) => i !== undefined),
+						mergeMap((i) => from(this.badgeClassApi.getBadgesForIssuer(i.slug))),
+					),
+				),
 			)
 			.subscribe({
 				next: (b) => {
@@ -325,7 +330,8 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 					else this.userBadges.set(b.map((badge) => new BadgeClass(this.entityManager, badge)));
 				},
 				error: (err) => {
-					this.errorContextInfo.set(err.toString());
+					console.error(err);
+					this.errorContextInfo.set('message' in err ? err.message : err.toString());
 					this.currentRoute.set('error');
 					this.finished.emit(false);
 				},
