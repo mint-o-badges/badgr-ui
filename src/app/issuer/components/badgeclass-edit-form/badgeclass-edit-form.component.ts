@@ -66,6 +66,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
+import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -315,9 +316,9 @@ export class BadgeClassEditFormComponent
 		.addControl('badge_customImage', '')
 		.addControl('useIssuerImageInBadge', true)
 		.addControl('badge_description', '', [Validators.required, Validators.maxLength(700)])
-		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull])
-		.addControl('badge_hours', 1, this.positiveIntegerOrNull)
-		.addControl('badge_minutes', 0, this.positiveIntegerOrNull)
+		.addControl('badge_study_load', 0, [(control) => PositiveIntegerOrNullValidator.valid(control, this.translate)])
+		.addControl('badge_hours', 1, (control) => PositiveIntegerOrNullValidator.valid(control, this.translate))
+		.addControl('badge_minutes', 0, (control) => PositiveIntegerOrNullValidator.valid(control, this.translate))
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
@@ -341,16 +342,28 @@ export class BadgeClassEditFormComponent
 			typedFormGroup()
 				.addControl('selected', false)
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
-				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
+				.addControl('hours', 1, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(MAX_HRS_PER_COMPETENCY),
+				])
+				.addControl('minutes', 0, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(59),
+				])
 				.addControl('framework', 'esco', Validators.required),
 		)
 		.addArray(
 			'keywordCompetencies',
 			typedFormGroup()
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
-				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
+				.addControl('hours', 1, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(MAX_HRS_PER_COMPETENCY),
+				])
+				.addControl('minutes', 0, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(59),
+				])
 				.addControl('framework', 'esco', Validators.required),
 		)
 		.addArray(
@@ -362,8 +375,14 @@ export class BadgeClassEditFormComponent
 				.addControl('framework_identifier', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
-				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
+				.addControl('hours', 1, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(MAX_HRS_PER_COMPETENCY),
+				])
+				.addControl('minutes', 0, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(59),
+				])
 				.addControl('category', '', Validators.required)
 				.addControl('framework', '')
 				.addControl('source', ''),
@@ -377,7 +396,7 @@ export class BadgeClassEditFormComponent
 				.addControl('target_framework', '')
 				.addControl('target_code', ''),
 		)
-		.addControl('expiration', null, [this.positiveIntegerOrNull()])
+		.addControl('expiration', null, [(control) => PositiveIntegerOrNullValidator.valid(control, this.translate)])
 
 		.addArray('criteria', this.criteriaForm)
 
@@ -1606,20 +1625,6 @@ export class BadgeClassEditFormComponent
 			if (isNaN(val) || val < 1) {
 				return { expires_amount: this.translate.instant('CreateBadge.valuePositive') };
 				// return { expires_amount: 'CreateBadge.valuePositive' };
-			}
-		};
-	}
-
-	positiveIntegerOrNull() {
-		// turned into factory because this was sometimes missing
-		return (control: AbstractControl) => {
-			const val = parseFloat(control.value);
-
-			if (isNaN(val)) {
-				return { emptyField: this.translate.instant('OEBComponents.fieldIsRequired') };
-			}
-			if (!Number.isInteger(val) || val < 0) {
-				return { negativeDuration: this.translate.instant('CreateBadge.durationPositive') };
 			}
 		};
 	}
