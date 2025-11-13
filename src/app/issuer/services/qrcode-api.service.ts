@@ -34,8 +34,10 @@ export class QrCodeApiService extends BaseHttpApiService {
 		this.messageService = messageService;
 	}
 
-	getQrCode(qrSlug: string) {
-		return this.get<ApiQRCode>(`/v1/issuer/qrcode/${qrSlug}`).then((r) => r.body);
+	getQrCode(issuerSlug: string, badgeClassSlug: string, qrSlug: string) {
+		return this.get<ApiQRCode>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes/${qrSlug}`).then(
+			(r) => r.body,
+		);
 	}
 
 	createQrCode(issuerSlug: string, badgeClassSlug: string, qrCode: ApiQRCode) {

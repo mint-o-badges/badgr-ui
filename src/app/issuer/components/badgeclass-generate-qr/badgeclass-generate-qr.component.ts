@@ -156,7 +156,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	ngOnInit() {
 		this.baseUrl = window.location.origin;
 		if (this.qrSlug) {
-			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+			this.qrCodeApiService.getQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug).then((qrCode) => {
 				this.qrTitle = qrCode.title;
 				this.creator = qrCode.createdBy;
 				this.activity_start_date = qrCode.activity_start_date;
