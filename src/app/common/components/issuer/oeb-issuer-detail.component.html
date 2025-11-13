@@ -384,9 +384,7 @@
 						[badges]="group.badges"
 						(directBadgeAward)="routeToBadgeAward($event, issuer)"
 						(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-						(redirectToBadgeDetail)="
-							routeToBadgeDetail($event.badge, group.networkIssuer, $event.focusRequests)
-						"
+						(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
 					></badges-datatable>
 				}
 			</div>
