@@ -325,7 +325,7 @@ export class OebBadgeClassEditForm implements AfterViewInit {
 					else this.userBadges.set(b.map((badge) => new BadgeClass(this.entityManager, badge)));
 				},
 				error: (err) => {
-					this.errorContextInfo.set(err);
+					this.errorContextInfo.set(err.toString());
 					this.currentRoute.set('error');
 					this.finished.emit(false);
 				},
