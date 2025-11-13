@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -19,10 +19,11 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmH2 } from '@spartan-ng/helm/typography';
+import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
 
 @Component({
-	templateUrl: 'badgeclass-edit-copypermissions.component.html',
-	styleUrl: './badgeclass-edit-copypermissions.component.css',
+	templateUrl: 'badgeclass-edit-issued.component.html',
+	styleUrl: './badgeclass-edit-issued.component.css',
 	imports: [
 		BgBreadcrumbsComponent,
 		HlmH1,
@@ -35,7 +36,7 @@ import { HlmH1, HlmH2 } from '@spartan-ng/helm/typography';
 		TranslatePipe,
 	],
 })
-export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	protected title = inject(Title);
 	protected messageService = inject(MessageService);
 	protected issuerManager = inject(IssuerManager);
@@ -55,12 +56,15 @@ export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRou
 	@ViewChild('formElem')
 	formElem: ElementRef<HTMLFormElement>;
 
-	badgeClassForm = typedFormGroup().addControl('copy_permissions_allow_others', false);
+	badgeClassForm = typedFormGroup()
+		.addControl('copy_permissions_allow_others', false)
+		.addControl('expiration', null, [
+			(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+			,
+			Validators.max(10000),
+		]);
 
 	savePromise: Promise<BadgeClass> | null = null;
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {
 		const sessionService = inject(SessionService);
@@ -83,6 +87,7 @@ export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRou
 				this.badgeClass = badgeClass;
 				this.badgeClassForm.setValue({
 					copy_permissions_allow_others: badgeClass.canCopy('others'),
+					expiration: badgeClass.expiration,
 				});
 			},
 			(error) =>
