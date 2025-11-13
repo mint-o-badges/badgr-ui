@@ -41,6 +41,11 @@ import { isValidEmail } from '~/common/util/is-valid-email';
 import { OebInputComponent } from '~/components/input.component';
 import { DateValidator } from '~/common/validators/date.validator';
 import { DateRangeValidator } from '~/common/validators/date-range.validator';
+import { OebSeparatorComponent } from '~/components/oeb-separator.component';
+import { OebCollapsibleComponent } from '~/components/oeb-collapsible.component';
+import { NgIcon } from '@ng-icons/core';
+import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
+import { setupActivityOnlineSync } from '~/common/util/activity-place-sync-helper';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -55,6 +60,10 @@ import { DateRangeValidator } from '~/common/validators/date-range.validator';
 		NgClass,
 		FormsModule,
 		OebInputComponent,
+		OebSeparatorComponent,
+		OebCollapsibleComponent,
+		NgIcon,
+		OptionalDetailsComponent,
 	],
 })
 export class BadgeclassIssueBulkAwardConformation
@@ -79,20 +88,23 @@ export class BadgeclassIssueBulkAwardConformation
 
 	@ViewChildren('emailInput') emailInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
-	activityDatesForm = typedFormGroup()
+	optionalDetailsForm = typedFormGroup()
 		.addControl('activity_start_date', '', DateValidator.validDate, (control) => {
 			control.rawControl.valueChanges.subscribe(() => {
 				if (
-					this.activityDatesForm.controls.activity_end_date.rawControl.value === '' &&
+					this.optionalDetailsForm.controls.activity_end_date.rawControl.value === '' &&
 					control.rawControl.value !== ''
 				)
-					this.activityDatesForm.controls.activity_end_date.setValue(control.rawControl.value);
+					this.optionalDetailsForm.controls.activity_end_date.setValue(control.rawControl.value);
 			});
 		})
 		.addControl('activity_end_date', '', [
 			DateValidator.validDate,
 			DateRangeValidator.endDateAfterStartDate('activity_start_date', 'activityEndBeforeStart'),
-		]);
+		])
+		.addControl('activity_zip', '')
+		.addControl('activity_city', '')
+		.addControl('activity_online', false);
 
 	buttonDisabledClass = true;
 	buttonDisabledAttribute = true;
@@ -100,13 +112,12 @@ export class BadgeclassIssueBulkAwardConformation
 
 	issueBadgeFinished: Promise<unknown>;
 
+	subscriptions: Subscription[] = [];
+
 	private taskSubscription: Subscription | null = null;
 	currentTaskStatus: TaskResult | null = null;
 
 	private focusedRow: BulkIssueData | null = null;
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {
 		const sessionService = inject(SessionService);
@@ -122,16 +133,18 @@ export class BadgeclassIssueBulkAwardConformation
 
 	ngOnInit(): void {
 		this.enableActionButton();
+		this.subscriptions.push(...setupActivityOnlineSync(this.optionalDetailsForm));
 	}
 
 	ngOnDestroy() {
 		if (this.taskSubscription) {
 			this.taskSubscription.unsubscribe();
 		}
+		this.subscriptions.forEach((s) => s.unsubscribe());
 	}
 
 	enableActionButton() {
-		this.buttonDisabledClass = this.hasInvalidEmails || !this.activityDatesForm.valid;
+		this.buttonDisabledClass = this.hasInvalidEmails || !this.optionalDetailsForm.valid;
 		this.buttonDisabledAttribute = null;
 	}
 
@@ -165,8 +178,8 @@ export class BadgeclassIssueBulkAwardConformation
 
 		row.emailInvalid = !isValidEmail(row.email);
 
-		this.buttonDisabledClass = this.hasInvalidEmails || !this.activityDatesForm.valid;
-		this.buttonDisabledAttribute = this.hasInvalidEmails || !this.activityDatesForm.valid;
+		this.buttonDisabledClass = this.hasInvalidEmails || !this.optionalDetailsForm.valid;
+		this.buttonDisabledAttribute = this.hasInvalidEmails || !this.optionalDetailsForm.valid;
 	}
 
 	onEditFocus(row: BulkIssueData) {
@@ -193,7 +206,7 @@ export class BadgeclassIssueBulkAwardConformation
 		const recipientProfileContextUrl =
 			'https://api.openbadges.education/static/extensions/recipientProfile/context.json';
 
-		const formState = this.activityDatesForm.value;
+		const formState = this.optionalDetailsForm.rawControl.getRawValue();
 		const activityStartDate = formState.activity_start_date
 			? new Date(formState.activity_start_date).toISOString()
 			: null;
@@ -220,6 +233,9 @@ export class BadgeclassIssueBulkAwardConformation
 				extensions: extensions,
 				activity_start_date: activityStartDate,
 				activity_end_date: activityEndDate,
+				activity_zip: formState.activity_zip,
+				activity_city: formState.activity_city,
+				activity_online: formState.activity_online,
 			};
 			assertions.push(assertion);
 		});

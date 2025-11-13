@@ -185,4 +185,6 @@ export interface ApiCredentialSubject {
 	};
 	activityStartDate?: string;
 	activityEndDate?: string;
+	activityCity?: string;
+	activityOnline?: string;
 }

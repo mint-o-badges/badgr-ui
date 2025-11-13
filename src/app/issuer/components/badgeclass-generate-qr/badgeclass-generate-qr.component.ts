@@ -75,6 +75,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	creator: string;
 	valid: boolean = true;
 	validity: string;
+	activity_place: string;
 	course_date: string;
 	activity_start_date: string | null;
 	activity_end_date: string | null;
@@ -155,7 +156,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	ngOnInit() {
 		this.baseUrl = window.location.origin;
 		if (this.qrSlug) {
-			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+			this.qrCodeApiService.getQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug).then((qrCode) => {
 				this.qrTitle = qrCode.title;
 				this.creator = qrCode.createdBy;
 				this.activity_start_date = qrCode.activity_start_date;
@@ -188,6 +189,12 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 						BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.valid_from), 'dd.MM.yyyy') +
 						' - ' +
 						BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.expires_at), 'dd.MM.yyyy');
+				}
+
+				if (qrCode.activity_city) {
+					this.activity_place = qrCode.activity_city;
+				} else if (qrCode.activity_online) {
+					this.activity_place = 'Online';
 				}
 
 				this.qrData = `${this.baseUrl}/public/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;

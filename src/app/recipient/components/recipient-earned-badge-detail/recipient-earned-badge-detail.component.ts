@@ -159,6 +159,11 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					activity_end_date: this.badge.activityEndDate,
 					category: this.category['Category'],
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
+					activity_city: this.badge.activityCity
+						? this.badge.activityCity
+						: this.badge.activityOnline
+							? 'Online'
+							: null,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,

@@ -174,7 +174,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 			},
 			{
 				key: 'learningpaths',
-				title: 'General.learningPaths',
+				title: 'LearningPath.learningpathsPlural',
 				component: this.learningPathsTemplate,
 			},
 		];
