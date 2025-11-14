@@ -28,14 +28,27 @@
 				<section class="section tw-text-oebblack tw-text-lg">
 					<h2 hlmH2 class="!tw-text-oebblack tw-mb-4">{{ 'CreateBadge.expiration' | translate }}</h2>
 					<p class="tw-italic tw-mb-4" [innerHTML]="'CreateBadge.expirationInfo' | translate"></p>
-					<div class="tw-flex tw-gap-3 tw-items-baseline">
-						<span>{{ 'General.count' | translate }}</span>
-						<oeb-input
-							[noTopMargin]="true"
-							[control]="badgeClassForm.rawControlMap.expiration"
-							fieldType="number"
-						></oeb-input>
-						<span>{{ 'General.days' | translate }}</span>
+					<div class="tw-w-fit tw-flex tw-gap-4 tw-text-oebblack tw-text-lg tw-mt-4">
+						<div class="tw-flex tw-items-baseline tw-gap-3">
+							<span>{{ 'General.count' | translate }}</span>
+							<oeb-input
+								id="duration-number"
+								[control]="badgeClassForm.rawControlMap.expiration"
+								[noTopMargin]="true"
+								[fieldType]="'number'"
+							></oeb-input>
+						</div>
+						<div class="tw-flex tw-items-baseline tw-gap-3">
+							<span>{{ 'RecBadgeDetail.duration' | translate }}</span>
+
+							<oeb-select
+								[noTopMargin]="true"
+								[id]="'duration-type'"
+								ariaLabel="chooseDuration"
+								[control]="badgeClassForm.rawControlMap.expiration_unit"
+								[optionMap]="durationOptions"
+							></oeb-select>
+						</div>
 					</div>
 				</section>
 

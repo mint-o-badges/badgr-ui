@@ -67,6 +67,7 @@ import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
+import { getDurationOptions, expirationToDays, ExpirationUnit } from '~/common/util/expiration-util';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -161,8 +162,6 @@ export class BadgeClassEditFormComponent
 	alignmentNameError = this.translate.instant('CreateBadge.alignmentNameError');
 	alignmentURLError = this.translate.instant('CreateBadge.alignmentURLError');
 
-	count = this.translate.instant('General.count');
-	duration = this.translate.instant('RecBadgeDetail.duration');
 	chooseDuration = this.translate.instant('CreateBadge.chooseDuration');
 	newTag = this.translate.instant('CreateBadge.newTag');
 
@@ -397,7 +396,7 @@ export class BadgeClassEditFormComponent
 				.addControl('target_code', ''),
 		)
 		.addControl('expiration', null, [(control) => PositiveIntegerOrNullValidator.valid(control, this.translate)])
-
+		.addControl('expiration_unit', 'days', Validators.required)
 		.addArray('criteria', this.criteriaForm)
 
 		.addControl('copy_permissions_allow_others', false);
@@ -456,6 +455,8 @@ export class BadgeClassEditFormComponent
 	tags = new Set<string>();
 
 	collapsedCompetenciesOpen = false;
+
+	durationOptions = null;
 
 	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
@@ -592,6 +593,7 @@ export class BadgeClassEditFormComponent
 				target_code: alignment.target_code,
 			})),
 			expiration: badgeClass.expiration,
+			expiration_unit: 'days', // api always returns expiration in days
 			criteria: badgeClass.apiModel.criteria,
 			copy_permissions_allow_others: this.existing ? badgeClass.canCopy('others') : false,
 		});
@@ -621,6 +623,8 @@ export class BadgeClassEditFormComponent
 	ngOnInit() {
 		super.ngOnInit();
 		this.fetchTags();
+
+		this.durationOptions = getDurationOptions(this.translate);
 
 		if (this.issuer.is_network) {
 			this.badgeClassForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
@@ -1358,6 +1362,8 @@ export class BadgeClassEditFormComponent
 			const aiCompetenciesSuggestions = this.aiCompetenciesSuggestions;
 			const keywordCompetenciesResults = this.selectedKeywordCompetencies;
 
+			const expirationDays = expirationToDays(formState.expiration, formState.expiration_unit as ExpirationUnit);
+
 			let copy_permissions: BadgeClassCopyPermissions[];
 			if (this.issuer.is_network) {
 				copy_permissions = ['none'];
@@ -1376,7 +1382,7 @@ export class BadgeClassEditFormComponent
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);
 				this.existingBadgeClass.criteria = formState.criteria;
-				this.existingBadgeClass.expiration = formState.expiration;
+				this.existingBadgeClass.expiration = expirationDays;
 				this.existingBadgeClass.criteria_text = '';
 				this.existingBadgeClass.extension = {
 					...this.existingBadgeClass.extension,
@@ -1431,7 +1437,7 @@ export class BadgeClassEditFormComponent
 					imageFrame: imageFrame,
 					tags: Array.from(this.tags),
 					alignment: this.alignmentsEnabled ? formState.alignments : [],
-					expiration: formState.expiration,
+					expiration: expirationDays,
 					criteria: formState.criteria,
 					extensions: {
 						'extensions:StudyLoadExtension': {

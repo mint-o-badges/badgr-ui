@@ -22,6 +22,8 @@ import { HlmH1, HlmH2 } from '@spartan-ng/helm/typography';
 import { HlmP } from '@spartan-ng/helm/typography';
 import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
 import { OebInputComponent } from '~/components/input.component';
+import { OebSelectComponent } from '~/components/select.component';
+import { getDurationOptions, expirationToDays, ExpirationUnit } from '~/common/util/expiration-util';
 
 @Component({
 	templateUrl: 'badgeclass-edit-issued.component.html',
@@ -38,6 +40,7 @@ import { OebInputComponent } from '~/components/input.component';
 		TranslatePipe,
 		HlmP,
 		OebInputComponent,
+		OebSelectComponent,
 	],
 })
 export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -57,6 +60,8 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 	badgeClassLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
+	durationOptions = null;
+
 	@ViewChild('formElem')
 	formElem: ElementRef<HTMLFormElement>;
 
@@ -66,7 +71,8 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 			(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
 			,
 			Validators.max(10000),
-		]);
+		])
+		.addControl('expiration_unit', 'days');
 
 	savePromise: Promise<BadgeClass> | null = null;
 
@@ -92,6 +98,7 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 				this.badgeClassForm.setValue({
 					copy_permissions_allow_others: badgeClass.canCopy('others'),
 					expiration: badgeClass.expiration,
+					expiration_unit: 'days',
 				});
 			},
 			(error) =>
@@ -113,6 +120,7 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.durationOptions = getDurationOptions(this.translate);
 	}
 
 	badgeClassCreated(promise: Promise<BadgeClass>) {
@@ -132,12 +140,12 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 
 	async onSubmit() {
 		const formState = this.badgeClassForm.value;
-		console.log('formState');
+		const expirationDays = expirationToDays(formState.expiration, formState.expiration_unit as ExpirationUnit);
 		const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
 		if (formState.copy_permissions_allow_others) {
 			copy_permissions.push('others');
 		}
-		this.badgeClass.expiration = formState.expiration;
+		this.badgeClass.expiration = expirationDays;
 		this.badgeClass.copyPermissions = copy_permissions;
 		try {
 			this.savePromise = this.badgeClass.save();
