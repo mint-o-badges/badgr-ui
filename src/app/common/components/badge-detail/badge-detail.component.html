@@ -342,6 +342,16 @@
 											</dd>
 										</div>
 									}
+									@if (config.validUntil) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'RecBadgeDetail.validUntil' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+												<time [date]="config.validUntil" format="dd.MM.y"></time>
+											</dd>
+										</div>
+									}
 									@if (config.issuedTo) {
 										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
 											<dt class="tw-text-sm tw-text-darkgray">

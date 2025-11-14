@@ -1,0 +1,83 @@
+<div class="oeb">
+	<div class="page-padding">
+		<div class="oeb-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
+		</div>
+		<header class="tw-mt-16 tw-pb-10">
+			<h1 hlmH1 class="tw-text-purple tw-mb-6 tw-font-black">{{ 'EditBadge.editBadge' | translate }}</h1>
+			<p hlmP size="lg">{{ 'Badge.editAfterIssuedInfo' | translate }}</p>
+		</header>
+
+		<section *bgAwaitPromises="[issuerLoaded]">
+			<h2 hlmH2 class="tw-font-bold !tw-text-oebblack tw-pb-4">
+				{{ 'CreateBadge.optionalBadgeDetails' | translate }}
+			</h2>
+			<form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
+				<section class="section tw-text-oebblack tw-text-lg tw-pb-6">
+					<h2 hlmH2 class="!tw-text-oebblack tw-mb-4">{{ 'Badge.copyBadgeHeadline' | translate }}</h2>
+					<p class="tw-italic tw-mb-4" [innerHTML]="'Badge.copyBadgeDescription1' | translate"></p>
+					<p class="tw-text-purple tw-italic" [innerHTML]="'Badge.copyBadgeDescription2' | translate"></p>
+					<div class="tw-mt-2 tw-mb-2">
+						<oeb-checkbox
+							[text]="'Badge.copyLabelOthers' | translate"
+							[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
+						/>
+					</div>
+				</section>
+
+				<section class="section tw-text-oebblack tw-text-lg">
+					<h2 hlmH2 class="!tw-text-oebblack tw-mb-4">{{ 'CreateBadge.expiration' | translate }}</h2>
+					<p class="tw-italic tw-mb-4" [innerHTML]="'CreateBadge.expirationInfo' | translate"></p>
+					<div class="tw-w-fit tw-flex tw-gap-4 tw-text-oebblack tw-text-lg tw-mt-4">
+						<div class="tw-flex tw-items-baseline tw-gap-3">
+							<span>{{ 'General.count' | translate }}</span>
+							<oeb-input
+								id="duration-number"
+								[control]="badgeClassForm.rawControlMap.expiration"
+								[noTopMargin]="true"
+								[fieldType]="'number'"
+							></oeb-input>
+						</div>
+						<div class="tw-flex tw-items-baseline tw-gap-3">
+							<span>{{ 'RecBadgeDetail.duration' | translate }}</span>
+
+							<oeb-select
+								[noTopMargin]="true"
+								[id]="'duration-type'"
+								ariaLabel="chooseDuration"
+								[control]="badgeClassForm.rawControlMap.expiration_unit"
+								[optionMap]="durationOptions"
+							></oeb-select>
+						</div>
+					</div>
+				</section>
+
+				<div
+					class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8"
+				>
+					<oeb-button
+						class="tw-mr-4"
+						type="button"
+						variant="secondary"
+						(click)="cancelClicked()"
+						[disabled]="!!savePromise"
+						[class.disabled]="!!savePromise"
+						[disabled-when-requesting]="true"
+						text="{{ 'General.cancel' | translate }}"
+					></oeb-button>
+
+					<oeb-button
+						id="create-badge-btn"
+						type="submit"
+						width="max_content"
+						[disabled]="!!savePromise"
+						[loading-promises]="[savePromise]"
+						loading-message="{{ 'General.save' | translate }}"
+						text="{{ 'General.save' | translate }}"
+					>
+					</oeb-button>
+				</div>
+			</form>
+		</section>
+	</div>
+</div>

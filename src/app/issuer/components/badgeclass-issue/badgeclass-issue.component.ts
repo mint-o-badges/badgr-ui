@@ -102,12 +102,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
-	get defaultExpiration(): string {
-		if (this.badgeClass && this.badgeClass.expiresDuration && this.badgeClass.expiresAmount) {
-			return this.badgeClass.expirationDateRelative().toISOString().replace(/T.*/, '');
-		}
-	}
-
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
 	}
@@ -149,7 +143,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		}
 	};
 
-	expirationDateEditable = false;
 	idError: string | boolean = false;
 
 	issuer: Issuer;
@@ -180,10 +173,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',
-			typedFormGroup()
-				.addControl('narrative', '')
-				.addControl('evidence_url', '', UrlValidator.validUrl)
-				.addControl('expiration', ''),
+			typedFormGroup().addControl('narrative', '').addControl('evidence_url', '', UrlValidator.validUrl),
 		);
 
 	badgeClass: BadgeClass;

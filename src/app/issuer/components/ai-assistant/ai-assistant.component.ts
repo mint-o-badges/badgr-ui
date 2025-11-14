@@ -7,6 +7,7 @@ import { ApiSkill } from '~/common/model/ai-skills.model';
 import { AiSkillsService } from '~/common/services/ai-skills.service';
 import { MessageService } from '~/common/services/message.service';
 import { typedFormGroup } from '~/common/util/typed-forms';
+import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
 import { CompetencyAccordionComponent } from '~/components/accordion.component';
 import { AltchaComponent } from '~/components/altcha.component';
 import { OebInputComponent } from '~/components/input.component';
@@ -48,23 +49,19 @@ export class AiAssistantComponent implements AfterViewInit {
 
 	@ViewChild('top') top: ElementRef<HTMLElement>;
 
-	positiveIntegerOrNull(control: AbstractControl) {
-		const val = parseFloat(control.value);
-
-		if (isNaN(val)) {
-			return { emptyField: this.translate.instant('OEBComponents.fieldIsRequired') };
-		}
-		if (!Number.isInteger(val) || val < 0) {
-			return { negativeDuration: this.translate.instant('CreateBadge.durationPositive') };
-		}
-	}
-
 	aiForm = typedFormGroup().addArray(
 		'aiCompetencies',
 		typedFormGroup()
 			.addControl('selected', false)
-			.addControl('hours', '1', [this.positiveIntegerOrNull, Validators.max(999)])
-			.addControl('minutes', '0', [this.positiveIntegerOrNull, Validators.max(59)]),
+			.addControl('hours', '1', [
+				(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+				Validators.max(999),
+			])
+			.addControl('minutes', '0', [
+				(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+				,
+				Validators.max(59),
+			]),
 	);
 
 	requiredError = this.translate.instant('CreateBadge.requiredError');
