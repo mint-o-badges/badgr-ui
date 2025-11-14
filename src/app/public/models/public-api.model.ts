@@ -10,7 +10,6 @@ import { Issuer } from '../../issuer/models/issuer.model';
 export interface PublicApiBadgeAssertion_OB3 {
 	'@context': Array<string>;
 	type: ['VerifiableCredential', 'OpenBadgeCredential'];
-	obVersion: '3.0';
 	id: string;
 	name: string;
 	evidence: Array<{
@@ -85,7 +84,6 @@ export interface PublicApiBadgeAssertion_OB3 {
 export interface PublicApiBadgeAssertion_OB2 {
 	'@context': 'https://w3id.org/openbadges/v2';
 	type: 'Assertion';
-	obVersion: '2.0';
 	image: string;
 	badge: string | PublicApiBadgeClass;
 	id: string;

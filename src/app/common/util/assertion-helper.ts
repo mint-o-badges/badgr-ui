@@ -5,14 +5,11 @@ import {
 } from '~/public/models/public-api.model';
 
 export function isOB2Assertion(assertion: PublicApiBadgeAssertion): assertion is PublicApiBadgeAssertion_OB2 {
-	return assertion.obVersion === '2.0' || typeof assertion.type === 'string';
+	return typeof assertion.type === 'string' && assertion.type === 'Assertion';
 }
 
 export function isOB3Assertion(assertion: PublicApiBadgeAssertion): assertion is PublicApiBadgeAssertion_OB3 {
-	return (
-		assertion.obVersion === '3.0' ||
-		(Array.isArray(assertion.type) && assertion.type.includes('VerifiableCredential'))
-	);
+	return Array.isArray(assertion.type) && assertion.type.includes('VerifiableCredential');
 }
 
 export function getAssertionExpiration(assertion: PublicApiBadgeAssertion): string | undefined {

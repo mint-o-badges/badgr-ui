@@ -23,7 +23,12 @@ import { PdfService } from '../../../common/services/pdf.service';
 import { SessionService } from '~/common/services/session.service';
 import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { Issuer } from '~/issuer/models/issuer.model';
-import { getAssertionExpiration, getAssertionIssuedDate } from '~/common/util/assertion-helper';
+import {
+	getAssertionExpiration,
+	getAssertionIssuedDate,
+	isOB2Assertion,
+	isOB3Assertion,
+} from '~/common/util/assertion-helper';
 
 @Component({
 	template: ` <bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam.loadedPromise]"></bg-badgedetail>`,
@@ -183,7 +188,7 @@ export class PublicBadgeAssertionComponent {
 				this.assertionId = paramValue;
 				const service: PublicApiService = this.injector.get(PublicApiService);
 				const assertion = await service.getBadgeAssertion(paramValue);
-				if (assertion.obVersion == '2.0' && assertion.revoked) {
+				if (isOB2Assertion(assertion) && assertion.revoked) {
 					if (assertion.revocationReason) {
 						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
 					} else {
@@ -259,10 +264,17 @@ export class PublicBadgeAssertionComponent {
 					badgeImage: assertion.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
 					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
+					duration: assertion.badge['extensions:StudyLoadExtension'].StudyLoad,
 					learningPaths: lps,
 					version: assertionVersion,
 					issuedOn: new Date(getAssertionIssuedDate(assertion)),
 					validUntil: new Date(getAssertionExpiration(assertion)),
+					activity_start_date: isOB3Assertion(assertion)
+						? new Date(assertion.credentialSubject.activityStartDate)
+						: null,
+					activity_end_date: isOB3Assertion(assertion)
+						? new Date(assertion.credentialSubject.activityEndDate)
+						: null,
 					networkBadge: assertion.isNetworkBadge,
 					networkImage: assertion.networkImage,
 					networkName: assertion.networkName,
