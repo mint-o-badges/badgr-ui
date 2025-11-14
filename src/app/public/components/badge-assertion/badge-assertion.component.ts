@@ -317,7 +317,11 @@ export class PublicBadgeAssertionComponent {
 			.getPdf(this.assertionSlug, 'badges')
 			.then((url) => {
 				this.pdfSrc = url;
-				this.pdfService.downloadPdf(this.pdfSrc, this.assertion.badge.name, new Date(this.assertion.validFrom));
+				this.pdfService.downloadPdf(
+					this.pdfSrc,
+					this.assertion.badge.name,
+					new Date(getAssertionIssuedDate(this.assertion)),
+				);
 			})
 			.catch((error) => {
 				console.log(error);

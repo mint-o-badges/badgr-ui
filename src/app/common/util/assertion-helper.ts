@@ -32,18 +32,10 @@ export function getAssertionBadgeName(assertion: PublicApiBadgeAssertion): strin
 }
 
 export function getAssertionRecipient(assertion: PublicApiBadgeAssertion): string | undefined {
-	if (isOB2Assertion(assertion)) {
-		const extRecipient =
-			'extensions:recipientProfile' in assertion ? assertion['extensions:recipientProfile']['Name'] : undefined;
-		if (extRecipient) return extRecipient;
-
-		return assertion.recipient.identity;
-	} else {
-		const idObj = assertion.credentialSubject.identifier[0];
-		if (!idObj) return undefined;
-
-		if (idObj.hashed) return `[Hashed ${idObj.identityType}]`;
-
-		return idObj.identityHash || undefined;
+	const ext = (assertion as any)['extensions:recipientProfile'];
+	if (ext && typeof ext === 'object' && 'name' in ext) {
+		return ext['name'];
 	}
+
+	return undefined;
 }

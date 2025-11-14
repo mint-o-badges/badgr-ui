@@ -60,6 +60,11 @@ export interface PublicApiBadgeAssertion_OB3 {
 		activityFormat?: 'Online';
 	};
 
+	credentialStatus: {
+		id: string;
+		type: '1EdTechRevocationList';
+	};
+
 	// Custom extensions
 	slug?: string;
 	sourceUrl?: string;
@@ -99,7 +104,6 @@ export interface PublicApiBadgeAssertion_OB2 {
 		| string;
 	narrative: string;
 	issuedOn?: string;
-	validFrom?: string;
 	expires?: string;
 	revoked?: boolean;
 	revocationReason?: string;
