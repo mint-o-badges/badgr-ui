@@ -220,7 +220,7 @@
 							@if (groupBy === 'Category') {
 								@for (categoryGroup of badgeResultsByCategory; track categoryGroup) {
 									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
-										{{ categoryOptions[categoryGroup.category] }}
+										{{ categoryOptions[categoryGroup.category] | translate }}
 										<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
 											>{{ categoryGroup.badges.length }}
 											{{ categoryGroup.badges.length === 1 ? 'Badge' : 'Badges' }}</span
