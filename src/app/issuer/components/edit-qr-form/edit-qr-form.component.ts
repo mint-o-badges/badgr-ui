@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, inject, OnDestroy } from '@angular/core';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -57,6 +56,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 
 	environment = environment;
 
+	previewB64Img: string;
+
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
 	}
@@ -85,7 +86,6 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 
 	badgeClassLoaded: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
-	crumbs: LinkEntry[];
 
 	subscriptions: Subscription[] = [];
 
@@ -123,38 +123,38 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
 				.then((badgeClass) => {
 					this.badgeClass = badgeClass;
+					const category = badgeClass.extension['extensions:CategoryExtension'].Category;
+
+					this.badgeClassManager
+						.createBadgeImage(this.issuerSlug, badgeClass.slug, category, true)
+						.then((img) => {
+							this.previewB64Img = img.image_url;
+						});
 					return this.issuerManager.issuerBySlug(this.partnerIssuerSlug);
 				})
 				.then((partnerIssuer) => {
 					this.issuer = partnerIssuer;
 				});
 		} else {
-			this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
-				this.issuer = issuer;
-			});
+			this.issuerLoaded = this.issuerManager
+				.issuerBySlug(this.issuerSlug)
+				.then((issuer) => {
+					this.issuer = issuer;
+				})
+				.then(() => {
+					this.badgeClassLoaded = this.badgeClassManager
+						.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
+						.then((badgeClass) => {
+							this.badgeClass = badgeClass;
 
-			this.badgeClassLoaded = this.badgeClassManager
-				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
-				.then((badgeClass) => {
-					this.badgeClass = badgeClass;
+							const category = badgeClass.extension['extensions:CategoryExtension'].Category;
 
-					this.crumbs = [
-						{ title: 'Issuers', routerLink: ['/issuer'] },
-						{
-							// title: issuer.name,
-							title: 'issuer',
-							routerLink: ['/issuer/issuers', this.issuerSlug],
-						},
-						{
-							title: 'badges',
-							routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/'],
-						},
-						{
-							title: badgeClass.name,
-							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug],
-						},
-						{ title: 'Award Badge' },
-					];
+							this.badgeClassManager
+								.createBadgeImage(this.issuerSlug, badgeClass.slug, category, true)
+								.then((img) => {
+									this.previewB64Img = img.image_url;
+								});
+						});
 				});
 		}
 

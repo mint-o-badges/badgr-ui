@@ -50,7 +50,6 @@ export class NetworkLearningPathsComponent implements OnInit {
 	}
 
 	routeToBadgeCreation() {
-		if (!this.canCreateNetworkLp) return;
 		this.router.navigate([`/issuer/issuers/${this.network().slug}/badges/select`]);
 	}
 }
