@@ -316,6 +316,9 @@ export class QrCodeDatatableComponent implements OnInit {
 				extensions: extensions,
 				activity_start_date: activityStartDate,
 				activity_end_date: activityEndDate,
+				activity_city: qrCode.activity_city,
+				activity_zip: qrCode.activity_zip,
+				activity_online: qrCode.activity_online,
 			} satisfies BadgeInstanceBatchAssertion);
 		});
 

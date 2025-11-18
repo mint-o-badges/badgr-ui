@@ -80,7 +80,7 @@
 		"reset": "Zurücksetzen",
 		"exam": "Test / Prüfung",
 		"create": "erstellen",
-		"copy": "kopieren",
+		"copy": "Kopieren",
 		"place": "stellen",
 		"forwarded": "weitergeleitet",
 		"revoke": "zurücknehmen",
@@ -522,7 +522,7 @@
 		},
 		"copyBadgeHeadline": "Kopier-Status",
 		"copyBadgeDescription1": "Innerhalb der eigenen Institution können Badges immer kopiert werden. ",
-		"copyBadgeDescription2": "Den Kopier-Status für <strong>andere</strong> Institutionen kannst du später jederzeit über das Menü auf der Badge-Detail-Seite aktualisieren.",
+		"copyBadgeDescription2": "Den Kopier-Status für <strong>andere</strong> Institutionen kannst du jederzeit über den Menüpunkt “Bearbeiten” auf der Badge-Detail-Seite aktualisieren.",
 		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
 		"copy": "Badge für eigene Institution kopieren",
 		"copyBadge": "Badge kopieren",
@@ -531,6 +531,7 @@
 		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt.",
 		"copyThisIssuer": "Kopieren (diese Institution)",
 		"editCopyStatus": "Kopierstatus bearbeiten",
+		"editAfterIssuedInfo": "Da der Badge bereits vergeben wurde, können lediglich folgende Daten bearbeitet werden: ",
 		"award": "Badge direkt vergeben",
 		"awardQRCode": "Badge über QR-Code vergeben",
 		"partOfLearningPath": "Dieser Badge ist Teil folgender Lernpfade:",
@@ -623,7 +624,7 @@
 		"alignEducationalFramework": "Verknüpfung zu Bildungs-Standards",
 		"frame": "Rahmen",
 		"expiration": "Gültigkeit",
-		"expirationInfo": "Diese Information kann auch bei der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
+		"expirationInfo": "Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
 		"validUntil": "Der Badge ist gültig bis ",
 		"chooseDuration": "Wähle Dauer",
 		"durationPositive": "Bitte gib eine positive Zahl oder 0 ein",
@@ -676,7 +677,10 @@
 		"aiAssistantNote": "Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>E-Mail</a>. <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Datenschutz bei OEB.</a>",
 		"successfullyCreated": "Badge erfolgreich erstellt!",
 		"activityEndDateRequired": "Enddatum ist erforderlich und darf nicht vor dem Startdatum liegen",
-		"activityStartDateRequired": "Startdatum ist erforderlich"
+		"activityStartDateRequired": "Startdatum ist erforderlich",
+		"selectIssuer": "Für welche deiner Institutionen soll der Badge erstellt bzw. editiert werden?",
+		"noIssuersAvailable": "Du bist nicht Teil einer Institution und kannst daher keine Badges erstellen oder editieren.",
+		"selectBadge": "Wähle den zu bearbeitenden Badge oder erstelle einen Neuen"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -867,7 +871,8 @@
 		"shareViaLinkedIn": "Auf LinkedIn:",
 		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden.",
 		"courseDate": "Datum der Veranstaltung",
-		"courseDateShort": "Veranstaltungs-Datum"
+		"courseDateShort": "Veranstaltungs-Datum",
+		"venue": "Ort der Veranstaltung"
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
@@ -886,6 +891,7 @@
 		"issuedBy": "Vergeben von",
 		"issuedOn": "Vergeben am",
 		"awardedTo": "Vergeben an",
+		"validUntil": "Gültig bis",
 		"more": "Mehr",
 		"criteria": "Kriterien",
 		"viewCriteriaUrl": "Besuche externe Kriterien-URL",
@@ -919,7 +925,8 @@
 		"confirmRemove": "Entfernen bestätigen",
 		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?",
 		"pdfDownload": "PDF-Zertifikat herunterladen",
-		"downloadMicroDegree": "Micro Degree herunterladen"
+		"downloadMicroDegree": "Micro Degree herunterladen",
+		"place": "Ort"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",

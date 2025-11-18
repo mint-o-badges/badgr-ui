@@ -493,16 +493,9 @@ export class BadgeClassDetailComponent
 					disabled: !this.issuer.canCreateBadge || badgeClass.copyPermissions.includes('none'),
 				},
 				{
-					title: 'Badge.editCopyStatus',
-					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'copypermissions'],
-					icon: 'lucideCopyX',
-					disabled: !this.issuer.canEditBadge || badgeClass.copyPermissions.includes('none'),
-				},
-				{
 					title: 'General.edit',
-					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-					disabled:
-						badgeClass.recipientCount > 0 || !this.issuer.canEditBadge || this.qrCodeAwards.length > 0,
+					routerLink: this.getEditRoute(badgeClass),
+					disabled: !this.issuer.canEditBadge,
 					icon: 'lucidePencil',
 				},
 				{
@@ -596,6 +589,14 @@ export class BadgeClassDetailComponent
 	ngOnDestroy() {
 		if (this.taskSubscription) {
 			this.taskSubscription.unsubscribe();
+		}
+	}
+
+	getEditRoute(badgeClass: BadgeClass): any[] {
+		if (badgeClass.recipientCount > 0 || this.qrCodeAwards.length > 0) {
+			return ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit-issued'];
+		} else {
+			return ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'];
 		}
 	}
 
@@ -815,6 +816,9 @@ export class BadgeClassDetailComponent
 						context: {
 							headerTemplate: this.networkIssuerSelectionHeader,
 							content: this.networkIssuerSelection,
+							templateContext: {
+								closeDialog: (result?) => dialogRef.close(result),
+							},
 						},
 					});
 
@@ -866,18 +870,23 @@ export class BadgeClassDetailComponent
 						context: {
 							headerTemplate: this.networkIssuerSelectionHeader,
 							content: this.networkIssuerSelection,
+							templateContext: {
+								closeDialog: (result?: string) => dialogRef.close(result),
+							},
 						},
 					});
 					this.dialogRef = dialogRef;
 					this.dialogRef.closed$.subscribe((result) => {
 						if (result === 'continue')
-							this.router.navigate([
-								'/issuer/issuers/',
-								this.selectedNetworkIssuer.slug,
-								'badges',
-								badge.slug,
-								'qr',
-							]);
+							this.router.navigate(
+								['/issuer/issuers/', this.selectedNetworkIssuer.slug, 'badges', badge.slug, 'qr'],
+								{
+									queryParams: {
+										partnerIssuer: this.selectedNetworkIssuer.slug,
+										isNetworkBadge: true,
+									},
+								},
+							);
 					});
 				}
 			} else {

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -42,6 +42,11 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { OebCollapsibleComponent } from '~/components/oeb-collapsible.component';
 import { DateRangeValidator } from '~/common/validators/date-range.validator';
+import { NgIcon } from '@ng-icons/core';
+import { OebSeparatorComponent } from '~/components/oeb-separator.component';
+import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
+import { setupActivityOnlineSync } from '~/common/util/activity-place-sync-helper';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -76,9 +81,12 @@ import { DateRangeValidator } from '~/common/validators/date-range.validator';
 		DatePipe,
 		TranslatePipe,
 		OebCollapsibleComponent,
+		NgIcon,
+		OebSeparatorComponent,
+		OptionalDetailsComponent,
 	],
 })
-export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	protected title = inject(Title);
 	protected messageService = inject(MessageService);
 	protected eventsService = inject(EventsService);
@@ -93,12 +101,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
-
-	get defaultExpiration(): string {
-		if (this.badgeClass && this.badgeClass.expiresDuration && this.badgeClass.expiresAmount) {
-			return this.badgeClass.expirationDateRelative().toISOString().replace(/T.*/, '');
-		}
-	}
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -141,7 +143,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		}
 	};
 
-	expirationDateEditable = false;
 	idError: string | boolean = false;
 
 	issuer: Issuer;
@@ -166,18 +167,20 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			DateValidator.validDate,
 			DateRangeValidator.endDateAfterStartDate('activity_start_date', 'activityEndBeforeStart'),
 		])
+		.addControl('activity_zip', '')
+		.addControl('activity_city', '')
+		.addControl('activity_online', false)
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',
-			typedFormGroup()
-				.addControl('narrative', '')
-				.addControl('evidence_url', '', UrlValidator.validUrl)
-				.addControl('expiration', ''),
+			typedFormGroup().addControl('narrative', '').addControl('evidence_url', '', UrlValidator.validUrl),
 		);
 
 	badgeClass: BadgeClass;
 
 	previewB64Img: string;
+
+	subscriptions: Subscription[] = [];
 
 	issueBadgeFinished: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
@@ -241,6 +244,11 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.subscriptions.push(...setupActivityOnlineSync(this.issueForm));
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach((s) => s.unsubscribe());
 	}
 
 	addEvidence() {
@@ -299,6 +307,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				extensions,
 				activity_start_date: activityStartDate,
 				activity_end_date: activityEndDate,
+				activity_zip: formState.activity_zip,
+				activity_city: formState.activity_city,
+				activity_online: formState.activity_online,
 			})
 			.then(() => this.badgeClass.update())
 			.then(

@@ -8,6 +8,9 @@ export interface ApiQRCode {
 	expires_at?: string;
 	activity_start_date?: string;
 	activity_end_date?: string;
+	activity_zip?: string;
+	activity_city?: string;
+	activity_online?: boolean;
 	badgeclass_id?: string;
 	issuer_id?: string;
 	request_count?: number;
