@@ -143,6 +143,8 @@ export class OebIssuerDetailComponent implements OnInit {
 	networkGroups: Map<string, { network: any; badges: BadgeResult[]; sharedAt: string }> = new Map();
 	networkGroupsArray: { network: any; badges: BadgeResult[]; sharedAt: string }[] = [];
 
+	sharedBadgeSlugs = new Set<string>();
+
 	tabs: Tab[] = undefined;
 	activeTab = 'badges';
 
@@ -268,6 +270,10 @@ export class OebIssuerDetailComponent implements OnInit {
 				for (const networkBadgeClass of group.badge_classes) {
 					const badgeClass = new BadgeClass(this.entityManager, networkBadgeClass);
 
+					if (this.sharedBadgeSlugs?.has(badgeClass.slug)) {
+						continue;
+					}
+
 					const requestCount = requestMap.get(badgeClass.slug)?.length ?? 0;
 
 					const awardedCount = networkBadgeClass.awarded_count ?? 0;
@@ -387,6 +393,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			this.networkGroupsArray = Array.from(this.networkGroups.values()).sort((a, b) => {
 				return new Date(b.sharedAt || 0).getTime() - new Date(a.sharedAt || 0).getTime();
 			});
+			this.sharedBadgeSlugs = new Set(this.networkGroupsArray.flatMap((g) => g.badges.map((b) => b.badge.slug)));
 		}
 	}
 
@@ -410,7 +417,12 @@ export class OebIssuerDetailComponent implements OnInit {
 		} else {
 			await this.getPublicLearningPaths(this.issuer.slug);
 		}
-		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
+		await this.updateResults();
+		// must run before updateNetworkResults to populate sharedBadgeSlugs
+		await this.updateSharedNetworkResults();
+		await this.updateNetworkResults();
+
+		// await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
 		this.badgeTemplateTabs = [
 			{
 				key: 'issuer-badges',

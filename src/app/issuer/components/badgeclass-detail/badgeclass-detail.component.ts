@@ -816,6 +816,9 @@ export class BadgeClassDetailComponent
 						context: {
 							headerTemplate: this.networkIssuerSelectionHeader,
 							content: this.networkIssuerSelection,
+							templateContext: {
+								closeDialog: (result?) => dialogRef.close(result),
+							},
 						},
 					});
 
@@ -867,18 +870,23 @@ export class BadgeClassDetailComponent
 						context: {
 							headerTemplate: this.networkIssuerSelectionHeader,
 							content: this.networkIssuerSelection,
+							templateContext: {
+								closeDialog: (result?: string) => dialogRef.close(result),
+							},
 						},
 					});
 					this.dialogRef = dialogRef;
 					this.dialogRef.closed$.subscribe((result) => {
 						if (result === 'continue')
-							this.router.navigate([
-								'/issuer/issuers/',
-								this.selectedNetworkIssuer.slug,
-								'badges',
-								badge.slug,
-								'qr',
-							]);
+							this.router.navigate(
+								['/issuer/issuers/', this.selectedNetworkIssuer.slug, 'badges', badge.slug, 'qr'],
+								{
+									queryParams: {
+										partnerIssuer: this.selectedNetworkIssuer.slug,
+										isNetworkBadge: true,
+									},
+								},
+							);
 					});
 				}
 			} else {

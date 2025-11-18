@@ -85,6 +85,8 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	badgeRequested: boolean = false;
 	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/${this.qrSlug}/edit`;
 	qrCodeWidth = 244;
+	previewB64Img: string;
+
 	public qrCodeDownloadLink: SafeUrl = '';
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
@@ -118,6 +120,13 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
 			.then((badgeClass) => {
 				this.badgeClass = badgeClass;
+				const category = badgeClass.extension['extensions:CategoryExtension'].Category;
+
+				this.badgeClassManager
+					.createBadgeImage(this.issuerSlug, badgeClass.slug, category, true)
+					.then((img) => {
+						this.previewB64Img = img.image_url;
+					});
 
 				let im = this.badgeClass.issuerManager;
 				im.issuerBySlug(this.issuerSlug).then((issuer) => {
@@ -156,7 +165,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	ngOnInit() {
 		this.baseUrl = window.location.origin;
 		if (this.qrSlug) {
-			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+			this.qrCodeApiService.getQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug).then((qrCode) => {
 				this.qrTitle = qrCode.title;
 				this.creator = qrCode.createdBy;
 				this.activity_start_date = qrCode.activity_start_date;

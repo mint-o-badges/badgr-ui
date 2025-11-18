@@ -678,7 +678,10 @@
 		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>",
 		"successfullyCreated": "Badge successfully created!",
 		"activityEndDateRequired": "End date is required and may not be before the start date",
-		"activityStartDateRequired": "Start date is required"
+		"activityStartDateRequired": "Start date is required",
+		"selectIssuer": "For which of your institutions should the badge be created or edited?",
+		"noIssuersAvailable": "You are not part of an institution and therefore cannot create or edit badges.",
+		"selectBadge": "Select the badge you want to edit or create a new one"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
