@@ -258,11 +258,10 @@ export class LearningPathEditFormComponent
 		},
 	];
 
-	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
-		competency: '',
-		participation: '',
-		learningpath: '',
-		noCategory: '',
+	categoryOptions: { [key in BadgeClassCategory]: string } = {
+		competency: 'Badge.categories.competency',
+		participation: 'Badge.categories.participation',
+		learningpath: 'Badge.categories.learningpath',
 	};
 
 	get imageFieldDirty() {
