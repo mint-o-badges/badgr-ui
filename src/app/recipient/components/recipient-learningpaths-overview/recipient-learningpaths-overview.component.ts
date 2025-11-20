@@ -5,10 +5,11 @@ import { HlmInputModule } from '@spartan-ng/helm/input';
 import { ApiLearningPath } from '~/common/model/learningpath-api.model';
 import { BgLearningPathCard } from '~/common/components/bg-learningpathcard';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
+import { HlmH3 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'recipient-learningpaths-overview',
-	imports: [TranslatePipe, HlmInputModule, FormsModule, BgLearningPathCard],
+	imports: [TranslatePipe, HlmInputModule, HlmH3, FormsModule, BgLearningPathCard],
 	template: ` <!-- No badges, empty state! -->
 		@if (learningPaths().length === 0) {
 			<section class="emptysection l-emptysection">
@@ -58,7 +59,7 @@ import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 								[requested]="lp.requested"
 								[studyLoad]="calculateStudyLoad(lp)"
 								[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
-							></bg-learningpathcard>
+							/>
 						}
 					</div>
 				</div>
@@ -82,7 +83,7 @@ import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 								[completed]="true"
 								[studyLoad]="calculateStudyLoad(lp)"
 								[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
-							></bg-learningpathcard>
+							/>
 						}
 					</div>
 				</div>

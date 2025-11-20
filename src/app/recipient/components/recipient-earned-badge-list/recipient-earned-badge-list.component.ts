@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterContentInit, inject, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -14,13 +13,12 @@ import { UserProfileManager } from '../../../common/services/user-profile-manage
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
-import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
 import { CountUpDirective, CountUpModule } from 'ngx-countup';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService, TranslatePipe, LangChangeEvent } from '@ngx-translate/core';
-import { provideIcons, NgIcon } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import { RecipientBadgeCollectionApiService } from '../../services/recipient-badge-collection-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DialogComponent } from '../../../components/dialog.component';
@@ -72,8 +70,6 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		HlmInput,
 		OebCheckboxComponent,
 		BgBadgecard,
-		HlmH3,
-		BgLearningPathCard,
 		BgCollectionCard,
 		AddBadgeDialogComponent,
 		TranslatePipe,
@@ -101,8 +97,6 @@ export class RecipientEarnedBadgeListComponent
 	private breakpointService = inject(BreakpointService);
 
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
-	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
-	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
 	@ViewChild('addBadgeDialog')
 	addBadgeDialog: AddBadgeDialogComponent;
@@ -124,10 +118,6 @@ export class RecipientEarnedBadgeListComponent
 	collections: RecipientBadgeCollection[] = [];
 
 	badgeResults: BadgeResult[] = [];
-	learningPathResults: any[] = [];
-	learningPathsInProgress: LearningPath[] = [];
-	learningPathsCompleted: LearningPath[] = [];
-	learningPathsReadyToRequest: LearningPath[] = [];
 	issuerResults: MatchingIssuerBadges[] = [];
 	issuerLearningPathResults: MatchingLearningPathIssuer[] = [];
 	badgeClassesByIssuerId: { [issuerUrl: string]: RecipientBadgeInstance[] };
@@ -435,12 +425,8 @@ export class RecipientEarnedBadgeListComponent
 	private updateResults() {
 		// Clear Results
 		this.badgeResults.length = 0;
-		this.learningPathResults.length = 0;
 		this.issuerResults.length = 0;
 		this.issuerLearningPathResults.length = 0;
-		this.learningPathsCompleted.length = 0;
-		this.learningPathsReadyToRequest.length = 0;
-		this.learningPathsInProgress.length = 0;
 
 		const issuerResultsByIssuer: { [issuerUrl: string]: MatchingIssuerBadges } = {};
 
@@ -471,32 +457,6 @@ export class RecipientEarnedBadgeListComponent
 			return true;
 		};
 
-		const addToLearningPathResults = (learningPath: any) => {
-			// Restrict Length
-			if (this.learningPathResults.length > this.maxDisplayedResults) {
-				return false;
-			}
-
-			if (!this.learningPathResults.find((r) => r.learningPath === learningPath)) {
-				// appending the results to the badgeResults array bound to the view template.
-				if (learningPath.completed_at) {
-					if (!this.learningPathsCompleted.find((r) => r === learningPath)) {
-						this.learningPathsCompleted.push(learningPath);
-					}
-				} else if (learningPath.progress / this.calculateStudyLoad(learningPath) == 1) {
-					if (!this.learningPathsReadyToRequest.find((r) => r === learningPath)) {
-						this.learningPathsReadyToRequest.push(learningPath);
-					}
-				} else {
-					if (!this.learningPathsInProgress.find((r) => r === learningPath)) {
-						this.learningPathsInProgress.push(learningPath);
-					}
-				}
-				this.learningPathResults.push(learningPath);
-			}
-			return true;
-		};
-
 		const addIssuerToResults = (issuer: ApiRecipientBadgeIssuer) => {
 			(this.badgeClassesByIssuerId[issuer.id] || []).forEach(addBadgeToResults);
 		};
@@ -504,9 +464,6 @@ export class RecipientEarnedBadgeListComponent
 		this.allIssuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResults);
 
 		this.allBadges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-		this.allLearningPaths
-			.filter(MatchingAlgorithm.learningPathMatcher(this._searchQuery))
-			.forEach(addToLearningPathResults);
 		this.badgeResults.sort((a, b) => b.badge.issueDate.getTime() - a.badge.issueDate.getTime());
 		this.issuerResults.forEach((r) => r.badges.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
 		// this.learningPathResults.forEach((r) => r.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
@@ -547,25 +504,6 @@ export class RecipientEarnedBadgeListComponent
 			relativeTo: this.route,
 			queryParams: { tab: tab },
 		});
-	}
-
-	calculateStudyLoad(lp: LearningPath): number {
-		const totalStudyLoad = lp.badges.reduce(
-			(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
-			0,
-		);
-		return totalStudyLoad;
-	}
-
-	checkCompleted(lp: LearningPath): boolean {
-		if (lp.required_badges_count != lp.badges.length) {
-			const badgeClassIds = lp.badges.map((b) => b.badge.slug);
-			const userBadgeCount = this.allBadges.filter((b) =>
-				badgeClassIds.some((i) => b.badgeClass.slug == i),
-			).length;
-			return userBadgeCount >= lp.required_badges_count;
-		}
-		return lp.completed_at != null;
 	}
 
 	routeToCollectionCreation() {
