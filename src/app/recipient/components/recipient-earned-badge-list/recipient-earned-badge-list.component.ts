@@ -6,7 +6,6 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 import { groupIntoArray, groupIntoObject } from '../../../common/util/array-reducers';
 import { MessageService } from '../../../common/services/message.service';
 import { SessionService } from '../../../common/services/session.service';
-
 import { AddBadgeDialogComponent } from '../add-badge-dialog/add-badge-dialog.component';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { ApiRecipientBadgeIssuer } from '../../models/recipient-badge-api.model';
@@ -17,7 +16,6 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 import { UserProfile } from '../../../common/model/user-profile.model';
 import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
 import { CountUpDirective, CountUpModule } from 'ngx-countup';
-import { Competency } from '../../../common/model/competency.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,10 +37,8 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
-import { OebCompetency } from '../../../common/components/oeb-competency';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
 import { BgCollectionCard } from '../../../common/bg-collectioncard';
-import { DynamicFilterPipe } from '../../../common/pipes/dynamicFilterPipe';
 import { RecipientSkillVisualisationComponent } from '../recipient-skill-visualisation/recipient-skill-visualisation.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
@@ -53,9 +49,6 @@ import { appearAnimation } from '~/common/animations/animations';
 import { RecipientCompetencyOverview } from '../recipient-competency-overview/recipient-competency-overview.component';
 
 type BadgeDispay = 'grid' | 'list';
-type EscoCompetencies = {
-	[key: string]: Competency;
-};
 
 export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 
@@ -63,14 +56,6 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 	selector: 'recipient-earned-badge-list',
 	templateUrl: './recipient-earned-badge-list.component.html',
 	animations: [appearAnimation],
-	providers: [
-		provideIcons({ lucideHexagon }),
-		provideIcons({ lucideMedal }),
-		provideIcons({ lucideClock }),
-		provideIcons({ lucideHand }),
-		provideIcons({ lucideBookOpen }),
-		provideIcons({ lucideHeart }),
-	],
 	imports: [
 		FormMessageComponent,
 		BgAwaitPromises,
@@ -87,11 +72,9 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		OebCheckboxComponent,
 		BgBadgecard,
 		HlmH3,
-		OebCompetency,
 		BgLearningPathCard,
 		BgCollectionCard,
 		AddBadgeDialogComponent,
-		DynamicFilterPipe,
 		TranslatePipe,
 		RecipientSkillVisualisationComponent,
 		OebGlobalSortSelectComponent,
@@ -166,16 +149,6 @@ export class RecipientEarnedBadgeListComponent
 
 	dialogRef: BrnDialogRef = null;
 	translatedTitles: string[] = [];
-
-	groupedUserCompetencies: Competency[] | object = {};
-	newGroupedUserCompetencies: Competency[] | object = {};
-
-	totalStudyTime = 0;
-	public objectKeys = Object.keys;
-	public objectValues = Object.values;
-
-	@ViewChild('countup') countup: CountUpDirective;
-	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
 
 	activeTab: string = 'profile';
@@ -213,15 +186,9 @@ export class RecipientEarnedBadgeListComponent
 		this.updateResults();
 	}
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
-		const router = inject(Router);
-		const route = inject(ActivatedRoute);
+		super();
 		const sessionService = inject(SessionService);
-
-		super(router, route, sessionService);
 		const title = this.title;
 		const dialogService = this.dialogService;
 		const profileManager = this.profileManager;
@@ -451,7 +418,6 @@ export class RecipientEarnedBadgeListComponent
 			.map((g) => g.values[0].badgeClass.issuer);
 
 		this.allBadges = allBadges;
-		this.groupCompetencies(allBadges);
 		this.updateResults();
 	}
 
@@ -546,58 +512,6 @@ export class RecipientEarnedBadgeListComponent
 
 	trackById(index: number, badge: RecipientBadgeInstance) {
 		return badge.slug;
-	}
-
-	private groupCompetencies(badges) {
-		this.totalStudyTime = 0;
-		let groupedCompetencies: EscoCompetencies = {};
-		let newGroupedCompetencies: EscoCompetencies = {};
-		this.groupedUserCompetencies = {};
-		this.newGroupedUserCompetencies = {};
-
-		badges.forEach((badge) => {
-			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
-			competencies.forEach((competency) => {
-				const key = competency['framework_identifier'] || competency.name + String(competency.studyLoad);
-				if (groupedCompetencies[key]) {
-					groupedCompetencies[key].studyLoad += competency.studyLoad;
-					if (groupedCompetencies[key].lastReceived < badge.issueDate) {
-						groupedCompetencies[key].lastReceived = badge.issueDate;
-					}
-				} else {
-					groupedCompetencies[key] = { ...competency };
-					groupedCompetencies[key].lastReceived = badge.issueDate;
-				}
-				if (competency.studyLoad) {
-					this.totalStudyTime += competency.studyLoad;
-				}
-			});
-		});
-
-		badges
-			.filter((badge) => badge.mostRelevantStatus)
-			.forEach((badge) => {
-				let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
-				competencies.forEach((competency) => {
-					const key = competency['framework_identifier'] || competency.name + String(competency.studyLoad);
-					if (newGroupedCompetencies[key]) {
-						newGroupedCompetencies[key].studyLoad += competency.studyLoad;
-						if (newGroupedCompetencies[key].lastReceived < badge.issueDate) {
-							newGroupedCompetencies[key].lastReceived = badge.issueDate;
-						}
-					} else {
-						newGroupedCompetencies[key] = { ...competency };
-						newGroupedCompetencies[key].lastReceived = badge.issueDate;
-					}
-				});
-			});
-
-		this.groupedUserCompetencies = Object.values(groupedCompetencies).sort((a, b) => {
-			return a.lastReceived.getTime() - b.lastReceived.getTime();
-		});
-		this.newGroupedUserCompetencies = Object.values(newGroupedCompetencies).sort((a, b) => {
-			return a.lastReceived.getTime() - b.lastReceived.getTime();
-		});
 	}
 
 	onSortChanged(sortOption: string): void {
