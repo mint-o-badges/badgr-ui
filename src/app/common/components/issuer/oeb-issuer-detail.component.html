@@ -363,7 +363,10 @@
 
 				@for (networkGroup of networkGroupsArray; track networkGroup.network.slug) {
 					<div class="tw-mt-6">
-						<div class="tw-px-2 tw-py-3 tw-flex tw-items-center tw-gap-3 tw-border-b-2 tw-border-purple">
+						<div
+							class="tw-px-2 tw-py-3 tw-flex tw-items-center tw-gap-3 tw-border-b-2 tw-border-purple !tw-cursor-pointer"
+							[routerLink]="['/issuer/networks', networkGroup.network.slug]"
+						>
 							<img
 								class="tw-w-12 tw-h-12 tw-object-cover tw-rounded"
 								[src]="networkGroup.network.image"
@@ -401,7 +404,8 @@
 				</div>
 				@for (group of networkBadgeInstanceResults; track group) {
 					<div
-						class="tw-px-2 tw-py-2 tw-gap-2 tw-flex tw-items-center tw-font-semibold tw-text-lg tw-leading-[130%] tw-uppercase tw-text-oebblack"
+						class="tw-px-2 tw-py-2 tw-gap-2 tw-flex tw-items-center tw-font-semibold tw-text-lg tw-leading-[130%] tw-uppercase tw-text-oebblack tw-cursor-pointer"
+						[routerLink]="['/issuer/networks', group.networkIssuer.slug]"
 					>
 						<img class="tw-w-12" [src]="group.networkIssuer.image" alt="Network Logo" />
 						<span>{{ group.issuerName }}</span>
