@@ -228,7 +228,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 		const valid_from = this.qrForm.controls.valid_from.value;
 		const expires = this.qrForm.controls.expires_at.value;
 
-		if (valid_from && expires && new Date(expires) <= new Date(valid_from)) {
+		if (valid_from && expires && new Date(expires) < new Date(valid_from)) {
 			return { expiresBeforeValidFrom: true };
 		}
 

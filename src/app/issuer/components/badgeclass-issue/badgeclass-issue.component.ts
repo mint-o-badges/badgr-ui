@@ -316,7 +316,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				() => {
 					this.eventsService.recipientBadgesStale.next([]);
 					this.openSuccessDialog(formState.recipient_identifier);
-					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
+					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug], {
+						queryParams: { tab: 'recipients' },
+					});
 					this.messageService.setMessage('Badge awarded to ' + formState.recipient_identifier, 'success');
 				},
 				(error) => {
