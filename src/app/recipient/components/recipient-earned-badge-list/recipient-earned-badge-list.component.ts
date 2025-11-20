@@ -50,6 +50,7 @@ import { HlmH2, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 import { OebGlobalSortSelectComponent } from '~/components/oeb-global-sort-select.component';
 import { appearAnimation } from '~/common/animations/animations';
+import { RecipientCompetencyOverview } from '../recipient-competency-overview/recipient-competency-overview.component';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -94,6 +95,7 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		TranslatePipe,
 		RecipientSkillVisualisationComponent,
 		OebGlobalSortSelectComponent,
+		RecipientCompetencyOverview,
 	],
 })
 export class RecipientEarnedBadgeListComponent
