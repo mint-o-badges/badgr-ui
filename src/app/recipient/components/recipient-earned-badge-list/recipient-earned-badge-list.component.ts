@@ -47,6 +47,7 @@ import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 import { OebGlobalSortSelectComponent } from '~/components/oeb-global-sort-select.component';
 import { appearAnimation } from '~/common/animations/animations';
 import { RecipientCompetencyOverview } from '../recipient-competency-overview/recipient-competency-overview.component';
+import RecipientLearningPathsOverview from '../recipient-learningpaths-overview/recipient-learningpaths-overview.component';
 
 type BadgeDispay = 'grid' | 'list';
 
@@ -79,6 +80,7 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		RecipientSkillVisualisationComponent,
 		OebGlobalSortSelectComponent,
 		RecipientCompetencyOverview,
+		RecipientLearningPathsOverview,
 	],
 })
 export class RecipientEarnedBadgeListComponent

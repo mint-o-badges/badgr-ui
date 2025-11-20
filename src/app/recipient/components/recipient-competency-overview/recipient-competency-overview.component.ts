@@ -7,7 +7,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CountUpModule } from 'ngx-countup';
 import { OebCompetency } from '~/common/components/oeb-competency';
 import { Competency } from '~/common/model/competency.model';
-import { KeyValuePipe } from '@angular/common';
 
 @Component({
 	selector: 'recipient-competency-overview',
