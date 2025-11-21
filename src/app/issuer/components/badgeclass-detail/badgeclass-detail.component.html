@@ -1,48 +1,50 @@
 <bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 	<oeb-tabs [variant]="'black'" (onTabChanged)="onTabChange($event)" [activeTab]="activeTab" [tabs]="tabs">
 	</oeb-tabs>
-	<div #qrAwards>
-		@if (issuer && issuer.is_network) {
-			@if (!networkQrCodeApiAwards.length) {
+	@if (activeTab === 'qrcodes') {
+		<div #qrAwards>
+			@if (issuer && issuer.is_network) {
+				@if (!networkQrCodeApiAwards.length) {
+					<qrcode-awards
+						[(selectedNetworkIssuer)]="selectedNetworkIssuer"
+						(qrBadgeAward)="onQrBadgeAward($event)"
+						[awards]="[]"
+						[badgeClass]="badgeClass"
+						[issuer]="issuer"
+						[routerLinkText]="config?.issueQrRouterLink"
+						[networkUserIssuers]="networkUserIssuers()"
+						[networkIssuerSelection]="networkIssuerSelection"
+						[networkIssuerSelectionHeader]="networkIssuerSelectionHeader"
+					></qrcode-awards>
+				}
+				@for (qrGroup of networkQrCodeApiAwards; track qrGroup.issuer.slug) {
+					<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
+						<img class="tw-w-11" [src]="qrGroup.issuer.image" alt="Issuer Logo" />
+						<span class="tw-text-oebblack tw-text-lg tw-font-semibold tw-uppercase">{{
+							qrGroup.issuer.name
+						}}</span>
+					</div>
+					<qrcode-awards
+						(qrBadgeAward)="onQrBadgeAward($event)"
+						[awards]="qrGroup.qrcodes"
+						[badgeClass]="badgeClass"
+						[issuer]="qrGroup.issuer"
+						[routerLinkText]="config?.issueQrRouterLink"
+						[interactive]="qrGroup.staff"
+					></qrcode-awards>
+				}
+			} @else {
 				<qrcode-awards
-					[(selectedNetworkIssuer)]="selectedNetworkIssuer"
 					(qrBadgeAward)="onQrBadgeAward($event)"
-					[awards]="[]"
+					[awards]="qrCodeAwards"
 					[badgeClass]="badgeClass"
 					[issuer]="issuer"
 					[routerLinkText]="config?.issueQrRouterLink"
-					[networkUserIssuers]="networkUserIssuers()"
-					[networkIssuerSelection]="networkIssuerSelection"
-					[networkIssuerSelectionHeader]="networkIssuerSelectionHeader"
+					[defaultUnfolded]="focusRequests"
 				></qrcode-awards>
 			}
-			@for (qrGroup of networkQrCodeApiAwards; track qrGroup.issuer.slug) {
-				<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
-					<img class="tw-w-11" [src]="qrGroup.issuer.image" alt="Issuer Logo" />
-					<span class="tw-text-oebblack tw-text-lg tw-font-semibold tw-uppercase">{{
-						qrGroup.issuer.name
-					}}</span>
-				</div>
-				<qrcode-awards
-					(qrBadgeAward)="onQrBadgeAward($event)"
-					[awards]="qrGroup.qrcodes"
-					[badgeClass]="badgeClass"
-					[issuer]="qrGroup.issuer"
-					[routerLinkText]="config?.issueQrRouterLink"
-					[interactive]="qrGroup.staff"
-				></qrcode-awards>
-			}
-		} @else {
-			<qrcode-awards
-				(qrBadgeAward)="onQrBadgeAward($event)"
-				[awards]="qrCodeAwards"
-				[badgeClass]="badgeClass"
-				[issuer]="issuer"
-				[routerLinkText]="config?.issueQrRouterLink"
-				[defaultUnfolded]="focusRequests"
-			></qrcode-awards>
-		}
-	</div>
+		</div>
+	}
 	<ng-template #batchAwards>
 		@if (issuer) {
 			@if (issuer.is_network) {
