@@ -15,11 +15,11 @@
 					@if (activeTab === 'badges' || activeTab === 'profile') {
 						<oeb-button
 							icon="lucideUpload"
+							[iconLeft]="true"
 							[variant]="activeTab === 'profile' ? 'secondary' : 'default'"
-							[iconLeft]="!mobile"
 							(click)="uploadBadge()"
 							[disabled-when-requesting]="true"
-							[text]="mobile ? null : ('RecBadge.uploadBadge' | translate)"
+							[text]="'RecBadge.uploadBadge' | translate"
 						>
 						</oeb-button>
 					}

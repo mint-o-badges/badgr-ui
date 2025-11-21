@@ -5,6 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { CountUpModule } from 'ngx-countup';
+import { appearAnimation } from '~/common/animations/animations';
 import { BgBadgecard } from '~/common/components/bg-badgecard';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 import { OebCheckboxComponent } from '~/components/oeb-checkbox.component';
@@ -26,6 +27,7 @@ import { RecipientBadgeInstance } from '~/recipient/models/recipient-badge.model
 		OebCheckboxComponent,
 		BgBadgecard,
 	],
+	animations: [appearAnimation],
 	template: `<div class="oeb-section-sm">
 			<div class="tw-grid tw-grid-cols-2 tw-gap-3">
 				<div
