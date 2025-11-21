@@ -242,6 +242,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 
 		if (this.editing) {
 			const formState = this.qrForm.value;
+			const expiresDate = new Date(formState.expires_at);
+			expiresDate.setUTCHours(23, 59, 59, 999);
 			this.qrCodePromise = this.qrCodeApiService
 				.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
 					title: formState.title,
@@ -256,7 +258,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 					activity_zip: formState.activity_zip,
 					activity_online: formState.activity_online,
 					activity_city: formState.activity_city,
-					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : null,
+					expires_at: formState.expires_at ? expiresDate.toISOString() : null,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : null,
 					badgeclass_id: this.badgeSlug,
 					issuer_id: this.issuerSlug,
@@ -277,6 +279,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 		} else {
 			const formState = this.qrForm.value;
 			const issuer = this.isNetworkBadge && this.partnerIssuerSlug ? this.partnerIssuerSlug : this.issuerSlug;
+			const expiresDate = new Date(formState.expires_at);
+			expiresDate.setUTCHours(23, 59, 59, 999);
 			this.qrCodePromise = this.qrCodeApiService
 				.createQrCode(issuer, this.badgeSlug, {
 					title: formState.title,
@@ -292,7 +296,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 					activity_zip: formState.activity_zip,
 					activity_online: formState.activity_online,
 					activity_city: formState.activity_city,
-					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
+					expires_at: formState.expires_at ? expiresDate.toISOString() : undefined,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 					notifications: formState.notifications,
 				})
