@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, AfterContentInit, inject, viewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterContentInit, inject, viewChild, input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -84,6 +84,8 @@ export class RecipientEarnedBadgeListComponent
 	readonly collectionInfoHeaderTemplate = viewChild<ElementRef>('collectionInfoHeaderTemplate');
 	readonly collectionInfoContentTemplate = viewChild<ElementRef>('collectionInfoContentTemplate');
 
+	readonly inputTabs = input<string[]>(['profile', 'badges', 'competencies', 'microdegrees', 'collections']);
+
 	allBadges: RecipientBadgeInstance[] = [];
 	importedBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
@@ -167,33 +169,40 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	ngAfterContentInit() {
-		this.tabs = [
-			{
-				key: 'profile',
-				title: 'NavItems.profile',
-				component: this.profileTemplate(),
-			},
-			{
-				key: 'badges',
-				title: 'Badges',
-				component: this.badgesTemplate(),
-			},
-			{
-				key: 'competencies',
-				title: 'RecBadge.competencies',
-				component: this.badgesCompetency(),
-			},
-			{
-				key: 'microdegrees',
-				title: 'LearningPath.learningpathsPlural',
-				component: this.learningPathTemplate(),
-			},
-			{
-				key: 'collections',
-				title: 'General.collections',
-				component: this.collectionTemplate(),
-			},
-		];
+		this.tabs = this.inputTabs().map((t) => {
+			switch (t) {
+				case 'profile':
+					return {
+						key: 'profile',
+						title: 'NavItems.profile',
+						component: this.profileTemplate(),
+					};
+				case 'badges':
+					return {
+						key: 'badges',
+						title: 'Badges',
+						component: this.badgesTemplate(),
+					};
+				case 'competencies':
+					return {
+						key: 'competencies',
+						title: 'RecBadge.competencies',
+						component: this.badgesCompetency(),
+					};
+				case 'microdegrees':
+					return {
+						key: 'microdegrees',
+						title: 'LearningPath.learningpathsPlural',
+						component: this.learningPathTemplate(),
+					};
+				case 'collections':
+					return {
+						key: 'collections',
+						title: 'General.collections',
+						component: this.collectionTemplate(),
+					};
+			}
+		});
 	}
 
 	loadImportedBadges() {
