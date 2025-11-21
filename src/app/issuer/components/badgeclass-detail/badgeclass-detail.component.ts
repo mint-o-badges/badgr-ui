@@ -39,7 +39,7 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { Network } from '~/issuer/network.model';
 import { BadgeInstanceApiService } from '~/issuer/services/badgeinstance-api.service';
-import { OebTabsComponent } from '~/components/oeb-tabs.component';
+import { OebTabsComponent, Tab } from '~/components/oeb-tabs.component';
 import { ApiBadgeInstance } from '~/issuer/models/badgeinstance-api.model';
 import { ApiQRCode, NetworkQrCodeGroup } from '~/issuer/models/qrcode-api.model';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
@@ -123,7 +123,7 @@ export class BadgeClassDetailComponent
 
 	TaskStatus = TaskStatus;
 
-	tabs: any = undefined;
+	tabs: Tab[] = undefined;
 	activeTab = 'qrcodes';
 
 	get issuerSlug() {
@@ -315,7 +315,7 @@ export class BadgeClassDetailComponent
 			{
 				key: 'qrcodes',
 				title: 'QrCode.qrAwards',
-				component: this.qrAwards,
+				component: null, // rendered in the template
 			},
 			{
 				key: 'recipients',
