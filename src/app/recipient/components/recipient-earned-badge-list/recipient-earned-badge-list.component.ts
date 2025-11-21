@@ -46,6 +46,7 @@ import { OebGlobalSortSelectComponent } from '~/components/oeb-global-sort-selec
 import { appearAnimation } from '~/common/animations/animations';
 import { RecipientCompetencyOverview } from '../recipient-competency-overview/recipient-competency-overview.component';
 import RecipientLearningPathsOverview from '../recipient-learningpaths-overview/recipient-learningpaths-overview.component';
+import RecipientEarnedBadgesOverview from '../recipient-earned-badges-overview/recipient-earned-badges-overview.component';
 
 type BadgeDispay = 'grid' | 'list';
 
@@ -77,6 +78,7 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		OebGlobalSortSelectComponent,
 		RecipientCompetencyOverview,
 		RecipientLearningPathsOverview,
+		RecipientEarnedBadgesOverview,
 	],
 })
 export class RecipientEarnedBadgeListComponent
