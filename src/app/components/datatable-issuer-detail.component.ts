@@ -284,9 +284,11 @@ export class IssuerDetailDatatableComponent {
 		{
 			id: 'RecBadgeDetail.issuedOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.issuedOn,
-			cell: (info) => null,
-			// cell: (info) => formatDate(info.getValue(), 'dd.MM.yyyy', 'de-DE'),
+			accessorFn: (row): Date => row.issuedOn,
+			cell: (info) => {
+				const value = info.getValue();
+				return formatDate(value as Date, 'dd.MM.yyyy', 'de-DE');
+			},
 		},
 		{
 			id: 'actions',

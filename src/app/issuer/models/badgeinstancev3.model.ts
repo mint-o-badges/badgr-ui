@@ -16,6 +16,10 @@ export class BadgeInstanceV3 {
 
 	constructor(data: ApiBadgeInstance) {
 		Object.assign(this, data);
+
+		if (!this.issued_on && data.json?.issuedOn) {
+			this.issued_on = data.json.issuedOn;
+		}
 	}
 
 	get issuedOn(): Date {
