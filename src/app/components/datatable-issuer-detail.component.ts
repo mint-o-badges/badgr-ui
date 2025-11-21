@@ -27,6 +27,8 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { Network } from '~/issuer/network.model';
 import { HlmP } from '@spartan-ng/helm/typography';
+import { BadgeInstanceV3 } from '~/issuer/models/badgeinstancev3.model';
+import { HlmNumberedPagination } from '@spartan-ng/helm/pagination';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -44,6 +46,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		NgIcon,
 		HlmIconModule,
 		HlmP,
+		HlmNumberedPagination,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
@@ -169,77 +172,13 @@ import { HlmP } from '@spartan-ng/helm/typography';
 				</table>
 
 				@if (shouldShowPagination()) {
-					<div class="tw-flex tw-items-center tw-justify-center tw-px-2 tw-py-4">
-						<div class="tw-flex tw-items-center tw-space-x-1">
-							<!-- First page button -->
-							<button
-								hlmBtn
-								size="sm"
-								[disabled]="!table.getCanPreviousPage()"
-								(click)="table.setPageIndex(0)"
-								class="tw-px-2 tw-flex tw-items-center tw-text-oebblack"
-							>
-								<ng-icon hlm name="lucideChevronsLeft" />
-							</button>
-
-							<!-- Previous page button -->
-							<button
-								hlmBtn
-								size="sm"
-								[disabled]="!table.getCanPreviousPage()"
-								(click)="table.previousPage()"
-								class="tw-px-2 tw-flex tw-items-center tw-text-oebblack"
-							>
-								<ng-icon hlm name="lucideChevronLeft" />
-							</button>
-
-							<!-- Numbered page buttons -->
-							@for (page of getVisiblePageNumbers(); track page) {
-								@if (page === '...') {
-									<span class="tw-px-3 tw-py-2 tw-text-lg tw-text-purple">...</span>
-								} @else {
-									<button
-										hlmBtn
-										size="sm"
-										(click)="table.setPageIndex($any(page) - 1)"
-										class="tw-min-w-[2.5rem] tw-px-3"
-									>
-										<span
-											[ngClass]="
-												table.getState().pagination.pageIndex + 1 == page
-													? 'tw-text-white tw-font-bold tw-text-lg tw-bg-purple tw-py-2 tw-px-4 tw-rounded-full'
-													: 'tw-text-purple tw-text-lg'
-											"
-										>
-											{{ page }}</span
-										>
-									</button>
-								}
-							}
-
-							<!-- Next page button -->
-							<button
-								hlmBtn
-								size="sm"
-								[disabled]="!table.getCanNextPage()"
-								(click)="table.nextPage()"
-								class="tw-px-2 tw-items-center tw-flex tw-text-oebblack"
-							>
-								<ng-icon hlm name="lucideChevronRight" />
-							</button>
-
-							<!-- Last page button -->
-							<button
-								hlmBtn
-								size="sm"
-								[disabled]="!table.getCanNextPage()"
-								(click)="table.setPageIndex(table.getPageCount() - 1)"
-								class="tw-px-2 tw-flex tw-items-center tw-text-oebblack"
-							>
-								<ng-icon hlm name="lucideChevronsRight" />
-							</button>
-						</div>
-					</div>
+					<hlm-numbered-pagination
+						[(currentPage)]="currentPageNumber"
+						[(itemsPerPage)]="currentPageSize"
+						[totalItems]="recipientCount()"
+						[maxSize]="7"
+						[showEdges]="true"
+					/>
 				}
 
 				<ng-template #translateHeaderIDCellTemplate let-context>
@@ -280,9 +219,13 @@ export class IssuerDetailDatatableComponent {
 	recipientCount = input<number>(0);
 	downloadStates = input<Record<string, boolean>>({});
 	awardInProgress = input<boolean>(false);
-	recipients = input.required<BadgeInstance[]>();
+	recipients = input.required<BadgeInstanceV3[]>();
+	isLoading = input<boolean>(false);
 	actionElement = output<BadgeInstance>();
 	downloadCertificate = output<{ instance: BadgeInstance; badgeIndex: number }>();
+
+	paginationChange = output<{ pageIndex: number; pageSize: number }>();
+	searchChange = output<string>();
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
@@ -305,11 +248,36 @@ export class IssuerDetailDatatableComponent {
 
 	searchValue = signal<string>('');
 
-	private readonly tableColumnDefinition: ColumnDef<BadgeInstance>[] = [
+	currentPageNumber = signal<number>(1);
+	currentPageSize = signal<number>(15);
+
+	constructor() {
+		effect(() => {
+			const page = this.currentPageNumber();
+			const size = this.currentPageSize();
+
+			this.pagination.set({
+				pageIndex: page - 1,
+				pageSize: size,
+			});
+
+			this.paginationChange.emit({
+				pageIndex: page - 1,
+				pageSize: size,
+			});
+		});
+
+		effect(() => {
+			const search = this.searchValue();
+			this.searchChange.emit(search);
+		});
+	}
+
+	private readonly tableColumnDefinition: ColumnDef<BadgeInstanceV3>[] = [
 		{
 			id: 'General.name',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.getExtension('extensions:recipientProfile', row.recipientIdentifier).name,
+			accessorFn: (row) => row.getExtension('extensions:recipientProfile', { name: '' }).name,
 			cell: (ctx) => ctx.getValue(),
 			sortDescFirst: false,
 		},
@@ -317,7 +285,8 @@ export class IssuerDetailDatatableComponent {
 			id: 'RecBadgeDetail.issuedOn',
 			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => row.issuedOn,
-			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
+			cell: (info) => null,
+			// cell: (info) => formatDate(info.getValue(), 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'actions',
@@ -326,42 +295,27 @@ export class IssuerDetailDatatableComponent {
 		},
 	];
 
-	shouldShowPagination = computed(() => this.recipients().length > 15);
+	shouldShowPagination = computed(() => this.recipientCount() > 15);
 
 	table = createAngularTable(() => ({
 		data: this.recipients(),
 		columns: this.tableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
+		manualPagination: true,
+		pageCount: Math.ceil(this.recipientCount() / this.pagination().pageSize),
 		getPaginationRowModel: getPaginationRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		state: {
 			sorting: this.tableSorting(),
 			pagination: this.pagination(),
 			rowSelection: this.rowSelection(),
-			globalFilter: this.searchValue(),
 		},
 		onSortingChange: (updater) =>
 			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
 		onPaginationChange: (updater) =>
 			updater instanceof Function ? this.pagination.update(updater) : this.pagination.set(updater),
-		onGlobalFilterChange: (value) => this.searchValue.set(value),
-		globalFilterFn: (row, columnId, filterValue) => {
-			if (!filterValue) return true;
-
-			const searchTerm = filterValue.toLowerCase();
-			const badgeInstance = row.original;
-
-			const name =
-				badgeInstance
-					.getExtension('extensions:recipientProfile', badgeInstance.recipientIdentifier)
-					.name?.toLowerCase() || '';
-
-			const email = badgeInstance.recipientIdentifier?.toLowerCase() || '';
-
-			return name.includes(searchTerm) || email.includes(searchTerm);
-		},
-		enableSortingRemoval: false, // ensures at least one column is sorted
+		enableSortingRemoval: false,
 		enableRowSelection: true,
 		onRowSelectionChange: (updaterOrValue) => {
 			this.rowSelection.set(
@@ -375,56 +329,14 @@ export class IssuerDetailDatatableComponent {
 		},
 	}));
 
-	onPageSizeChange(event: Event): void {
-		const target = event.target as HTMLSelectElement;
-		this.table.setPageSize(Number(target.value));
-	}
-
-	getVisiblePageNumbers(): (number | string)[] {
-		const currentPage = this.table.getState().pagination.pageIndex + 1;
-		const totalPages = this.table.getPageCount();
-
-		const delta = 2; // Number of pages to show on each side of current page
-
-		if (totalPages <= 7) {
-			return Array.from({ length: totalPages }, (_, i) => i + 1);
-		}
-
-		const left = Math.max(2, currentPage - delta);
-		const right = Math.min(totalPages - 1, currentPage + delta);
-		const pages: (number | string)[] = [];
-
-		pages.push(1);
-
-		if (left > 2) {
-			pages.push('...');
-		}
-
-		for (let i = left; i <= right; i++) {
-			if (i !== 1 && i !== totalPages) {
-				pages.push(i);
-			}
-		}
-
-		if (right < totalPages - 1) {
-			pages.push('...');
-		}
-
-		if (totalPages > 1) {
-			pages.push(totalPages);
-		}
-
-		return pages;
-	}
-
 	onSearchChange(event: Event): void {
 		const target = event.target as HTMLInputElement;
 		this.searchValue.set(target.value);
-		this.table.setPageIndex(0);
+		this.currentPageNumber.set(1);
 	}
 
 	clearSearch(): void {
 		this.searchValue.set('');
-		this.table.setPageIndex(0);
+		this.currentPageNumber.set(1);
 	}
 }
