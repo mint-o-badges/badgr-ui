@@ -87,14 +87,17 @@
 				}
 			} @else {
 				<issuer-detail-datatable
-					[issuer]="issuer"
+					[recipients]="recipients()"
+					[isLoading]="isLoadingInstances"
 					[recipientCount]="recipientCount"
-					[recipients]="instanceResults"
-					(actionElement)="revokeInstance($event)"
-					(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
+					[issuer]="issuer"
 					[downloadStates]="downloadStates"
-					[awardInProgress]="isTaskProcessing || isTaskPending"
-				></issuer-detail-datatable>
+					[awardInProgress]="isTaskActive && (isTaskPending || isTaskProcessing)"
+					(paginationChange)="onPaginationChange($event)"
+					(searchChange)="onSearchChange($event)"
+					(actionElement)="revokeInstance($event)"
+					(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
+				/>
 			}
 		}
 	</ng-template>

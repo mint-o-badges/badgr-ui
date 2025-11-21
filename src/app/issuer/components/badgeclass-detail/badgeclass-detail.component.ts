@@ -45,6 +45,7 @@ import { ApiQRCode, NetworkQrCodeGroup } from '~/issuer/models/qrcode-api.model'
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 import { PublicApiService } from '~/public/services/public-api.service';
 import { SelectNetworkComponent } from '../select-network/select-network.component';
+import { BadgeInstanceV3 } from '~/issuer/models/badgeinstancev3.model';
 
 interface groupedInstances {
 	has_access: boolean;
@@ -125,6 +126,13 @@ export class BadgeClassDetailComponent
 
 	tabs: any = undefined;
 	activeTab = 'qrcodes';
+
+	recipients = signal<BadgeInstanceV3[]>([]);
+	currentPageIndex = 0;
+	currentPageSize = 15;
+	totalInstanceCount = 0;
+	isLoadingInstances = false;
+	currentRecipientQuery = '';
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -227,9 +235,6 @@ export class BadgeClassDetailComponent
 		c1: 'C1 Leader*in',
 		c2: 'C2 Vorreiter*in',
 	};
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {
 		const sessionService = inject(SessionService);
@@ -534,41 +539,98 @@ export class BadgeClassDetailComponent
 		}
 	}
 
-	async loadInstances(recipientQuery?: string) {
-		const instances = new BadgeClassInstances(
-			this.badgeInstanceManager,
-			this.issuerSlug,
-			this.badgeSlug,
-			recipientQuery,
-		);
+	async loadInstances(recipientQuery?: string, pageIndex = 0, pageSize = 15) {
+		this.isLoadingInstances = true;
+		this.currentRecipientQuery = recipientQuery || '';
+		this.currentPageIndex = pageIndex;
+		this.currentPageSize = pageSize;
+
+		const offset = pageIndex * pageSize;
+
 		this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug);
-		this.badgeInstancesLoaded = instances.loadedPromise.then(
-			async (retInstances) => {
-				this.crumbs = [
-					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
-					{
-						title: this.issuer.name,
-						routerLink: [`/issuer/${this.issuer.is_network ? 'networks' : 'issuers'}/` + this.issuerSlug],
-					},
-					{
-						title: this.badgeClass.name,
-						routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug],
-					},
-				];
-				this.allBadgeInstances = retInstances;
-				const issuerUrls = retInstances.entities.map((i) => i.issuerUrl);
+
+		this.badgeInstancesLoaded = this.badgeInstanceApiService
+			.listBadgeInstancesV3(this.issuerSlug, this.badgeSlug, recipientQuery, pageSize, offset)
+			.then(async (result) => {
+				// Convert API instances to BadgeInstance models
+				const tempSet = new BadgeClassInstances(
+					this.badgeInstanceManager,
+					this.issuerSlug,
+					this.badgeSlug,
+					recipientQuery,
+				);
+
+				const instances = result.results.map((i) => new BadgeInstanceV3(i));
+
+				this.recipients.set(instances);
+
+				// Store pagination state and counts
+				this.totalInstanceCount = result.total_count;
+				this.recipientCount = result.count;
+
+				const issuerUrls = tempSet.entities.map((i) => i.issuerUrl);
 				this.awardingIssuers = await this.issuerManager.issuersByUrls(issuerUrls);
-				this.updateResults();
+
 				this.loadConfig(this.badgeClass);
-			},
-			(error) => {
+
+				return tempSet;
+			})
+			.catch((error) => {
 				this.messageService.reportLoadingError(
 					`Could not load recipients ${this.issuerSlug} / ${this.badgeSlug}`,
 				);
-				return error;
-			},
-		);
+				throw error;
+			})
+			.finally(() => {
+				this.isLoadingInstances = false;
+			});
 	}
+
+	onPaginationChange(pagination: { pageIndex: number; pageSize: number }) {
+		// Load instances with current search query and new pagination
+		this.loadInstances(this.currentRecipientQuery, pagination.pageIndex, pagination.pageSize);
+	}
+
+	onSearchChange(searchQuery: string) {
+		// Reset to first page when search changes
+		this.loadInstances(searchQuery, 0, this.currentPageSize);
+	}
+
+	// async loadInstances(recipientQuery?: string) {
+	// 	const instances = new BadgeClassInstances(
+	// 		this.badgeInstanceManager,
+	// 		this.issuerSlug,
+	// 		this.badgeSlug,
+	// 		recipientQuery,
+	// 	);
+	// 	this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug);
+	// 	this.badgeInstancesLoaded = instances.loadedPromise.then(
+	// 		async (retInstances) => {
+	// 			this.crumbs = [
+	// 				{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
+	// 				{
+	// 					title: this.issuer.name,
+	// 					routerLink: [`/issuer/${this.issuer.is_network ? 'networks' : 'issuers'}/` + this.issuerSlug],
+	// 				},
+	// 				{
+	// 					title: this.badgeClass.name,
+	// 					routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug],
+	// 				},
+	// 			];
+	// 			this.allBadgeInstances = retInstances;
+	// 			const issuerUrls = retInstances.entities.map((i) => i.issuerUrl);
+	// 			this.awardingIssuers = await this.issuerManager.issuersByUrls(issuerUrls);
+	// 			this.updateResults();
+	// 			this.loadConfig(this.badgeClass);
+	// 		},
+	// 		(error) => {
+	// 			this.messageService.reportLoadingError(
+	// 				`Could not load recipients ${this.issuerSlug} / ${this.badgeSlug}`,
+	// 			);
+	// 			return error;
+	// 		},
+	// 	);
+	// }
 
 	onQrBadgeAward(event: number) {
 		this.loadInstances();
@@ -913,27 +975,6 @@ export class BadgeClassDetailComponent
 		this.instanceResults = this.allBadgeInstances.entities;
 		if (this.recipientCount > this.resultsPerPage) {
 			this.showAssertionCount = true;
-		}
-	}
-
-	private hasNextPage() {
-		return this.allBadgeInstances.lastPaginationResult && this.allBadgeInstances.lastPaginationResult.nextUrl;
-	}
-	private hasPrevPage() {
-		return this.allBadgeInstances.lastPaginationResult && this.allBadgeInstances.lastPaginationResult.prevUrl;
-	}
-
-	private clickNextPage() {
-		if (this.hasNextPage()) {
-			this.showAssertionCount = false;
-			this.assertionsLoaded = this.allBadgeInstances.loadNextPage().then(() => (this.showAssertionCount = true));
-		}
-	}
-
-	private clickPrevPage() {
-		if (this.hasPrevPage()) {
-			this.showAssertionCount = false;
-			this.assertionsLoaded = this.allBadgeInstances.loadPrevPage().then(() => (this.showAssertionCount = true));
 		}
 	}
 }
