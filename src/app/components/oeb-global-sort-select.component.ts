@@ -35,11 +35,6 @@ export class OebGlobalSortSelectComponent implements OnInit, AfterViewInit {
 		{ value: 'date_desc', label: this.translate.instant('General.dateDescending') },
 	];
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
-	constructor() {}
-
 	ngOnInit(): void {
 		this.control.valueChanges.subscribe((value) => {
 			this.sortChanged.emit(value);

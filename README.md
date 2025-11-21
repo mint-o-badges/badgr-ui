@@ -56,7 +56,11 @@ In order to include an Angular component for exporting as custom element / web c
 
 1. Create a bootstrapper for your Angular component
     1. Next to your `my-component.component.ts`, create a `my-component.web-component.ts`
-    1. In `my-component.web-component.ts`, call `createWebComponent` from [the utility file](./webcomponents/create-webcomponent.ts) and provide the component, the tag name under which the custom element is registered and the required app configuration (providers etc).
+    1. In `my-component.web-component.ts`, call `createWebComponent` from [the utility file](./webcomponents/create-webcomponent.ts) and provide the component, the tag name (usually starting with 'oeb-') under which the custom element is registered and the required app configuration (providers etc).
+    1. For more complex scenarios (e.g. some logic in the component necessary to mock routing) also create a file thats named after the tag name you are choosing for your custom component
+        - Suppose you export `my-component.ts`, do create a `my-component.web-component.ts` and use `oeb-my-component` for the tag
+        - Also create `oeb-my-component.ts` and pass its class to [`createWebComponent`](./webcomponents/create-webcomponent.ts) instead of the class in `my-component.ts`
+        - Do the modifications as needed in `oeb-my-component.ts` to leave `my-component.ts` untouched (mostly)
 1. Add a build configuration to the `angular.json` file:
     1. In the `web-components-cli` project under `configuration` add `my-component` and specify `main` and `outputPath`, where `main` points to your `my-component.web-component.ts` and outputPath points to `dist/webcomponents/my-component`
 1. Add a build step to the `package.json`:

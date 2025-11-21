@@ -5,4 +5,5 @@ export interface Competency {
 	name: string;
 	studyLoad: number;
 	lastReceived: Date;
+	category: 'skill' | 'knowledge';
 }
