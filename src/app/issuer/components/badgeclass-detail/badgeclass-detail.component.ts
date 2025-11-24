@@ -673,10 +673,24 @@ export class BadgeClassDetailComponent
 		}
 	}
 
+	private appendPartialResults(newInstances: any[]) {
+		if (!newInstances || newInstances.length === 0) return;
+
+		const current = this.recipients();
+		const merged = [...new Map([...current, ...newInstances].map((item) => [item.slug, item])).values()];
+
+		this.recipients.set(merged);
+		this.recipientCount = merged.length;
+	}
+
 	private subscribeToTaskUpdates() {
 		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
 			(taskResult: TaskResult) => {
 				this.currentTaskStatus = taskResult;
+
+				if (taskResult.status === TaskStatus.PROGRESS) {
+					this.appendPartialResults(taskResult.result.successful);
+				}
 
 				if (taskResult.status === TaskStatus.SUCCESS) {
 					this.handleTaskSuccess(taskResult);
@@ -695,11 +709,11 @@ export class BadgeClassDetailComponent
 		this.isTaskActive = false;
 
 		const awardCount = taskResult.result?.data.length;
-		if (awardCount) {
-			this.recipientCount += awardCount;
-		}
+		// if (awardCount) {
+		// 	this.recipientCount += awardCount;
+		// }
 		// Refresh datatable
-		this.loadInstances();
+		// this.loadInstances();
 	}
 
 	private handleTaskFailure(taskResult: TaskResult) {
