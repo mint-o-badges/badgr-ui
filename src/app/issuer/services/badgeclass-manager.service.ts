@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
+import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { BadgeClass } from '../models/badgeclass.model';
 import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
@@ -12,18 +13,17 @@ import {
 } from '../models/badgeclass-api.model';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { BadgeClassApiService } from './badgeclass-api.service';
-import { IssuerUrl } from '../models/issuer-api.model';
+import { IssuerSlug, IssuerUrl } from '../models/issuer-api.model';
 import { AnyRefType, EntityRef } from '../../common/model/entity-ref';
 import { ManagedEntityGrouping } from '../../common/model/entity-set';
 import { MessageService } from '../../common/services/message.service';
 import { from, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { first, map } from 'rxjs/operators';
-import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class BadgeClassManager extends BaseHttpApiService {
-	protected loginService: AuthenticationService;
+	protected loginService: SessionService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected commonEntityManager = inject(CommonEntityManager);
@@ -120,7 +120,7 @@ export class BadgeClassManager extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const loginService = inject(AUTH_PROVIDER);
+		const loginService = inject(SessionService);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);
@@ -137,9 +137,6 @@ export class BadgeClassManager extends BaseHttpApiService {
 		return this.badgeClassApi.deleteBadgeClass(badge.issuerSlug, badge.slug).then((response) => {
 			this.allBadgesList.remove(badge);
 			this.badgesList.remove(badge);
-			this._networkBadgesBySlug.forEach((entitySet) => {
-				entitySet.remove(badge);
-			});
 			return response;
 		});
 	}

@@ -28,7 +28,6 @@ import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { PublicApiIssuer } from '~/public/models/public-api.model';
-import { BadgeClassManager } from '~/issuer/services/badgeclass-manager.service';
 
 @Component({
 	selector: 'select-network',
@@ -40,7 +39,6 @@ export class SelectNetworkComponent implements OnInit {
 	private messageService = inject(MessageService);
 	private networkApiService = inject(NetworkApiService);
 	private badgeClassApiService = inject(BadgeClassApiService);
-	private badgeClassManager = inject(BadgeClassManager);
 	private router = inject(Router);
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
@@ -113,7 +111,6 @@ export class SelectNetworkComponent implements OnInit {
 	shareBadge() {
 		try {
 			this.badgeClassApiService.shareOnNetwork(this.selectedNetwork.slug, this.badge().slug).then((s) => {
-				this.badgeClassManager.badgesList.updateList();
 				this.closeSelect.emit();
 				this.router.navigate(['/issuer/networks/', this.selectedNetwork.slug], {
 					queryParams: { tab: 'badges', innerTab: 'partner' },

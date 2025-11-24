@@ -44,6 +44,9 @@ export class UserProfileManager {
 		return this.userProfileSet.loadedPromise.then(() => this.userProfile);
 	}
 
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
 	constructor() {}
 
 	reloadUserProfileSet() {

@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { OAuthApiService } from './oauth-api.service';
+import { SessionService } from './session.service';
 import {
 	ApiOAuth2AppAuthorization,
 	ApiOAuth2AppInfo,
@@ -11,14 +12,13 @@ import { StandaloneEntitySet } from '../model/managed-entity-set';
 import { OAuth2AppAuthorization } from '../model/oauth.model';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { CommonDialogsService } from './common-dialogs.service';
-import { AUTH_PROVIDER } from './authentication-service';
 
 const OAUTH_STATE_STORAGE_NAME = 'oauthState';
 
 @Injectable({ providedIn: 'root' })
 export class OAuthManager {
 	oauthApi = inject(OAuthApiService);
-	private sessionService = inject(AUTH_PROVIDER);
+	private sessionService = inject(SessionService);
 	private commonEntityManager = inject(CommonEntityManager);
 	private commonDialogsService = inject(CommonDialogsService);
 

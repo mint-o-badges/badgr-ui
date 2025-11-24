@@ -15,7 +15,7 @@ import { LearningPathCreateComponent } from './components/learningpath-create/le
 import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
-import { BadgeClassEditIssuedComponent } from './components/badgeclass-edit-issued/badgeclass-edit-issued';
+import { BadgeClassEditCopyPermissionsComponent } from './components/badgeclass-edit-copypermissions/badgeclass-edit-copypermissions';
 import { NetworkCreateComponent } from './components/network-create/network-create.component';
 import { NetworkDashboardComponent } from './components/network-dashboard/network-dashboard.component';
 import { NetworkInviteConfirmationComponent } from './components/network-invite-confirmation/network-invite-confirmation.component';
@@ -99,8 +99,8 @@ export const routes = [
 		component: BadgeClassEditComponent,
 	},
 	{
-		path: 'issuers/:issuerSlug/badges/:badgeSlug/edit-issued',
-		component: BadgeClassEditIssuedComponent,
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/copypermissions',
+		component: BadgeClassEditCopyPermissionsComponent,
 	},
 	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/issue',

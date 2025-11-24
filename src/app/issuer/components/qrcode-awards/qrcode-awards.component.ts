@@ -1,21 +1,11 @@
 import { NgIcon } from '@ng-icons/core';
-import {
-	Component,
-	EventEmitter,
-	Input,
-	Output,
-	SimpleChanges,
-	inject,
-	OnChanges,
-	input,
-	TemplateRef,
-	model,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, inject, OnChanges } from '@angular/core';
 import { BrnAccordionContent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { BadgeRequestApiService } from '../../services/badgerequest-api.service';
@@ -33,8 +23,6 @@ import { SvgIconComponent } from '~/common/components/svg-icon.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH3 } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
-import { ApiQRCode } from '~/issuer/models/qrcode-api.model';
-import { DialogComponent } from '~/components/dialog.component';
 
 @Component({
 	selector: 'qrcode-awards',
@@ -48,6 +36,7 @@ import { DialogComponent } from '~/components/dialog.component';
 		BrnAccordionContent,
 		RouterModule,
 		NgClass,
+		OebSeparatorComponent,
 		OebButtonComponent,
 		OebDropdownComponent,
 		QrCodeDatatableComponent,
@@ -60,11 +49,6 @@ export class QrCodeAwardsComponent implements OnChanges {
 	private qrCodeApiService = inject(QrCodeApiService);
 	private router = inject(Router);
 	private translate = inject(TranslateService);
-
-	networkUserIssuers = input<Issuer[]>();
-	networkIssuerSelection = input<TemplateRef<any>>();
-	networkIssuerSelectionHeader = input<TemplateRef<any>>();
-	selectedNetworkIssuer = model<Issuer | null>();
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
@@ -79,13 +63,15 @@ export class QrCodeAwardsComponent implements OnChanges {
 		}
 	}
 
-	@Input() awards: ApiQRCode[];
+	@Input() awards: any[];
 	@Input() routerLinkText: string[];
 	@Input() issuer: Issuer | Network;
 	@Input() badgeClass: BadgeClass;
 	@Input() defaultUnfolded: boolean | undefined = false;
 	@Input() interactive = true;
 	@Output() qrBadgeAward = new EventEmitter<number>();
+
+	requestedBadges: any[] = [];
 
 	qrCodeMenus: Array<MenuItem[]> = [];
 
@@ -153,7 +139,7 @@ export class QrCodeAwardsComponent implements OnChanges {
 	}
 
 	routeToQrAward(badge: BadgeClass, issuer) {
-		if (badge.recipientCount === 0 && issuer instanceof Issuer) {
+		if (badge.recipientCount === 0) {
 			const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
 				context: {
 					variant: 'info',
@@ -168,37 +154,6 @@ export class QrCodeAwardsComponent implements OnChanges {
 				if (result === 'continue')
 					this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 			});
-		} else if (issuer.is_network) {
-			if (!this.networkUserIssuers().length) {
-				const dialogRef = this._hlmDialogService.open(DialogComponent, {
-					context: {
-						variant: 'failure',
-						text: this.translate.instant('Network.addInstitutionToIssue'),
-					},
-				});
-			} else {
-				const dialogRef = this._hlmDialogService.open(DialogComponent, {
-					context: {
-						headerTemplate: this.networkIssuerSelectionHeader(),
-						content: this.networkIssuerSelection(),
-						templateContext: {
-							closeDialog: (result?: string) => dialogRef.close(result),
-						},
-					},
-				});
-
-				dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue' && this.selectedNetworkIssuer()) {
-						this.router.navigate([
-							'/issuer/issuers/',
-							this.selectedNetworkIssuer().slug,
-							'badges',
-							badge.slug,
-							'qr',
-						]);
-					}
-				});
-			}
 		} else {
 			this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 		}

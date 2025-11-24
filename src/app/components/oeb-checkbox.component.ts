@@ -22,7 +22,8 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	],
 	template: `<label
 		[ngClass]="multiLineText ? 'tw-items-start' : 'tw-items-center'"
-		class="tw-flex tw-mt-[0.25rem] md:tw-text-lg"
+		class="tw-flex tw-mt-[0.25rem]"
+		hlmP
 	>
 		<hlm-checkbox
 			[name]="name"
@@ -30,10 +31,11 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			(changed)="onChange($event)"
 			[formControl]="control"
 			[class.tw-mr-2]="!noMargin"
+			[disabled]="disabled"
 			class="tw-mt-[1px]"
 		/>
 		<div class="tw-flex tw-flex-col">
-			<span class="tw-pl-[8px]" [ngClass]="{ 'tw-text-darkgrey': control?.disabled }" [innerHTML]="text"></span>
+			<span class="tw-pl-[8px]" [innerHTML]="text"></span>
 			@if (isErrorState) {
 				<oeb-input-error class="tw-text-red tw-pl-[3px]" [error]="errorMessageForDisplay"></oeb-input-error>
 			}
@@ -53,6 +55,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() ngModel: boolean;
 	@Input() value: string;
 	@Input() checked = false;
+	@Input() disabled = false;
 	@Input() error: string;
 	@Input() errorMessage: CustomValidatorMessages;
 	@Input() label: string;
@@ -62,6 +65,9 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() multiLineText = false;
 
 	@Output() ngModelChange = new EventEmitter<boolean>();
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
 
 	constructor() {}
 
@@ -103,10 +109,9 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	private cachedErrorState = null;
 
 	get controlErrorState() {
-		if (this.control && this.control.hasError('required')) {
+		if (this.control) {
 			return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
 		}
-		return false;
 	}
 
 	get isErrorState() {

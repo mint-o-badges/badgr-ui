@@ -27,11 +27,9 @@ export class NetworkManager {
 	constructor() {}
 
 	createNetwork(initialNetwork: ApiNetworkForCreation): Promise<Network> {
-		return this.networkApiService.createNetwork({ ...initialNetwork, is_network: true }).then((newNetwork) => {
-			const network = this.networksList.addOrUpdate(newNetwork);
-			this.issuerManager.networksList.addOrUpdate(newNetwork);
-			return network;
-		});
+		return this.networkApiService
+			.createNetwork({ ...initialNetwork, is_network: true })
+			.then((newNetwork) => this.networksList.addOrUpdate(newNetwork));
 	}
 
 	get myNetworks$(): Observable<Network[]> {

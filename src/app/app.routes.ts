@@ -1,6 +1,10 @@
 import { Route, Routes, UrlMatcher, UrlMatchResult, UrlSegment, UrlSegmentGroup } from '@angular/router';
 import { environment } from '../environments/environment';
 import { AuthGuard } from './common/guards/auth.guard';
+import { ForwardRouteComponent } from './common/pages/forward-route.component';
+import { InitialRedirectComponent } from './initial-redirect.component';
+import { CmsPageComponent } from './common/components/cms/cms-page.component';
+import { CmsPostListComponent } from './common/components/cms/cms-post-list/cms-post-list.component';
 
 const cmsSlugMatcher = (segments: UrlSegment[], group: UrlSegmentGroup, route: Route, type: string): UrlMatchResult => {
 	if (segments[0].path == type) {
@@ -24,11 +28,11 @@ export const ROUTE_CONFIG: Routes = [
 	},
 	{
 		path: 'initial-redirect',
-		loadComponent: () => import('./initial-redirect.component').then((m) => m.InitialRedirectComponent),
+		component: InitialRedirectComponent,
 	},
 	{
 		path: 'forward',
-		loadComponent: () => import('./common/pages/forward-route.component').then((m) => m.ForwardRouteComponent),
+		component: ForwardRouteComponent,
 	},
 	{
 		path: 'auth',
@@ -93,19 +97,18 @@ export const ROUTE_CONFIG: Routes = [
 
 	// CMS contents
 	{
-		loadComponent: () => import('./common/components/cms/cms-page.component').then((m) => m.CmsPageComponent),
+		component: CmsPageComponent,
 		data: { cmsContentType: 'page' },
 		matcher: cmsPageMatcher,
 	},
 	{
-		loadComponent: () => import('./common/components/cms/cms-page.component').then((m) => m.CmsPageComponent),
+		component: CmsPageComponent,
 		data: { cmsContentType: 'post' },
 		matcher: cmsPostMatcher,
 	},
 	{
 		path: 'news',
-		loadComponent: () =>
-			import('./common/components/cms/cms-post-list/cms-post-list.component').then((m) => m.CmsPostListComponent),
+		component: CmsPostListComponent,
 	},
 
 	// catchall

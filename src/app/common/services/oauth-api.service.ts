@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
 import { BaseHttpApiService } from './base-http-api.service';
@@ -8,13 +9,12 @@ import {
 	ApiOAuthResponse,
 	OAuth2RequestParams,
 } from '../model/oauth-api.model';
-import { ExternalAuthProvider } from '../model/user-profile-api.model';
+import { ExternalAuthProvider, SocialAccountProviderInfo } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
-import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class OAuthApiService extends BaseHttpApiService {
-	protected loginService: AuthenticationService;
+	protected loginService: SessionService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -23,7 +23,7 @@ export class OAuthApiService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const loginService = inject(AUTH_PROVIDER);
+		const loginService = inject(SessionService);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);

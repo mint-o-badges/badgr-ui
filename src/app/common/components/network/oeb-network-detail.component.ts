@@ -22,9 +22,6 @@ import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
 import { BadgeClassManager } from '~/issuer/services/badgeclass-manager.service';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { Router } from '@angular/router';
-import { SessionService } from '~/common/services/session.service';
-import { NgClass } from '@angular/common';
-import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
 	selector: 'oeb-network-detail',
@@ -40,8 +37,6 @@ import { NgTemplateOutlet } from '@angular/common';
 		BgBreadcrumbsComponent,
 		OebTabsComponent,
 		BgBadgecard,
-		NgClass,
-		NgTemplateOutlet,
 	],
 })
 export class OebNetworkDetailComponent {
@@ -52,7 +47,6 @@ export class OebNetworkDetailComponent {
 	protected profileManager = inject(UserProfileManager);
 	protected networkApiService = inject(NetworkApiService);
 	protected badgeClassManager = inject(BadgeClassManager);
-	protected sessionService = inject(SessionService);
 	protected router = inject(Router);
 
 	@Input() issuers: Issuer[] | PublicApiIssuer[];
@@ -75,7 +69,6 @@ export class OebNetworkDetailComponent {
 	tabs: Tab[] = undefined;
 
 	activeTab = 'network';
-	userIsMember = false;
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
@@ -83,11 +76,6 @@ export class OebNetworkDetailComponent {
 	constructor() {}
 
 	async ngOnInit() {
-		if (this.sessionService.isLoggedIn) {
-			this.issuerManager.myNetworks$.subscribe((networks) => {
-				this.userIsMember = networks.some((i) => this.network.slug == i.slug);
-			});
-		}
 		this.linkentries = [
 			{ title: this.translate.instant('Network.networksNav'), routerLink: ['/catalog/networks'] },
 			{
@@ -125,14 +113,14 @@ export class OebNetworkDetailComponent {
 				key: 'network',
 				title: 'Network.networkBadges',
 				icon: 'lucideShipWheel',
-				count: this.networkBadges.length,
-				component: null, //rendered via templateOutlet
+				count: this.partnerBadges.length,
+				component: this.networkTemplate,
 			},
 			{
 				key: 'partner',
 				title: 'Issuer.partnerBadges',
 				icon: 'lucideHexagon',
-				component: null, // rendered via templateOutlet
+				component: this.partnerTemplate,
 				count: this.partnerBadges.length,
 			},
 		];

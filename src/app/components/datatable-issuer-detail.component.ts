@@ -26,7 +26,6 @@ import {
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { Network } from '~/issuer/network.model';
-import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -43,19 +42,20 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		FlexRenderDirective,
 		NgIcon,
 		HlmIconModule,
-		HlmP,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
-		<div>
+		<div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-2">
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
-				<div class="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
-					<p hlmP class="tw-font-semibold tw-text-purple tw-uppercase">
+				<div class="l-stack u-margin-bottom2x u-margin-top4x tw-w-full tw-flex tw-justify-between">
+					<h3
+						class="md:tw-text-nowrap tw-text-lg tw-font-semibold tw-font-[rubik] tw-text-purple tw-uppercase"
+					>
 						{{ recipientCount() }} Badge -
 						{{
 							recipientCount() == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate)
 						}}
-					</p>
+					</h3>
 
 					<div class="tw-relative">
 						<ng-icon

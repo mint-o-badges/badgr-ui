@@ -64,7 +64,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	protected router: Router;
-	protected authService: SessionService;
+	protected sessionService: SessionService;
 	protected title = inject(Title);
 	protected messageService = inject(MessageService);
 	protected profileManager = inject(UserProfileManager);
@@ -137,7 +137,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 
 		super(router, route, sessionService);
 		this.router = router;
-		this.authService = sessionService;
+		this.sessionService = sessionService;
 		const title = this.title;
 
 		title.setTitle(`Profile - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -274,7 +274,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		) {
 			this.profile.delete().then(
 				() => {
-					this.authService.logout();
+					this.sessionService.logout();
 					// Not sure why I need the timeout, but
 					// otherwise the message isn't shown
 					setTimeout(() =>

@@ -28,7 +28,7 @@ import { NgModel, FormsModule } from '@angular/forms';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
-import { NgStyle, NgClass } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
@@ -38,11 +38,9 @@ import { AddInstitutionComponent } from '../add-institution/add-institution.comp
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 import { NetworkBadgesComponent } from '../network-badges/network-badges.component';
-import { NetworkLearningPathsComponent } from '../network-learningpaths/network-learningpaths.component';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { RouterLink } from '@angular/router';
 import { Network } from '~/issuer/network.model';
-import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
 @Component({
 	selector: 'network-dashboard',
 	templateUrl: './network-dashboard.component.html',
@@ -59,9 +57,7 @@ import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
 		AddInstitutionComponent,
 		BgBreadcrumbsComponent,
 		NetworkBadgesComponent,
-		NetworkLearningPathsComponent,
 		RouterLink,
-		NgClass,
 	],
 })
 export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
@@ -93,14 +89,12 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	issuerSearchResults = [];
 
 	rightsAndRolesExpanded = false;
-	networkBadges: ApiBadgeClass[] = [];
 
 	private _networkStaffRoleOptions: FormFieldSelectOption[];
 
 	@ViewChild('overviewTemplate', { static: true }) overviewTemplate: ElementRef;
 	@ViewChild('partnerTemplate', { static: true }) partnerTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
-	@ViewChild('learningPathsTemplate', { static: true }) learningPathsTemplate: ElementRef;
 
 	@ViewChild('headerTemplate')
 	headerTemplate: TemplateRef<void>;
@@ -172,11 +166,6 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 				title: 'Badges',
 				component: this.badgesTemplate,
 			},
-			{
-				key: 'learningpaths',
-				title: 'LearningPath.learningpathsPlural',
-				component: this.learningPathsTemplate,
-			},
 		];
 	}
 
@@ -220,7 +209,6 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		this.networkApiService.getNetworkInvites(this.networkSlug).then((invites) => {
 			this.networkInvites.set(invites);
 		});
-		this.activeTab = 'partners';
 		if (this.dialogRef) {
 			this.dialogRef.close();
 		}

@@ -1,5 +1,12 @@
 import { Routes } from '@angular/router';
 
+import { ProfileComponent } from './components/profile/profile.component';
+import { AppIntegrationListComponent } from './components/app-integrations-list/app-integrations-list.component';
+import { BadgebookLti1DetailComponent } from './components/badgebook-lti1-integration-detail/badgebook-lti1-integration-detail.component';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { OAuthAppDetailComponent } from './components/oauth-app-detail/oauth-app-detail.component';
+
 export const routes: Routes = [
 	/* Profile */
 	{
@@ -9,39 +16,30 @@ export const routes: Routes = [
 	},
 	{
 		path: 'profile',
-		loadComponent: () => import('./components/profile/profile.component').then((m) => m.ProfileComponent),
+		component: ProfileComponent,
 	},
 	{
 		path: 'edit',
-		loadComponent: () =>
-			import('./components/profile-edit/profile-edit.component').then((m) => m.ProfileEditComponent),
+		component: ProfileEditComponent,
 	},
 	{
 		path: 'app-integrations',
-		loadComponent: () =>
-			import('./components/app-integrations-list/app-integrations-list.component').then(
-				(m) => m.AppIntegrationListComponent,
-			),
+		component: AppIntegrationListComponent,
 	},
 	{
 		path: 'app-integrations/app/canvas-lti1',
-		loadComponent: () =>
-			import('./components/badgebook-lti1-integration-detail/badgebook-lti1-integration-detail.component').then(
-				(m) => m.BadgebookLti1DetailComponent,
-			),
+		component: BadgebookLti1DetailComponent,
 	},
 	{
 		path: 'app-integrations/oauth-app/:appId',
-		loadComponent: () =>
-			import('./components/oauth-app-detail/oauth-app-detail.component').then((m) => m.OAuthAppDetailComponent),
+		component: OAuthAppDetailComponent,
 	},
 	{
 		path: 'change-password',
-		loadComponent: () =>
-			import('./components/change-password/change-password.component').then((m) => m.ChangePasswordComponent),
+		component: ChangePasswordComponent,
 	},
 	{
 		path: '**',
-		loadComponent: () => import('./components/profile/profile.component').then((m) => m.ProfileComponent),
+		component: ProfileComponent,
 	},
 ];

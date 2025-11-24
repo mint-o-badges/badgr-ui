@@ -4,13 +4,14 @@ import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
 import { BaseHttpApiService } from './base-http-api.service';
 import { ExternalAuthProvider } from '../model/user-profile-api.model';
+import { throwExpr } from '../util/throw-expr';
 import { UpdatableSubject } from '../util/updatable-subject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavigationService } from './navigation.service';
-import { AuthenticationService } from './authentication-service';
 
 export const EXPIRATION_DATE_STORAGE_KEY = 'LoginService.tokenExpirationDate';
 const IS_OIDC_LOGIN_KEY = 'LoginService.isOidcLogin';
+
 const DEFAULT_EXPIRATION_SECONDS = 24 * 60 * 60;
 
 export interface AuthorizationTokenInformation {
@@ -20,7 +21,7 @@ export interface AuthorizationTokenInformation {
 }
 
 @Injectable({ providedIn: 'root' })
-export class SessionService implements AuthenticationService {
+export class SessionService {
 	private http = inject(HttpClient);
 	private configService = inject(AppConfigService);
 	private messageService = inject(MessageService);
@@ -34,9 +35,6 @@ export class SessionService implements AuthenticationService {
 	get loggedin$() {
 		return this.loggedInSubject.asObservable();
 	}
-	get isLoggedIn$() {
-		return this.loggedInSubject.asObservable();
-	}
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
@@ -48,17 +46,17 @@ export class SessionService implements AuthenticationService {
 		this.enabledExternalAuthProviders = configService.featuresConfig.externalAuthProviders || [];
 	}
 
-	validateToken(): Promise<void> {
+	validateToken(sessionOnlyStorage = false): Promise<AuthorizationTokenInformation> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
 		const client_id = 'public';
 
 		const payload = `grant_type=oidc&client_id=${encodeURIComponent(client_id)}&scope=${encodeURIComponent(scope)}`;
 
-		return this.makeAuthorizationRequest(endpoint, payload, true);
+		return this.makeAuthorizationRequest(endpoint, payload, sessionOnlyStorage, true);
 	}
 
-	refreshToken(): Promise<void> {
+	refreshToken(sessionOnlyStorage = false): Promise<AuthorizationTokenInformation> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
 		const client_id = 'public';
@@ -67,10 +65,10 @@ export class SessionService implements AuthenticationService {
 			scope,
 		)}`;
 
-		return this.makeAuthorizationRequest(endpoint, payload, true);
+		return this.makeAuthorizationRequest(endpoint, payload, sessionOnlyStorage, true);
 	}
 
-	login(credential: UserCredential): Promise<void> {
+	login(credential: UserCredential, sessionOnlyStorage = false): Promise<AuthorizationTokenInformation> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
 		const client_id = 'public';
@@ -79,10 +77,15 @@ export class SessionService implements AuthenticationService {
 			scope,
 		)}&username=${encodeURIComponent(credential.username)}&password=${encodeURIComponent(credential.password)}`;
 
-		return this.makeAuthorizationRequest(endpoint, payload, false);
+		return this.makeAuthorizationRequest(endpoint, payload, sessionOnlyStorage, false);
 	}
 
-	makeAuthorizationRequest(endpoint: string, payload: string, isOidcLogin: boolean): Promise<void> {
+	makeAuthorizationRequest(
+		endpoint: string,
+		payload: string,
+		sessionOnlyStorage: boolean,
+		isOidcLogin: boolean,
+	): Promise<AuthorizationTokenInformation> {
 		const headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
 		// Update global loading state
 		this.messageService.incrementPendingRequestCount();
@@ -102,16 +105,19 @@ export class SessionService implements AuthenticationService {
 					throw new Error('Login Failed: ' + r.status);
 				}
 
-				this.storeToken(r.body, isOidcLogin);
-				if (isOidcLogin) this.startRefreshTokenTimer(r.body.expires_in || DEFAULT_EXPIRATION_SECONDS);
+				this.storeToken(r.body, sessionOnlyStorage, isOidcLogin);
+				if (isOidcLogin)
+					this.startRefreshTokenTimer(r.body.expires_in || DEFAULT_EXPIRATION_SECONDS, sessionOnlyStorage);
+
+				return r.body;
 			});
 	}
 
 	private refreshTokenTimeout?: NodeJS.Timeout;
 
-	startRefreshTokenTimer(expiresIn: number) {
+	startRefreshTokenTimer(expiresIn: number, sessionOnlyStorage = false) {
 		const timeout = (expiresIn - 60) * 1000;
-		this.refreshTokenTimeout = setTimeout(() => this.refreshToken(), timeout);
+		this.refreshTokenTimeout = setTimeout(() => this.refreshToken(sessionOnlyStorage), timeout);
 	}
 
 	stopRefreshTokenTimer() {
@@ -167,13 +173,19 @@ export class SessionService implements AuthenticationService {
 	/**
 	 * Note that this doesn't actually store the token anymore, but merely the metadata on the token
 	 */
-	storeToken(token: AuthorizationTokenInformation, isOidcLogin = false): void {
+	storeToken(token: AuthorizationTokenInformation, sessionOnlyStorage = false, isOidcLogin = false): void {
 		const expirationDateStr = new Date(
 			Date.now() + (token.expires_in || DEFAULT_EXPIRATION_SECONDS) * 1000,
 		).toISOString();
 
-		localStorage.setItem(EXPIRATION_DATE_STORAGE_KEY, expirationDateStr);
-		localStorage.setItem(IS_OIDC_LOGIN_KEY, isOidcLogin ? 'true' : '');
+		if (sessionOnlyStorage) {
+			sessionStorage.setItem(EXPIRATION_DATE_STORAGE_KEY, expirationDateStr);
+			sessionStorage.setItem(IS_OIDC_LOGIN_KEY, isOidcLogin ? 'true' : '');
+		} else {
+			localStorage.setItem(EXPIRATION_DATE_STORAGE_KEY, expirationDateStr);
+			localStorage.setItem(IS_OIDC_LOGIN_KEY, isOidcLogin ? 'true' : '');
+		}
+
 		this.loggedInSubject.next(true);
 	}
 

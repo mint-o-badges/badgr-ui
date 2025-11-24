@@ -8,7 +8,7 @@
 					>
 						<img
 							class="tw-w-[133px] tw-h-[133px] tw-mx-auto tw-block"
-							[loaded-src]="previewB64Img"
+							[loaded-src]="badgeClass.image"
 							[loading-src]="badgeLoadingImageUrl"
 							[error-src]="badgeFailedImageUrl"
 						/>
@@ -27,7 +27,7 @@
 					{{ 'QrCode.create' | translate }} <br />
 					<span class="tw-font-black tw-text-purple tw-uppercase">{{ badgeClass.name }}</span>
 				</h2>
-				@if (issuer && (issuer.is_network || isNetworkBadge)) {
+				@if (environment.networksEnabled) {
 					<div class="tw-flex tw-gap-2 tw-items-center md:tw-mt-7 tw-mt-6">
 						<div class="tw-bg-white tw-w-[60px] tw-h-[60px] tw-flex tw-justify-center tw-items-center">
 							<img width="" [src]="issuer.image" alt="Issuer image" />
@@ -53,36 +53,71 @@
 				<input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
 				<input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
 
-				<div class="tw-py-10">
-					<oeb-optional-details
-						[parentForm]="qrForm"
-						[showExpiration]="true"
-						[showEvidence]="false"
-						[showLocation]="true"
-						[showCourseDate]="true"
-					>
-					</oeb-optional-details>
-				</div>
-
-				<!-- Notifications Section -->
-				@if (editing) {
-					<span
-						class="tw-mt-8 md:tw-mt-10 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
-					>
-						{{ 'General.notification' | translate }}
-					</span>
-				}
-
-				<oeb-checkbox
-					[class]="editing ? 'oeb-standard-padding-bottom' : 'oeb-standard-padding-bottom'"
-					type="checkbox"
-					[text]="'QrCode.receiveEmails' | translate"
-					[control]="qrForm.rawControlMap.notifications"
+				<span
+					class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+					>{{ 'QrCode.expiration' | translate }} <span class="tw-font-normal">(optional)</span></span
 				>
-				</oeb-checkbox>
 
-				<!-- Action Buttons -->
-				@if (editing) {
+				@if (!editing) {
+					<div class="tw-flex tw-flex-col xl:tw-flex-row tw-gap-2 tw-justify-between xl:tw-items-end">
+						<div class="tw-flex md:tw-justify-between tw-gap-12">
+							<oeb-input
+								labelStyle="tw-text-oebblack"
+								[label]="'QrCode.expirationStart' | translate"
+								[errorMessage]="{
+									invalidDate: 'QrCode.invalidDate' | translate,
+								}"
+								[control]="qrForm.rawControlMap.valid_from"
+								fieldType="date"
+							></oeb-input>
+							<oeb-input
+								labelStyle="tw-text-oebblack"
+								[label]="'QrCode.expirationEnd' | translate"
+								[errorMessage]="{
+									expiresBeforeValidFrom: ('QrCode.invalidDateRange' | translate),
+									invalidDate: ('QrCode.invalidDate' | translate),
+								}"
+								[control]="qrForm.rawControlMap.expires_at"
+								fieldType="date"
+							></oeb-input>
+						</div>
+					</div>
+					@if (qrForm.hasError('noStartDate')) {
+						<p id="noStartDateError" [hidden]="!qrForm.hasError('noStartDate')" class="tw-text-red tw-mb-2">
+							{{ 'QrCode.missingStartDate' | translate }}
+						</p>
+					}
+				} @else {
+					<div class="tw-flex tw-gap-12">
+						<oeb-input
+							[label]="'QrCode.expirationStart' | translate"
+							[errorMessage]="'QrCode.invalidDate' | translate"
+							[control]="qrForm.rawControlMap.valid_from"
+							fieldType="date"
+						></oeb-input>
+						<oeb-input
+							[label]="'QrCode.expirationEnd' | translate"
+							[errorMessage]="'QrCode.invalidDate' | translate"
+							[control]="qrForm.rawControlMap.expires_at"
+							fieldType="date"
+						></oeb-input>
+					</div>
+					@if (qrForm.hasError('noStartDate')) {
+						<p id="noStartDateError" [hidden]="!qrForm.hasError('noStartDate')" class="tw-text-red tw-mb-2">
+							{{ 'QrCode.missingStartDate' | translate }}
+						</p>
+					}
+					<span
+						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+						>{{ 'General.notification' | translate }}</span
+					>
+					<oeb-checkbox
+						class="oeb-standard-padding-bottom"
+						type="checkbox"
+						[text]="'QrCode.receiveEmails' | translate"
+						[control]="qrForm.rawControlMap.notifications"
+					>
+					</oeb-checkbox>
 					<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-mt-2 tw-w-full">
 						<oeb-button
 							variant="secondary"
@@ -100,7 +135,25 @@
 						>
 						</oeb-button>
 					</div>
-				} @else {
+				}
+
+				@if (!editing) {
+					<div>
+						<span
+							class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+							>{{ 'General.notification' | translate }}</span
+						>
+						<oeb-checkbox
+							class="oeb-standard-padding-bottom"
+							type="checkbox"
+							[text]="'QrCode.receiveEmails' | translate"
+							[control]="qrForm.rawControlMap.notifications"
+						>
+						</oeb-checkbox>
+					</div>
+				}
+
+				@if (!editing) {
 					<oeb-button
 						class="tw-whitespace-nowrap tw-mt-6"
 						type="submit"

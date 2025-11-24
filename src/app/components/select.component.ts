@@ -21,7 +21,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		OebSeparatorComponent,
 		TranslateModule,
 	],
-	template: ` <div class="tw-max-w-md" [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
+	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		@if (label) {
 			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName">
 				<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>

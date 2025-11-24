@@ -1,4 +1,3 @@
-import { getAssertionIssuedDate, isOB2Assertion } from '~/common/util/assertion-helper';
 import { PublicApiBadgeAssertionWithBadgeClass } from '../app/public/models/public-api.model';
 import { generateEmbedHtml } from './generate-embed-html';
 import sha256Module from 'tiny-sha256';
@@ -44,7 +43,7 @@ export function setupEmbeddedBadges() {
 				if (xhr.status === 200) {
 					const data = JSON.parse(xhr.responseText) as PublicApiBadgeAssertionWithBadgeClass;
 
-					if (isOB2Assertion(data) && data.revoked) {
+					if (data.revoked) {
 						badge.innerHTML = 'This assertion has been revoked. ' + (data.revocationReason || '');
 						return;
 					}
@@ -53,7 +52,7 @@ export function setupEmbeddedBadges() {
 						'extensions:recipientProfile' in data ? data['extensions:recipientProfile']['name'] : undefined;
 
 					let verified = false;
-					if (isOB2Assertion(data) && data.recipient.type === 'url') {
+					if (data.recipient.type === 'url') {
 						const currentLocation = window.location.toString();
 						if (data.recipient.hashed) {
 							const parts = data.recipient.identity.split('$', 2);
@@ -76,7 +75,7 @@ export function setupEmbeddedBadges() {
 						includeVerifyButton,
 						badgeClassName: data.badge.name,
 						recipientName,
-						awardDate: format_date(getAssertionIssuedDate(this.badge)),
+						awardDate: format_date(data.issuedOn),
 						verified,
 						includeScript: false,
 						staticPrefix,

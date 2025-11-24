@@ -1,15 +1,15 @@
 import { Injectable, inject } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
+import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { BadgeClassSlug } from '../models/badgeclass-api.model';
 import { BadgeRequest } from '../models/badgerequest-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class BadgeRequestApiService extends BaseHttpApiService {
-	protected loginService: AuthenticationService;
+	protected loginService: SessionService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -18,7 +18,7 @@ export class BadgeRequestApiService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const loginService = inject(AUTH_PROVIDER);
+		const loginService = inject(SessionService);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);

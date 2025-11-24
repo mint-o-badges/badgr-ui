@@ -13,7 +13,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 	providers: [provideIcons({ lucideClock, lucideChevronDown })],
 	imports: [HlmAccordionModule, NgIcon, HlmIcon, TranslateModule, BrnAccordionContent, RouterModule],
 	template: `
-		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-2">
+		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4">
 			<div hlmAccordion>
 				<div hlmAccordionItem class="tw-px-2 tw-py-2">
 					<button class="tw-w-full hover:tw-no-underline tw-border-0 tw-bg-transparent" hlmAccordionTrigger>

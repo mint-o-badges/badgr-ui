@@ -3,11 +3,11 @@ import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
-import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
+import { SessionService } from './session.service';
 
 @Injectable({ providedIn: 'root' })
 export class ServerTimestampService extends BaseHttpApiService {
-	protected loginService: AuthenticationService;
+	protected loginService: SessionService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -16,7 +16,7 @@ export class ServerTimestampService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const loginService = inject(AUTH_PROVIDER);
+		const loginService = inject(SessionService);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);

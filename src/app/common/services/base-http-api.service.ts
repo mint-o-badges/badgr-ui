@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 // import { LoginService } from "../../auth/auth.service";
+import { SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
 import {
@@ -13,7 +14,6 @@ import {
 import { timeoutPromise } from '../util/promise-util';
 import { Observable } from 'rxjs';
 import { getCookie } from '../util/cookies';
-import { AUTH_PROVIDER } from './authentication-service';
 
 export class BadgrApiError extends Error {
 	constructor(
@@ -26,7 +26,7 @@ export class BadgrApiError extends Error {
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseHttpApiService {
-	protected authService = inject(AUTH_PROVIDER);
+	protected sessionService = inject(SessionService);
 	protected http = inject(HttpClient);
 	protected configService = inject(AppConfigService);
 	protected messageService = inject(MessageService);
@@ -80,7 +80,7 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-				withCredentials: useAuth && (requireAuth || this.authService.isLoggedIn),
+				withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn),
 			}),
 		);
 	}
@@ -107,7 +107,7 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-				withCredentials: useAuth && (requireAuth || this.authService.isLoggedIn),
+				withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn),
 			}),
 		);
 	}
@@ -175,7 +175,7 @@ export abstract class BaseHttpApiService {
 		const detectAndHandleResponseErrors = <T extends HttpResponseBase>(response: T): T | never => {
 			if ((response && response.status < 200) || response.status >= 300) {
 				if (response.status === 401 || response.status === 403) {
-					this.authService.handleAuthenticationError();
+					this.sessionService.handleAuthenticationError();
 				} else if (response.status === 0) {
 					this.messageService.reportFatalError(`Server Unavailable`);
 					// TODO: Is this going to cause trouble?

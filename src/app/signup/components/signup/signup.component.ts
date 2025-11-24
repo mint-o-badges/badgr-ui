@@ -73,7 +73,6 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 			PasswordComplexityValidator.securePassword,
 		])
 		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
-		.addControl('zipCode', '')
 		.addControl('agreedTermsService', false, Validators.requiredTrue)
 		.addControl('marketingOptIn', false)
 		.addControl('captcha', '');
@@ -86,6 +85,9 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 	get theme() {
 		return this.configService.theme;
 	}
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
 
 	constructor() {
 		const router = inject(Router);
@@ -164,7 +166,6 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 			formState.firstName,
 			formState.lastName,
 			formState.password,
-			formState.zipCode,
 			formState.agreedTermsService,
 			formState.marketingOptIn,
 			altcha.value,

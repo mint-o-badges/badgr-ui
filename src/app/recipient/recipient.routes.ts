@@ -1,5 +1,12 @@
 import { Routes } from '@angular/router';
 
+import { RecipientBadgeCollectionDetailComponent } from './components/recipient-badge-collection-detail/recipient-badge-collection-detail.component';
+import { RecipientEarnedBadgeDetailComponent } from './components/recipient-earned-badge-detail/recipient-earned-badge-detail.component';
+import { RecipientEarnedBadgeListComponent } from './components/recipient-earned-badge-list/recipient-earned-badge-list.component';
+import { RecipientBadgeCollectionCreateComponent } from './components/recipient-badge-collection-create/recipient-badge-collection-create.component';
+import { ImportedBadgeDetailComponent } from './components/imported-badge-detail/imported-badge-detail.component';
+import { RecipientBadgeCollectionEditComponent } from '~/recipient-badge-collection-edit/recipient-badge-collection-edit.component';
+
 export const routes: Routes = [
 	/* Recipient Badges */
 	{
@@ -9,54 +16,33 @@ export const routes: Routes = [
 	},
 	{
 		path: 'badges',
-		loadComponent: () =>
-			import('./components/recipient-earned-badge-list/recipient-earned-badge-list.component').then(
-				(m) => m.RecipientEarnedBadgeListComponent,
-			),
+		component: RecipientEarnedBadgeListComponent,
 	},
 	{
 		path: 'badges/import',
-		loadComponent: () =>
-			import('./components/recipient-earned-badge-list/recipient-earned-badge-list.component').then(
-				(m) => m.RecipientEarnedBadgeListComponent,
-			),
+		component: RecipientEarnedBadgeListComponent,
 	},
 	{
 		path: 'earned-badge/:badgeSlug',
-		loadComponent: () =>
-			import('./components/recipient-earned-badge-detail/recipient-earned-badge-detail.component').then(
-				(m) => m.RecipientEarnedBadgeDetailComponent,
-			),
+		component: RecipientEarnedBadgeDetailComponent,
 	},
 	{
 		path: 'imported-badge/:badgeSlug',
-		loadComponent: () =>
-			import('./components/imported-badge-detail/imported-badge-detail.component').then(
-				(m) => m.ImportedBadgeDetailComponent,
-			),
+		component: ImportedBadgeDetailComponent,
 	},
 
 	/* Recipient Badge Collections */
 	{
 		path: 'badge-collections/create',
-		loadComponent: () =>
-			import('./components/recipient-badge-collection-create/recipient-badge-collection-create.component').then(
-				(m) => m.RecipientBadgeCollectionCreateComponent,
-			),
+		component: RecipientBadgeCollectionCreateComponent,
 	},
 	{
 		path: 'badge-collections/:collectionSlug/edit',
-		loadComponent: () =>
-			import('~/recipient-badge-collection-edit/recipient-badge-collection-edit.component').then(
-				(m) => m.RecipientBadgeCollectionEditComponent,
-			),
+		component: RecipientBadgeCollectionEditComponent,
 	},
 	{
 		path: 'badge-collections/collection/:collectionSlug',
-		loadComponent: () =>
-			import('./components/recipient-badge-collection-detail/recipient-badge-collection-detail.component').then(
-				(m) => m.RecipientBadgeCollectionDetailComponent,
-			),
+		component: RecipientBadgeCollectionDetailComponent,
 	},
 	{
 		path: '**',

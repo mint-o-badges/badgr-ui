@@ -143,8 +143,6 @@ export class OebIssuerDetailComponent implements OnInit {
 	networkGroups: Map<string, { network: any; badges: BadgeResult[]; sharedAt: string }> = new Map();
 	networkGroupsArray: { network: any; badges: BadgeResult[]; sharedAt: string }[] = [];
 
-	sharedBadgeSlugs = new Set<string>();
-
 	tabs: Tab[] = undefined;
 	activeTab = 'badges';
 
@@ -270,17 +268,10 @@ export class OebIssuerDetailComponent implements OnInit {
 				for (const networkBadgeClass of group.badge_classes) {
 					const badgeClass = new BadgeClass(this.entityManager, networkBadgeClass);
 
-					if (this.sharedBadgeSlugs?.has(badgeClass.slug)) {
-						continue;
-					}
-
 					const requestCount = requestMap.get(badgeClass.slug)?.length ?? 0;
 
+					// Extract the awarded_count from the API response
 					const awardedCount = networkBadgeClass.awarded_count ?? 0;
-
-					if (awardedCount === 0) {
-						continue;
-					}
 
 					const badgeResult = new BadgeResult(
 						badgeClass,
@@ -292,15 +283,13 @@ export class OebIssuerDetailComponent implements OnInit {
 					groupBadges.push(badgeResult);
 				}
 
-				if (groupBadges.length > 0) {
-					groupBadges.sort(this.sortBadgeResult);
+				groupBadges.sort(this.sortBadgeResult);
 
-					this.networkBadgeInstanceResults.push({
-						issuerName: group.network_issuer.name,
-						badges: groupBadges,
-						networkIssuer: group.network_issuer,
-					});
-				}
+				this.networkBadgeInstanceResults.push({
+					issuerName: group.network_issuer.name,
+					badges: groupBadges,
+					networkIssuer: group.network_issuer,
+				});
 			}
 
 			this.networkBadgeInstanceResults.sort((a, b) => {
@@ -393,7 +382,6 @@ export class OebIssuerDetailComponent implements OnInit {
 			this.networkGroupsArray = Array.from(this.networkGroups.values()).sort((a, b) => {
 				return new Date(b.sharedAt || 0).getTime() - new Date(a.sharedAt || 0).getTime();
 			});
-			this.sharedBadgeSlugs = new Set(this.networkGroupsArray.flatMap((g) => g.badges.map((b) => b.badge.slug)));
 		}
 	}
 
@@ -407,22 +395,15 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	async ngOnInit() {
 		// initialize counts as 0 and update after data has loaded
-		if (this.sessionService.isLoggedIn) {
-			if (this.issuer instanceof Issuer && this.issuer.currentUserStaffMember) {
-				await this.getLearningPathsForIssuerApi(this.issuer.slug);
-			}
+		if (this.sessionService.isLoggedIn && this.issuer instanceof Issuer && this.issuer.currentUserStaffMember) {
+			await this.getLearningPathsForIssuerApi(this.issuer.slug);
 			this.issuerManager.myIssuers$.subscribe((issuers) => {
 				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
 			});
 		} else {
 			await this.getPublicLearningPaths(this.issuer.slug);
 		}
-		await this.updateResults();
-		// must run before updateNetworkResults to populate sharedBadgeSlugs
-		await this.updateSharedNetworkResults();
-		await this.updateNetworkResults();
-
-		// await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
+		await Promise.all([this.updateResults(), this.updateNetworkResults(), this.updateSharedNetworkResults()]);
 		this.badgeTemplateTabs = [
 			{
 				key: 'issuer-badges',

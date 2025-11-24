@@ -5,14 +5,12 @@ export interface BrnButtonConfig {
 	variant: ButtonVariants['variant'];
 	size: ButtonVariants['size'];
 	width: ButtonVariants['width'];
-	weight: ButtonVariants['weight'];
 }
 
 const defaultConfig: BrnButtonConfig = {
 	variant: 'default',
 	size: 'default',
 	width: 'default',
-	weight: 'bold',
 };
 
 const BrnButtonConfigToken = new InjectionToken<BrnButtonConfig>('BrnButtonConfig');

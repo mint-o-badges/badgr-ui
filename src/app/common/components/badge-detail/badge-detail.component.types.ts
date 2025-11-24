@@ -71,11 +71,7 @@ export interface PageConfig {
 	updatedAt?: Date;
 	issuedOn?: Date;
 	issuedTo?: string;
-	validUntil?: Date;
-	activity_start_date?: Date;
-	activity_end_date?: Date;
 	duration?: string;
-	activity_city?: string;
 	category: string;
 	tags: string[];
 	issuerName: string;

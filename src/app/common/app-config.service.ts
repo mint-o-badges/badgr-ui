@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, NgZone, inject } from '@angular/core';
+import { Injectable, InjectionToken, Injector, NgZone, inject } from '@angular/core';
 import { ApiConfig, BadgrConfig, FeaturesConfig, HelpConfig } from '../../environments/badgr-config';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -8,13 +8,11 @@ import * as deepmerge from 'deepmerge';
 import { animationFramePromise } from './util/promise-util';
 import { initializeTheme } from '../../theming/theme-setup';
 
-export const PARTIAL_CONFIG = new InjectionToken<Partial<BadgrConfig>>('config');
-
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
+	private injector = inject(Injector);
 	private http = inject(HttpClient);
 	private ngZone = inject(NgZone);
-	private partialConfig = inject(PARTIAL_CONFIG, { optional: true });
 
 	get apiConfig(): ApiConfig {
 		return this.config.api;
@@ -57,7 +55,7 @@ export class AppConfigService {
 				environment.config || {},
 
 				// Configuration overrides in Angular's dependency injection. Mostly used for tests.
-				this.partialConfig || {},
+				this.injector.get(new InjectionToken<Partial<BadgrConfig>>('config'), null) || {},
 
 				// Remote configuration overrides, generally domain-specific from a config server
 				(await this.loadRemoteConfig()) || {},

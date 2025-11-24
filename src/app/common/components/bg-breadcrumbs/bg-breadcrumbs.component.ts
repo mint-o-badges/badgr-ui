@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
+
 import { RouterLink } from '@angular/router';
-import { HlmIcon } from '@spartan-ng/helm/icon';
-import { NgIcon } from '@ng-icons/core';
+import { SvgIconComponent } from '../svg-icon.component';
 
 @Component({
 	selector: 'bg-breadcrumbs',
 	templateUrl: './bg-breadcrumbs.component.html',
-	imports: [RouterLink, NgIcon, HlmIcon],
+	imports: [RouterLink, SvgIconComponent],
 })
 export class BgBreadcrumbsComponent {
 	@Input() linkentries: LinkEntry[];

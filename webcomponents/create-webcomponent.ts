@@ -1,18 +1,6 @@
-import { ApplicationConfig, enableProdMode, Injectable, Type } from '@angular/core';
+import { ApplicationConfig, enableProdMode, Type } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { createApplication } from '@angular/platform-browser';
-import {
-	ActivatedRoute,
-	ActivatedRouteSnapshot,
-	convertToParamMap,
-	Event,
-	NavigationBehaviorOptions,
-	NavigationEnd,
-	NavigationExtras,
-	Router,
-	UrlTree,
-} from '@angular/router';
-import { Observable, Subject } from 'rxjs';
 import { LanguageService, lngs } from '~/common/services/language.service';
 
 /**
@@ -44,33 +32,3 @@ export const useWebComponentLanguageSetting = (lang: LanguageService) => {
 	if (lngs.indexOf(configuredLanguage) >= 0) lang.setLanguage(configuredLanguage);
 	else lang.setInitialAppLanguage();
 };
-
-@Injectable()
-export class WebComponentRouter extends Router {
-	private readonly _eventsSubject = new Subject<Event>();
-
-	override get events(): Observable<Event> {
-		return this._eventsSubject;
-	}
-
-	navigate(commands: any[], extras?: NavigationExtras): Promise<boolean> {
-		const urlTree = super.createUrlTree(commands, extras);
-		this._eventsSubject.next(new NavigationEnd(Math.random(), urlTree.toString(), urlTree.toString()));
-		return Promise.resolve(true);
-	}
-
-	navigateByUrl(url: string | UrlTree, extras?: NavigationBehaviorOptions): Promise<boolean> {
-		this._eventsSubject.next(new NavigationEnd(Math.random(), url.toString(), url.toString()));
-		return Promise.resolve(true);
-	}
-}
-
-@Injectable()
-export class WebComponentActivatedRoute extends ActivatedRoute {
-	override snapshot: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-
-	constructor() {
-		super();
-		this.snapshot.params = convertToParamMap({});
-	}
-}

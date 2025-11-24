@@ -99,24 +99,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 		</div>
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate }}
-		</ng-template>
-
-		<ng-template #inviteCellTemplate let-context>
-			<div
-				class="tw-flex tw-flex-row tw-items-center tw-leading-7 tw-gap-2 tw-cursor-pointer"
-				(click)="redirectToIssuerDetail.emit(context.row.original)"
-			>
-				<div>
-					<img
-						class=""
-						src="{{ context.row.original.issuer.image }}"
-						alt="{{ context.row.original.issuer.name }}"
-						width="40"
-					/>
-				</div>
-				<p>{{ context.getValue() }}</p>
-			</div>
+			{{ context.header.id | translate | titlecase }}
 		</ng-template>
 
 		<ng-template #issuerActionsCellTemplate let-context>
@@ -129,7 +112,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 				<oeb-button
 					size="xs"
 					variant="secondary"
-					text="{{ 'General.withdraw' | translate }}"
+					text="{{ 'General.revoke' | translate }}"
 					(click)="revokeInvitation(context.row.original)"
 				/>
 			</div>
@@ -144,25 +127,23 @@ export class NetworkInvitesDatatableComponent {
 	actionElement = output<ApiNetworkInvitation>();
 
 	inviteRevoked = output<ApiNetworkInvitation>();
-	redirectToIssuerDetail = output<Issuer>();
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	issuerActionsTemplate = viewChild.required<TemplateRef<any>>('issuerActionsCellTemplate');
-	inviteCellTemplate = viewChild.required<TemplateRef<any>>('inviteCellTemplate');
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'Network.pendingInvites',
+			id: 'General.name',
 			desc: false,
 		},
 	]);
 
 	private readonly tableColumnDefinition: ColumnDef<ApiNetworkInvitation>[] = [
 		{
-			id: 'Network.pendingInvites',
+			id: 'General.name',
 			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => row.issuer.name,
-			cell: (ctx) => this.inviteCellTemplate(),
+			cell: (ctx) => ctx.getValue(),
 			sortDescFirst: false,
 		},
 		{

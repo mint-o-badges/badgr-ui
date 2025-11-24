@@ -1,67 +1,80 @@
 import { Routes } from '@angular/router';
-
+import { PublicComponent } from './components/public/public.component';
+import { PublicBadgeAssertionComponent } from './components/badge-assertion/badge-assertion.component';
+import { PublicBadgeClassComponent } from './components/badgeclass/badgeclass.component';
+import { PublicIssuerComponent } from './components/issuer/issuer.component';
+import { PublicBadgeCollectionComponent } from './components/badge-collection/badge-collection.component';
 import { BadgrRouteData } from '../common/services/navigation.service';
+import { AboutComponent } from './components/about/about.component';
+import { NewsletterComponent } from './components/about/newsletter/newsletter.component';
+import { StartComponent } from './components/start/start.component';
+import { ImpressumComponent } from './components/impressum/impressum.component';
+import { TermsComponent } from './components/terms-of-service/terms-of-service.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { RequestBadgeComponent } from '../issuer/components/request-badge/request-badge.component';
+import { PdfDownloadComponent } from './components/pdf-download/pdf-download.component';
+import { PublicLearningPathComponent } from './components/learningpath/learningpath.component';
+import { PublicNotFoundComponent } from './components/not-found/not-found-component';
+import { PublicNetworkComponent } from './components/network/network.component';
 
 export const routes: Routes = [
 	{
 		path: '',
-		loadComponent: () => import('./components/public/public.component').then((m) => m.PublicComponent),
+		component: PublicComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'downloads/:pdfName',
-		loadComponent: () =>
-			import('./components/pdf-download/pdf-download.component').then((m) => m.PdfDownloadComponent),
+		component: PdfDownloadComponent,
 	},
 	{
 		path: 'about',
-		loadComponent: () => import('./components/about/about.component').then((m) => m.AboutComponent),
+		component: AboutComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'about/newsletter',
-		loadComponent: () =>
-			import('./components/about/newsletter/newsletter.component').then((m) => m.NewsletterComponent),
+		component: NewsletterComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'start',
-		loadComponent: () => import('./components/start/start.component').then((m) => m.StartComponent),
+		component: StartComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'impressum',
-		loadComponent: () => import('./components/impressum/impressum.component').then((m) => m.ImpressumComponent),
+		component: ImpressumComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'terms',
-		loadComponent: () =>
-			import('./components/terms-of-service/terms-of-service.component').then((m) => m.TermsComponent),
+		component: TermsComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'privacy',
-		loadComponent: () => import('./components/privacy/privacy.component').then((m) => m.PrivacyComponent),
+		component: PrivacyComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'faq',
-		loadComponent: () => import('./components/faq/faq.component').then((m) => m.FaqComponent),
+		component: FaqComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
@@ -69,10 +82,7 @@ export const routes: Routes = [
 
 	{
 		path: 'assertions/:assertionId',
-		loadComponent: () =>
-			import('./components/badge-assertion/badge-assertion.component').then(
-				(m) => m.PublicBadgeAssertionComponent,
-			),
+		component: PublicBadgeAssertionComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
@@ -80,8 +90,7 @@ export const routes: Routes = [
 
 	{
 		path: 'badges/:badgeId',
-		loadComponent: () =>
-			import('./components/badgeclass/badgeclass.component').then((m) => m.PublicBadgeClassComponent),
+		component: PublicBadgeClassComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
@@ -89,55 +98,49 @@ export const routes: Routes = [
 
 	{
 		path: 'issuers/:issuerId',
-		loadComponent: () => import('./components/issuer/issuer.component').then((m) => m.PublicIssuerComponent),
+		component: PublicIssuerComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'networks/:networkId',
-		loadComponent: () => import('./components/network/network.component').then((m) => m.PublicNetworkComponent),
+		component: PublicNetworkComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'learningpaths/:learningPathId',
-		loadComponent: () =>
-			import('./components/learningpath/learningpath.component').then((m) => m.PublicLearningPathComponent),
+		component: PublicLearningPathComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'issuer/issuers/:issuerSlug/badges/:badgeSlug/request/:qrCodeId',
-		loadComponent: () =>
-			import('../issuer/components/request-badge/request-badge.component').then((m) => m.RequestBadgeComponent),
+		component: RequestBadgeComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'collections/not-found',
-		loadComponent: () =>
-			import('./components/not-found/not-found-component').then((m) => m.PublicNotFoundComponent),
+		component: PublicNotFoundComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: 'collections/:collectionShareHash',
-		loadComponent: () =>
-			import('./components/badge-collection/badge-collection.component').then(
-				(m) => m.PublicBadgeCollectionComponent,
-			),
+		component: PublicBadgeCollectionComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
 	{
 		path: '**',
-		loadComponent: () => import('./components/public/public.component').then((m) => m.PublicComponent),
+		component: PublicComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,

@@ -34,7 +34,6 @@ import {
 import { OebCheckboxComponent } from './oeb-checkbox.component';
 import { OebTableImports } from './oeb-table';
 import { HlmButtonModule } from './spartan/ui-button-helm/src';
-import { ApiQRCode } from '~/issuer/models/qrcode-api.model';
 
 export type RequestedBadge = {
 	email: string;
@@ -175,7 +174,6 @@ export type RequestedBadge = {
 			size="sm"
 			class="tw-float-right"
 			variant="blackborder"
-			[weight]="'medium'"
 			(click)="issueBadges()"
 			[disabled]="this.rowSelectionCount() === 0 || this.isTaskProcessing() || this.isTaskPending()"
 			[text]="this.rowSelectionCount() > 1 ? ('Issuer.giveBadges' | translate) : ('Issuer.giveBadge' | translate)"
@@ -190,7 +188,7 @@ export class QrCodeDatatableComponent implements OnInit {
 	private messageService = inject(MessageService);
 	private translate = inject(TranslateService);
 
-	qrCode = input.required<ApiQRCode>();
+	qrCodeId = input.required<string>();
 	badgeSlug = input.required<string>();
 	issuerSlug = input.required<string>();
 	qrBadgeAward = output<number>();
@@ -270,7 +268,7 @@ export class QrCodeDatatableComponent implements OnInit {
 	constructor() {}
 
 	ngOnInit(): void {
-		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCode().slug).then((response: any) => {
+		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId()).then((response: any) => {
 			this.requestedBadges.set(
 				response.body.requested_badges.map((badge: ApiRequestedBadge) => this.transformRequestedBadge(badge)),
 			);
@@ -292,15 +290,10 @@ export class QrCodeDatatableComponent implements OnInit {
 		if (this.rowSelectionCount() === 0 || this.isTaskProcessing() || this.isTaskPending()) return;
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
-		const qrCode = this.qrCode();
 		const recipientProfileContextUrl =
 			'https://api.openbadges.education/static/extensions/recipientProfile/context.json';
 		Object.keys(this.rowSelection()).forEach((idx) => {
 			const b = this.requestedBadges().at(Number(idx));
-			const activityStartDate = qrCode.activity_start_date
-				? new Date(qrCode.activity_start_date).toISOString()
-				: null;
-			const activityEndDate = qrCode.activity_end_date ? new Date(qrCode.activity_end_date).toISOString() : null;
 			const name = b.firstName + ' ' + b.lastName;
 			const extensions = name
 				? {
@@ -314,11 +307,6 @@ export class QrCodeDatatableComponent implements OnInit {
 			assertions.push({
 				recipient_identifier: b.email,
 				extensions: extensions,
-				activity_start_date: activityStartDate,
-				activity_end_date: activityEndDate,
-				activity_city: qrCode.activity_city,
-				activity_zip: qrCode.activity_zip,
-				activity_online: qrCode.activity_online,
 			} satisfies BadgeInstanceBatchAssertion);
 		});
 

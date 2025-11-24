@@ -183,7 +183,7 @@ export class BadgeStudioComponent implements OnInit {
 		this.context2d.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
 		const shapeImage = shapeImagesTypes[formdata.badge_category] || shapeImagesTypes['participation'];
-		const issuerLogoFrame = 'breakdown/static/images/square.svg';
+		const issuerLogoFrame = '../../../../breakdown/static/images/square.svg';
 
 		try {
 			const [shapeSvgText, issuerFrameSvgText] = await Promise.all([
@@ -475,9 +475,9 @@ const shapeImagesTypes = {
 	c1: '../../../../breakdown/static/badgestudio/shapes/c1.svg',
 	c2: '../../../../breakdown/static/badgestudio/shapes/c2.svg',
 	nolvl: '../../../../breakdown/static/badgestudio/shapes/nolvl.svg',
-	participation: 'breakdown/static/badgestudio/shapes/participation.svg',
-	learningpath: 'breakdown/static/badgestudio/shapes/learningpath.svg',
-	competency: 'breakdown/static/badgestudio/shapes/competency.svg',
+	participation: '../../../../breakdown/static/badgestudio/shapes/participation.svg',
+	learningpath: '../../../../breakdown/static/badgestudio/shapes/learningpath.svg',
+	competency: '../../../../breakdown/static/badgestudio/shapes/competency.svg',
 };
 
 // Created from http://fontawesome.io/cheatsheet/

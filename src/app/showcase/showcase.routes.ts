@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-
+import { ShowcaseComponent } from './components/showcase.component';
 import { BadgrRouteData } from '../common/services/navigation.service';
 
 export const routes: Routes = [
 	{
 		path: '',
-		loadComponent: () => import('./components/showcase.component').then((m) => m.ShowcaseComponent),
+		component: ShowcaseComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,

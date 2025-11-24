@@ -36,7 +36,6 @@ const COPY_NOTIF_TIMEOUT_MS: number = 3000;
 				<oeb-button
 					[text]="'General.copy' | translate"
 					[variant]="'blackborder'"
-					[weight]="'medium'"
 					[size]="'sm'"
 					(click)="copyToClipboard(shareUrl)"
 				/>

@@ -83,6 +83,9 @@ export class PublicBadgeClassComponent implements OnInit {
 
 	badgeClassPromise: Promise<PublicApiBadgeClassWithIssuer>;
 
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
 	constructor() {
 		const injector = this.injector;
 		const title = this.title;
@@ -106,7 +109,9 @@ export class PublicBadgeClassComponent implements OnInit {
 					awardCriteria: badge.criteria['narrative'],
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
-					category: badge['extensions:CategoryExtension']?.Category,
+					category: this.translate.instant(
+						`Badge.categories.${badge['extensions:CategoryExtension']?.Category || 'participation'}`,
+					),
 					duration: badge['extensions:StudyLoadExtension'].StudyLoad,
 					tags: badge.tags,
 					issuerName: badge.issuer.name,
@@ -120,9 +125,6 @@ export class PublicBadgeClassComponent implements OnInit {
 					crumbs: [{ title: 'Badges', routerLink: ['/catalog/badges'] }, { title: badge.name }],
 					learningPaths: this.learningPaths,
 					copy_permissions: badge.copy_permissions,
-					networkBadge: badge.isNetworkBadge,
-					networkImage: badge.networkImage,
-					networkName: badge.networkName,
 				};
 
 				// wait for user profile, emails, issuer to check if user can copy

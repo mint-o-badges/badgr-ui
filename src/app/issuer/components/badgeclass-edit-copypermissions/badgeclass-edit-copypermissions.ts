@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -19,15 +19,10 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH1, HlmH2 } from '@spartan-ng/helm/typography';
-import { HlmP } from '@spartan-ng/helm/typography';
-import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
-import { OebInputComponent } from '~/components/input.component';
-import { OebSelectComponent } from '~/components/select.component';
-import { getDurationOptions, expirationToDays, ExpirationUnit } from '~/common/util/expiration-util';
 
 @Component({
-	templateUrl: 'badgeclass-edit-issued.component.html',
-	styleUrl: './badgeclass-edit-issued.component.css',
+	templateUrl: 'badgeclass-edit-copypermissions.component.html',
+	styleUrl: './badgeclass-edit-copypermissions.component.css',
 	imports: [
 		BgBreadcrumbsComponent,
 		HlmH1,
@@ -38,12 +33,9 @@ import { getDurationOptions, expirationToDays, ExpirationUnit } from '~/common/u
 		OebCheckboxComponent,
 		OebButtonComponent,
 		TranslatePipe,
-		HlmP,
-		OebInputComponent,
-		OebSelectComponent,
 	],
 })
-export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	protected title = inject(Title);
 	protected messageService = inject(MessageService);
 	protected issuerManager = inject(IssuerManager);
@@ -60,21 +52,15 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 	badgeClassLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
-	durationOptions = null;
-
 	@ViewChild('formElem')
 	formElem: ElementRef<HTMLFormElement>;
 
-	badgeClassForm = typedFormGroup()
-		.addControl('copy_permissions_allow_others', false)
-		.addControl('expiration', null, [
-			(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
-			,
-			Validators.max(10000),
-		])
-		.addControl('expiration_unit', 'days');
+	badgeClassForm = typedFormGroup().addControl('copy_permissions_allow_others', false);
 
 	savePromise: Promise<BadgeClass> | null = null;
+
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
 
 	constructor() {
 		const sessionService = inject(SessionService);
@@ -97,8 +83,6 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 				this.badgeClass = badgeClass;
 				this.badgeClassForm.setValue({
 					copy_permissions_allow_others: badgeClass.canCopy('others'),
-					expiration: badgeClass.expiration,
-					expiration_unit: 'days',
 				});
 			},
 			(error) =>
@@ -120,7 +104,6 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 
 	ngOnInit() {
 		super.ngOnInit();
-		this.durationOptions = getDurationOptions(this.translate);
 	}
 
 	badgeClassCreated(promise: Promise<BadgeClass>) {
@@ -140,12 +123,10 @@ export class BadgeClassEditIssuedComponent extends BaseAuthenticatedRoutableComp
 
 	async onSubmit() {
 		const formState = this.badgeClassForm.value;
-		const expirationDays = expirationToDays(formState.expiration, formState.expiration_unit as ExpirationUnit);
 		const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
 		if (formState.copy_permissions_allow_others) {
 			copy_permissions.push('others');
 		}
-		this.badgeClass.expiration = expirationDays;
 		this.badgeClass.copyPermissions = copy_permissions;
 		try {
 			this.savePromise = this.badgeClass.save();

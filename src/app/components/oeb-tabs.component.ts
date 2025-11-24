@@ -51,7 +51,7 @@ export type Tab = {
 			}
 		</hlm-tabs-list>
 		@for (tab of tabs(); track tab) {
-			<div [hlmTabsContent]="tab.key" class="tw-mt-6">
+			<div [hlmTabsContent]="tab.key">
 				<ng-template *ngTemplateOutlet="tab.component"></ng-template>
 			</div>
 		}

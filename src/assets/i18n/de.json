@@ -34,7 +34,6 @@
 		"address": "Adresse",
 		"street": "Strasse",
 		"postalCode": "Postleitzahl",
-		"optionalPostalCode": "<span class=\"tw-italic tw-font-normal\">Optional: </span> Postleitzahl",
 		"description": "Beschreibung",
 		"city": "Stadt",
 		"member": "Mitglied",
@@ -80,20 +79,16 @@
 		"reset": "Zurücksetzen",
 		"exam": "Test / Prüfung",
 		"create": "erstellen",
-		"copy": "Kopieren",
+		"copy": "kopieren",
 		"place": "stellen",
 		"forwarded": "weitergeleitet",
 		"revoke": "zurücknehmen",
-		"withdraw": "Zurückziehen",
 		"confirm": "Bestätigen",
 		"noRequests": "Keine Anfragen",
 		"oneRequest": "1 Anfrage",
 		"multiRequests": "# Anfragen",
 		"license": "Lizenz",
-		"language": {
-			"de": "Deutsch",
-			"en": "Englisch"
-		},
+		"language": { "de": "Deutsch", "en": "Englisch" },
 		"close": "Schliessen",
 		"notification": "Benachrichtigung",
 		"validationCompleteForm": "Bitte vollständig ausfüllen",
@@ -121,9 +116,7 @@
 		"website": "Webseite",
 		"organization": "Organisation",
 		"notNow": "Jetzt nicht",
-		"notFound": "Nicht gefunden",
-		"start": "Start",
-		"end": "Ende"
+		"notFound": "Nicht gefunden"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -315,7 +308,6 @@
 			"allCategories": "Alle Kategorien",
 			"schule": "Schule",
 			"hochschule": "Hochschule",
-			"jugendhilfe": "Freier Träger der Jugendhilfe",
 			"andere": "andere"
 		},
 		"learningPathParticipants": "Teilnehmer:innen",
@@ -361,7 +353,7 @@
 		"websiteUrl": "Webseiten-URL",
 		"schoolLabel": "Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)",
 		"universityLabel": "Hochschule (Universitäten. Fachhochschulen, ...)",
-		"othersLabel": "Anderer Bildungsanbieter (Bibliotheken, Makerspaces, Museen, Vereine, Unternehmen, ...)",
+		"othersLabel": "Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)",
 		"imageRequiredError": "Bitte wähle ein Bild aus.",
 		"csvPreview": "Hier siehst du eine Vorschau der ersten",
 		"rowsOfYourFile": "Zeilen deiner Datei.",
@@ -373,7 +365,6 @@
 		"creatingBadge": "Erstelle Badge",
 		"memberView": "Mitglieds-Ansicht",
 		"partOfNetwork": "Teil vom Netzwerk",
-		"notNetworkPartnerYet": "Die Institution ist noch nicht Teil eines Netzwerks.",
 		"contract26": "Mit einem Klick auf „Institution erstellen“ wird die <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>hier abrufbare</a> Vereinbarung gemäß Artikel 26 Abs. 1 DSGVO über die gemeinsame datenschutzrechtliche Verantwortung der Institution mit den Verbundpartnerinnen wirksam.",
 		"linkedInId": "<span class=\"tw-italic tw-font-normal\">Optional: </span> LinkedIn-ID",
 		"linkedInIdUse1": "Für die ",
@@ -402,13 +393,7 @@
 		"partnerBadges": "Partner-Badges",
 		"bulkInvalidEmail": "1 ungültige E-Mail-Adresse gefunden. Bitte korrigiere oder entferne die rot markierte E-Mail-Adresse.",
 		"bulkInvalidEmailsPlural": "{{count}} ungültige E-Mail-Adressen gefunden. Bitte korrigiere oder entferne die rot markierten E-Mail-Adressen.",
-		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail.",
-		"addOptionalDetails": "Optionale Details hinzufügen",
-		"evidence": "Nachweis für erfolgreiche Teilnahme",
-		"addNewEvidence": "Weiteren Nachweis hinzufügen",
-		"evidenceUrl": "URL zum Nachweis",
-		"evidenceNarrative": "Textliches Narrativ",
-		"youthWelfare": "Freier Träger der Jugendhilfe"
+		"bulkReceiveByEmail": "Die Empfänger:innen erhalten den Badge per E-Mail."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
@@ -421,7 +406,6 @@
 		"addPartnerNext": "Deine Partner-Institutionen kannst du im nächsten Schritt hinzufügen.",
 		"welcomeDashboard": "Willkommen auf dem Dashboard des Netzwerks",
 		"inviteInstitutions": "Institutionen zum Netzwerk einladen",
-		"shortInviteInstitutions": "Institutionen einladen",
 		"addInstitutions": "Institutionen hinzufügen",
 		"rolesAndRights": "<span class='tw-text-link tw-underline'>Rollen und Rechte</span> übertragen sich: Die Einladungs-Mail geht an die Eigentümer:innen der Institutionen. <span class='tw-font-bold'>Diese werden innerhalb des Netzwerks entsprechende Rechte haben wie z.B. das Erstellen von Netzwerk-Badges und das Hinzufügen weiterer Partner-Organisationen</span>.",
 		"addMember_owner": "Eigentümer:in",
@@ -439,25 +423,18 @@
 		"networksRegistered": "Netzwerke sind auf OEB registriert",
 		"partner": "Mitglieder des Netzwerks",
 		"noInstitutionAddedYet": "Du hast noch keine Institutionen zu deinem Netzwerk hinzugefügt.",
-		"addInstitutionToIssue": "Das Netzwerk selbst vergibt keine Badges. Füge Institutionen zu deinem Netzwerk hinzu, um Badges zu vergeben.",
 		"partnerIssuers": "Partner:innen",
 		"notifiedIssuerOwners": "Wir haben die Eigentümer:innen der Institutionen per E-Mail benachrichtigt.",
 		"visibleAfterConfirmation": "Sobald sie die Einladung bestätigt haben, sind sie auf der Partner:innen-Seite sichtbar.",
 		"resendInvitation": "Einladung erneut senden",
 		"invitedOn": "Eingeladen am",
 		"yourRole": "Deine Rolle: {{role}}",
-		"role": {
-			"owner": "Eigentümer:in",
-			"editor": "Editor:in",
-			"staff": "Mitarbeiter:in"
-		},
+		"role": { "owner": "Eigentümer:in", "editor": "Editor:in", "staff": "Mitarbeiter:in" },
 		"confirmNetworkInvitation": "Bestätige die <span class='tw-font-bold'>Netzwerk-Einladung von {{networkName}}</span> für deine Institution <span class='tw-italic'>{{issuerName}}</span> mit Klick auf den Button:",
 		"partnerSince": "Netzwerk-Partner:in seit",
 		"alreadyConfirmed": "Ein anderes Mitglied von <span class='tw-italic'> {{issuerName}} hat die Netzwerk-Einladung von <span class='tw-font-bold'> {{networkName}}</span> bereits bestätigt.",
 		"view": "Netzwerk ansehen",
 		"createBadge": "Netzwerk-Badge erstellen",
-		"createLp": "Netzwerk-Lernpfad erstellen",
-		"noLpsYet": "Es gibt noch keine Netzwerk-Lernpfade.",
 		"awardBadgeIssuer": "Über welche deiner <span class='tw-font-bold'>Institutionen</span> soll der Badge vergeben werden?",
 		"networkBadges": "Netzwerk-Badges",
 		"noPartnerBadgesYet": "Bisher hat keine Partner-Institution einen Badge für das Netzwerk freigegeben.",
@@ -466,9 +443,7 @@
 		"noBadgesYet": "Das Netzwerk <span class='tw-font-semibold'>{{network}}</span> hat noch keine eigenen Badges erstellt.",
 		"sharedBy": "Freigegeben von",
 		"sharedOn": "Freigegeben am",
-		"website": "Netzwerk-Webseite",
-		"createLpInfo": "Um einen <span class='tw-font-bold'>Netzwerk-Lernpfad</span> anlegen zu können, müssen mindestens zwei Badges im Netzwerk erstellt oder von Partner-Institutionen für das Netzwerk freigegeben werden.",
-		"pendingInvites": "Unbestätigte Einladungen"
+		"website": "Netzwerk-Webseite"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -522,7 +497,7 @@
 		},
 		"copyBadgeHeadline": "Kopier-Status",
 		"copyBadgeDescription1": "Innerhalb der eigenen Institution können Badges immer kopiert werden. ",
-		"copyBadgeDescription2": "Den Kopier-Status für <strong>andere</strong> Institutionen kannst du jederzeit über den Menüpunkt “Bearbeiten” auf der Badge-Detail-Seite aktualisieren.",
+		"copyBadgeDescription2": "Den Kopier-Status für <strong>andere</strong> Institutionen kannst du später jederzeit über das Menü auf der Badge-Detail-Seite aktualisieren.",
 		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
 		"copy": "Badge für eigene Institution kopieren",
 		"copyBadge": "Badge kopieren",
@@ -531,7 +506,6 @@
 		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt.",
 		"copyThisIssuer": "Kopieren (diese Institution)",
 		"editCopyStatus": "Kopierstatus bearbeiten",
-		"editAfterIssuedInfo": "Da der Badge bereits vergeben wurde, können lediglich folgende Daten bearbeitet werden: ",
 		"award": "Badge direkt vergeben",
 		"awardQRCode": "Badge über QR-Code vergeben",
 		"partOfLearningPath": "Dieser Badge ist Teil folgender Lernpfade:",
@@ -563,8 +537,7 @@
 		"allNetworkMembersGetBadge": "Alle Mitglieder des gewählten Netzwerks können den Badge über ihre Institution vergeben.",
 		"networkAssertionsGetTracked": "Alle Vergaben des Badges fliessen in die Daten-Auswertung des Netzwerks ein.",
 		"cantRemoveFromNetwork": "Der Badge kann NICHT wieder aus dem Netzwerk entfernt werden.",
-		"shareBadgeOnNetwork": "Badge für Netzwerk freigeben",
-		"alreadyShared": "Der Badge wurde bereits für ein Netzwerk freigegeben."
+		"shareBadgeOnNetwork": "Badge für Netzwerk freigeben"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
@@ -624,7 +597,7 @@
 		"alignEducationalFramework": "Verknüpfung zu Bildungs-Standards",
 		"frame": "Rahmen",
 		"expiration": "Gültigkeit",
-		"expirationInfo": "Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
+		"expirationInfo": "Diese Information kann auch bei der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
 		"validUntil": "Der Badge ist gültig bis ",
 		"chooseDuration": "Wähle Dauer",
 		"durationPositive": "Bitte gib eine positive Zahl oder 0 ein",
@@ -674,13 +647,7 @@
 		"subjectMatter": "Schreibe, was dein Lernangebot <u>fachlich</u> vermittelt.",
 		"howLearningWorks": "Beschreibe auch, <u>wie</u> das Lernen stattfindet.",
 		"inAddition": "Oft können neben fachlichen Kompetenzen auch <u>Soft Skills</u> wie soziale, kommunikative oder Problemlösungs-Fähigkeiten erworben werden – bei Teamarbeit, Experimentieren, Planung, ...",
-		"aiAssistantNote": "Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>E-Mail</a>. <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Datenschutz bei OEB.</a>",
-		"successfullyCreated": "Badge erfolgreich erstellt!",
-		"activityEndDateRequired": "Enddatum ist erforderlich und darf nicht vor dem Startdatum liegen",
-		"activityStartDateRequired": "Startdatum ist erforderlich",
-		"selectIssuer": "Für welche deiner Institutionen soll der Badge erstellt bzw. editiert werden?",
-		"noIssuersAvailable": "Du bist nicht Teil einer Institution und kannst daher keine Badges erstellen oder editieren.",
-		"selectBadge": "Wähle den zu bearbeitenden Badge oder erstelle einen Neuen"
+		"aiAssistantNote": "Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>E-Mail</a>. <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Datenschutz bei OEB.</a>"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -869,10 +836,7 @@
 		"shareViaLink": "Per Link:",
 		"addToLinkedInProfile": "Badge zu LinkedIn-Profil hinzufügen",
 		"shareViaLinkedIn": "Auf LinkedIn:",
-		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden.",
-		"courseDate": "Datum der Veranstaltung",
-		"courseDateShort": "Veranstaltungs-Datum",
-		"venue": "Ort der Veranstaltung"
+		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden."
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
@@ -891,7 +855,6 @@
 		"issuedBy": "Vergeben von",
 		"issuedOn": "Vergeben am",
 		"awardedTo": "Vergeben an",
-		"validUntil": "Gültig bis",
 		"more": "Mehr",
 		"criteria": "Kriterien",
 		"viewCriteriaUrl": "Besuche externe Kriterien-URL",
@@ -925,8 +888,7 @@
 		"confirmRemove": "Entfernen bestätigen",
 		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?",
 		"pdfDownload": "PDF-Zertifikat herunterladen",
-		"downloadMicroDegree": "Micro Degree herunterladen",
-		"place": "Ort"
+		"downloadMicroDegree": "Micro Degree herunterladen"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
@@ -1034,9 +996,7 @@
 		"pleaseRenewPassword": "Deshalb bitten wir dich, dein Passwort zu erneuern.",
 		"pleaseRenewPasswordInfo": "Dauert nur kurz und sorgt für mehr Schutz.",
 		"dontPanic": "Keine Panik – alles ist in Ordnung!",
-		"repeatNewpassword": "Passwort wiederholen",
-		"loggingIn": "Einloggen ...",
-		"editProfile": "Profile editieren"
+		"repeatNewpassword": "Passwort wiederholen"
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
@@ -1078,7 +1038,7 @@
 		"description": "Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.",
 		"howItWorks": "So funktioniert's:",
 		"create": "QR-Code-Vergabe erstellen für",
-		"titlePlaceholder": "Badge Vergabe Juni 2025 in Berlin",
+		"titlePlaceholder": "Badge Vergabe Juni 2024",
 		"creatorName": "Name Ersteller:in",
 		"creatorNamePlaceholder": "Mein Vorname und Nachname",
 		"expiration": "Gültigkeit des QR-Codes",
@@ -1096,14 +1056,12 @@
 		"downloadPoster": "Download QR-Code-Plakat",
 		"badgeDetailPage": "Badge Detail Seite",
 		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben",
-		"invalidExpirationDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
-		"invalidDateRange": "Das End-Datum darf nicht vor dem Start-Datum liegen",
+		"invalidDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
 		"invalidDate": "Bitte gib ein Datum in der Form YYYY/mm/dd an",
 		"missingStartDate": "Bitte gib ein Start-Datum für die Gültigkeit an",
 		"expired": "QR-Code ist nicht mehr gültig."
 	},
 	"LearningPath": {
-		"learningpathSingular": "Lernpfad",
 		"learningpathsPlural": "Lernpfade",
 		"learningpathsNav": "Lernpfade A-Z",
 		"catalogHeadline": "Alle Lernpfade in der Übersicht",
@@ -1123,11 +1081,7 @@
 		"continue": "Weiterlernen",
 		"finished": "Abgeschlossen",
 		"includedBadges": "Enthaltene Badges",
-		"badgeTabs": {
-			"all": "Alle",
-			"inprogress": "Offen",
-			"finished": "Abgeschlossen"
-		},
+		"badgeTabs": { "all": "Alle", "inprogress": "Offen", "finished": "Abgeschlossen" },
 		"chooseBadges": "Enthaltene Badges wählen",
 		"badgeSequenceStep": "Badge-Reihenfolge",
 		"badgeSequence": "Reihenfolge der Badges im Lernpfad",
@@ -1175,9 +1129,7 @@
 		"shortDescriptionLine1": "Zusammenfassende Beschreibung des Lernangebots.",
 		"shortDescriptionLine2": "Diese Kurz-Beschreibung wird im Abschluss-Badge Micro Degree gespeichert."
 	},
-	"OEBComponents": {
-		"fieldIsRequired": "Dieses Feld ist erforderlich"
-	},
+	"OEBComponents": { "fieldIsRequired": "Dieses Feld ist erforderlich" },
 	"ErrorDialog": {
 		"title": "Es ist ein Fehler passiert!",
 		"message": "Unten siehst du die Fehlermeldung. Wenn du glaubst, der Fehler liegt bei uns, kannst du die Fehlermeldung kopieren und uns per Mail schicken, oder du erstellst ein Issue auf GitHub.",
@@ -1186,9 +1138,5 @@
 		"createIssue": "Zu den GitHub Issues",
 		"sendEmail": "Sende eine Mail"
 	},
-	"NounProject": {
-		"searchIcon": "Icon suchen",
-		"loading": "Lädt...",
-		"noIconsFoundFor": "Kein Icon gefunden für"
-	}
+	"NounProject": { "searchIcon": "Icon suchen", "loading": "Lädt...", "noIconsFoundFor": "Kein Icon gefunden für" }
 }

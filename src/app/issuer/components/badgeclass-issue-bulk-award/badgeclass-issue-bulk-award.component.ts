@@ -73,7 +73,7 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 	protected badgeClassManager = inject(BadgeClassManager);
 	protected formBuilder = inject(FormBuilder);
 	protected issuerManager = inject(IssuerManager);
-	protected authService: SessionService;
+	protected sessionService: SessionService;
 	protected messageService = inject(MessageService);
 	protected router: Router;
 	protected route: ActivatedRoute;
@@ -100,7 +100,7 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 		const route = inject(ActivatedRoute);
 
 		super(router, route, sessionService);
-		this.authService = sessionService;
+		this.sessionService = sessionService;
 		this.router = router;
 		this.route = route;
 

@@ -4,7 +4,7 @@ import { CmsPageComponent } from '~/common/components/cms/cms-page.component';
 
 @Component({
 	selector: 'app-start',
-	template: ` <cms-page [slug]="translate.currentLang == 'de' ? 'startseite' : 'homepage'" />`,
+	template: `<cms-page [slug]="translate.currentLang == 'de' ? 'startseite' : 'homepage'" />`,
 	standalone: true,
 	imports: [CmsPageComponent],
 })

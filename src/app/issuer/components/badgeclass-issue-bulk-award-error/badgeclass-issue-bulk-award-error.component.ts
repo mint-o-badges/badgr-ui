@@ -18,7 +18,7 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 })
 export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComponent implements OnInit {
 	protected formBuilder = inject(FormBuilder);
-	protected authService: SessionService;
+	protected sessionService: SessionService;
 	protected messageService = inject(MessageService);
 	protected router: Router;
 	protected route: ActivatedRoute;
@@ -40,7 +40,7 @@ export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComp
 
 		super(router, route, sessionService);
 
-		this.authService = sessionService;
+		this.sessionService = sessionService;
 		this.router = router;
 		this.route = route;
 	}

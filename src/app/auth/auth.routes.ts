@@ -1,5 +1,15 @@
 import { Routes } from '@angular/router';
 
+import { LogoutComponent } from './components/logout/logout.component';
+import { ResetPasswordSent } from './components/reset-password-sent/reset-password-sent.component';
+import { RequestPasswordResetComponent } from './components/request-password-reset/request-password-reset.component';
+import { LoginComponent } from './components/login/login.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { OAuth2AuthorizeComponent } from './components/oauth2-authorize/oauth2-authorize.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { NewTermsComponent } from './components/new-terms/new-terms.component';
+import { NewPasswordComponent } from './components/new-password/new-password.component';
+
 export const routes: Routes = [
 	{
 		path: '',
@@ -8,70 +18,59 @@ export const routes: Routes = [
 	},
 	{
 		path: 'login',
-		loadComponent: () => import('./components/login/login.component').then((m) => m.LoginComponent),
+		component: LoginComponent,
 	},
 	{
 		path: 'logout',
-		loadComponent: () => import('./components/logout/logout.component').then((m) => m.LogoutComponent),
+		component: LogoutComponent,
 	},
 	{
 		path: 'login/:name',
-		loadComponent: () => import('./components/login/login.component').then((m) => m.LoginComponent),
+		component: LoginComponent,
 	},
 	{
 		path: 'login/:name/:email',
-		loadComponent: () => import('./components/login/login.component').then((m) => m.LoginComponent),
+		component: LoginComponent,
 	},
 	{
 		path: 'new-terms',
-		loadComponent: () => import('./components/new-terms/new-terms.component').then((m) => m.NewTermsComponent),
+		component: NewTermsComponent,
 	},
 	{
 		path: 'new-password',
-		loadComponent: () =>
-			import('./components/new-password/new-password.component').then((m) => m.NewPasswordComponent),
+		component: NewPasswordComponent,
 	},
 
 	/* OAuth2 */
 	{
 		path: 'oauth2/authorize',
-		loadComponent: () =>
-			import('./components/oauth2-authorize/oauth2-authorize.component').then((m) => m.OAuth2AuthorizeComponent),
+		component: OAuth2AuthorizeComponent,
 	},
 
 	/* Reset Password */
 	{
 		path: 'request-password-reset',
-		loadComponent: () =>
-			import('./components/request-password-reset/request-password-reset.component').then(
-				(m) => m.RequestPasswordResetComponent,
-			),
+		component: RequestPasswordResetComponent,
 	},
 	{
 		path: 'request-password-reset/:email',
-		loadComponent: () =>
-			import('./components/request-password-reset/request-password-reset.component').then(
-				(m) => m.RequestPasswordResetComponent,
-			),
+		component: RequestPasswordResetComponent,
 	},
 	{
 		path: 'reset-password-sent',
-		loadComponent: () =>
-			import('./components/reset-password-sent/reset-password-sent.component').then((m) => m.ResetPasswordSent),
+		component: ResetPasswordSent,
 	},
 	{
 		path: 'change-password',
-		loadComponent: () =>
-			import('./components/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent),
+		component: ResetPasswordComponent,
 	},
 	{
 		path: 'change-password/:token',
-		loadComponent: () =>
-			import('./components/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent),
+		component: ResetPasswordComponent,
 	},
 	{
 		path: 'welcome',
-		loadComponent: () => import('./components/welcome/welcome.component').then((m) => m.WelcomeComponent),
+		component: WelcomeComponent,
 	},
 	{
 		path: '**',

@@ -1,7 +1,9 @@
 import {
 	ApiBadgeClass,
 	ApiBadgeClassAlignment,
+	ApiBadgeClassExpiration,
 	BadgeClassCopyPermissions,
+	BadgeClassExpiresDuration,
 	BadgeClassRef,
 	BadgeClassUrl,
 } from './badgeclass-api.model';
@@ -123,12 +125,23 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.extensions && extensionName in this.apiModel.extensions;
 	}
 
-	get expiration(): number {
-		return this.apiModel.expiration;
+	get expiresDuration(): BadgeClassExpiresDuration | undefined {
+		return this.apiModel.expires ? this.apiModel.expires.duration : undefined;
 	}
-
-	set expiration(days: number | undefined) {
-		this.apiModel.expiration = days ?? undefined;
+	set expiresDuration(duration: BadgeClassExpiresDuration | undefined) {
+		if (!this.apiModel.expires) {
+			this.apiModel.expires = {} as ApiBadgeClassExpiration;
+		}
+		this.apiModel.expires.duration = duration;
+	}
+	get expiresAmount(): number | undefined {
+		return this.apiModel.expires ? this.apiModel.expires.amount : undefined;
+	}
+	set expiresAmount(amount: number | undefined) {
+		if (!this.apiModel.expires) {
+			this.apiModel.expires = {} as ApiBadgeClassExpiration;
+		}
+		this.apiModel.expires.amount = amount;
 	}
 
 	get issuerSlug(): string {
@@ -207,16 +220,30 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		};
 	}
 	clearExpires(): void {
-		this.apiModel.expiration = undefined;
+		this.apiModel.expires = null;
 	}
 
 	expirationDateRelative(issuedOn?: Date): Date | undefined {
-		if (this.apiModel.expiration) {
-			const baseDate = issuedOn ? new Date(issuedOn) : new Date();
-			baseDate.setDate(baseDate.getDate() + this.apiModel.expiration);
-			return baseDate;
+		if (this.expiresAmount) {
+			const ret = issuedOn || new Date();
+			switch (this.expiresDuration) {
+				case 'days':
+					ret.setDate(ret.getDate() + this.expiresAmount);
+					break;
+				case 'months':
+					ret.setMonth(ret.getMonth() + this.expiresAmount);
+					break;
+				case 'weeks':
+					ret.setDate(ret.getDate() + this.expiresAmount * 7);
+					break;
+				case 'years':
+					ret.setFullYear(ret.getFullYear() + this.expiresAmount);
+					break;
+				default:
+					break;
+			}
+			return new Date(ret);
 		}
-		return undefined;
 	}
 
 	update(): Promise<this> {
