@@ -15,7 +15,11 @@ import { IconsProvider } from '~/icons-provider';
 @Component({
 	selector: 'oeb-competency-overview',
 	imports: [RecipientCompetencyOverview],
-	template: ` <recipient-competency-overview [badges]="convertedBadges()" />`,
+	template: `<div class="oeb page-padding">
+		<div class="tw-bg-lightpurple oeb-inset-padding">
+			<recipient-competency-overview [badges]="convertedBadges()" />
+		</div>
+	</div>`,
 })
 class OebCompetencyOverview {
 	readonly commonManager = inject(CommonEntityManager);

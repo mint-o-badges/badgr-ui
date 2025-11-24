@@ -42,6 +42,7 @@
 							"main": "src/app/recipient/components/recipient-earned-badges-overview/recipient-earned-badges-overview.web-component.ts",
 							"outputPath": "dist/webcomponents/oeb-earned-badges-overview",
 							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
 								"src/styles/oeb/oeb_styles.scss",
 								"src/styles/google-webfonts/nunito.scss",
 								"src/styles/google-webfonts/rubik.scss"
@@ -52,6 +53,7 @@
 							"main": "src/app/recipient/components/recipient-competency-overview/recipient-competency-overview.web-component.ts",
 							"outputPath": "dist/webcomponents/oeb-competency-overview",
 							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
 								"src/styles/oeb/oeb_styles.scss",
 								"src/styles/google-webfonts/nunito.scss",
 								"src/styles/google-webfonts/rubik.scss"
@@ -62,6 +64,7 @@
 							"main": "src/app/recipient/components/recipient-learningpaths-overview/recipient-learningpaths-overview.web-component.ts",
 							"outputPath": "dist/webcomponents/oeb-learningpaths-overview",
 							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
 								"src/styles/oeb/oeb_styles.scss",
 								"src/styles/google-webfonts/nunito.scss",
 								"src/styles/google-webfonts/rubik.scss"
@@ -72,6 +75,7 @@
 							"main": "src/app/recipient/components/recipient-backpack/recipient-backpack.web-component.ts",
 							"outputPath": "dist/webcomponents/oeb-backpack",
 							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
 								"src/styles/oeb/oeb_styles.scss",
 								"src/styles/google-webfonts/nunito.scss",
 								"src/styles/google-webfonts/rubik.scss"
