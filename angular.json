@@ -48,7 +48,7 @@
 							],
 							"assets": ["src/favicon.ico", "src/assets/@concentricsky/badgr-style/dist/images/icons.svg"]
 						},
-						"oeb-recipient-competency-overview": {
+						"oeb-competency-overview": {
 							"main": "src/app/recipient/components/recipient-competency-overview/recipient-competency-overview.web-component.ts",
 							"outputPath": "dist/webcomponents/oeb-competency-overview",
 							"styles": [
@@ -58,7 +58,7 @@
 							],
 							"assets": ["src/favicon.ico", "src/assets/@concentricsky/badgr-style/dist/images/icons.svg"]
 						},
-						"oeb-recipient-learningpaths-overview": {
+						"oeb-learningpaths-overview": {
 							"main": "src/app/recipient/components/recipient-learningpaths-overview/recipient-learningpaths-overview.web-component.ts",
 							"outputPath": "dist/webcomponents/oeb-learningpaths-overview",
 							"styles": [

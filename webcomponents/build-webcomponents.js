@@ -17,8 +17,8 @@ const components = [
 	'oeb-skill-visualisation',
 	'oeb-badge-creation',
 	'oeb-earned-badges-overview',
-	'oeb-recipient-competency-overview',
-	'oeb-recipient-learningpaths-overview',
+	'oeb-competency-overview',
+	'oeb-learningpaths-overview',
 	'oeb-backpack',
 ];
 
