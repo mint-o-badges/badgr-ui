@@ -107,6 +107,9 @@ import { RecipientBadgeInstance } from '~/recipient/models/recipient-badge.model
 								[badgeSlug]="b.slug"
 								[competencies]="b.getExtension('extensions:CompetencyExtension', [{}])"
 								[imported]="b.imported"
+								[publicUrl]="this.isEmbedded() ? b.shareUrl : null"
+								[publicIssuerUrl]="this.isEmbedded() ? b.badgeClass.issuer.id : null"
+								[useBlankHref]="this.isEmbedded()"
 							/>
 						}
 					</div>
@@ -134,6 +137,9 @@ import { RecipientBadgeInstance } from '~/recipient/models/recipient-badge.model
 										[issuerTitle]="badge.badgeClass.issuer.name"
 										[badgeSlug]="badge.slug"
 										[competencies]="badge.getExtension('extensions:CompetencyExtension', [{}])"
+										[publicUrl]="this.isEmbedded() ? badge.shareUrl : null"
+										[publicIssuerUrl]="this.isEmbedded() ? badge.badgeClass.issuer.id : null"
+										[useBlankHref]="this.isEmbedded()"
 									/>
 								}
 							</div>
@@ -148,6 +154,7 @@ export default class RecipientEarnedBadgesOverview {
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly DEFAULT_SORT = 'date_desc';
 	badges = input.required<RecipientBadgeInstance[]>();
+	isEmbedded = input<boolean>(false);
 	groupByIssuer = signal<boolean>(false);
 	sortOption = signal<'name_asc' | 'name_desc' | 'date_asc' | 'date_desc'>(this.DEFAULT_SORT);
 	searchQuery = signal<string>('');
