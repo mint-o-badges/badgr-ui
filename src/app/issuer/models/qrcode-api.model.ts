@@ -4,8 +4,13 @@ export interface ApiQRCode {
 	title: string;
 	createdBy: string;
 	slug?: string;
-	valid_from?: any;
-	expires_at?: any;
+	valid_from?: string;
+	expires_at?: string;
+	activity_start_date?: string;
+	activity_end_date?: string;
+	activity_zip?: string;
+	activity_city?: string;
+	activity_online?: boolean;
 	badgeclass_id?: string;
 	issuer_id?: string;
 	request_count?: number;

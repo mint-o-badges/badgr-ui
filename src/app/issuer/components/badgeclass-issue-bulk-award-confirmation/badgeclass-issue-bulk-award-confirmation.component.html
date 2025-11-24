@@ -90,7 +90,16 @@
 			<tbody></tbody>
 		</table>
 	</div>
-	<div class="oeb-standard-padding-bottom tw-flex tw-flex-col tw-text-end tw-gap-6">
+
+	<oeb-optional-details
+		[parentForm]="optionalDetailsForm"
+		[showEvidence]="false"
+		[showLocation]="true"
+		[showCourseDate]="true"
+	>
+	</oeb-optional-details>
+
+	<div class="oeb-standard-padding-bottom tw-flex tw-flex-col tw-text-end tw-gap-6 tw-mt-6">
 		@if (invalidEmailCount === 1) {
 			<span class="tw-text-red tw-text-lg">
 				{{ 'Issuer.bulkInvalidEmail' | translate }}

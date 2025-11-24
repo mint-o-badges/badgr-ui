@@ -88,7 +88,9 @@ import { HlmP } from '@spartan-ng/helm/typography';
 								variant="light"
 								class="badgecard-x-issuer text-clamp issuer-clamp"
 								[title]="issuerTitle"
-								[routerLink]="['../../public/issuers', issuerSlug]"
+								[routerLink]="
+									network ? ['/public/networks', issuerSlug] : ['/public/issuers', issuerSlug]
+								"
 								>{{ issuerTitle }}</a
 							>
 						} @else {
@@ -197,8 +199,8 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	],
 })
 export class BgBadgecard {
-	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
-	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+	readonly badgeLoadingImageUrl = 'breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = 'breakdown/static/images/badge-failed.svg';
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
 	@Input() publicUrl: string;
@@ -210,6 +212,7 @@ export class BgBadgecard {
 	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | 'imported' | undefined;
 	@Input() verifyUrl: string;
 	@Input() public = false;
+	@Input() network = false;
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: FormControl;
 	@Input() showCheckbox = false;

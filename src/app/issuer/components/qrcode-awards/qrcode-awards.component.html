@@ -1,4 +1,4 @@
-<div class="oeb tw-mt-4">
+<div class="oeb">
 	@if (awards.length === 0) {
 		<div class="tw-flex tw-flex-col tw-gap-2">
 			<h3 hlmH3 class="tw-text-purple tw-font-bold tw-uppercase">{{ 'QrCode.qrAwards' | translate }}</h3>
@@ -54,7 +54,7 @@
 							@if (award.request_count > 0 && issuer?.slug && badgeClass?.slug && interactive) {
 								<brn-accordion-content hlm class="tw-text-white">
 									<qrcodes-datatable
-										[qrCodeId]="award.slug"
+										[qrCode]="award"
 										[issuerSlug]="issuer.slug"
 										[badgeSlug]="badgeClass.slug"
 										(deletedQRAward)="deleteQRAward($event)"

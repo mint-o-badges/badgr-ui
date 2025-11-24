@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
@@ -12,12 +11,15 @@ import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmH1, HlmP, HlmH2 } from '@spartan-ng/helm/typography';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 import { Network } from '~/issuer/network.model';
+import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 
 @Component({
+	selector: 'badgeclass-select-type',
 	templateUrl: 'badgeclass-select-type.component.html',
 	styleUrls: ['./badgeclass-select-type.component.scss'],
-	imports: [BgBreadcrumbsComponent, HlmH1, HlmP, HlmH2, RouterLink, TranslatePipe],
+	imports: [BgBreadcrumbsComponent, HlmH1, HlmP, HlmH2, RouterLink, TranslatePipe, BgAwaitPromises],
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	protected title = inject(Title);
@@ -47,7 +49,7 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const sessionService = inject(SessionService);
+		const sessionService = inject(AUTH_PROVIDER);
 		const router = inject(Router);
 		const route = inject(ActivatedRoute);
 
@@ -84,5 +86,12 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 
 	ngOnInit() {
 		super.ngOnInit();
+	}
+
+	get canCreateLp(): boolean {
+		return (
+			!this.issuer.is_network ||
+			(this.issuer instanceof Network && this.issuer.partnerBadgesCount + this.issuer.badgeClassCount >= 2)
+		);
 	}
 }
