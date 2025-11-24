@@ -19,6 +19,7 @@ const components = [
 	'oeb-earned-badges-overview',
 	'oeb-recipient-competency-overview',
 	'oeb-recipient-learningpaths-overview',
+	'oeb-backpack',
 ];
 
 if (component && !components.includes(component)) {
