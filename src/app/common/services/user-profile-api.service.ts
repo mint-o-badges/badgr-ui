@@ -1,16 +1,16 @@
 import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { BaseHttpApiService } from './base-http-api.service';
-import { SessionService } from './session.service';
 import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
 import { ApiStaffRequest } from '../../issuer/models/staffrequest-api.model';
+import { AUTH_PROVIDER, AuthenticationService } from './authentication-service';
 
 @Injectable({ providedIn: 'root' })
 export class UserProfileApiService extends BaseHttpApiService {
-	protected sessionService: SessionService;
+	protected sessionService: AuthenticationService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -20,7 +20,7 @@ export class UserProfileApiService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const sessionService = inject(SessionService);
+		const sessionService = inject(AUTH_PROVIDER);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);
@@ -93,6 +93,6 @@ export class UserProfileApiService extends BaseHttpApiService {
 	}
 
 	revokeIssuerStaffRequest(requestId: string) {
-		return this.delete(`/v1/user/issuerStaffRequest/request/${requestId}`);
+		return this.delete(`/v1/user/issuerStaffRequest/${requestId}`);
 	}
 }

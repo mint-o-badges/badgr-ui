@@ -4,7 +4,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { SessionService } from '../../../common/services/session.service';
 import { Title } from '@angular/platform-browser';
-
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfile } from '../../../common/model/user-profile.model';
@@ -13,7 +12,8 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { FormFieldText } from '../../../common/components/formfield-text';
+import { OebInputComponent } from '~/components/input.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	templateUrl: './profile-edit.component.html',
@@ -23,8 +23,9 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 		BgBreadcrumbsComponent,
 		FormsModule,
 		ReactiveFormsModule,
-		FormFieldText,
+		OebInputComponent,
 		RouterLink,
+		TranslatePipe,
 	],
 })
 export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -36,16 +37,14 @@ export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent imp
 	profile: UserProfile;
 	profileEditForm = typedFormGroup()
 		.addControl('firstName', '', Validators.required)
-		.addControl('lastName', '', Validators.required);
+		.addControl('lastName', '', Validators.required)
+		.addControl('zipCode', '');
 
 	profileLoaded: Promise<unknown>;
 	crumbs: LinkEntry[] = [
 		{ title: 'Profile', routerLink: ['/profile'] },
 		{ title: 'Edit Profile', routerLink: ['/profile/edit'] },
 	];
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {
 		const router = inject(Router);
@@ -79,6 +78,7 @@ export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent imp
 
 		this.profile.firstName = formValue.firstName;
 		this.profile.lastName = formValue.lastName;
+		this.profile.zipCode = formValue.zipCode;
 
 		this.profile.save().then(
 			() => {

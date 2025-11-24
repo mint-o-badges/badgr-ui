@@ -54,6 +54,10 @@ export class IssuerManager {
 		return this.issuersList.loaded$.pipe(map((l) => l.entities));
 	}
 
+	get myNetworks$(): Observable<Network[]> {
+		return this.networksList.loaded$.pipe(map((l) => l.entities));
+	}
+
 	get allIssuers$(): Observable<Issuer[]> {
 		return this.allIssuersList.loaded$.pipe(map((l) => l.entities));
 	}

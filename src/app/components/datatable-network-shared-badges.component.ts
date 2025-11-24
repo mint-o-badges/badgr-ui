@@ -89,7 +89,7 @@ import { SharedBadgeWithRequests } from '~/issuer/components/network-badges/netw
 										<ng-container
 											*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
 										>
-											<div [innerHTML]="cell"></div>
+											<div class="tw-flex tw-items-center tw-min-h-10" [innerHTML]="cell"></div>
 										</ng-container>
 									</td>
 								}
@@ -207,7 +207,7 @@ export class NetworkSharedBadgesDatatableComponent {
 		{
 			id: 'Issuer.recipients',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.badgeclass.recipient_count,
+			accessorFn: (row) => row.recipient_count,
 			cell: (info) => info.getValue(),
 		},
 		{

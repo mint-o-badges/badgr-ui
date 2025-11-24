@@ -79,7 +79,7 @@ export class AddInstitutionComponent implements AfterViewInit {
 			try {
 				this.issuerSearchResults = [];
 				this.issuerSearchResults = (await this.publicApiService.searchIssuers(this.issuerSearchQuery)).filter(
-					(i) => !i.is_network && !this.invites().some((inv) => inv.issuer.slug == i.slug && !inv.revoked),
+					(i) => !this.hasUnrevokedInvite(i.slug),
 				);
 			} catch (error) {
 				this.messageService.reportAndThrowError(`Failed to issuers: ${error.message}`, error);
@@ -142,6 +142,10 @@ export class AddInstitutionComponent implements AfterViewInit {
 			.finally(() => {
 				this.inviting = false;
 			});
+	}
+
+	private hasUnrevokedInvite(issuerSlug: string): boolean {
+		return this.invites().some((inv) => inv.issuer?.slug === issuerSlug && !inv.revoked);
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);

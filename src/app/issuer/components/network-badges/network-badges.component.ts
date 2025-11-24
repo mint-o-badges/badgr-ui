@@ -176,7 +176,7 @@ export class NetworkBadgesComponent {
 		const badgesByIssuer = await firstValueFrom(this.badgeClassService.getNetworkBadgesByIssuerUrl$(networkSlug));
 
 		this.badges = this.sortBadgesByCreatedAt(badgesByIssuer[this.network().issuerUrl] || []).filter(
-			(b) => b.sharedOnNetwork == null,
+			(b) => b.sharedOnNetwork == null && b.extension['extensions:CategoryExtension'].Category !== 'learningpath',
 		);
 
 		const requestMap = await this.loadRequestsForBadges(this.badges);
@@ -217,7 +217,7 @@ export class NetworkBadgesComponent {
 		this.sharedBadgeResults = await Promise.all(sharedBadgePromises);
 	}
 
-	private sortBadgesByCreatedAt(badges: any[]) {
+	private sortBadgesByCreatedAt(badges: BadgeClass[]) {
 		const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
 		return badges.sort((a, b) => cmp(b.createdAt, a.createdAt));
 	}
@@ -264,7 +264,7 @@ export class NetworkBadgesComponent {
 			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 				context: {
 					variant: 'failure',
-					text: this.translate.instant('Network.noInstitutionAddedYet'),
+					text: this.translate.instant('Network.addInstitutionToIssue'),
 				},
 			});
 		} else {
@@ -286,7 +286,7 @@ export class NetworkBadgesComponent {
 			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 				context: {
 					variant: 'failure',
-					text: this.translate.instant('Network.noInstitutionAddedYet'),
+					text: this.translate.instant('Network.addInstitutionToIssue'),
 				},
 			});
 		} else {
