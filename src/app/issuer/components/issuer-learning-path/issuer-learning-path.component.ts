@@ -20,6 +20,7 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebLearningPathDetailComponent } from '../../../common/components/learningpath-detail/oeb-learning-path.component';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'issuer-learning-path',
@@ -42,7 +43,7 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 	readonly noIssuersPlaceholderSrc =
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
 
-	issuer: Issuer;
+	issuer: Issuer | Network;
 	learningPath: ApiLearningPath;
 	issuerSlug: string;
 	learningPathSlug: string;
@@ -93,7 +94,7 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 			},
 		];
 
-		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
+		this.issuerLoaded = this.issuerManager.issuerOrNetworkBySlug(this.issuerSlug).then(
 			(issuer) => {
 				this.issuer = issuer;
 				this.title.setTitle(
@@ -153,14 +154,16 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 			})
 			.then(
 				() => {
-					this.issuer.delete().then(
-						() => {
-							this.issuerManager.issuersList.invalidateList();
-							this.messageService.reportMinorSuccess(`Deleted issuer '${this.issuer.name}'`);
-							this.router.navigate(['/issuer/issuers']);
-						},
-						(error) => this.messageService.reportHandledError(`Failed to delete issuer`, error),
-					);
+					if (this.issuer instanceof Issuer) {
+						this.issuer.delete().then(
+							() => {
+								this.issuerManager.issuersList.invalidateList();
+								this.messageService.reportMinorSuccess(`Deleted issuer '${this.issuer.name}'`);
+								this.router.navigate(['/issuer/issuers']);
+							},
+							(error) => this.messageService.reportHandledError(`Failed to delete issuer`, error),
+						);
+					}
 				},
 				() => {},
 			);

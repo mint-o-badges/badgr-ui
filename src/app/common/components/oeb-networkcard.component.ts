@@ -14,22 +14,24 @@ import { Network } from '~/issuer/network.model';
 		<div class="tw-flex tw-flex-col tw-h-full">
 			<div class="tw-flex-row tw-flex tw-items-center">
 				<div
-					class="tw-bg-white tw-w-[100px] tw-h-[100px] tw-flex tw-items-center tw-justify-center tw-rounded-[10px]"
+					class="tw-bg-white tw-w-[100px] tw-h-[100px] tw-flex tw-flex-shrink-0 tw-items-center tw-justify-center tw-rounded-[10px]"
 				>
 					<img [src]="network.image" class="tw-aspect-square" width="80" />
 				</div>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
 					<div class="!tw-text-3xl tw-font-bold tw-leading-[120%] tw-text-white">{{ network.name }}</div>
 					@if (!public) {
-						<span class="tw-text-white tw-text-lg"
-							>{{
+						<p
+							class="tw-text-white tw-pb-2 tw-mt-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+						>
+							{{
 								'Network.yourRole'
 									| translate
 										: {
 												role: 'Network.role.' + network.current_user_network_role | translate,
 										  }
 							}}
-						</span>
+						</p>
 					}
 				</div>
 			</div>
@@ -43,6 +45,7 @@ import { Network } from '~/issuer/network.model';
 							<oeb-button
 								variant="secondary"
 								width="full_width"
+								weight="medium"
 								[text]="'Issuer.createBadge' | translate"
 								[routerLink]="['/issuer/networks', network.slug]"
 								[queryParams]="{ tab: 'badges' }"

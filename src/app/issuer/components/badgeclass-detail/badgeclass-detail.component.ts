@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, model, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -39,7 +39,7 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { Network } from '~/issuer/network.model';
 import { BadgeInstanceApiService } from '~/issuer/services/badgeinstance-api.service';
-import { OebTabsComponent } from '~/components/oeb-tabs.component';
+import { OebTabsComponent, Tab } from '~/components/oeb-tabs.component';
 import { ApiBadgeInstance } from '~/issuer/models/badgeinstance-api.model';
 import { ApiQRCode, NetworkQrCodeGroup } from '~/issuer/models/qrcode-api.model';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
@@ -123,7 +123,7 @@ export class BadgeClassDetailComponent
 
 	TaskStatus = TaskStatus;
 
-	tabs: any = undefined;
+	tabs: Tab[] = undefined;
 	activeTab = 'qrcodes';
 
 	get issuerSlug() {
@@ -315,7 +315,7 @@ export class BadgeClassDetailComponent
 			{
 				key: 'qrcodes',
 				title: 'QrCode.qrAwards',
-				component: this.qrAwards,
+				component: null, // rendered in the template
 			},
 			{
 				key: 'recipients',
@@ -326,13 +326,47 @@ export class BadgeClassDetailComponent
 	}
 
 	shareOnNetwork() {
-		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+		if (this.badgeClass.sharedOnNetwork) {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					variant: 'failure',
+					text: this.translate.instant('Badge.alreadyShared'),
+				},
+			});
+			return;
+		}
+
+		const cannotShare =
+			!(this.issuer instanceof Issuer) ||
+			!this.issuer.networks ||
+			this.issuer.networks.length === 0 ||
+			this.badgeClass.copyPermissions.includes('none');
+
+		if (cannotShare) {
+			if (this.issuer.is_network) {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Network.addInstitutionToIssue'),
+					},
+				});
+			} else {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Issuer.notNetworkPartnerYet'),
+					},
+				});
+			}
+			return;
+		}
+
+		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.networkSelectionHeader,
 				content: this.networkSelection,
 			},
 		});
-		this.dialogRef = dialogRef;
 	}
 
 	copyBadge() {
@@ -355,7 +389,7 @@ export class BadgeClassDetailComponent
 
 	closeDialog(result = '') {
 		if (this.dialogRef) {
-			if ((result = 'continue')) {
+			if (result === 'continue') {
 				this.dialogRef.close('continue');
 			} else {
 				this.dialogRef.close();
@@ -415,7 +449,6 @@ export class BadgeClassDetailComponent
 			headerButton: {
 				title: 'Badge.award',
 				action: () => this.routeToBadgeAward(badgeClass, this.issuer),
-				disabled: this.issuer.is_network && !this.networkUserIssuers().length,
 			},
 			issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 			qrCodeButton: {
@@ -451,10 +484,7 @@ export class BadgeClassDetailComponent
 					title: 'Badge.shareOnNetwork',
 					action: this.shareOnNetwork.bind(this),
 					icon: 'lucideShare2',
-					disabled:
-						(this.issuer instanceof Issuer
-							? !(this.issuer.networks && this.issuer.networks.length > 0)
-							: true) || badgeClass.copyPermissions.includes('none'),
+					disabled: this.issuer.is_network || badgeClass.copyPermissions.includes('none'),
 				},
 				{
 					title: badgeClass.copyPermissions.includes('others') ? 'General.copy' : 'Badge.copyThisIssuer',
@@ -463,16 +493,9 @@ export class BadgeClassDetailComponent
 					disabled: !this.issuer.canCreateBadge || badgeClass.copyPermissions.includes('none'),
 				},
 				{
-					title: 'Badge.editCopyStatus',
-					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'copypermissions'],
-					icon: 'lucideCopyX',
-					disabled: !this.issuer.canEditBadge || badgeClass.copyPermissions.includes('none'),
-				},
-				{
 					title: 'General.edit',
-					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-					disabled:
-						badgeClass.recipientCount > 0 || !this.issuer.canEditBadge || this.qrCodeAwards.length > 0,
+					routerLink: this.getEditRoute(badgeClass),
+					disabled: !this.issuer.canEditBadge,
 					icon: 'lucidePencil',
 				},
 				{
@@ -566,6 +589,14 @@ export class BadgeClassDetailComponent
 	ngOnDestroy() {
 		if (this.taskSubscription) {
 			this.taskSubscription.unsubscribe();
+		}
+	}
+
+	getEditRoute(badgeClass: BadgeClass): any[] {
+		if (badgeClass.recipientCount > 0 || this.qrCodeAwards.length > 0) {
+			return ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit-issued'];
+		} else {
+			return ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'];
 		}
 	}
 
@@ -773,23 +804,36 @@ export class BadgeClassDetailComponent
 						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 				});
 			} else if (this.issuer.is_network) {
-				const dialogRef = this._hlmDialogService.open(DialogComponent, {
-					context: {
-						headerTemplate: this.networkIssuerSelectionHeader,
-						content: this.networkIssuerSelection,
-					},
-				});
-				this.dialogRef = dialogRef;
-				this.dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue')
-						this.router.navigate([
-							'/issuer/issuers/',
-							this.selectedNetworkIssuer.slug,
-							'badges',
-							badge.slug,
-							'issue',
-						]);
-				});
+				if (!this.networkUserIssuers().length) {
+					this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							variant: 'failure',
+							text: this.translate.instant('Network.addInstitutionToIssue'),
+						},
+					});
+				} else {
+					const dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							headerTemplate: this.networkIssuerSelectionHeader,
+							content: this.networkIssuerSelection,
+							templateContext: {
+								closeDialog: (result?) => dialogRef.close(result),
+							},
+						},
+					});
+
+					this.dialogRef = dialogRef;
+					this.dialogRef.closed$.subscribe((result) => {
+						if (result === 'continue')
+							this.router.navigate([
+								'/issuer/issuers/',
+								this.selectedNetworkIssuer.slug,
+								'badges',
+								badge.slug,
+								'issue',
+							]);
+					});
+				}
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 			}
@@ -814,23 +858,37 @@ export class BadgeClassDetailComponent
 						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 				});
 			} else if (this.issuer.is_network) {
-				const dialogRef = this._hlmDialogService.open(DialogComponent, {
-					context: {
-						headerTemplate: this.networkIssuerSelectionHeader,
-						content: this.networkIssuerSelection,
-					},
-				});
-				this.dialogRef = dialogRef;
-				this.dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue')
-						this.router.navigate([
-							'/issuer/issuers/',
-							this.selectedNetworkIssuer.slug,
-							'badges',
-							badge.slug,
-							'qr',
-						]);
-				});
+				if (!this.networkUserIssuers().length) {
+					this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							variant: 'failure',
+							text: this.translate.instant('Network.addInstitutionToIssue'),
+						},
+					});
+				} else {
+					const dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							headerTemplate: this.networkIssuerSelectionHeader,
+							content: this.networkIssuerSelection,
+							templateContext: {
+								closeDialog: (result?: string) => dialogRef.close(result),
+							},
+						},
+					});
+					this.dialogRef = dialogRef;
+					this.dialogRef.closed$.subscribe((result) => {
+						if (result === 'continue')
+							this.router.navigate(
+								['/issuer/issuers/', this.selectedNetworkIssuer.slug, 'badges', badge.slug, 'qr'],
+								{
+									queryParams: {
+										partnerIssuer: this.selectedNetworkIssuer.slug,
+										isNetworkBadge: true,
+									},
+								},
+							);
+					});
+				}
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 			}

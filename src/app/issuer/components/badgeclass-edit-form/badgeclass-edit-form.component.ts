@@ -3,7 +3,6 @@ import {
 	Component,
 	ElementRef,
 	EventEmitter,
-	inject,
 	Input,
 	OnInit,
 	Output,
@@ -12,11 +11,11 @@ import {
 	SimpleChanges,
 	AfterViewChecked,
 	OnChanges,
+	inject,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
 	AbstractControl,
-	FormBuilder,
 	Validators,
 	ValidatorFn,
 	ValidationErrors,
@@ -24,20 +23,16 @@ import {
 	FormsModule,
 	ReactiveFormsModule,
 } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 import { Md5 } from 'ts-md5';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import {
 	ApiBadgeClassForCreation,
 	BadgeClassCategory,
 	BadgeClassCopyPermissions,
-	BadgeClassExpiresDuration,
 	BadgeClassLevel,
 } from '../../models/badgeclass-api.model';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
-import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
 import { UrlValidator } from '../../../common/validators/url.validator';
@@ -51,7 +46,6 @@ import { ApiSkill } from '../../../common/model/ai-skills.model';
 import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { NavigationService } from '../../../common/services/navigation.service';
 import { base64ByteSize } from '../../../common/util/file-util';
-import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { StepperComponent } from '../../../components/stepper/stepper.component';
 import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclass-details/badgeclass-details.component';
 import { Issuer } from '../../models/issuer.model';
@@ -71,6 +65,9 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
+import { AUTH_PROVIDER } from '~/common/services/authentication-service';
+import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
+import { getDurationOptions, expirationToDays, ExpirationUnit } from '~/common/util/expiration-util';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -110,19 +107,13 @@ export class BadgeClassEditFormComponent
 	extends BaseAuthenticatedRoutableComponent
 	implements OnInit, AfterViewInit, AfterViewChecked, OnChanges
 {
-	protected fb = inject(FormBuilder);
-	protected title = inject(Title);
 	protected messageService = inject(MessageService);
-	protected issuerManager = inject(IssuerManager);
 	private configService = inject(AppConfigService);
 	protected badgeClassManager = inject(BadgeClassManager);
 	protected dialogService = inject(CommonDialogsService);
-	protected componentElem = inject<ElementRef<HTMLElement>>(ElementRef);
 	protected aiSkillsService = inject(AiSkillsService);
 	private translate = inject(TranslateService);
 	private navService = inject(NavigationService);
-
-	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	baseUrl: string;
 	badgeCategory: string;
@@ -171,8 +162,6 @@ export class BadgeClassEditFormComponent
 	alignmentNameError = this.translate.instant('CreateBadge.alignmentNameError');
 	alignmentURLError = this.translate.instant('CreateBadge.alignmentURLError');
 
-	count = this.translate.instant('General.count');
-	duration = this.translate.instant('RecBadgeDetail.duration');
 	chooseDuration = this.translate.instant('CreateBadge.chooseDuration');
 	newTag = this.translate.instant('CreateBadge.newTag');
 
@@ -326,9 +315,9 @@ export class BadgeClassEditFormComponent
 		.addControl('badge_customImage', '')
 		.addControl('useIssuerImageInBadge', true)
 		.addControl('badge_description', '', [Validators.required, Validators.maxLength(700)])
-		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull])
-		.addControl('badge_hours', 1, this.positiveIntegerOrNull)
-		.addControl('badge_minutes', 0, this.positiveIntegerOrNull)
+		.addControl('badge_study_load', 0, [(control) => PositiveIntegerOrNullValidator.valid(control, this.translate)])
+		.addControl('badge_hours', 1, (control) => PositiveIntegerOrNullValidator.valid(control, this.translate))
+		.addControl('badge_minutes', 0, (control) => PositiveIntegerOrNullValidator.valid(control, this.translate))
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
@@ -352,16 +341,28 @@ export class BadgeClassEditFormComponent
 			typedFormGroup()
 				.addControl('selected', false)
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
-				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
+				.addControl('hours', 1, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(MAX_HRS_PER_COMPETENCY),
+				])
+				.addControl('minutes', 0, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(59),
+				])
 				.addControl('framework', 'esco', Validators.required),
 		)
 		.addArray(
 			'keywordCompetencies',
 			typedFormGroup()
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
-				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
+				.addControl('hours', 1, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(MAX_HRS_PER_COMPETENCY),
+				])
+				.addControl('minutes', 0, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(59),
+				])
 				.addControl('framework', 'esco', Validators.required),
 		)
 		.addArray(
@@ -373,8 +374,14 @@ export class BadgeClassEditFormComponent
 				.addControl('framework_identifier', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
-				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
+				.addControl('hours', 1, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(MAX_HRS_PER_COMPETENCY),
+				])
+				.addControl('minutes', 0, [
+					(control) => PositiveIntegerOrNullValidator.valid(control, this.translate),
+					Validators.max(59),
+				])
 				.addControl('category', '', Validators.required)
 				.addControl('framework', '')
 				.addControl('source', ''),
@@ -388,7 +395,8 @@ export class BadgeClassEditFormComponent
 				.addControl('target_framework', '')
 				.addControl('target_code', ''),
 		)
-
+		.addControl('expiration', null, [(control) => PositiveIntegerOrNullValidator.valid(control, this.translate)])
+		.addControl('expiration_unit', 'days', Validators.required)
 		.addArray('criteria', this.criteriaForm)
 
 		.addControl('copy_permissions_allow_others', false);
@@ -448,19 +456,7 @@ export class BadgeClassEditFormComponent
 
 	collapsedCompetenciesOpen = false;
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Expiration
-	expirationEnabled = false;
-	expirationForm = typedFormGroup()
-		.addControl('expires_amount', '', [Validators.required, this.positiveInteger, Validators.max(1000)])
-		.addControl('expires_duration', '', Validators.required);
-
-	durationOptions: { [key in BadgeClassExpiresDuration]: string } = {
-		days: this.translate.instant('General.days'),
-		weeks: this.translate.instant('General.weeks'),
-		months: this.translate.instant('General.months'),
-		years: this.translate.instant('General.years'),
-	};
+	durationOptions = null;
 
 	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
@@ -502,7 +498,7 @@ export class BadgeClassEditFormComponent
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const sessionService = inject(SessionService);
+		const sessionService = inject(AUTH_PROVIDER);
 		const router = inject(Router);
 		const route = inject(ActivatedRoute);
 
@@ -596,6 +592,8 @@ export class BadgeClassEditFormComponent
 				target_framework: alignment.target_framework,
 				target_code: alignment.target_code,
 			})),
+			expiration: badgeClass.expiration,
+			expiration_unit: 'days', // api always returns expiration in days
 			criteria: badgeClass.apiModel.criteria,
 			copy_permissions_allow_others: this.existing ? badgeClass.canCopy('others') : false,
 		});
@@ -620,14 +618,13 @@ export class BadgeClassEditFormComponent
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
 
 		this.alignmentsEnabled = this.badgeClass.alignments.length > 0;
-		if (badgeClass.expiresAmount && badgeClass.expiresDuration) {
-			this.enableExpiration();
-		}
 	}
 
 	ngOnInit() {
 		super.ngOnInit();
 		this.fetchTags();
+
+		this.durationOptions = getDurationOptions(this.translate);
 
 		if (this.issuer.is_network) {
 			this.badgeClassForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
@@ -961,23 +958,6 @@ export class BadgeClassEditFormComponent
 
 	removeTag(tag: string) {
 		this.tags.delete(tag);
-	}
-
-	enableExpiration() {
-		const initialAmount = this.badgeClass ? this.badgeClass.expiresAmount : '';
-		const initialDuration = this.badgeClass ? this.badgeClass.expiresDuration || '' : '';
-
-		this.expirationEnabled = true;
-
-		this.expirationForm.setValue({
-			expires_amount: initialAmount.toString(),
-			expires_duration: initialDuration.toString(),
-		});
-	}
-
-	disableExpiration() {
-		this.expirationEnabled = false;
-		this.expirationForm.reset();
 	}
 
 	enableAlignments() {
@@ -1342,11 +1322,8 @@ export class BadgeClassEditFormComponent
 			}
 
 			this.badgeClassForm.markTreeDirty();
-			if (this.expirationEnabled) {
-				this.expirationForm.markTreeDirty();
-			}
 
-			if (!this.badgeClassForm.valid || (this.expirationEnabled && !this.expirationForm.valid)) {
+			if (!this.badgeClassForm.valid) {
 				const firstInvalidInput = this.formElem.nativeElement.querySelector(
 					'.ng-invalid,.dropzone-is-error,.u-text-error',
 				);
@@ -1374,8 +1351,6 @@ export class BadgeClassEditFormComponent
 
 			const formState = this.badgeClassForm.value;
 
-			const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
-
 			const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
 			const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
 			const levelExtensionContextUrl = `${this.baseUrl}/static/extensions/LevelExtension/context.json`;
@@ -1386,6 +1361,8 @@ export class BadgeClassEditFormComponent
 
 			const aiCompetenciesSuggestions = this.aiCompetenciesSuggestions;
 			const keywordCompetenciesResults = this.selectedKeywordCompetencies;
+
+			const expirationDays = expirationToDays(formState.expiration, formState.expiration_unit as ExpirationUnit);
 
 			let copy_permissions: BadgeClassCopyPermissions[];
 			if (this.issuer.is_network) {
@@ -1405,6 +1382,7 @@ export class BadgeClassEditFormComponent
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);
 				this.existingBadgeClass.criteria = formState.criteria;
+				this.existingBadgeClass.expiration = expirationDays;
 				this.existingBadgeClass.criteria_text = '';
 				this.existingBadgeClass.extension = {
 					...this.existingBadgeClass.extension,
@@ -1447,13 +1425,6 @@ export class BadgeClassEditFormComponent
 						},
 					};
 				}
-				if (this.expirationEnabled) {
-					this.existingBadgeClass.expiresDuration =
-						expirationState.expires_duration as BadgeClassExpiresDuration;
-					this.existingBadgeClass.expiresAmount = parseInt(expirationState.expires_amount, 10);
-				} else {
-					this.existingBadgeClass.clearExpires();
-				}
 				this.existingBadgeClass.copyPermissions = copy_permissions;
 
 				this.savePromise = this.existingBadgeClass.save();
@@ -1466,6 +1437,7 @@ export class BadgeClassEditFormComponent
 					imageFrame: imageFrame,
 					tags: Array.from(this.tags),
 					alignment: this.alignmentsEnabled ? formState.alignments : [],
+					expiration: expirationDays,
 					criteria: formState.criteria,
 					extensions: {
 						'extensions:StudyLoadExtension': {
@@ -1512,12 +1484,6 @@ export class BadgeClassEditFormComponent
 							type: ['Extension', 'extensions:OrgImageExtension'],
 							OrgImage: this.currentImage,
 						},
-					};
-				}
-				if (this.expirationEnabled) {
-					badgeClassData.expires = {
-						duration: expirationState.expires_duration as BadgeClassExpiresDuration,
-						amount: parseInt(expirationState.expires_amount, 10),
 					};
 				}
 				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuer.slug, badgeClassData);
@@ -1665,20 +1631,6 @@ export class BadgeClassEditFormComponent
 			if (isNaN(val) || val < 1) {
 				return { expires_amount: this.translate.instant('CreateBadge.valuePositive') };
 				// return { expires_amount: 'CreateBadge.valuePositive' };
-			}
-		};
-	}
-
-	positiveIntegerOrNull() {
-		// turned into factory because this was sometimes missing
-		return (control: AbstractControl) => {
-			const val = parseFloat(control.value);
-
-			if (isNaN(val)) {
-				return { emptyField: this.translate.instant('OEBComponents.fieldIsRequired') };
-			}
-			if (!Number.isInteger(val) || val < 0) {
-				return { negativeDuration: this.translate.instant('CreateBadge.durationPositive') };
 			}
 		};
 	}

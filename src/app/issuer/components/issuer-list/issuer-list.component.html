@@ -175,7 +175,7 @@
 </ng-template>
 
 <ng-template #issuersTemplate>
-	<p class="tw-pb-4 tw-mt-10 tw-text-oebblack tw-text-lg tw-leading-[130%]">
+	<p class="tw-pb-4 tw-mt-10 tw-text-oebblack tw-text-lg tw-leading-[130%] tw-max-w-[600px]">
 		<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
 		<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
 	</p>
@@ -224,7 +224,7 @@
 								>{{ issuer.name }}</a
 							>
 							<p
-								class="tw-text-oebblack tw-pb-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+								class="tw-text-oebblack tw-pb-2 tw-mt-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
 							>
 								{{ 'Issuer.yourRole' | translate }}
 								{{ issuer.currentUserStaffMember?.roleInfo.label | translate }}

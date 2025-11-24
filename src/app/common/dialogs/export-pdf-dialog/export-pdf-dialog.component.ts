@@ -17,6 +17,7 @@ import { PublicApiBadgeAssertionWithBadgeClass } from '../../../public/models/pu
 import { LoadingDotsComponent } from '../../components/loading-dots.component';
 import { SvgIconComponent } from '../../components/svg-icon.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { getAssertionIssuedDate } from '~/common/util/assertion-helper';
 
 @Component({
 	selector: 'export-pdf-dialog',
@@ -91,18 +92,6 @@ export class ExportPdfDialog extends BaseDialog {
 		this.showModal();
 
 		this.generateBadgeCollectionPdf(this.collection);
-
-		return new Promise<void>((resolve, reject) => {
-			this.resolveFunc = resolve;
-			this.rejectFunc = reject;
-		});
-	}
-
-	async openDialogForBackpack(badgeResults: BadgeResult[], profile: UserProfile): Promise<void> {
-		this.badgeResults = badgeResults;
-		this.showModal();
-
-		this.generateBackpackPdf(this.badgeResults, profile);
 
 		return new Promise<void>((resolve, reject) => {
 			this.resolveFunc = resolve;
@@ -236,124 +225,6 @@ export class ExportPdfDialog extends BaseDialog {
 		}
 	}
 
-	// disclaimer: unfinished
-	generateBackpackPdf(badgeResults: BadgeResult[], profile: UserProfile) {
-		this.pdfError = undefined;
-		this.doc = new jsPDF();
-
-		let yPos = 20;
-		let xMargin = 10;
-
-		try {
-			// title
-			this.doc.setFontSize(30);
-			this.doc.setFont('Helvetica', 'bold');
-			let title = 'Rucksack';
-			if (profile.firstName != '') {
-				title += ' von ' + profile.firstName + ' ' + profile.lastName;
-			}
-			this.doc.text(title, xMargin, yPos, {
-				align: 'justify',
-			});
-
-			// Badges table title
-			this.doc.setFontSize(17);
-			let badgeText = '' + badgeResults.length + ' Badge';
-			if (badgeResults.length > 1) {
-				badgeText += 's:';
-			} else {
-				badgeText += ':';
-			}
-			yPos += 15;
-			this.doc.text(badgeText, xMargin, yPos, {
-				align: 'justify',
-			});
-			this.doc.line(xMargin, yPos + 1, xMargin + this.doc.getTextWidth(badgeText), yPos + 1);
-
-			// Badges table header
-			this.doc.setFontSize(14);
-			yPos += 12;
-			let headings = [
-				{
-					name: 'Badge',
-					width: 80,
-				},
-				{
-					name: 'Institution',
-					width: 60,
-				},
-				{
-					name: 'Vergeben',
-					width: 60,
-				},
-			];
-			let xPos = xMargin;
-			headings.forEach((heading, i) => {
-				this.doc.text(heading.name, xPos, yPos, {
-					align: 'justify',
-				});
-				xPos += heading.width;
-			});
-
-			// Badges table content
-			this.doc.setFont('Helvetica', 'normal');
-			yPos += 12;
-			badgeResults.forEach((badgeResult, _) => {
-				let badgeClass = badgeResult.badge.badgeClass;
-				let xPos = xMargin;
-				this.doc.addImage(badgeClass.image, 'png', xPos, yPos - 7, 11, 11);
-				xPos += 13;
-				let name = badgeClass.name;
-				let cutoff = 60;
-				if (this.doc.getTextWidth(name) > cutoff) {
-					// while(this.doc.getTextWidth(name) > 30) {
-					// 	name = name.substring(0, name.length - 1);
-					// }
-					name = name.substring(0, name.length - (this.doc.getTextWidth(name) - cutoff) / 2);
-					name += '...';
-				}
-				this.doc.text(name, xPos, yPos, {
-					align: 'justify',
-				});
-				xPos += 80 * (12 / 14);
-				let institution = badgeClass.issuer.name;
-				cutoff = 50;
-				if (this.doc.getTextWidth(institution) > cutoff) {
-					// while(this.doc.getTextWidth(institution) > 30) {
-					// 	institution = institution.substring(0, institution.length - 1);
-					// }
-					institution = institution.substring(
-						0,
-						institution.length - (this.doc.getTextWidth(institution) - cutoff) / 2,
-					);
-					institution += '...';
-				}
-				this.doc.text(institution, xPos, yPos, {
-					align: 'justify',
-				});
-				xPos += 70 * (12 / 14);
-
-				let date: string = '';
-				if (this.badge instanceof RecipientBadgeInstance)
-					date = this.badge.issueDate.toLocaleDateString('de-DE');
-				else if (this.badge satisfies PublicApiBadgeAssertionWithBadgeClass)
-					date = new Date(this.badge.issuedOn).toLocaleDateString('de-DE');
-
-				this.doc.text(date, xPos, yPos, {
-					align: 'justify',
-				});
-				yPos += 12;
-			});
-
-			this.badgePdf = this.doc.output('datauristring');
-			this.outputElement.nativeElement.src = this.badgePdf;
-			this.outputElement.nativeElement.setAttribute('style', 'overflow: auto');
-		} catch (e) {
-			this.pdfError = e;
-			console.log(e);
-		}
-	}
-
 	downloadPdf() {
 		let name: string = '';
 		let issueDate: Date = new Date(0);
@@ -363,7 +234,7 @@ export class ExportPdfDialog extends BaseDialog {
 			issueDate = this.badge.issueDate;
 		} else if (this.badge satisfies PublicApiBadgeAssertionWithBadgeClass) {
 			name = this.badge.slug;
-			issueDate = new Date(this.badge.issuedOn);
+			issueDate = new Date(getAssertionIssuedDate(this.badge));
 		}
 
 		this.pdfService.downloadPdf(this.pdfSrc, name.trim().replace(' ', '_'), issueDate);

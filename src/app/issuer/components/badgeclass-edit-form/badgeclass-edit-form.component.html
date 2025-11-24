@@ -1119,47 +1119,35 @@
 							}
 						</div>
 					}
-					<div class="section tw-text-oebblack tw-mt-6">
-						<h2 hlmH2 class="!tw-text-oebblack">
+
+					<!-- Expiration -->
+					<section class="section tw-text-oebblack tw-mt-6">
+						<h2 hlmH2 class="!tw-text-oebblack tw-pb-4">
 							{{ 'CreateBadge.expiration' | translate }}
 						</h2>
-						<span
-							class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
-							[innerHTML]="'CreateBadge.expirationInfo' | translate"
-						></span>
-						<div class="formsection-x-body">
-							<div class="tw-w-fit tw-flex tw-gap-6">
-								<oeb-input
-									id="duration-number"
-									[control]="expirationForm.rawControlMap.expires_amount"
-									[label]="count"
-									[fieldType]="'number'"
-									[max]="1000"
-									[maxchar]="4"
-									[min]="1"
-									[errorMessage]="{
-										max: maxValue1000,
-									}"
-								></oeb-input>
-								<oeb-select
-									[id]="'duration-type'"
-									ariaLabel="chooseDuration"
-									[control]="expirationForm.rawControlMap.expires_duration"
-									[label]="duration"
-									[placeholder]="chooseDuration"
-									[optionMap]="durationOptions"
-								></oeb-select>
-							</div>
+						<div class="tw-w-fit tw-flex tw-gap-4 tw-text-oebblack tw-text-lg tw-mt-4 tw-mb-4">
+							<oeb-input
+								id="duration-number"
+								[control]="badgeClassForm.rawControlMap.expiration"
+								[noTopMargin]="true"
+								[fieldType]="'number'"
+								[errorMessage]="{
+									max: maxValue1000,
+								}"
+							></oeb-input>
+							<oeb-select
+								[noTopMargin]="true"
+								[id]="'duration-type'"
+								ariaLabel="chooseDuration"
+								[control]="badgeClassForm.rawControlMap.expiration_unit"
+								[optionMap]="durationOptions"
+							></oeb-select>
 						</div>
-						<!-- <div class="tw-mt-2 tw-mb-2 tw-flex tw-gap-2"> -->
-						<!-- <span [innerHTML]="'CreateBadge.validUntil' | translate"></span> -->
-						<!-- <oeb-input
-                        [errorMessage]="'Bitte gib ein Datum in der Form tt/mm/jjjj an'"
-                        [control]="expirationForm.rawControlMap.expires"
-                        fieldType="date"
-                      ></oeb-input> -->
-						<!-- </div> -->
-					</div>
+						<p
+							class="tw-italic tw-text-purple tw-text-lg"
+							[innerHTML]="'CreateBadge.expirationInfo' | translate"
+						></p>
+					</section>
 				</cdk-step>
 			</oeb-stepper>
 		</ng-container>

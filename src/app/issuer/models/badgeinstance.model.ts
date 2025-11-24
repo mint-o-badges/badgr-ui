@@ -169,6 +169,14 @@ export class BadgeInstance extends ManagedEntity<ApiBadgeInstance, BadgeInstance
 		return this.apiModel.evidence_items;
 	}
 
+	get activityStartDate(): Date {
+		return this.apiModel.activity_start_date ? new Date(this.apiModel.activity_start_date) : undefined;
+	}
+
+	get activityEndDate(): Date {
+		return this.apiModel.activity_end_date ? new Date(this.apiModel.activity_end_date) : undefined;
+	}
+
 	revokeBadgeInstance(revocationReason: string): Promise<BadgeClassInstances> {
 		return this.badgeInstanceManager.badgeInstanceApiService
 			.revokeBadgeInstance(this.issuerSlug, this.badgeClassSlug, this.slug, revocationReason)

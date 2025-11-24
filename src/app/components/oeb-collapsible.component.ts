@@ -97,4 +97,8 @@ export class OebCollapsibleComponent implements AfterViewInit, OnChanges {
 	disabled() {
 		return this.collapsible && this.collapsible.expanded() && !this.closeable;
 	}
+
+	get expanded(): boolean {
+		return this.collapsible?.expanded() ?? false;
+	}
 }

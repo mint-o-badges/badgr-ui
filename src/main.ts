@@ -16,6 +16,9 @@ import { ROUTE_CONFIG } from './app/app.routes';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { uiTimestamp } from './environments/timestamp';
+import { IconsProvider } from '~/icons-provider';
+import { SessionService } from '~/common/services/session.service';
+import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 
 registerLocaleData(localeDe);
 
@@ -30,6 +33,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
 	providers: [
+		{ provide: AUTH_PROVIDER, useClass: SessionService },
 		provideHttpClient(),
 		importProvidersFrom(
 			BrowserModule,
@@ -62,5 +66,6 @@ bootstrapApplication(AppComponent, {
 			withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
 		),
 		provideAnimations(),
+		IconsProvider,
 	],
 }).catch((err) => console.log(err));

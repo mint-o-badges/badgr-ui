@@ -25,6 +25,7 @@ import {
 	lucideGrid2x2,
 	lucideCheck,
 	lucideClock,
+	lucideClockFading,
 	lucidePencil,
 	lucideTrash2,
 	lucideTriangleAlert,
@@ -51,6 +52,10 @@ import {
 	lucideEyeOff,
 	lucideNetwork,
 	lucideShipWheel,
+	lucideArrowLeft,
+	lucideCircleAlert,
+	lucideLock,
+	lucideCalendarDays,
 } from '@ng-icons/lucide';
 
 export const IconsProvider = provideIcons({
@@ -69,6 +74,7 @@ export const IconsProvider = provideIcons({
 	lucideShare2,
 	lucideSearch,
 	lucideX,
+	lucideCalendarDays,
 	lucideCloudUpload,
 	lucideChevronUp,
 	lucideChevronDown,
@@ -79,6 +85,7 @@ export const IconsProvider = provideIcons({
 	lucideGrid2x2,
 	lucideCheck,
 	lucideClock,
+	lucideClockFading,
 	lucidePencil,
 	lucideTrash2,
 	lucideTriangleAlert,
@@ -105,4 +112,7 @@ export const IconsProvider = provideIcons({
 	lucideEyeOff,
 	lucideNetwork,
 	lucideShipWheel,
+	lucideArrowLeft,
+	lucideCircleAlert,
+	lucideLock,
 });

@@ -38,7 +38,7 @@
 					<div class="tw-flex tw-gap-2">
 						<img
 							class="tw-w-[63.58px] tw-h-[63.58px] md:tw-w-[75.61px] md:tw-h-[75.61px] tw-block"
-							[loaded-src]="badgeClass.image"
+							[loaded-src]="previewB64Img"
 							[loading-src]="badgeLoadingImageUrl"
 							[error-src]="badgeFailedImageUrl"
 						/>
@@ -55,10 +55,22 @@
 						<span class="tw-font-bold">{{ 'QrCode.creator' | translate }}</span>
 						<span>{{ creator }}</span>
 					</div>
+					@if (course_date) {
+						<div class="tw-flex tw-flex-col">
+							<span class="tw-font-bold">{{ 'RecBadge.courseDate' | translate }}</span>
+							<span>{{ course_date }}</span>
+						</div>
+					}
 					@if (validity) {
 						<div class="tw-flex tw-flex-col">
 							<span class="tw-font-bold">{{ 'QrCode.validity' | translate }}</span>
 							<span>{{ validity }}</span>
+						</div>
+					}
+					@if (activity_place) {
+						<div class="tw-flex tw-flex-col">
+							<span class="tw-font-bold">{{ 'RecBadge.venue' | translate }}</span>
+							<span>{{ activity_place }}</span>
 						</div>
 					}
 				</div>
