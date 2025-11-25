@@ -59,6 +59,7 @@ import { HlmH3 } from '@spartan-ng/helm/typography';
 								[requested]="lp.requested"
 								[studyLoad]="calculateStudyLoad(lp)"
 								[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
+								[disableLink]="this.isEmbedded()"
 							/>
 						}
 					</div>
@@ -83,6 +84,7 @@ import { HlmH3 } from '@spartan-ng/helm/typography';
 								[completed]="true"
 								[studyLoad]="calculateStudyLoad(lp)"
 								[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
+								[disableLink]="this.isEmbedded()"
 							/>
 						}
 					</div>
@@ -94,6 +96,7 @@ export default class RecipientLearningPathsOverview {
 	readonly noBadgesImageUrl: string =
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	learningPaths = input.required<ApiLearningPath[]>();
+	isEmbedded = input<boolean>(false);
 	filteredLearningPaths = computed(() =>
 		this.learningPaths().filter(MatchingAlgorithm.learningPathMatcher(this.searchQuery())),
 	);
