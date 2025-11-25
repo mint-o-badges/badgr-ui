@@ -27,6 +27,6 @@ export class BadgeInstanceV3 {
 	}
 
 	getExtension(name: string, defaultValue: any = null) {
-		return this.extensions && this.extensions[name] ? this.extensions[name] : defaultValue;
+		return this.extensions && this.extensions[name] ? this.extensions[name].name : defaultValue;
 	}
 }
