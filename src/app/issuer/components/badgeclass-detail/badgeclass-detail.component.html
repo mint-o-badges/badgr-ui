@@ -43,7 +43,7 @@
 			></qrcode-awards>
 		}
 	</div>
-	<ng-template #batchAwards>
+	<div #batchAwards>
 		@if (issuer) {
 			@if (issuer.is_network) {
 				@if (groupedPartnerInstances) {
@@ -100,7 +100,7 @@
 				/>
 			}
 		}
-	</ng-template>
+	</div>
 	<ng-template #headerTemplate>
 		<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
 	</ng-template>

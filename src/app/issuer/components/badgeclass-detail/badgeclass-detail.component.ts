@@ -46,6 +46,7 @@ import { CommonEntityManager } from '~/entity-manager/services/common-entity-man
 import { PublicApiService } from '~/public/services/public-api.service';
 import { SelectNetworkComponent } from '../select-network/select-network.component';
 import { BadgeInstanceV3 } from '~/issuer/models/badgeinstancev3.model';
+import { SuccessDialogComponent } from '~/common/dialogs/oeb-dialogs/success-dialog.component';
 
 interface groupedInstances {
 	has_access: boolean;
@@ -552,7 +553,6 @@ export class BadgeClassDetailComponent
 		this.badgeInstancesLoaded = this.badgeInstanceApiService
 			.listBadgeInstancesV3(this.issuerSlug, this.badgeSlug, recipientQuery, pageSize, offset)
 			.then(async (result) => {
-				// Convert API instances to BadgeInstance models
 				const tempSet = new BadgeClassInstances(
 					this.badgeInstanceManager,
 					this.issuerSlug,
@@ -564,7 +564,6 @@ export class BadgeClassDetailComponent
 
 				this.recipients.set(instances);
 
-				// Store pagination state and counts
 				this.totalInstanceCount = result.total_count;
 				this.recipientCount = result.count;
 
@@ -587,50 +586,12 @@ export class BadgeClassDetailComponent
 	}
 
 	onPaginationChange(pagination: { pageIndex: number; pageSize: number }) {
-		// Load instances with current search query and new pagination
 		this.loadInstances(this.currentRecipientQuery, pagination.pageIndex, pagination.pageSize);
 	}
 
 	onSearchChange(searchQuery: string) {
-		// Reset to first page when search changes
 		this.loadInstances(searchQuery, 0, this.currentPageSize);
 	}
-
-	// async loadInstances(recipientQuery?: string) {
-	// 	const instances = new BadgeClassInstances(
-	// 		this.badgeInstanceManager,
-	// 		this.issuerSlug,
-	// 		this.badgeSlug,
-	// 		recipientQuery,
-	// 	);
-	// 	this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug);
-	// 	this.badgeInstancesLoaded = instances.loadedPromise.then(
-	// 		async (retInstances) => {
-	// 			this.crumbs = [
-	// 				{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
-	// 				{
-	// 					title: this.issuer.name,
-	// 					routerLink: [`/issuer/${this.issuer.is_network ? 'networks' : 'issuers'}/` + this.issuerSlug],
-	// 				},
-	// 				{
-	// 					title: this.badgeClass.name,
-	// 					routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug],
-	// 				},
-	// 			];
-	// 			this.allBadgeInstances = retInstances;
-	// 			const issuerUrls = retInstances.entities.map((i) => i.issuerUrl);
-	// 			this.awardingIssuers = await this.issuerManager.issuersByUrls(issuerUrls);
-	// 			this.updateResults();
-	// 			this.loadConfig(this.badgeClass);
-	// 		},
-	// 		(error) => {
-	// 			this.messageService.reportLoadingError(
-	// 				`Could not load recipients ${this.issuerSlug} / ${this.badgeSlug}`,
-	// 			);
-	// 			return error;
-	// 		},
-	// 	);
-	// }
 
 	onQrBadgeAward(event: number) {
 		this.loadInstances();
@@ -705,15 +666,27 @@ export class BadgeClassDetailComponent
 		);
 	}
 
+	public openSuccessDialog(recipient = null, text = null) {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+				recipient: recipient,
+				text: text,
+				variant: 'success',
+			},
+		});
+	}
+
 	private handleTaskSuccess(taskResult: TaskResult) {
 		this.isTaskActive = false;
 
-		const awardCount = taskResult.result?.data.length;
-		// if (awardCount) {
-		// 	this.recipientCount += awardCount;
-		// }
-		// Refresh datatable
-		// this.loadInstances();
+		const awardCount = taskResult.result?.data?.length || 0;
+		const errorCount = taskResult.result?.errors?.length || 0;
+
+		if (awardCount) {
+			this.openSuccessDialog(null, awardCount + ' ' + this.translate.instant('QrCode.badgesAwardedSuccessfully'));
+		}
+
+		this.loadInstances(this.currentRecipientQuery, this.currentPageIndex, this.currentPageSize);
 	}
 
 	private handleTaskFailure(taskResult: TaskResult) {
@@ -799,7 +772,7 @@ export class BadgeClassDetailComponent
 	}
 
 	// To get and download badge certificate in pdf format
-	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
+	downloadCertificate(instance: BadgeInstance | BadgeInstanceV3, badgeIndex: number) {
 		this.downloadStates[instance.slug] = true;
 		this.pdfService
 			.getPdf(instance.slug, 'badges')

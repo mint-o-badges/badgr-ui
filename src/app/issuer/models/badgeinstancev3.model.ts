@@ -26,6 +26,10 @@ export class BadgeInstanceV3 {
 		return new Date(this.issued_on);
 	}
 
+	get createdAt(): Date {
+		return new Date(this.created_at);
+	}
+
 	getExtension(name: string, defaultValue: any = null) {
 		return this.extensions && this.extensions[name] ? this.extensions[name].name : defaultValue;
 	}
