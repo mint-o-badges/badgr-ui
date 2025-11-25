@@ -67,14 +67,13 @@ export type BackpackTab = (typeof _backpackTabs)[number];
 					<recipient-skill-visualisation [skills]="skills()"></recipient-skill-visualisation>
 				</ng-template>
 				<ng-template #badgesTemplate>
-					<recipient-earned-badges-overview [badges]="badges()" />
+					<recipient-earned-badges-overview [badges]="badges()" [isEmbedded]="isEmbedded()" />
 				</ng-template>
-
 				<ng-template #badgesCompetency>
 					<recipient-competency-overview [badges]="badges()" />
 				</ng-template>
 				<ng-template #learningPathTemplate>
-					<recipient-learningpaths-overview [learningPaths]="learningPaths()" />
+					<recipient-learningpaths-overview [learningPaths]="learningPaths()" [isEmbedded]="true" />
 				</ng-template>
 				<ng-template #collectionTemplate>
 					<!-- No collections, empty state! -->
@@ -166,11 +165,12 @@ export class RecipientBackpack {
 	readonly route = inject(ActivatedRoute);
 	readonly router = inject(Router);
 	readonly profile = input.required<UserProfile>();
-	readonly skills = input.required<ApiRootSkill[]>();
-	readonly badges = input.required<RecipientBadgeInstance[]>();
-	readonly learningPaths = input.required<ApiLearningPath[]>();
-	readonly collections = input.required<RecipientBadgeCollection[]>();
+	readonly skills = input<ApiRootSkill[]>([]);
+	readonly badges = input<RecipientBadgeInstance[]>([]);
+	readonly learningPaths = input<ApiLearningPath[]>([]);
+	readonly collections = input<RecipientBadgeCollection[]>([]);
 	readonly badgeUploadDisabled = input<boolean>(false);
+	readonly isEmbedded = input<boolean>(false);
 	readonly enabledTabs = input<BackpackTab[]>([..._backpackTabs]);
 	readonly tabs = computed(() => {
 		return this.enabledTabs().map((t) => {
