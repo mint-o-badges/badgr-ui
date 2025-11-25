@@ -311,7 +311,7 @@ export class QrCodeDatatableComponent implements OnInit, OnDestroy {
 	}
 
 	private handleTaskProgress(taskResult: TaskResult) {
-		const successful = taskResult.result?.successful ?? [];
+		const successful = taskResult.result?.data ?? [];
 		if (!successful.length) return;
 
 		const allAwardedEmails = successful.map((s: any) => s.recipient_identifier);

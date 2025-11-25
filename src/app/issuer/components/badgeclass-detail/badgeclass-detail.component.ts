@@ -689,7 +689,7 @@ export class BadgeClassDetailComponent
 				this.currentTaskStatus = taskResult;
 
 				if (taskResult.status === TaskStatus.PROGRESS) {
-					this.appendPartialResults(taskResult.result.successful);
+					this.appendPartialResults(taskResult.result.data);
 				}
 
 				if (taskResult.status === TaskStatus.SUCCESS) {
