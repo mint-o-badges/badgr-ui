@@ -710,7 +710,10 @@ export class BadgeClassDetailComponent
 	}
 
 	get isTaskPending(): boolean {
-		return this.currentTaskStatus?.status === TaskStatus.PENDING;
+		return (
+			this.currentTaskStatus?.status === TaskStatus.PENDING ||
+			this.currentTaskStatus?.status === TaskStatus.PROGRESS
+		);
 	}
 
 	get isTaskProcessing(): boolean {
