@@ -1,106 +1,110 @@
 <bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 	<oeb-tabs [variant]="'black'" (onTabChanged)="onTabChange($event)" [activeTab]="activeTab" [tabs]="tabs">
 	</oeb-tabs>
-	<div #qrAwards>
-		@if (issuer && issuer.is_network) {
-			@if (!networkQrCodeApiAwards.length) {
-				<qrcode-awards
-					[(selectedNetworkIssuer)]="selectedNetworkIssuer"
-					(qrBadgeAward)="onQrBadgeAward($event)"
-					[awards]="[]"
-					[badgeClass]="badgeClass"
-					[issuer]="issuer"
-					[routerLinkText]="config?.issueQrRouterLink"
-					[networkUserIssuers]="networkUserIssuers()"
-					[networkIssuerSelection]="networkIssuerSelection"
-					[networkIssuerSelectionHeader]="networkIssuerSelectionHeader"
-				></qrcode-awards>
-			}
-			@for (qrGroup of networkQrCodeApiAwards; track qrGroup.issuer.slug) {
-				<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
-					<img class="tw-w-11" [src]="qrGroup.issuer.image" alt="Issuer Logo" />
-					<span class="tw-text-oebblack tw-text-lg tw-font-semibold tw-uppercase">{{
-						qrGroup.issuer.name
-					}}</span>
-				</div>
-				<qrcode-awards
-					(qrBadgeAward)="onQrBadgeAward($event)"
-					[awards]="qrGroup.qrcodes"
-					[badgeClass]="badgeClass"
-					[issuer]="qrGroup.issuer"
-					[routerLinkText]="config?.issueQrRouterLink"
-					[interactive]="qrGroup.staff"
-				></qrcode-awards>
-			}
-		} @else {
-			<qrcode-awards
-				(qrBadgeAward)="onQrBadgeAward($event)"
-				[awards]="qrCodeAwards"
-				[badgeClass]="badgeClass"
-				[issuer]="issuer"
-				[routerLinkText]="config?.issueQrRouterLink"
-				[defaultUnfolded]="focusRequests"
-			></qrcode-awards>
-		}
-	</div>
-	<div #batchAwards>
-		@if (issuer) {
-			@if (issuer.is_network) {
-				@if (groupedPartnerInstances) {
-					@for (partner of groupedPartnerInstances; track partner) {
-						@if (!partner.has_access && partner.instance_count > 0) {
-							<div class="tw-mb-4">
-								<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
-									<img class="tw-w-11" [src]="partner.issuer.image" alt="Partner Logo" />
-									<span class="tw-text-oebblack tw-font-bold tw-text-lg tw-uppercase">{{
-										partner.issuer.name
-									}}</span>
-								</div>
-							</div>
-							<div class="tw-bg-purple tw-rounded-[10px] tw-w-full tw-px-4 tw-py-5">
-								<span class="tw-text-white tw-font-semibold tw-text-lg">{{
-									partner.instance_count + ' ' + ('Issuer.badgeAwards' | translate)
-								}}</span>
-							</div>
-						} @else if (partner.instances.length) {
-							<div>
-								<div class="tw-mt-8 tw-flex tw-gap-2 tw-items-center">
-									<img class="tw-w-11" [src]="partner.issuer.image" alt="Partner Logo" />
-									<span class="tw-text-oebblack tw-font-bold tw-text-lg tw-uppercase">{{
-										partner.issuer.name
-									}}</span>
-								</div>
-								<issuer-detail-datatable
-									[issuer]="issuer"
-									[recipientCount]="partner.instance_count"
-									[recipients]="partner.instances"
-									(actionElement)="revokeInstance($event)"
-									(downloadCertificate)="
-										downloadCertificate($event['instance'], $event['badgeIndex'])
-									"
-									[downloadStates]="downloadStates"
-									[awardInProgress]="isTaskProcessing || isTaskPending"
-								></issuer-detail-datatable>
-							</div>
-						}
-					}
+	@if (activeTab === 'qrcodes') {
+		<div #qrAwards>
+			@if (issuer && issuer.is_network) {
+				@if (!networkQrCodeApiAwards.length) {
+					<qrcode-awards
+						[(selectedNetworkIssuer)]="selectedNetworkIssuer"
+						(qrBadgeAward)="onQrBadgeAward($event)"
+						[awards]="[]"
+						[badgeClass]="badgeClass"
+						[issuer]="issuer"
+						[routerLinkText]="config?.issueQrRouterLink"
+						[networkUserIssuers]="networkUserIssuers()"
+						[networkIssuerSelection]="networkIssuerSelection"
+						[networkIssuerSelectionHeader]="networkIssuerSelectionHeader"
+					></qrcode-awards>
+				}
+				@for (qrGroup of networkQrCodeApiAwards; track qrGroup.issuer.slug) {
+					<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
+						<img class="tw-w-11" [src]="qrGroup.issuer.image" alt="Issuer Logo" />
+						<span class="tw-text-oebblack tw-text-lg tw-font-semibold tw-uppercase">{{
+							qrGroup.issuer.name
+						}}</span>
+					</div>
+					<qrcode-awards
+						(qrBadgeAward)="onQrBadgeAward($event)"
+						[awards]="qrGroup.qrcodes"
+						[badgeClass]="badgeClass"
+						[issuer]="qrGroup.issuer"
+						[routerLinkText]="config?.issueQrRouterLink"
+						[interactive]="qrGroup.staff"
+					></qrcode-awards>
 				}
 			} @else {
-				<issuer-detail-datatable
-					[recipients]="recipients()"
-					[isLoading]="isLoadingInstances"
-					[recipientCount]="recipientCount"
+				<qrcode-awards
+					(qrBadgeAward)="onQrBadgeAward($event)"
+					[awards]="qrCodeAwards"
+					[badgeClass]="badgeClass"
 					[issuer]="issuer"
-					[downloadStates]="downloadStates"
-					[awardInProgress]="isTaskActive && (isTaskPending || isTaskProcessing)"
-					(paginationChange)="onPaginationChange($event)"
-					(searchChange)="onSearchChange($event)"
-					(actionElement)="revokeInstance($event)"
-					(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
-				/>
+					[routerLinkText]="config?.issueQrRouterLink"
+					[defaultUnfolded]="focusRequests"
+				></qrcode-awards>
 			}
-		}
-	</div>
+		</div>
+	}
+	@if (activeTab === 'recipients') {
+		<div #batchAwards>
+			@if (issuer) {
+				@if (issuer.is_network) {
+					@if (groupedPartnerInstances) {
+						@for (partner of groupedPartnerInstances; track partner) {
+							@if (!partner.has_access && partner.instance_count > 0) {
+								<div class="tw-mb-4">
+									<div class="tw-mt-8 tw-mb-2 tw-flex tw-gap-2 tw-items-center">
+										<img class="tw-w-11" [src]="partner.issuer.image" alt="Partner Logo" />
+										<span class="tw-text-oebblack tw-font-bold tw-text-lg tw-uppercase">{{
+											partner.issuer.name
+										}}</span>
+									</div>
+								</div>
+								<div class="tw-bg-purple tw-rounded-[10px] tw-w-full tw-px-4 tw-py-5">
+									<span class="tw-text-white tw-font-semibold tw-text-lg">{{
+										partner.instance_count + ' ' + ('Issuer.badgeAwards' | translate)
+									}}</span>
+								</div>
+							} @else if (partner.instances.length) {
+								<div>
+									<div class="tw-mt-8 tw-flex tw-gap-2 tw-items-center">
+										<img class="tw-w-11" [src]="partner.issuer.image" alt="Partner Logo" />
+										<span class="tw-text-oebblack tw-font-bold tw-text-lg tw-uppercase">{{
+											partner.issuer.name
+										}}</span>
+									</div>
+									<issuer-detail-datatable
+										[issuer]="issuer"
+										[recipientCount]="partner.instance_count"
+										[recipients]="partner.instances"
+										(actionElement)="revokeInstance($event)"
+										(downloadCertificate)="
+											downloadCertificate($event['instance'], $event['badgeIndex'])
+										"
+										[downloadStates]="downloadStates"
+										[awardInProgress]="isTaskProcessing || isTaskPending"
+									></issuer-detail-datatable>
+								</div>
+							}
+						}
+					}
+				} @else {
+					<issuer-detail-datatable
+						[recipients]="recipients()"
+						[isLoading]="isLoadingInstances"
+						[recipientCount]="recipientCount"
+						[issuer]="issuer"
+						[downloadStates]="downloadStates"
+						[awardInProgress]="isTaskActive && (isTaskPending || isTaskProcessing)"
+						(paginationChange)="onPaginationChange($event)"
+						(searchChange)="onSearchChange($event)"
+						(actionElement)="revokeInstance($event)"
+						(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
+					/>
+				}
+			}
+		</div>
+	}
 	<ng-template #headerTemplate>
 		<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
 	</ng-template>
