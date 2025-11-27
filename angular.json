@@ -51,7 +51,8 @@
 								"src/favicon.ico",
 								"src/assets/@concentricsky/badgr-style/dist/images/icons.svg",
 								"src/breakdown/static/images/badge-loading.svg",
-								"src/breakdown/static/images/badge-failed.svg"
+								"src/breakdown/static/images/badge-failed.svg",
+								"src/assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg"
 							]
 						},
 						"oeb-competency-overview": {
@@ -79,7 +80,8 @@
 								"src/assets/@concentricsky/badgr-style/dist/images/icons.svg",
 								"src/breakdown/static/images/badge-loading.svg",
 								"src/breakdown/static/images/badge-failed.svg",
-								"src/assets/oeb/images/learningPath/learningPathIcon.svg"
+								"src/assets/oeb/images/learningPath/learningPathIcon.svg",
+								"src/assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg"
 							]
 						},
 						"oeb-backpack": {

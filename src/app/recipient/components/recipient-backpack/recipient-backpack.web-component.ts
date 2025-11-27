@@ -2,7 +2,7 @@ import { useWebComponentLanguageSetting, createWebcomponent } from 'webcomponent
 import { provideHttpClient } from '@angular/common/http';
 import { Component, computed, importProvidersFrom, inject, input, provideAppInitializer } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { LanguageService } from '~/common/services/language.service';
 
 import * as translationsEn from 'src/assets/i18n/en.json';
@@ -22,17 +22,26 @@ import { ApiUserProfile } from '~/common/model/user-profile-api.model';
 @Component({
 	selector: 'oeb-earned-badges-overview',
 	imports: [RecipientBackpack],
-	template: ` <recipient-backpack
-		[profile]="convertedProfile()"
-		[skills]="skills()"
-		[badges]="convertedBadges()"
-		[learningPaths]="learningPaths()"
-		[enabledTabs]="['profile', 'badges', 'competencies', 'microdegrees']"
-		[badgeUploadDisabled]="true"
-		[isEmbedded]="true"
-	/>`,
+	template: `<base [href]="baseurl()" />
+		@if (convertedProfile() && skills() && convertedBadges() && learningPaths()) {
+			<recipient-backpack
+				[profile]="convertedProfile()"
+				[skills]="skills()"
+				[badges]="convertedBadges()"
+				[learningPaths]="learningPaths()"
+				[enabledTabs]="['profile', 'badges', 'competencies', 'microdegrees']"
+				[badgeUploadDisabled]="true"
+				[isEmbedded]="true"
+			/>
+		}`,
 })
 class OebBackpack {
+	/** URL of the server hosting the web component */
+	readonly baseurl = input.required<SafeResourceUrl, string>({
+		transform: (url: string | undefined) =>
+			url ? this.domSanitizer.bypassSecurityTrustResourceUrl(url) : this.domSanitizer.bypassSecurityTrustHtml(''),
+	});
+	readonly domSanitizer = inject(DomSanitizer);
 	readonly commonManager = inject(CommonEntityManager);
 	readonly badges = input<ApiRecipientBadgeInstance[]>([]);
 	readonly convertedBadges = computed(() => {
@@ -42,9 +51,10 @@ class OebBackpack {
 	});
 	readonly learningPaths = input<ApiLearningPath[]>([]);
 	readonly skills = input<ApiRootSkill[]>([]);
-	readonly profile = input.required<ApiUserProfile>();
+	readonly profile = input<ApiUserProfile>(undefined);
 	readonly convertedProfile = computed(() => {
-		return new UserProfile(this.commonManager, this.profile());
+		if (this.profile() !== undefined) return new UserProfile(this.commonManager, this.profile());
+		return undefined;
 	});
 }
 

@@ -33,7 +33,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 					@if (!completed) {
 						<div class="tw-absolute tw-top-[10px] tw-right-[10px]">
 							<img
-								src="/assets/oeb/images/learningPath/learningPathIcon.svg"
+								src="assets/oeb/images/learningPath/learningPathIcon.svg"
 								class="tw-w-[30px]"
 								alt="LearningPath"
 							/>
@@ -45,7 +45,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 						>
 							<div class="tw-inline-block">
 								<img
-									src="/assets/oeb/images/learningPath/learningPathIcon.svg"
+									src="assets/oeb/images/learningPath/learningPathIcon.svg"
 									class="tw-w-[30px]"
 									alt="LearningPath"
 								/>

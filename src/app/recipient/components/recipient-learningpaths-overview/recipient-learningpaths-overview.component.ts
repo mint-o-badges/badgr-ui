@@ -19,7 +19,7 @@ import { HlmH3 } from '@spartan-ng/helm/typography';
 					<img
 						alt="Illustration of backpack with badges"
 						class="emptysection-x-image"
-						[src]="noBadgesImageUrl"
+						[src]="'assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg'"
 					/>
 				</div>
 			</section>
@@ -93,8 +93,6 @@ import { HlmH3 } from '@spartan-ng/helm/typography';
 		</div>`,
 })
 export default class RecipientLearningPathsOverview {
-	readonly noBadgesImageUrl: string =
-		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	learningPaths = input.required<ApiLearningPath[]>();
 	isEmbedded = input<boolean>(false);
 	filteredLearningPaths = computed(() =>

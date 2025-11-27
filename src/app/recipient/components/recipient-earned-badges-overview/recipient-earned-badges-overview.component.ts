@@ -50,7 +50,7 @@ import { RecipientBadgeInstance } from '~/recipient/models/recipient-badge.model
 					<img
 						alt="Illustration of backpack with badges"
 						class="emptysection-x-image"
-						[src]="noBadgesImageUrl"
+						[src]="'assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg'"
 					/>
 				</div>
 			</section>
@@ -150,8 +150,6 @@ import { RecipientBadgeInstance } from '~/recipient/models/recipient-badge.model
 		}`,
 })
 export default class RecipientEarnedBadgesOverview {
-	readonly noBadgesImageUrl: string =
-		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly DEFAULT_SORT = 'date_desc';
 	badges = input.required<RecipientBadgeInstance[]>();
 	isEmbedded = input<boolean>(false);
