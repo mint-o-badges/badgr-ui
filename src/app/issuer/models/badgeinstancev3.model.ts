@@ -31,7 +31,26 @@ export class BadgeInstanceV3 {
 		return new Date(this.created_at);
 	}
 
+	get issuerSlug(): string {
+		const match = this.issuer.match(/\/issuers\/([^\/]+)/);
+		return match ? match[1] : null;
+	}
+
+	get badgeClassSlug(): string {
+		const match = this.badge_class.match(/\/badges\/([^\/]+)/);
+		return match ? match[1] : null;
+	}
+
 	getExtension(name: string, defaultValue: any = null) {
 		return this.extensions && this.extensions[name] ? this.extensions[name].name : defaultValue;
+	}
+
+	revokeBadgeInstance(badgeInstanceApiService: any, revocationReason: string): Promise<void> {
+		return badgeInstanceApiService
+			.revokeBadgeInstance(this.issuerSlug, this.badgeClassSlug, this.slug, revocationReason)
+			.then(() => {
+				this.revoked = true;
+				this.revocation_reason = revocationReason;
+			});
 	}
 }

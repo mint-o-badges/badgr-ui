@@ -221,7 +221,7 @@ export class IssuerDetailDatatableComponent {
 	awardInProgress = input<boolean>(false);
 	recipients = input.required<BadgeInstanceV3[]>();
 	isLoading = input<boolean>(false);
-	actionElement = output<BadgeInstance>();
+	actionElement = output<BadgeInstanceV3>();
 	downloadCertificate = output<{ instance: BadgeInstance; badgeIndex: number }>();
 
 	paginationChange = output<{ pageIndex: number; pageSize: number }>();

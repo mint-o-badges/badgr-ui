@@ -738,24 +738,24 @@ export class BadgeClassDetailComponent
 		return this.currentTaskStatus?.status === TaskStatus.FAILURE;
 	}
 
-	revokeInstance(instance: BadgeInstance) {
+	revokeInstance(instance: BadgeInstanceV3) {
 		this.confirmDialog
 			.openResolveRejectDialog({
 				dialogTitle: this.translate.instant('General.warning'),
 				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', {
 					badge: this.badgeClass.name,
-					recipient: instance.recipientIdentifier,
+					recipient: instance.recipient_identifier,
 				}),
 				resolveButtonLabel: this.translate.instant('General.revoke'),
 				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 			.then(
 				() => {
-					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
+					instance.revokeBadgeInstance(this.badgeInstanceApiService, 'Manually revoked by Issuer').then(
 						(result) => {
 							this.messageService.reportMinorSuccess(
 								this.translate.instant('Issuer.revokeSuccess', {
-									recipient: instance.recipientIdentifier,
+									recipient: instance.recipient_identifier,
 								}),
 							);
 							this.badgeClass.update();
@@ -766,7 +766,7 @@ export class BadgeClassDetailComponent
 						(error) =>
 							this.messageService.reportAndThrowError(
 								this.translate.instant('Issuer.revokeError', {
-									recipient: instance.recipientIdentifier,
+									recipient: instance.recipient_identifier,
 								}),
 							),
 					);
