@@ -678,6 +678,7 @@ export class BadgeClassDetailComponent
 
 	private handleTaskSuccess(taskResult: TaskResult) {
 		this.isTaskActive = false;
+		this.taskService.stopTaskPolling(this.badgeClass.slug);
 
 		const awardCount = taskResult.result?.data?.length || 0;
 		const errorCount = taskResult.result?.errors?.length || 0;
