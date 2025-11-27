@@ -277,14 +277,17 @@ export class IssuerDetailDatatableComponent {
 		{
 			id: 'General.name',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.getExtension('extensions:recipientProfile', { name: '' }),
+			accessorFn: (row) => {
+				const ext = row.extensions?.['extensions:recipientProfile'];
+				return ext?.name ?? '';
+			},
 			cell: (ctx) => ctx.getValue(),
 			sortDescFirst: false,
 		},
 		{
 			id: 'RecBadgeDetail.issuedOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row): Date => new Date(),
+			accessorFn: (row): Date => new Date(row.json.issuedOn),
 			cell: (info) => {
 				const value = info.getValue();
 				return formatDate(value as Date, 'dd.MM.yyyy', 'de-DE');
