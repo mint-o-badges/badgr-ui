@@ -11,8 +11,9 @@ export class BadgeInstanceV3 {
 	revocation_reason: string | null;
 	extensions: any;
 	public_url: string;
-	badge_class: any;
-	issuer: any;
+	badge_class: string;
+	issuer: string;
+	json: { [key: string]: any };
 
 	constructor(data: ApiBadgeInstance) {
 		Object.assign(this, data);
