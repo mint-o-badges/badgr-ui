@@ -213,7 +213,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 					const category = badgeClass.extension['extensions:CategoryExtension'].Category;
 
 					this.badgeClassManager
-						.createBadgeImage(issuer.slug, badgeClass.slug, category, true)
+						.createBadgeImage(issuer.slug, badgeClass.slug, category, badgeClass.imageFrame)
 						.then((img) => {
 							this.previewB64Img = img.image_url;
 						});
@@ -316,7 +316,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				() => {
 					this.eventsService.recipientBadgesStale.next([]);
 					this.openSuccessDialog(formState.recipient_identifier);
-					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
+					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug], {
+						queryParams: { tab: 'recipients' },
+					});
 					this.messageService.setMessage('Badge awarded to ' + formState.recipient_identifier, 'success');
 				},
 				(error) => {

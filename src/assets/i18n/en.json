@@ -1036,7 +1036,8 @@
 		"pleaseRenewPasswordInfo": "Takes only a moment and provides greater protection.",
 		"dontPanic": "Don't panic – everything is fine!",
 		"repeatNewPassword": "Repeat password",
-		"loggingIn": "Logging in ..."
+		"loggingIn": "Logging in ...",
+		"editProfile": "Edit profile"
 	},
 	"Welcome": {
 		"heading": "Nice to see you!",
