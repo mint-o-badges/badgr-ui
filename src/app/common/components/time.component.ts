@@ -10,10 +10,10 @@ import { DatePipe } from '@angular/common';
 	imports: [DatePipe],
 })
 export class TimeComponent {
-	inputDate = input.required<Date>({ alias: 'date' });
+	inputDate = input.required<Date | undefined>({ alias: 'date' });
 	format = input.required<string>();
 	readonly datetimeAttr = computed(() => {
 		const d = this.inputDate();
-		return d.toISOString().split('T')[0];
+		return d ? d.toISOString().split('T')[0] : undefined;
 	});
 }
