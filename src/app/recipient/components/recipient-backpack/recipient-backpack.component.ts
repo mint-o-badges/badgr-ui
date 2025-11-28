@@ -238,10 +238,13 @@ export class RecipientBackpack {
 		// route reuse strategy turns all reusage off and thus
 		// navigating to the same url would trigger a reload.
 		// we only want to sync the query parameter though
-		const url = new URL(window.location.href);
-		url.searchParams.set('tab', tab); // add or replace the param
-		const newUrl = url.pathname + url.search + url.hash;
-		history.replaceState(null, '', newUrl);
+		// but only if we did not embed this component
+		if (!this.isEmbedded()) {
+			const url = new URL(window.location.href);
+			url.searchParams.set('tab', tab); // add or replace the param
+			const newUrl = url.pathname + url.search + url.hash;
+			history.replaceState(null, '', newUrl);
+		}
 	}
 
 	openCollectionInfoDialog() {
