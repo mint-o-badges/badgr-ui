@@ -50,15 +50,8 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 	navigationState: any;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
-		const sessionService = inject(SessionService);
-		const router = inject(Router);
-		const route = inject(ActivatedRoute);
-
-		super(router, route, sessionService);
+		super();
 		const title = this.title;
 
 		this.translate.get('Issuer.createBadge').subscribe((str) => {
