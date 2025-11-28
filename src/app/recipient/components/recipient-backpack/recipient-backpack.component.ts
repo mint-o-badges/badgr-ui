@@ -43,12 +43,13 @@ export type BackpackTab = (typeof _backpackTabs)[number];
 		<div class="tw-bg-lightpurple oeb-inset-padding">
 			<div class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm">
 				<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">
-					{{ 'RecBadge.greating' | translate }}
 					@if (profile()) {
-						<span class="tw-capitalize">{{ profile().firstName }}</span>
+						{{ 'RecBadge.greating' | translate }}
+						<span class="tw-capitalize">{{ profile().firstName }}</span> ,
+						{{ 'RecBadge.greating2' | translate }}
+					} @else {
+						{{ 'RecBadge.greating' | translate }}, {{ 'RecBadge.greating2' | translate }}
 					}
-					,
-					{{ 'RecBadge.greating2' | translate }}
 				</h2>
 
 				@if ((activeTab() === 'badges' || activeTab() === 'profile') && !badgeUploadDisabled()) {
