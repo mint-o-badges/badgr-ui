@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, OnChanges, SimpleChanges, ViewChild, OnDestroy, inject } from '@angular/core';
+import { Component, ElementRef, input, OnChanges, SimpleChanges, OnDestroy, inject, viewChild } from '@angular/core';
 import { ApiRootSkill, ApiSkill } from '../../../common/model/ai-skills.model';
 import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -123,7 +123,7 @@ const skillIconMap = {
 export class RecipientSkillVisualisationComponent implements OnChanges, OnDestroy {
 	private translate = inject(TranslateService);
 
-	@ViewChild('d3canvas') d3canvas: ElementRef<HTMLElement>;
+	readonly d3canvas = viewChild.required<ElementRef<HTMLElement>>('d3canvas');
 
 	skills = input<ApiRootSkill[]>([]);
 	skillTree: Map<string, ExtendedApiSkill>;
@@ -140,9 +140,6 @@ export class RecipientSkillVisualisationComponent implements OnChanges, OnDestro
 	selectedNode: ExtendedApiSkill | null = null;
 	selectedNodeNumber: string | undefined = undefined;
 	showSingleNode: boolean = false;
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
 
 	constructor() {
 		fromEvent(window, 'resize')
@@ -739,8 +736,9 @@ export class RecipientSkillVisualisationComponent implements OnChanges, OnDestro
 			});
 
 		// clear previous versions (on mobile change)
-		this.d3canvas.nativeElement.innerHTML = '';
-		this.d3canvas.nativeElement.append(svg.node());
+		const d3canvas = this.d3canvas();
+		d3canvas.nativeElement.innerHTML = '';
+		d3canvas.nativeElement.append(svg.node());
 	}
 
 	selectSkillForSingleView(skill: ExtendedApiSkill, index: number) {

@@ -12,9 +12,6 @@ export class LanguageService {
 
 	private selected_lng$: BehaviorSubject<string>;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
 		this.selected_lng$ = new BehaviorSubject(null);
 	}

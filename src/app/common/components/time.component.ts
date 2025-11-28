@@ -1,42 +1,19 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, input, computed } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-/**
- * Component that displays a date in a <time> element and minimizes the number of calls to the DatePipe, which is very
- * slow.
- */
 @Component({
 	selector: 'time[date]',
+	template: `{{ inputDate() | date }}`,
 	host: {
-		datetime: '{{ htmlDateStr }}',
+		'[attr.datetime]': 'datetimeAttr()',
 	},
-	template: `{{ userDateStr }}`,
+	imports: [DatePipe],
 })
-export class TimeComponent implements OnChanges {
-	static datePipe = new DatePipe('en-US');
-
-	@Input()
-	date: Date;
-
-	@Input()
-	format: string;
-
-	htmlDateStr = '';
-	userDateStr = '';
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if ('date' in changes || 'format' in changes) {
-			this.update();
-		}
-	}
-
-	update() {
-		if (this.date) {
-			this.htmlDateStr = TimeComponent.datePipe.transform(this.date, 'yyyy-MM-dd');
-			this.userDateStr = TimeComponent.datePipe.transform(this.date, this.format || 'medium');
-		} else {
-			this.htmlDateStr = '';
-			this.userDateStr = '';
-		}
-	}
+export class TimeComponent {
+	inputDate = input.required<Date | undefined>({ alias: 'date' });
+	format = input.required<string>();
+	readonly datetimeAttr = computed(() => {
+		const d = this.inputDate();
+		return d ? d.toISOString().split('T')[0] : undefined;
+	});
 }
