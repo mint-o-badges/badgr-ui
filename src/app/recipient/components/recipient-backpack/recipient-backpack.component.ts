@@ -44,8 +44,10 @@ export type BackpackTab = (typeof _backpackTabs)[number];
 			<div class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm">
 				<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">
 					{{ 'RecBadge.greating' | translate }}
-					<span class="tw-capitalize">{{ profile().firstName }}</span
-					>,
+					@if (profile()) {
+						<span class="tw-capitalize">{{ profile().firstName }}</span>
+					}
+					,
 					{{ 'RecBadge.greating2' | translate }}
 				</h2>
 
@@ -164,7 +166,7 @@ export class RecipientBackpack {
 	readonly translate = inject(TranslateService);
 	readonly route = inject(ActivatedRoute);
 	readonly router = inject(Router);
-	readonly profile = input.required<UserProfile>();
+	readonly profile = input<UserProfile>();
 	readonly skills = input<ApiRootSkill[]>([]);
 	readonly badges = input<RecipientBadgeInstance[]>([]);
 	readonly learningPaths = input<ApiLearningPath[]>([]);

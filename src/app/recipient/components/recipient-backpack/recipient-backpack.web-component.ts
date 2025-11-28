@@ -23,7 +23,7 @@ import { ApiUserProfile } from '~/common/model/user-profile-api.model';
 	selector: 'oeb-earned-badges-overview',
 	imports: [RecipientBackpack],
 	template: `<base [href]="baseurl()" />
-		@if (convertedProfile() && skills() && convertedBadges() && learningPaths()) {
+		@if (skills() && convertedBadges() && learningPaths()) {
 			<recipient-backpack
 				[profile]="convertedProfile()"
 				[skills]="skills()"
