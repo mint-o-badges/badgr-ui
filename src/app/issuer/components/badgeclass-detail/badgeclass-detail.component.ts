@@ -26,7 +26,7 @@ import { inject, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/cor
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
-import { Subscription } from 'rxjs';
+import { concatMap, debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
@@ -54,6 +54,7 @@ interface groupedInstances {
 	instances: ApiBadgeInstance[];
 	issuer: any;
 }
+
 @Component({
 	selector: 'badgeclass-detail',
 	templateUrl: './badgeclass-detail.component.html',
@@ -120,8 +121,10 @@ export class BadgeClassDetailComponent
 
 	currentTaskStatus: TaskResult | null = null;
 	isTaskActive: boolean = false;
-
+	readonly INPUT_DEBOUNCE_TIME = 400;
 	private taskSubscription: Subscription | null = null;
+	private searchSubscription: Subscription | null = null;
+	private searchSubject: Subject<string> = new Subject();
 
 	TaskStatus = TaskStatus;
 
@@ -590,7 +593,7 @@ export class BadgeClassDetailComponent
 	}
 
 	onSearchChange(searchQuery: string) {
-		this.loadInstances(searchQuery, 0, this.currentPageSize);
+		this.searchSubject.next(searchQuery);
 	}
 
 	onQrBadgeAward(event: number) {
@@ -601,6 +604,7 @@ export class BadgeClassDetailComponent
 	ngOnInit() {
 		super.ngOnInit();
 		this.checkForActiveTask();
+		this.debounceSearch();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
 		this.route.queryParams.subscribe((params) => {
 			if (params['tab']) {
@@ -613,6 +617,9 @@ export class BadgeClassDetailComponent
 		if (this.taskSubscription) {
 			this.taskSubscription.unsubscribe();
 		}
+		if (this.searchSubscription) {
+			this.searchSubscription.unsubscribe();
+		}
 	}
 
 	getEditRoute(badgeClass: BadgeClass): any[] {
@@ -621,6 +628,16 @@ export class BadgeClassDetailComponent
 		} else {
 			return ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'];
 		}
+	}
+
+	private debounceSearch() {
+		this.searchSubscription = this.searchSubject
+			.pipe(
+				distinctUntilChanged(),
+				debounceTime(this.INPUT_DEBOUNCE_TIME),
+				concatMap((searchQuery) => this.loadInstances(searchQuery, 0, this.currentPageSize)),
+			)
+			.subscribe();
 	}
 
 	private checkForActiveTask() {
