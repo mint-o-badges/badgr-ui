@@ -14,7 +14,7 @@
 		</div>
 	} @else {
 		<div hlmAccordion class="tw-flex tw-gap-2">
-			@for (award of awards; track award; let i = $index) {
+			@for (award of awards; track award.slug; let i = $index) {
 				<div class="tw-flex tw-gap-2">
 					<div
 						[ngClass]="
@@ -57,6 +57,7 @@
 										[qrCode]="award"
 										[issuerSlug]="issuer.slug"
 										[badgeSlug]="badgeClass.slug"
+										(requestCountChanged)="onRequestCountChanged(award, $event)"
 										(deletedQRAward)="deleteQRAward($event)"
 										(qrBadgeAward)="onQrBadgeAward($event)"
 									></qrcodes-datatable>
