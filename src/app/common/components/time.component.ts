@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 @Component({
 	selector: 'time[date]',
-	template: `{{ inputDate() | date }}`,
+	template: `{{ inputDate() | date: format() }}`,
 	host: {
 		'[attr.datetime]': 'datetimeAttr()',
 	},
