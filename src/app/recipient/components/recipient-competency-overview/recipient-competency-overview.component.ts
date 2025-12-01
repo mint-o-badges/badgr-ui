@@ -130,7 +130,8 @@ export class RecipientCompetencyOverview {
 			// use name + studyload for manual competencies because there is no framework identifier (like ESCO) for them
 			const key = c['framework_identifier'] || `${c.name}${c.studyLoad}`;
 			if (map.has(key)) {
-				map[key].studyLoad += c.studyLoad;
+				const existing = map.get(key);
+				existing.studyLoad += c.studyLoad;
 			} else {
 				map.set(key, c);
 			}
