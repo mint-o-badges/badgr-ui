@@ -243,7 +243,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 		if (this.editing) {
 			const formState = this.qrForm.value;
 			const expiresDate = new Date(formState.expires_at);
-			expiresDate.setUTCHours(23, 59, 59, 999);
+			expiresDate.setHours(23, 59, 59, 999);
 			this.qrCodePromise = this.qrCodeApiService
 				.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
 					title: formState.title,
@@ -280,7 +280,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 			const formState = this.qrForm.value;
 			const issuer = this.isNetworkBadge && this.partnerIssuerSlug ? this.partnerIssuerSlug : this.issuerSlug;
 			const expiresDate = new Date(formState.expires_at);
-			expiresDate.setUTCHours(23, 59, 59, 999);
+			expiresDate.setHours(23, 59, 59, 999);
 			this.qrCodePromise = this.qrCodeApiService
 				.createQrCode(issuer, this.badgeSlug, {
 					title: formState.title,
