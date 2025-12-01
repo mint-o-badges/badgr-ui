@@ -1,4 +1,4 @@
-import { Component, HostBinding, input, computed } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -10,10 +10,14 @@ import { DatePipe } from '@angular/common';
 	imports: [DatePipe],
 })
 export class TimeComponent {
-	inputDate = input.required<Date | undefined>({ alias: 'date' });
+	inputDate = input.required<Date | string | undefined>({ alias: 'date' });
 	format = input.required<string>();
 	readonly datetimeAttr = computed(() => {
 		const d = this.inputDate();
-		return d ? d.toISOString().split('T')[0] : undefined;
+		let date: Date;
+		if (typeof d === 'string') date = new Date(d);
+		else date = d;
+
+		return d ? date.toISOString().split('T')[0] : undefined;
 	});
 }
