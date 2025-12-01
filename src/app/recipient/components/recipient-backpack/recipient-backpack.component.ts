@@ -76,7 +76,7 @@ export type BackpackTab = (typeof _backpackTabs)[number];
 					<recipient-competency-overview [badges]="badges()" />
 				</ng-template>
 				<ng-template #learningPathTemplate>
-					<recipient-learningpaths-overview [learningPaths]="learningPaths()" [isEmbedded]="true" />
+					<recipient-learningpaths-overview [learningPaths]="learningPaths()" [isEmbedded]="isEmbedded()" />
 				</ng-template>
 				<ng-template #collectionTemplate>
 					<!-- No collections, empty state! -->
