@@ -3,21 +3,32 @@ import { DatePipe } from '@angular/common';
 
 @Component({
 	selector: 'time[date]',
-	template: `{{ inputDate() | date: format() }}`,
+	template: `@if (validDateOrNull()) {
+		{{ validDateOrNull() | date: format() }}
+	}`,
 	host: {
 		'[attr.datetime]': 'datetimeAttr()',
 	},
 	imports: [DatePipe],
 })
 export class TimeComponent {
-	inputDate = input.required<Date | string | undefined>({ alias: 'date' });
+	inputDate = input<Date | string | null>(undefined, { alias: 'date' });
+	validDateOrNull = computed(() => {
+		const raw = this.inputDate();
+		// This filters out javascripts Invalid Date and returns null instead
+		if (raw instanceof Date && isNaN(raw.getTime())) return null;
+		else return raw;
+	});
 	format = input.required<string>();
 	readonly datetimeAttr = computed(() => {
-		const d = this.inputDate();
-		let date: Date;
-		if (typeof d === 'string') date = new Date(d);
-		else date = d;
+		const raw = this.validDateOrNull();
+		if (raw === null) return undefined;
 
-		return d ? date.toISOString().split('T')[0] : undefined;
+		let date: Date | undefined = undefined;
+		if (typeof raw === 'string') date = new Date(raw);
+		else date = raw;
+
+		if (isNaN(date.getTime()) || date === undefined) return undefined;
+		return date.toISOString().split('T')[0];
 	});
 }
