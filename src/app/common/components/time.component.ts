@@ -10,14 +10,19 @@ import { DatePipe } from '@angular/common';
 	imports: [DatePipe],
 })
 export class TimeComponent {
-	inputDate = input.required<Date | string | undefined>({ alias: 'date' });
+	inputDate = input<Date | string | null>(undefined, { alias: 'date' });
 	format = input.required<string>();
 	readonly datetimeAttr = computed(() => {
-		const d = this.inputDate();
-		let date: Date;
-		if (typeof d === 'string') date = new Date(d);
-		else date = d;
+		const raw = this.inputDate();
+		// handle invalid dates
+		if (raw instanceof Date && isNaN(raw.getTime())) return undefined;
+		if (raw === null) return undefined;
 
-		return d ? date.toISOString().split('T')[0] : undefined;
+		let date: Date | undefined = undefined;
+		if (typeof raw === 'string') date = new Date(raw);
+		else date = raw;
+
+		if (isNaN(date.getTime()) || date === undefined) return undefined;
+		return date.toISOString().split('T')[0];
 	});
 }
