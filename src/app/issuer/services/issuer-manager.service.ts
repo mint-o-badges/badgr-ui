@@ -8,10 +8,10 @@ import {
 	ApiNetwork,
 	IssuerSlug,
 } from '../models/issuer-api.model';
-import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
+import { combineLatest, firstValueFrom, Observable, of, race } from 'rxjs';
 import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
-import { catchError, first, map } from 'rxjs/operators';
+import { catchError, filter, first, map, mergeMap } from 'rxjs/operators';
 import { NetworkApiService } from './network-api.service';
 import { Network } from '../network.model';
 
@@ -38,11 +38,6 @@ export class IssuerManager {
 		(apiModel) => apiModel.json.id,
 		() => this.issuerApiService.listAllIssuers(),
 	);
-
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
-	constructor() {}
 
 	createIssuer(initialIssuer: ApiIssuerForCreation): Promise<Issuer> {
 		return this.issuerApiService
@@ -98,35 +93,20 @@ export class IssuerManager {
 	}
 
 	issuerOrNetworkBySlug(issuerSlug: IssuerSlug): Promise<Issuer | Network> {
-		return firstValueFrom(
-			combineLatest([
-				this.allIssuersList.loaded$.pipe(map((l) => l.entities)),
-				this.issuersList.loaded$.pipe(
-					catchError((err: any) => of({ entities: [] })),
-					map((l) => l.entities),
-				),
-				this.networksList.loaded$.pipe(
-					catchError((err: any) => of({ entities: [] })),
-					map((l) => l.entities),
-				),
-			]).pipe(
-				map(([all, mine, networks]) => {
-					const allEntities = [...mine, ...networks];
-
-					all.forEach((entity) => {
-						if (!allEntities.find((e) => e.slug === entity.slug)) {
-							allEntities.push(entity);
-						}
-					});
-
-					return allEntities;
-				}),
-			),
-		).then(
-			(entities) =>
-				entities.find((e) => e.slug === issuerSlug) ||
-				this.throwError(`Issuer/Network Slug '${issuerSlug}' not found`),
-		);
+		try {
+			const loadIssuer = this.issuerApiService.getIssuer(issuerSlug);
+			const loadNetwork = this.networkApiService.getNetwork(issuerSlug);
+			return Promise.allSettled([loadIssuer, loadNetwork]).then(([i, n]) => {
+				if (i.status === 'fulfilled' && !i.value.is_network)
+					return new Issuer(this.commonEntityManager, i.value);
+				else if (i.status === 'fulfilled' && i.value.is_network) {
+					if (n.status === 'fulfilled') return new Network(this.commonEntityManager, n.value);
+					else throw new Error('Could not properly load network information');
+				}
+			});
+		} catch (e) {
+			this.throwError(`Issuer/Network Slug '${issuerSlug}' not found`);
+		}
 	}
 
 	issuersByUrls(issuerUrls: string[]): Promise<Issuer[]> {

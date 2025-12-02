@@ -75,13 +75,29 @@ import { HlmP } from '@spartan-ng/helm/typography';
 						>
 					}
 					@if (publicUrl) {
-						<a class="tw-font-bold text-clamp title-clamp" hlmP size="sm" [href]="publicUrl">{{
-							badgeTitle
-						}}</a>
+						<a
+							class="tw-font-bold text-clamp title-clamp"
+							hlmP
+							size="sm"
+							[href]="publicUrl"
+							[attr.target]="useBlankHref ? '_blank' : null"
+							>{{ badgeTitle }}</a
+						>
 					}
 
 					<div class="tw-pt-2 tw-flex tw-flex-col tw-flex-wrap">
-						@if (issuerSlug) {
+						@if (issuerSlug && useBlankHref) {
+							<a
+								hlmP
+								size="sm"
+								variant="light"
+								class="badgecard-x-issuer text-clamp issuer-clamp"
+								[title]="issuerTitle"
+								[href]="publicIssuerUrl"
+								[target]="useBlankHref ? '_blank' : null"
+								>{{ issuerTitle }}</a
+							>
+						} @else if (issuerSlug) {
 							<a
 								hlmP
 								size="sm"
@@ -91,6 +107,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 								[routerLink]="
 									network ? ['/public/networks', issuerSlug] : ['/public/issuers', issuerSlug]
 								"
+								[target]="useBlankHref ? '_blank' : null"
 								>{{ issuerTitle }}</a
 							>
 						} @else {
@@ -204,6 +221,7 @@ export class BgBadgecard {
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
 	@Input() publicUrl: string;
+	@Input() publicIssuerUrl: string;
 	@Input() badgeImage: string;
 	@Input() badgeTitle: string;
 	@Input() badgeDescription: string;
@@ -223,6 +241,7 @@ export class BgBadgecard {
 	@Input() tags: string[] = [];
 	@Input() showXIcon = false;
 	@Input() imported: boolean = false;
+	@Input() useBlankHref: boolean = false;
 
 	changeCheckbox(event: boolean) {
 		this.checkboxChange.emit(event);
