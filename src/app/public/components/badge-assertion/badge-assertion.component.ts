@@ -267,14 +267,16 @@ export class PublicBadgeAssertionComponent {
 					duration: assertion.badge['extensions:StudyLoadExtension'].StudyLoad,
 					learningPaths: lps,
 					version: assertionVersion,
-					issuedOn: new Date(getAssertionIssuedDate(assertion)),
-					validUntil: new Date(getAssertionExpiration(assertion)),
-					activity_start_date: isOB3Assertion(assertion)
-						? new Date(assertion.credentialSubject.activityStartDate)
-						: null,
-					activity_end_date: isOB3Assertion(assertion)
-						? new Date(assertion.credentialSubject.activityEndDate)
-						: null,
+					issuedOn: getAssertionIssuedDate(assertion) ? new Date(getAssertionIssuedDate(assertion)) : null,
+					validUntil: getAssertionExpiration(assertion) ? new Date(getAssertionExpiration(assertion)) : null,
+					activity_start_date:
+						isOB3Assertion(assertion) && assertion.credentialSubject.activityStartDate
+							? new Date(assertion.credentialSubject.activityStartDate)
+							: null,
+					activity_end_date:
+						isOB3Assertion(assertion) && assertion.credentialSubject.activityEndDate
+							? new Date(assertion.credentialSubject.activityEndDate)
+							: null,
 					networkBadge: assertion.isNetworkBadge,
 					networkImage: assertion.networkImage,
 					networkName: assertion.networkName,
