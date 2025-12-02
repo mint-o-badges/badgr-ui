@@ -134,7 +134,6 @@ export class BadgeClassDetailComponent
 	recipients = signal<BadgeInstanceV3[]>([]);
 	currentPageIndex = 0;
 	currentPageSize = 15;
-	totalInstanceCount = 0;
 	isLoadingInstances = false;
 	currentRecipientQuery = '';
 
@@ -566,9 +565,7 @@ export class BadgeClassDetailComponent
 				const instances = result.results.map((i) => new BadgeInstanceV3(i));
 
 				this.recipients.set(instances);
-
-				this.totalInstanceCount = result.total_count;
-				this.recipientCount = result.count;
+				this.recipientCount = result.total_count;
 
 				const issuerUrls = tempSet.entities.map((i) => i.issuerUrl);
 				this.awardingIssuers = await this.issuerManager.issuersByUrls(issuerUrls);
