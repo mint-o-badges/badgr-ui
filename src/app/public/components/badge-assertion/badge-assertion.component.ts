@@ -283,7 +283,6 @@ export class PublicBadgeAssertionComponent {
 					sharedOnNetwork: assertion.sharedOnNetwork,
 					awardingIssuers: this.awardingIssuers,
 				};
-				console.log(assertion);
 				if (assertion['extensions:recipientProfile'] && assertion['extensions:recipientProfile'].name) {
 					this.awardedToDisplayName = assertion['extensions:recipientProfile'].name;
 				}

@@ -3,7 +3,9 @@ import { DatePipe } from '@angular/common';
 
 @Component({
 	selector: 'time[date]',
-	template: `{{ inputDate() | date: format() }}`,
+	template: `@if (validDateOrNull()) {
+		{{ validDateOrNull() | date: format() }}
+	}`,
 	host: {
 		'[attr.datetime]': 'datetimeAttr()',
 	},
@@ -11,11 +13,15 @@ import { DatePipe } from '@angular/common';
 })
 export class TimeComponent {
 	inputDate = input<Date | string | null>(undefined, { alias: 'date' });
+	validDateOrNull = computed(() => {
+		const raw = this.inputDate();
+		// This filters out javascripts Invalid Date and returns null instead
+		if (raw instanceof Date && isNaN(raw.getTime())) return null;
+		else return raw;
+	});
 	format = input.required<string>();
 	readonly datetimeAttr = computed(() => {
-		const raw = this.inputDate();
-		// handle invalid dates
-		if (raw instanceof Date && isNaN(raw.getTime())) return undefined;
+		const raw = this.validDateOrNull();
 		if (raw === null) return undefined;
 
 		let date: Date | undefined = undefined;
