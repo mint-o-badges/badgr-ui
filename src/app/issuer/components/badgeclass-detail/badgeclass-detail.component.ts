@@ -565,7 +565,7 @@ export class BadgeClassDetailComponent
 				const instances = result.results.map((i) => new BadgeInstanceV3(i));
 
 				this.recipients.set(instances);
-				this.recipientCount = result.total_count;
+				this.recipientCount = result.count;
 
 				const issuerUrls = tempSet.entities.map((i) => i.issuerUrl);
 				this.awardingIssuers = await this.issuerManager.issuersByUrls(issuerUrls);

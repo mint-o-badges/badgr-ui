@@ -90,7 +90,6 @@ export interface BadgeInstanceBatchAssertion {
 
 export interface BadgeInstanceResultSetV3 {
 	count: number;
-	total_count: number;
 	next: string | null;
 	previous: string | null;
 	results: ApiBadgeInstance[];
