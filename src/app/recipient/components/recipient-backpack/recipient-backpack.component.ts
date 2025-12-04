@@ -98,7 +98,7 @@ export type BackpackTab = (typeof _backpackTabs)[number];
 									<div class="tw-mt-6">
 										<oeb-button
 											[text]="'BadgeCollection.createCollectionNow' | translate"
-											[routerLink]="['recipient/badge-collections/create']"
+											[routerLink]="['../badge-collections', 'create']"
 										/>
 									</div>
 								</div>
@@ -137,7 +137,7 @@ export type BackpackTab = (typeof _backpackTabs)[number];
 								variant="secondary"
 								size="md"
 								class="tw-mt-4 tw-float-right"
-								[routerLink]="['recipient/badge-collections/create']"
+								[routerLink]="['../badge-collections', 'create']"
 							/>
 						</div>
 					}
