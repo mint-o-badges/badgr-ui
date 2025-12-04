@@ -566,8 +566,7 @@ export class BadgeClassDetailComponent
 				const instances = result.results.map((i) => new BadgeInstanceV3(i));
 
 				this.recipients.set(instances);
-
-				this.totalInstanceCount = result.total_count;
+				if (this.totalInstanceCount === 0) this.totalInstanceCount = result.count;
 				this.recipientCount = result.count;
 
 				const issuerUrls = tempSet.entities.map((i) => i.issuerUrl);
@@ -651,14 +650,14 @@ export class BadgeClassDetailComponent
 		}
 	}
 
-	private appendPartialResults(newInstances: any[]) {
+	private appendPartialResults(newInstances: any[], processedCount) {
 		if (!newInstances || newInstances.length === 0) return;
 
 		const current = this.recipients();
 		const merged = [...new Map([...current, ...newInstances].map((item) => [item.slug, item])).values()];
 
 		this.recipients.set(merged);
-		this.recipientCount = merged.length;
+		this.recipientCount = this.totalInstanceCount + processedCount;
 	}
 
 	private subscribeToTaskUpdates() {
@@ -667,7 +666,7 @@ export class BadgeClassDetailComponent
 				this.currentTaskStatus = taskResult;
 
 				if (taskResult.status === TaskStatus.PROGRESS) {
-					this.appendPartialResults(taskResult.result.data);
+					this.appendPartialResults(taskResult.result.data, taskResult.result.processed);
 				}
 
 				if (taskResult.status === TaskStatus.SUCCESS) {
@@ -695,6 +694,8 @@ export class BadgeClassDetailComponent
 
 	private handleTaskSuccess(taskResult: TaskResult) {
 		this.isTaskActive = false;
+		this.currentTaskStatus = null;
+		this.totalInstanceCount = 0;
 		this.taskService.stopTaskPolling(this.badgeClass.slug);
 
 		const awardCount = taskResult.result?.data?.length || 0;
@@ -709,7 +710,8 @@ export class BadgeClassDetailComponent
 
 	private handleTaskFailure(taskResult: TaskResult) {
 		this.isTaskActive = false;
-
+		this.currentTaskStatus = null;
+		this.totalInstanceCount = 0;
 		const errorMessage = taskResult.result?.error || 'Batch award process failed';
 		this.messageService.reportHandledError(this.translate.instant('Issuer.batchAwardFailed'), errorMessage);
 	}
