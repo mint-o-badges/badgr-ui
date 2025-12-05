@@ -39,17 +39,9 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 	selectedBadges: RecipientBadgeInstance[] = [];
 	badgesFormArray: any;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
-		const router = inject(Router);
-		const route = inject(ActivatedRoute);
-		const loginService = inject(SessionService);
-
-		super(router, route, loginService);
-		const title = this.title;
-
-		title.setTitle(`Create Collection - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+		super();
+		console.log('const');
+		this.title.setTitle(`Create Collection - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 }
