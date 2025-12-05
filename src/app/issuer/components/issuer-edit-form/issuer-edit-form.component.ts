@@ -5,7 +5,7 @@ import { IssuerNameValidator } from '../../../common/validators/issuer-name.vali
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
-import { ApiIssuerForCreation, ApiIssuerForEditing } from '../../models/issuer-api.model';
+import { ApiIssuerForCreation, ApiIssuerForEditing, ApiNetworkForCreation } from '../../models/issuer-api.model';
 import { SessionService } from '../../../common/services/session.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -26,7 +26,6 @@ import { HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { countries } from 'countries-list';
 import * as states from '../../../../assets/data/german-states.json';
-import type { TCountries, ICountry, ICountryData } from 'countries-list';
 import { HlmDialogService } from '@spartan-ng/helm/dialog';
 import { DialogComponent } from '~/components/dialog.component';
 
@@ -238,8 +237,6 @@ export class IssuerEditFormComponent implements OnInit {
 					issuer_street: issuer.street,
 					issuer_streetnumber: issuer.streetnumber,
 					issuer_zip: issuer.zip,
-					country: issuer.country,
-					state: issuer.state,
 					issuer_linkedin_id: issuer.linkedinId,
 					verify_intended_use: issuer.intendedUseVerified,
 				}
@@ -345,100 +342,38 @@ export class IssuerEditFormComponent implements OnInit {
 	}
 
 	private handleNetworkSubmit(formState: any) {
-		const network = {
+		const network: ApiNetworkForCreation = {
 			name: formState.issuer_name,
 			description: formState.issuer_description,
 			url: formState.issuer_url,
 			country: formState.country,
 			state: formState.state,
 			image: formState.issuer_image,
-			linkedinId: formState.issuer_linkedin_id,
 		};
 
-		this.addIssuerFinished = this.networkManager
-			.createNetwork(network)
-			.then((network) => {
-				this.router.navigate(['issuer/networks', network.slug]);
-				this.messageService.setMessage('Network created successfully.', 'success');
-			})
-			.then(() => (this.addIssuerFinished = null));
+		if (this.existingIssuer) {
+			this.editIssuerFinished = this.networkManager
+				.editNetwork(this.issuerSlug, network)
+				.then(
+					(newIssuer) => {
+						this.router.navigate(['issuer/networks', newIssuer.slug]);
+						this.messageService.setMessage('Network edited successfully.', 'success');
+					},
+					(error) => {
+						this.messageService.setMessage('Unable to edit network: ' + error, 'error');
+					},
+				)
+				.then(() => (this.editIssuerFinished = null));
+		} else {
+			this.addIssuerFinished = this.networkManager
+				.createNetwork(network)
+				.then((network) => {
+					this.router.navigate(['issuer/networks', network.slug]);
+					this.messageService.setMessage('Network created successfully.', 'success');
+				})
+				.then(() => (this.addIssuerFinished = null));
+		}
 	}
-
-	// onSubmit() {
-	// 	if (this.issuerForm.controls.issuer_image.rawControl.hasError('required')) {
-	// 		this.imageError = this.translate.instant('Issuer.imageRequiredError');
-	// 	}
-
-	// 	if (!this.issuerForm.markTreeDirtyAndValidate()) {
-	// 		return;
-	// 	}
-
-	// 	const formState = this.issuerForm.value;
-
-	// 	const issuerFormState = this.issuerOnlyForm.value;
-
-	// 	if (this.existingIssuer) {
-	// 		const issuer: ApiIssuerForEditing = {
-	// 			name: formState.issuer_name,
-	// 			description: formState.issuer_description,
-	// 			image: formState.issuer_image,
-	// 			email: issuerFormState.issuer_email,
-	// 			url: formState.issuer_url,
-	// 			category: issuerFormState.issuer_category,
-	// 			street: issuerFormState.issuer_street,
-	// 			streetnumber: issuerFormState.issuer_streetnumber,
-	// 			zip: issuerFormState.issuer_zip,
-	// 			city: issuerFormState.issuer_city,
-	// 			country: formState.country,
-	// 			state: formState.state,
-	// 			intendedUseVerified: issuerFormState.verify_intended_use,
-	// 		};
-	// 		this.editIssuerFinished = this.issuerManager
-	// 			.editIssuer(this.issuerSlug, issuer)
-	// 			.then(
-	// 				(newIssuer) => {
-	// 					this.router.navigate(['issuer/issuers', newIssuer.slug]);
-	// 					this.messageService.setMessage('Issuer created successfully.', 'success');
-	// 				},
-	// 				(error) => {
-	// 					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
-	// 				},
-	// 			)
-	// 			.then(() => (this.editIssuerFinished = null));
-	// 	} else {
-	// 		const issuer: ApiIssuerForCreation = {
-	// 			name: formState.issuer_name,
-	// 			description: formState.issuer_description,
-	// 			email: issuerFormState.issuer_email,
-	// 			url: formState.issuer_url,
-	// 			category: issuerFormState.issuer_category,
-	// 			street: issuerFormState.issuer_street,
-	// 			streetnumber: issuerFormState.issuer_streetnumber,
-	// 			zip: issuerFormState.issuer_zip,
-	// 			city: issuerFormState.issuer_city,
-	// 			country: formState.country,
-	// 			state: formState.state,
-	// 			intendedUseVerified: issuerFormState.verify_intended_use,
-	// 		};
-
-	// 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
-	// 			issuer.image = formState.issuer_image;
-	// 		}
-
-	// 		this.addIssuerFinished = this.issuerManager
-	// 			.createIssuer(issuer)
-	// 			.then(
-	// 				(newIssuer) => {
-	// 					this.router.navigate(['issuer/issuers', newIssuer.slug]);
-	// 					this.messageService.setMessage('Issuer created successfully.', 'success');
-	// 				},
-	// 				(error) => {
-	// 					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
-	// 				},
-	// 			)
-	// 			.then(() => (this.addIssuerFinished = null));
-	// 	}
-	// }
 
 	public openLinkedInInfoDialog() {
 		this.dialogService.open(DialogComponent, {

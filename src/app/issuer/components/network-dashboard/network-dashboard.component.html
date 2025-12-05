@@ -4,9 +4,14 @@
 			<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
 		</div>
 		@if (activeTab === 'overview') {
-			<h1 hlmH1 class="tw-text-purple tw-font-black tw-mt-20 tw-pb-14">
-				{{ 'Network.welcomeDashboard' | translate }}
-			</h1>
+			<div class="tw-flex tw-mt-20">
+				<h1 hlmH1 class="tw-text-purple tw-font-black tw-pb-14">
+					{{ 'Network.welcomeDashboard' | translate }}
+				</h1>
+				@if (role === 'creator') {
+					<oeb-button [variant]="'secondary'" [text]="'General.edit' | translate" [routerLink]="['./edit']" />
+				}
+			</div>
 		}
 		<ng-template [bgAwaitPromises]="[networkLoaded]">
 			<section
