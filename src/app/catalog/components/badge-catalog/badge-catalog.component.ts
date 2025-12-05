@@ -212,7 +212,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					concatMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
 				)
 				.subscribe((paginatedBadges) => {
-					this.totalBadgeCount.set(paginatedBadges.total_count);
+					this.totalBadgeCount.set(paginatedBadges.count);
 					this.hasNext.set(paginatedBadges?.next !== null);
 					if (!paginatedBadges?.previous)
 						// on the first page, set the whole array to make sure to not append anything

@@ -7,6 +7,7 @@ import {
 	ApiBadgeInstance,
 	ApiBadgeInstanceForBatchCreation,
 	ApiBadgeInstanceForCreation,
+	BadgeInstanceResultSetV3,
 } from '../models/badgeinstance-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -117,6 +118,27 @@ export class BadgeInstanceApiService extends BaseHttpApiService {
 			url += `&recipient=${query}`;
 		}
 		return this.get(url).then(this.handleAssertionResult);
+	}
+
+	listBadgeInstancesV3(
+		issuerSlug?: string,
+		badgeSlug?: string,
+		query?: string,
+		limit = 15,
+		offset = 0,
+		ordering = '-created_at',
+	): Promise<BadgeInstanceResultSetV3> {
+		const params = new URLSearchParams();
+
+		if (issuerSlug) params.append('issuer', issuerSlug);
+		if (badgeSlug) params.append('badgeclass', badgeSlug);
+		if (query) params.append('recipient', query);
+		params.append('limit', limit.toString());
+		params.append('offset', offset.toString());
+		params.append('ordering', ordering);
+
+		const url = `/v3/badgeinstances?${params.toString()}`;
+		return this.get(url).then((r) => r.body as BadgeInstanceResultSetV3);
 	}
 
 	listNetworkBadgeInstances(networkSlug: string, badgeSlug: string, num = 500): Promise<any> {
