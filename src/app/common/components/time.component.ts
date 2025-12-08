@@ -1,42 +1,34 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-/**
- * Component that displays a date in a <time> element and minimizes the number of calls to the DatePipe, which is very
- * slow.
- */
 @Component({
 	selector: 'time[date]',
+	template: `@if (validDateOrNull()) {
+		{{ validDateOrNull() | date: format() }}
+	}`,
 	host: {
-		datetime: '{{ htmlDateStr }}',
+		'[attr.datetime]': 'datetimeAttr()',
 	},
-	template: `{{ userDateStr }}`,
+	imports: [DatePipe],
 })
-export class TimeComponent implements OnChanges {
-	static datePipe = new DatePipe('en-US');
+export class TimeComponent {
+	inputDate = input<Date | string | null>(undefined, { alias: 'date' });
+	validDateOrNull = computed(() => {
+		const raw = this.inputDate();
+		// This filters out javascripts Invalid Date and returns null instead
+		if (raw instanceof Date && isNaN(raw.getTime())) return null;
+		else return raw;
+	});
+	format = input.required<string>();
+	readonly datetimeAttr = computed(() => {
+		const raw = this.validDateOrNull();
+		if (raw === null) return undefined;
 
-	@Input()
-	date: Date;
+		let date: Date | undefined = undefined;
+		if (typeof raw === 'string') date = new Date(raw);
+		else date = raw;
 
-	@Input()
-	format: string;
-
-	htmlDateStr = '';
-	userDateStr = '';
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if ('date' in changes || 'format' in changes) {
-			this.update();
-		}
-	}
-
-	update() {
-		if (this.date) {
-			this.htmlDateStr = TimeComponent.datePipe.transform(this.date, 'yyyy-MM-dd');
-			this.userDateStr = TimeComponent.datePipe.transform(this.date, this.format || 'medium');
-		} else {
-			this.htmlDateStr = '';
-			this.userDateStr = '';
-		}
-	}
+		if (isNaN(date.getTime()) || date === undefined) return undefined;
+		return date.toISOString().split('T')[0];
+	});
 }
