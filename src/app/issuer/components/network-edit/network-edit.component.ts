@@ -4,7 +4,6 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { IssuerEditFormComponent } from '../issuer-edit-form/issuer-edit-form.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HlmH1 } from '@spartan-ng/helm/typography';
-import { HlmP } from '@spartan-ng/helm/typography';
 import { Issuer } from '~/issuer/models/issuer.model';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '~/common/app-config.service';
@@ -23,15 +22,15 @@ export class NetworkEditComponent extends BaseAuthenticatedRoutableComponent {
 	protected messageService = inject(MessageService);
 
 	network: Issuer;
-	issuerSlug: string;
+	networkSlug: string;
 
 	constructor() {
 		super();
 
 		this.title.setTitle(`Edit Network - ${this.configService.theme['serviceName'] || 'Badgr'}`);
-		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
+		this.networkSlug = this.route.snapshot.params['networkSlug'];
 
-		this.issuerManager.issuerBySlug(this.issuerSlug).then(
+		this.issuerManager.issuerBySlug(this.networkSlug).then(
 			(issuer) => {
 				this.network = issuer;
 
@@ -40,7 +39,7 @@ export class NetworkEditComponent extends BaseAuthenticatedRoutableComponent {
 				);
 			},
 			(error) => {
-				this.messageService.reportLoadingError(`Issuer '${this.issuerSlug}' does not exist.`, error);
+				this.messageService.reportLoadingError(`Issuer '${this.networkSlug}' does not exist.`, error);
 			},
 		);
 	}

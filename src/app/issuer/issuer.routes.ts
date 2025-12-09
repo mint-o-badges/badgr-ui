@@ -40,7 +40,7 @@ export const routes = [
 		component: NetworkDashboardComponent,
 	},
 	{
-		path: 'networks/:issuerSlug/edit',
+		path: 'networks/:networkSlug/edit',
 		component: NetworkEditComponent,
 	},
 	{
