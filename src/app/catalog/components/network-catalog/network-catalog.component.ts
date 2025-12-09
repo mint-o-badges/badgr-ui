@@ -138,7 +138,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 					concatMap((i) => this.loadRangeOfNetworks(i.page, i.searchQuery, i.sortOption)),
 				)
 				.subscribe((paginatedNetworks) => {
-					this.totalNetworkCount.set(paginatedNetworks.total_count);
+					this.totalNetworkCount.set(paginatedNetworks.count);
 					if (!paginatedNetworks) {
 						this.observeScrolling.set(true);
 						return;
