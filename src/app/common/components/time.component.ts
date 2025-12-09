@@ -28,7 +28,7 @@ export class TimeComponent {
 		if (typeof raw === 'string') date = new Date(raw);
 		else date = raw;
 
-		if (isNaN(date.getTime()) || date === undefined) return undefined;
+		if (date === undefined || isNaN(date.getTime())) return undefined;
 		return date.toISOString().split('T')[0];
 	});
 }
