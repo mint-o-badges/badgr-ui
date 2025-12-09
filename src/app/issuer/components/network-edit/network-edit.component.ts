@@ -34,7 +34,6 @@ export class NetworkEditComponent extends BaseAuthenticatedRoutableComponent {
 		this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
 				this.network = issuer;
-				console.log(this.network);
 
 				this.title.setTitle(
 					`Network - ${this.network.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
