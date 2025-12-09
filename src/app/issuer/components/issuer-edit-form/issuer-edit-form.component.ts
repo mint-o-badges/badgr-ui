@@ -109,9 +109,6 @@ export class IssuerEditFormComponent implements OnInit {
 	linkedInIdHeaderTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogHeader');
 	linkedInIdBodyTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogBody');
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
 		const loginService = inject(SessionService);
 		const title = this.title;
