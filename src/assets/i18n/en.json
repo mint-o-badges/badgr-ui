@@ -449,7 +449,8 @@
 		"role": {
 			"owner": "Owner",
 			"editor": "Editor",
-			"staff": "Member"
+			"staff": "Member",
+			"creator": "Creator / Owner"
 		},
 		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
 		"partnerSince": "Network Partner since",
@@ -469,7 +470,8 @@
 		"sharedOn": "Shared on",
 		"website": "Network website",
 		"createLpInfo": "To create a <span class='tw-font-bold'>network learning path</span>, at least two badges must be created in the network or approved for the network by partner institutions.",
-		"pendingInvites": "Unconfirmed invitations"
+		"pendingInvites": "Unconfirmed invitations",
+		"edit": "Edit network"
 	},
 	"Badge": {
 		"groupBy": "Group by",
