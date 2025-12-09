@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, input, ElementRef, viewChild, TemplateRef, inject } from '@angular/core';
-import { TypedFormGroup, typedFormGroup } from '../../../common/util/typed-forms';
+import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 import { UrlValidator } from '../../../common/validators/url.validator';
@@ -28,6 +28,7 @@ import { countries } from 'countries-list';
 import * as states from '../../../../assets/data/german-states.json';
 import { HlmDialogService } from '@spartan-ng/helm/dialog';
 import { DialogComponent } from '~/components/dialog.component';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'issuer-edit-form',
@@ -69,11 +70,8 @@ export class IssuerEditFormComponent implements OnInit {
 	emails: UserProfileEmail[];
 	primaryEmail: UserProfileEmail;
 	emailsOptions: FormFieldSelectOption[];
-	addIssuerFinished: Promise<unknown>;
-	editIssuerFinished: Promise<unknown>;
-
-	addNetworkFinished: Promise<unknown>;
-
+	addPromiseFinished: Promise<unknown>;
+	editPromiseFinished: Promise<unknown>;
 	_countriesOptions: FormFieldSelectOption[];
 	_germanStateOptions: FormFieldSelectOption[];
 
@@ -91,13 +89,13 @@ export class IssuerEditFormComponent implements OnInit {
 	iAmResponsible: string;
 	noMisuse: string;
 
-	existingIssuer: Issuer | null = null;
+	existingIssuer: Issuer | Network | null = null;
 
 	networkForm = input<boolean>(false);
 
-	@Input() issuerSlug: string;
+	@Input() issuerOrNetworkSlug: string;
 
-	@Input() set issuer(issuer: Issuer) {
+	@Input() set issuerOrNetwork(issuer: Issuer | Network) {
 		if (this.existingIssuer !== issuer) {
 			this.existingIssuer = issuer;
 			this.initFormFromExisting(issuer);
@@ -213,31 +211,31 @@ export class IssuerEditFormComponent implements OnInit {
 		}
 	}
 
-	initFormFromExisting(issuer: Issuer) {
-		if (!issuer) return;
+	initFormFromExisting(issuerOrNetwork: Issuer | Network) {
+		if (!issuerOrNetwork) return;
 
 		const commonValues = {
-			issuer_name: issuer.name,
-			issuer_description: issuer.description,
-			issuer_image: issuer.image,
-			issuer_url: issuer.websiteUrl,
-			country: issuer.country,
-			state: issuer.state,
-			issuer_linkedin_id: issuer.linkedinId,
+			issuer_name: issuerOrNetwork.name,
+			issuer_description: issuerOrNetwork.description,
+			issuer_image: issuerOrNetwork.image,
+			issuer_url: issuerOrNetwork.websiteUrl,
+			country: issuerOrNetwork.country,
+			state: issuerOrNetwork.state,
 		};
 
-		const issuerSpecificValues = !this.networkForm()
-			? {
-					issuer_category: issuer.category,
-					issuer_email: issuer.email,
-					issuer_city: issuer.city,
-					issuer_street: issuer.street,
-					issuer_streetnumber: issuer.streetnumber,
-					issuer_zip: issuer.zip,
-					issuer_linkedin_id: issuer.linkedinId,
-					verify_intended_use: issuer.intendedUseVerified,
-				}
-			: {};
+		const issuerSpecificValues =
+			!this.networkForm() && issuerOrNetwork instanceof Issuer
+				? {
+						issuer_category: issuerOrNetwork.category,
+						issuer_email: issuerOrNetwork.email,
+						issuer_city: issuerOrNetwork.city,
+						issuer_street: issuerOrNetwork.street,
+						issuer_streetnumber: issuerOrNetwork.streetnumber,
+						issuer_zip: issuerOrNetwork.zip,
+						issuer_linkedin_id: issuerOrNetwork.linkedinId,
+						verify_intended_use: issuerOrNetwork.intendedUseVerified,
+					}
+				: {};
 
 		this.issuerForm.setValue({
 			...commonValues,
@@ -310,8 +308,8 @@ export class IssuerEditFormComponent implements OnInit {
 		}
 
 		if (this.existingIssuer) {
-			this.editIssuerFinished = this.issuerManager
-				.editIssuer(this.issuerSlug, issuer)
+			this.editPromiseFinished = this.issuerManager
+				.editIssuer(this.issuerOrNetworkSlug, issuer)
 				.then(
 					(newIssuer) => {
 						this.router.navigate(['issuer/issuers', newIssuer.slug]);
@@ -321,9 +319,9 @@ export class IssuerEditFormComponent implements OnInit {
 						this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
 					},
 				)
-				.then(() => (this.editIssuerFinished = null));
+				.then(() => (this.editPromiseFinished = null));
 		} else {
-			this.addIssuerFinished = this.issuerManager
+			this.addPromiseFinished = this.issuerManager
 				.createIssuer(issuer)
 				.then(
 					(newIssuer) => {
@@ -334,7 +332,7 @@ export class IssuerEditFormComponent implements OnInit {
 						this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
 					},
 				)
-				.then(() => (this.addIssuerFinished = null));
+				.then(() => (this.addPromiseFinished = null));
 		}
 	}
 
@@ -349,8 +347,8 @@ export class IssuerEditFormComponent implements OnInit {
 		};
 
 		if (this.existingIssuer) {
-			this.editIssuerFinished = this.networkManager
-				.editNetwork(this.issuerSlug, network)
+			this.editPromiseFinished = this.networkManager
+				.editNetwork(this.issuerOrNetworkSlug, network)
 				.then(
 					(newIssuer) => {
 						this.router.navigate(['issuer/networks', newIssuer.slug]);
@@ -360,15 +358,15 @@ export class IssuerEditFormComponent implements OnInit {
 						this.messageService.setMessage('Unable to edit network: ' + error, 'error');
 					},
 				)
-				.then(() => (this.editIssuerFinished = null));
+				.then(() => (this.editPromiseFinished = null));
 		} else {
-			this.addIssuerFinished = this.networkManager
+			this.addPromiseFinished = this.networkManager
 				.createNetwork(network)
 				.then((network) => {
 					this.router.navigate(['issuer/networks', network.slug]);
 					this.messageService.setMessage('Network created successfully.', 'success');
 				})
-				.then(() => (this.addIssuerFinished = null));
+				.then(() => (this.addPromiseFinished = null));
 		}
 	}
 

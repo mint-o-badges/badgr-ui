@@ -4,11 +4,11 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { IssuerEditFormComponent } from '../issuer-edit-form/issuer-edit-form.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HlmH1 } from '@spartan-ng/helm/typography';
-import { Issuer } from '~/issuer/models/issuer.model';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '~/common/app-config.service';
-import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { MessageService } from '~/common/services/message.service';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'network-edit',
@@ -18,10 +18,10 @@ import { MessageService } from '~/common/services/message.service';
 export class NetworkEditComponent extends BaseAuthenticatedRoutableComponent {
 	protected configService = inject(AppConfigService);
 	protected title = inject(Title);
-	protected issuerManager = inject(IssuerManager);
+	protected networkManager = inject(NetworkManager);
 	protected messageService = inject(MessageService);
 
-	network: Issuer;
+	network: Network;
 	networkSlug: string;
 
 	constructor() {
@@ -30,9 +30,9 @@ export class NetworkEditComponent extends BaseAuthenticatedRoutableComponent {
 		this.title.setTitle(`Edit Network - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.networkSlug = this.route.snapshot.params['networkSlug'];
 
-		this.issuerManager.issuerBySlug(this.networkSlug).then(
-			(issuer) => {
-				this.network = issuer;
+		this.networkManager.networkBySlug(this.networkSlug).then(
+			(network) => {
+				this.network = network;
 
 				this.title.setTitle(
 					`Network - ${this.network.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
