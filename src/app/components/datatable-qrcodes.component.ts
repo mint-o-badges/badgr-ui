@@ -265,7 +265,7 @@ export class QrCodeDatatableComponent implements OnInit, OnDestroy {
 		{
 			accessorKey: 'email',
 			header: 'ID',
-			cell: (info) => info.row.original.email,
+			cell: (info) => `<strong>${info.row.original.firstName} ${info.row.original.lastName}</strong><br>${info.row.original.email}`,
 		},
 		{
 			id: 'Badge.requestedOn',
