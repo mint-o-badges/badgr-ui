@@ -158,6 +158,15 @@ export type RequestedBadge = {
 		<ng-template #translateHeaderIDCellTemplate let-context>
 			{{ context.header.id | translate }}
 		</ng-template>
+		<ng-template #nameAndMailCell let-context>
+			@if (context.row.original.firstName || context.row.original.lastName) {
+				<strong> {{ context.row.original.firstName }} {{ context.row.original.lastName }} </strong>
+			} @else {
+				<strong>&mdash;</strong>
+			}
+			<br />
+			{{ context.row.original.email }}
+		</ng-template>
 		<ng-template #headerCheckbox let-context>
 			<oeb-checkbox
 				[checked]="context.table.getIsAllRowsSelected()"
@@ -208,6 +217,7 @@ export class QrCodeDatatableComponent implements OnInit, OnDestroy {
 	requestCountChanged = output<number>();
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	nameAndMailCell = viewChild.required<TemplateRef<any>>('nameAndMailCell');
 	headerCheckbox = viewChild.required<TemplateRef<any>>('headerCheckbox');
 	rowCheckbox = viewChild.required<TemplateRef<any>>('rowCheckbox');
 	deleteButton = viewChild.required<TemplateRef<any>>('deleteButton');
@@ -265,7 +275,7 @@ export class QrCodeDatatableComponent implements OnInit, OnDestroy {
 		{
 			accessorKey: 'email',
 			header: 'ID',
-			cell: (info) => `<strong>${info.row.original.firstName} ${info.row.original.lastName}</strong><br>${info.row.original.email}`,
+			cell: (info) => this.nameAndMailCell(),
 		},
 		{
 			id: 'Badge.requestedOn',
