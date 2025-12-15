@@ -6,7 +6,7 @@
 
 		<ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-flex-col">
 			<!--Expiration Item-->
-			@if (showExpiration && hasControl('valid_from') && hasControl('expires_at')) {
+			@if (showExpiration() && hasControl('valid_from') && hasControl('expires_at')) {
 				<li>
 					<ng-template #collapseExpirationTrigger>
 						<ng-icon size="24px" hlm name="lucideClockFading" class="tw-mr-1 tw-text-oebblack"></ng-icon>
@@ -51,13 +51,51 @@
 					</oeb-collapsible>
 				</li>
 
-				<oeb-separator
-					[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed tw-border-darkgrey'"
-				></oeb-separator>
+				<oeb-separator [separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed tw-border-darkgrey'" />
+			}
+
+			<!-- Location Item -->
+			@if (showCourseUrl() && hasControl('courseUrl')) {
+				<li>
+					<ng-template #courseUrlTrigger>
+						<ng-icon size="24px" hlm name="lucideExternalLink" class="tw-mr-1"></ng-icon>
+						<span
+							[class.tw-font-semibold]="courseUrlCollapsible.expanded"
+							[class.tw-font-normal]="!courseUrlCollapsible.expanded"
+							class="tw-text-lg tw-text-oebblack tw-mr-auto"
+							[innerHTML]="'CreateBadge.linkToCourse' | translate"
+						></span>
+					</ng-template>
+					<oeb-collapsible
+						#courseUrlCollapsible
+						[trigger]="courseUrlTrigger"
+						[defaultOpen]="courseUrlDefaultOpen()"
+						[closeIcon]="'lucideChevronDown'"
+						[iconStyle]="'tw-text-oebblack'"
+						[iconSize]="'lg'"
+					>
+						<section class="tw-flex tw-flex-col tw-gap-4 tw-pt-4">
+							<div class="tw-flex tw-gap-4">
+								<oeb-input
+									class="oeb-input-hide-arrows tw-w-full"
+									[control]="getRawControl('courseUrl')"
+									[label]="'CreateBadge.websiteUrl' | translate"
+									[labelStyle]="'tw-text-oebblack tw-font-normal tw-text-lg'"
+									[noTopMargin]="true"
+									[placeholder]="'https://'"
+									[urlField]="true"
+									[fieldType]="'url'"
+									errorMessage="{{ 'Issuer.enterURL' | translate }}"
+								/>
+							</div>
+						</section>
+					</oeb-collapsible>
+				</li>
+				<oeb-separator [separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed tw-border-darkgrey'" />
 			}
 
 			<!-- Evidence Item -->
-			@if (showEvidence && hasControl('evidence_items')) {
+			@if (showEvidence() && hasControl('evidence_items')) {
 				<li>
 					<ng-template #collapseEvidenceTrigger>
 						<span
@@ -143,7 +181,7 @@
 			}
 
 			<!-- Course Date Item -->
-			@if (showCourseDate && hasControl('activity_start_date') && hasControl('activity_end_date')) {
+			@if (showCourseDate() && hasControl('activity_start_date') && hasControl('activity_end_date')) {
 				<li>
 					<ng-template #collapseCourseDateTrigger>
 						<ng-icon size="24px" hlm name="lucideCalendarDays" class="tw-mr-1"></ng-icon>
@@ -184,7 +222,7 @@
 					</oeb-collapsible>
 				</li>
 
-				@if (showLocation && hasControl('activity_zip')) {
+				@if (showLocation() && hasControl('activity_zip')) {
 					<oeb-separator
 						[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed tw-border-darkgrey'"
 					></oeb-separator>
@@ -192,7 +230,7 @@
 			}
 
 			<!-- Location Item -->
-			@if (showLocation && hasControl('activity_zip')) {
+			@if (showLocation() && hasControl('activity_zip')) {
 				<li>
 					<ng-template #venueTrigger>
 						<ng-icon size="24px" hlm name="lucideMapPin" class="tw-mr-1"></ng-icon>
