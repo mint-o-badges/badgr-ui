@@ -1,0 +1,103 @@
+<!-- Row 1: Kompetenzen Bubble Chart (LEFT) and Am meisten gestärkte Einzelkompetenzen (RIGHT) -->
+<div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-8 tw-mb-8">
+		<!-- Kompetenzen Bubble Chart (LEFT) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">Top Kompetenz-Bereiche</h2>
+			</div>
+
+			<!-- Bubble Chart Container -->
+			<div class="tw-relative" style="height: 400px;">
+				<!-- CSS Sun Backgrounds (behind SVG) -->
+				<div class="css-sun css-sun-large"></div>
+				<div class="css-sun css-sun-small"></div>
+
+				<!-- SVG for bubbles -->
+				<svg #bubbleChartSvg class="tw-w-full tw-h-full tw-relative" style="z-index: 2;">
+					<!-- Bubble chart will be rendered here -->
+				</svg>
+
+				<!-- Tooltip -->
+				<div
+					#bubbleTooltip
+					class="tw-absolute tw-hidden tw-bg-gray-900 tw-text-white tw-px-3 tw-py-2 tw-rounded-lg tw-text-sm tw-shadow-lg tw-pointer-events-none"
+					style="transition: all 0.2s ease; z-index: 1000;">
+				</div>
+			</div>
+		</div>
+
+		<!-- Am meisten gestärkte Einzelkompetenzen (RIGHT) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">Am meisten gestärkte Einzelkompetenzen</h2>
+			</div>
+			<div class="tw-space-y-3">
+				@for (item of individualCompetencyData; track item.competency) {
+					<div class="tw-flex tw-items-center tw-gap-4">
+						<!-- Competency Name on Left -->
+						<div class="tw-w-40 tw-flex-shrink-0">
+							<span class="tw-text-sm tw-font-medium tw-text-gray-700 tw-text-right tw-block tw-pr-2">{{ item.competency }}</span>
+						</div>
+						<!-- Horizontal Bar Chart on Right -->
+						<div class="tw-flex tw-items-center tw-flex-1 tw-gap-2">
+							<div class="tw-flex-1 tw-bg-gray-200 tw-rounded-full tw-h-8 tw-relative tw-overflow-hidden">
+								<div
+									class="tw-h-full tw-rounded-full tw-flex tw-items-center tw-justify-between tw-px-3 tw-text-white tw-text-xs tw-font-semibold badge-ranking-bar"
+									[style.background-color]="item.color"
+									[style.width.%]="(item.count / getMaxCompetencyCount()) * 100">
+									<span>{{ item.count }} Badges</span>
+									<span>{{ item.hours }}h</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+
+	<!-- Row 2: Kompetenzen nach Geschlecht (LEFT) and Kompetenzportfolio nach PLZ-Bereichen (RIGHT) -->
+	<div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-8 tw-mb-8">
+		<!-- Kompetenzen nach Geschlecht (LEFT) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">Kompetenzen nach Geschlecht</h2>
+			</div>
+			<div class="tw-space-y-4">
+				@for (item of genderCompetencyData.labels; track $index) {
+					<div class="tw-flex tw-items-center tw-justify-between">
+						<div class="tw-flex tw-items-center tw-space-x-3">
+							<div
+								class="tw-w-4 tw-h-4 tw-rounded-full"
+								[style.background-color]="genderCompetencyData.backgroundColor[$index]">
+							</div>
+							<span class="tw-text-sm tw-font-medium tw-text-gray-700">{{ item }}</span>
+						</div>
+						<div class="tw-flex tw-items-center tw-space-x-2">
+							<div class="tw-w-24 tw-bg-gray-200 tw-rounded-full tw-h-2">
+								<div
+									class="tw-h-2 tw-rounded-full competency-bar"
+									[style.background-color]="genderCompetencyData.backgroundColor[$index]"
+									[style.width.%]="genderCompetencyData.values[$index]">
+								</div>
+							</div>
+							<span class="tw-text-sm tw-font-semibold tw-text-gray-900 tw-w-12 tw-text-right">
+								{{ genderCompetencyData.values[$index] }}%
+							</span>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">Kompetenzverteilung nach PLZ-Bereichen</h2>
+			</div>
+		<!-- Kompetenzportfolio nach PLZ-Bereichen (RIGHT) -->
+		<app-plz-map></app-plz-map>
+			</div>
+	</div>

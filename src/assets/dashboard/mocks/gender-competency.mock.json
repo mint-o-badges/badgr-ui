@@ -1,0 +1,6 @@
+{
+  "description": "Gender-based Competency Distribution - Chart data showing competency distribution by gender",
+  "labels": ["Männlich", "Weiblich", "Divers", "Keine Angabe"],
+  "values": [42.3, 38.7, 2.8, 16.2],
+  "backgroundColor": ["#492E98", "#CCD7FF", "#93F993", "#757575"]
+}

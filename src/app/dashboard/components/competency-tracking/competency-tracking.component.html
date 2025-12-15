@@ -1,0 +1,166 @@
+<!-- Row 1: Kompetenzen Bubble Chart (LEFT) and Am meisten gestärkte Einzelkompetenzen (RIGHT) -->
+<div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-8 tw-mb-8">
+		<!-- Kompetenzen Bubble Chart (LEFT) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">{{ 'Dashboard.topCompetencyAreas' | translate }}</h2>
+			</div>
+
+			<!-- Bubble Chart Container -->
+			<div class="tw-relative" style="height: 400px;">
+				<!-- CSS Sun Backgrounds (behind SVG) -->
+				<div class="css-sun css-sun-large"></div>
+				<div class="css-sun css-sun-small"></div>
+
+				<!-- SVG for bubbles -->
+				<svg
+					#bubbleChartSvg
+					class="tw-w-full tw-h-full tw-absolute tw-top-0 tw-left-0"
+					style="z-index: 2;"
+					viewBox="0 0 600 400"
+					preserveAspectRatio="xMidYMid meet">
+					<!-- Bubble chart will be rendered here -->
+				</svg>
+
+				<!-- Tooltip -->
+				<div
+					#bubbleTooltip
+					class="tw-absolute tw-hidden tw-bg-gray-900 tw-text-white tw-px-3 tw-py-2 tw-rounded-lg tw-text-sm tw-shadow-lg tw-pointer-events-none"
+					style="transition: all 0.2s ease; z-index: 1000;">
+				</div>
+			</div>
+		</div>
+
+		<!-- Am meisten gestärkte Einzelkompetenzen (RIGHT) -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">{{ 'Dashboard.mostStrengthenedCompetencies' | translate }}</h2>
+			</div>
+			<div class="tw-space-y-3">
+				@for (item of individualCompetencyData; track item.competency) {
+					<div class="tw-flex tw-items-start tw-gap-4">
+						<!-- Competency Name on Left -->
+						<div class="tw-w-40 tw-flex-shrink-0 tw-pt-1">
+							<span class="tw-text-sm tw-font-medium tw-text-gray-700 tw-text-right tw-block tw-pr-2 tw-break-words tw-leading-tight">{{ item.translationKey | translate }}</span>
+						</div>
+						<!-- Horizontal Bar Chart on Right - Now Clickable -->
+						<div class="tw-flex tw-items-center tw-flex-1 tw-gap-2">
+							<div
+								class="tw-flex-1 tw-bg-gray-200 tw-rounded-full tw-h-8 tw-relative tw-overflow-hidden tw-cursor-pointer competency-bar-container"
+								(click)="openCompetencyDetail(item)"
+								role="button"
+								tabindex="0"
+								[attr.aria-label]="'Zeige Details für ' + (item.translationKey | translate)">
+								<div
+									class="tw-h-full tw-rounded-full tw-flex tw-items-center tw-justify-center tw-px-3 tw-text-white tw-text-xs tw-font-semibold badge-ranking-bar"
+									[style.background-color]="item.color"
+									[style.width.%]="(item.count / getMaxCompetencyCount()) * 100">
+									<span>{{ item.hours }}h</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+
+	<!-- Row 2: Kompetenzen nach Geschlecht (Full Width) -->
+	<div class="tw-grid tw-grid-cols-1 tw-gap-8 tw-mb-8">
+		<!-- Kompetenzen nach Geschlecht -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+				<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">{{ 'Dashboard.competenciesByGender' | translate }}</h2>
+			</div>
+			<div class="tw-space-y-4">
+				@for (item of genderCompetencyData.labels; track $index) {
+					<div
+						class="tw-flex tw-items-center tw-justify-between tw-cursor-pointer tw-transition-all tw-duration-200 tw-rounded-lg tw-p-2 hover:tw-bg-gray-50 gender-item"
+						(click)="openGenderDrillDown(item)"
+						role="button"
+						tabindex="0"
+						[attr.aria-label]="'Zeige Details für ' + item">
+						<div class="tw-flex tw-items-center tw-space-x-3">
+							<div
+								class="tw-w-4 tw-h-4 tw-rounded-full tw-flex-shrink-0"
+								[style.background-color]="genderCompetencyData.backgroundColor[$index]">
+							</div>
+							<span class="tw-text-sm tw-font-medium tw-text-gray-700">{{ item }}</span>
+						</div>
+						<div class="tw-flex tw-items-center tw-space-x-3">
+							<div class="tw-w-24 tw-bg-gray-200 tw-rounded-full tw-h-2">
+								<div
+									class="tw-h-2 tw-rounded-full competency-bar"
+									[style.background-color]="genderCompetencyData.backgroundColor[$index]"
+									[style.width.%]="genderCompetencyData.values[$index]">
+								</div>
+							</div>
+							<span class="tw-text-sm tw-font-semibold tw-text-gray-900 tw-w-12 tw-text-right">
+								{{ genderCompetencyData.values[$index] }}%
+							</span>
+							<!-- Click indicator icon -->
+							<svg class="tw-w-4 tw-h-4 tw-text-gray-400 tw-flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+							</svg>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+
+	<!-- Row 3: Angesprochene Kompetenzen im letzten Monat (Full Width) -->
+	@if (monthlyCompetencies && monthlyCompetencies.length > 0) {
+		<div class="tw-mb-8">
+			<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+				<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-6">
+					<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+					<h2 class="tw-text-xl tw-font-semibold" style="color: var(--color-black);">
+						{{ 'Dashboard.competenciesLastMonth' | translate }} ({{ totalMonthlyCompetencies }})
+					</h2>
+				</div>
+
+				<!-- Competency List -->
+				<div class="tw-space-y-4">
+					@for (item of monthlyCompetencies; track item.competencyKey || $index) {
+						<div class="tw-bg-white tw-border-2 tw-rounded-lg tw-p-6 hover:tw-shadow-md tw-transition-shadow" style="border-color: var(--color-midgrey);">
+							<div class="tw-flex tw-items-start tw-justify-between tw-gap-4">
+								<div class="tw-flex-1">
+									<div class="tw-flex tw-items-center tw-gap-3 tw-mb-2">
+										<div class="tw-w-3 tw-h-3 tw-rounded-full" style="background-color: var(--color-green);"></div>
+										<h3 class="tw-text-lg tw-font-semibold" style="color: var(--color-purple);">
+											{{ getMonthlyDetailTitle(item) }}
+										</h3>
+									</div>
+									@if (getMonthlyDetailCategory(item)) {
+										<p class="tw-text-sm tw-text-gray-500 tw-mb-2">
+											{{ 'Dashboard.category' | translate }}: {{ getMonthlyDetailCategory(item) }}
+										</p>
+									}
+									@if (item.details) {
+										<p class="tw-text-sm tw-text-gray-600">
+											{{ item.details }}
+										</p>
+									}
+								</div>
+								<div class="tw-text-right">
+									<p class="tw-text-2xl tw-font-bold" style="color: var(--color-purple);">
+										{{ getMonthlyDetailValue(item) }}
+									</p>
+									@if (item.date) {
+										<p class="tw-text-sm tw-text-gray-500 tw-mt-1">
+											{{ formatDate(item.date) }}
+										</p>
+									}
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	}
+

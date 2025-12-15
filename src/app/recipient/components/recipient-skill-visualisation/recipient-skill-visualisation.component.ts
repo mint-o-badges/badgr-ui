@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, OnChanges, SimpleChanges, OnDestroy, inject, viewChild } from '@angular/core';
+import { Component, ElementRef, input, OnChanges, SimpleChanges, OnDestroy, inject, viewChild, output } from '@angular/core';
 import { ApiRootSkill, ApiSkill } from '../../../common/model/ai-skills.model';
 import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -72,6 +72,21 @@ interface SkillLink {
 	target: string;
 }
 
+/**
+ * Data emitted when a top-level competency area bubble is clicked.
+ * Contains information needed to fetch detailed statistics from the backend.
+ */
+export interface CompetencyAreaClickData {
+	/** Display name of the competency area */
+	areaName: string;
+	/** ESCO concept URI of the area (for identification) */
+	areaConceptUri: string;
+	/** Total study load (hours) for this area */
+	studyLoad: number;
+	/** ESCO URIs of all individual competencies belonging to this area */
+	competencyUris: string[];
+}
+
 const skillIconMap = {
 	'/esco/skill/b94686e3-cce5-47a2-a8d8-402a0d0ed44e': lucideLifeBuoy,
 	'/esco/skill/8267ecb5-c976-4b6a-809b-4ceecb954967': lucideLightbulb,
@@ -126,6 +141,46 @@ export class RecipientSkillVisualisationComponent implements OnChanges, OnDestro
 	readonly d3canvas = viewChild.required<ElementRef<HTMLElement>>('d3canvas');
 
 	skills = input<ApiRootSkill[]>([]);
+
+	/**
+	 * Whether to show the intro text above the visualisation
+	 * Default: true (shows intro text)
+	 */
+	showIntroText = input<boolean>(true);
+
+	/**
+	 * i18n key for the intro text. Use different keys for different contexts:
+	 * - 'RecBadge.skillVisualisationIntro' (default): "In diesen Bereichen hast du am meisten Kompetenzen gestärkt:"
+	 * - 'RecBadge.skillVisualisationIntroLearners': "In diesen Bereichen haben die Lernenden am meisten Kompetenzen gestärkt:"
+	 */
+	introTextKey = input<string>('RecBadge.skillVisualisationIntro');
+
+	/**
+	 * Whether to show the help text (mouse hover instruction)
+	 * Default: true
+	 */
+	showHelpText = input<boolean>(true);
+
+	/**
+	 * Whether to show the legend (ESCO-Bereiche, Future Skills)
+	 * Default: true
+	 */
+	showLegend = input<boolean>(true);
+
+	/**
+	 * Whether clicking on a top-level competency area should emit an event
+	 * for opening a detail view (instead of just showing description).
+	 * Default: false (original behavior - shows description on click)
+	 */
+	enableAreaClick = input<boolean>(false);
+
+	/**
+	 * Emitted when a top-level competency area bubble is clicked
+	 * (only when enableAreaClick is true).
+	 * Contains the area data including all ESCO URIs of child competencies.
+	 */
+	areaClick = output<CompetencyAreaClickData>();
+
 	skillTree: Map<string, ExtendedApiSkill>;
 	d3data: { nodes: ExtendedApiSkill[]; links: SkillLink[] } = {
 		nodes: [],
@@ -652,6 +707,22 @@ export class RecipientSkillVisualisationComponent implements OnChanges, OnDestro
 				this.initD3();
 				return;
 			}
+
+			// If area click is enabled and this is a top-level node (depth == 1),
+			// emit the click event instead of showing description
+			if (this.enableAreaClick() && d.depth === 1) {
+				// Collect all leaf competency URIs that belong to this top-level area
+				const competencyUris = this.collectCompetencyUris(d);
+				const clickData: CompetencyAreaClickData = {
+					areaName: d.name,
+					areaConceptUri: d.concept_uri,
+					studyLoad: d.studyLoad,
+					competencyUris: competencyUris,
+				};
+				this.areaClick.emit(clickData);
+				return;
+			}
+
 			// TODO: dynamically resize description popover, reposition if out of screen?
 
 			if (d.description) {
@@ -743,6 +814,19 @@ export class RecipientSkillVisualisationComponent implements OnChanges, OnDestro
 
 	selectSkillForSingleView(skill: ExtendedApiSkill, index: number) {
 		if (this.mobile) {
+			// If area click is enabled, emit event instead of showing single view
+			if (this.enableAreaClick() && skill.depth === 1) {
+				const competencyUris = this.collectCompetencyUris(skill);
+				const clickData: CompetencyAreaClickData = {
+					areaName: skill.name,
+					areaConceptUri: skill.concept_uri,
+					studyLoad: skill.studyLoad,
+					competencyUris: competencyUris,
+				};
+				this.areaClick.emit(clickData);
+				return;
+			}
+
 			this.selectedNode = skill;
 			this.showSingleNode = true;
 			this.selectedNodeNumber = this.padStart(index);
@@ -766,5 +850,29 @@ export class RecipientSkillVisualisationComponent implements OnChanges, OnDestro
 
 	getFormattedSkillText(idx: number, name: string): string {
 		return `<span class="tw-font-extrabold tw-mr-1">${this.padStart(idx + 1)}</span> ${name}`;
+	}
+
+	/**
+	 * Collect all ESCO URIs of leaf competencies belonging to a top-level skill area.
+	 * These URIs are needed for the backend to aggregate statistics.
+	 */
+	private collectCompetencyUris(topLevelSkill: ExtendedApiSkill): string[] {
+		const uris: string[] = [];
+
+		// Use the leafs array that was populated during data preparation
+		if (topLevelSkill.leafs && topLevelSkill.leafs.length > 0) {
+			for (const leafId of topLevelSkill.leafs) {
+				const leaf = this.skillTree.get(leafId);
+				if (leaf && leaf.concept_uri) {
+					// Convert relative ESCO URI to full URI format
+					const fullUri = leaf.concept_uri.startsWith('http')
+						? leaf.concept_uri
+						: `http://data.europa.eu${leaf.concept_uri}`;
+					uris.push(fullUri);
+				}
+			}
+		}
+
+		return uris;
 	}
 }

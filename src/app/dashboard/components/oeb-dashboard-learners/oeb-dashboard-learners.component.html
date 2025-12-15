@@ -1,0 +1,137 @@
+<div class="oeb-dashboard-learners">
+	@if (viewState === 'overview') {
+		<div class="kpi-card-grid kpi-card-grid--two">
+			<div class="kpi-card">
+				<div class="kpi-card__content">
+					<div class="kpi-card__top">
+						<div class="kpi-card__icon">
+							<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#492E98" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+								<circle cx="9" cy="7" r="4"/>
+								<path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+								<path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+							</svg>
+						</div>
+						<div class="kpi-card__main">
+							<div class="kpi-card__value">{{ totalLearners | number }}</div>
+							<div class="kpi-card__description">{{ 'Dashboard.Learners.totalLearnersLabel' | translate }}</div>
+						</div>
+					</div>
+					@if (totalLearnersTrend && totalLearnersTrendValue !== undefined) {
+						<div class="kpi-card__growth">
+							{{ totalLearnersTrend === 'up' ? '+' : totalLearnersTrend === 'down' ? '-' : '' }}{{ totalLearnersTrendValue }}% {{ getTrendPeriodTranslationKey(totalLearnersTrendPeriod) | translate }}
+						</div>
+					}
+				</div>
+			</div>
+
+			<div class="kpi-card">
+				<div class="kpi-card__content">
+					<div class="kpi-card__top">
+						<div class="kpi-card__icon">
+							<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#492E98" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="12" r="10"/>
+								<polyline points="12 6 12 12 16 14"/>
+							</svg>
+						</div>
+						<div class="kpi-card__main">
+							<div class="kpi-card__value">{{ totalCompetencyHours | number }}</div>
+							<div class="kpi-card__description">{{ 'Network.Dashboard.kpi.competencyHours' | translate }}</div>
+						</div>
+					</div>
+					@if (competencyHoursTrend && competencyHoursTrendValue !== undefined) {
+						<div class="kpi-card__growth">
+							{{ competencyHoursTrend === 'up' ? '+' : competencyHoursTrend === 'down' ? '-' : '' }}{{ competencyHoursTrendValue }}% {{ getTrendPeriodTranslationKey(competencyHoursTrendPeriod) | translate }}
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+
+		@if (loadingResidence || loadingGender) {
+			<div class="tw-mt-6 tw-flex tw-items-center tw-justify-center tw-p-12">
+				<div class="tw-flex tw-flex-col tw-items-center tw-space-y-4">
+					<div class="tw-w-12 tw-h-12 tw-border-4 tw-border-purple-200 tw-border-t-purple-600 tw-rounded-full tw-animate-spin"></div>
+					<p class="tw-text-gray-600 tw-font-medium">{{ 'General.loading' | translate }}</p>
+				</div>
+			</div>
+		}
+
+		@if (!loadingResidence && !loadingGender) {
+			<div class="tw-mt-6">
+				<h2 class="tw-text-[22px] tw-font-bold tw-mb-4" style="color: var(--color-purple);">
+					{{ 'Dashboard.Learners.residenceDistribution' | translate }}
+				</h2>
+				<div class="tw-w-full tw-p-6" style="background-color: #F5F5F5; border-radius: 5px;">
+					<div class="tw-bg-white tw-rounded-lg tw-p-6 tw-border-solid" style="border-width: 1px; border-color: var(--color-purple);">
+						@if (learnerResidenceData.length > 0) {
+							<app-horizontal-bar-chart
+								[items]="getResidenceBarItems()"
+								[labelWidthPercent]="15"
+								barContentType="percentage"
+								barValueSuffix="%"
+								[showAfterBarText]="true"
+								afterBarTranslationKey="Dashboard.Learners.learners"
+								[clickable]="true"
+								(itemClick)="onResidenceBarClick($event)">
+							</app-horizontal-bar-chart>
+						} @else {
+							<div class="tw-flex tw-items-center tw-justify-center tw-h-32 tw-text-gray-500">
+								{{ 'Dashboard.Learners.noResidenceData' | translate }}
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+
+			<div class="tw-mt-6">
+				<div class="tw-flex tw-items-center tw-gap-2 tw-mb-4">
+					<h2 class="tw-text-[22px] tw-font-bold" style="color: var(--color-purple);">
+						{{ 'Dashboard.Learners.genderDistribution' | translate }}
+					</h2>
+					<info-icon [width]="350">
+						{{ 'Dashboard.genderAssignmentInfo' | translate }}
+					</info-icon>
+				</div>
+				<div class="tw-w-full tw-p-6" style="background-color: #F5F5F5; border-radius: 5px;">
+					<div class="tw-bg-white tw-rounded-lg tw-p-6 tw-border-solid" style="border-width: 1px; border-color: var(--color-purple);">
+						@if (genderStatistics.length > 0) {
+							<app-horizontal-bar-chart
+								[items]="getGenderBarItems()"
+								[labelWidthPercent]="15"
+								barContentType="percentage"
+								barValueSuffix="%"
+								[showAfterBarText]="true"
+								afterBarTranslationKey="Dashboard.Learners.learners"
+								[clickable]="true"
+								(itemClick)="onGenderBarClick($event)">
+							</app-horizontal-bar-chart>
+						} @else {
+							<div class="tw-flex tw-items-center tw-justify-center tw-h-32 tw-text-gray-500">
+								{{ 'Dashboard.Learners.noGenderData' | translate }}
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		}
+	}
+
+	@if (viewState === 'gender-detail' && selectedGender) {
+		<app-gender-competency-analysis
+			[gender]="selectedGender"
+			[networkSlug]="networkSlug"
+			(back)="onBackFromGenderDetail()"
+			(areaClick)="onCompetencyAreaClick($event)">
+		</app-gender-competency-analysis>
+	}
+
+	@if (viewState === 'residence-detail' && selectedResidence) {
+		<app-residence-detail
+			[city]="selectedResidence.city"
+			[networkSlug]="networkSlug"
+			(back)="onBackFromResidenceDetail()"
+			(areaClick)="onCompetencyAreaClick($event)">
+		</app-residence-detail>
+	}
+</div>

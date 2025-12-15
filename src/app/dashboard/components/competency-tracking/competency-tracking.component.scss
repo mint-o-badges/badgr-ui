@@ -1,0 +1,545 @@
+// Kompetenzen-Tracking Component Styles
+
+// ===========================
+// COMPETENCY BAR ANIMATIONS
+// ===========================
+
+.competency-bar {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  animation: fillBar 1.2s ease-out;
+}
+
+@keyframes fillBar {
+  from {
+    width: 0%;
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ===========================
+// BADGE RANKING BAR ANIMATION
+// ===========================
+
+.badge-ranking-bar {
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.05);
+  animation: slideIn 1.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    width: 0%;
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ===========================
+// COMPETENCY BAR CONTAINER (CLICKABLE)
+// ===========================
+
+.competency-bar-container {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    .badge-ranking-bar {
+      filter: brightness(1.1);
+      box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ===========================
+// KPI CARD HOVER EFFECTS
+// ===========================
+
+.kpi-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// ===========================
+// BUBBLE CHART ANIMATIONS
+// ===========================
+
+.bubble-chart-container {
+  position: relative;
+
+  svg {
+    overflow: visible;
+  }
+
+  .bubble-group {
+    transition: all 0.3s ease;
+
+    circle {
+      transition: all 0.3s ease;
+    }
+
+    &:hover circle {
+      opacity: 1 !important; // Keep full opacity on hover
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// ===========================
+// CSS SUN BACKGROUNDS - 26 RAYS
+// ===========================
+
+.css-sun {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+.css-sun-large {
+  width: 280px;
+  height: 280px;
+  bottom: 5%;
+  right: 5%;
+  // Create 26 rays using conic-gradient
+  background:
+    // Layer 1: Outer rays (thicker at edge)
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(255, 215, 0, 0.5) 3deg,
+      transparent 7deg,
+      transparent 13.85deg,
+      rgba(255, 215, 0, 0.5) 16.85deg,
+      transparent 20.85deg,
+      transparent 27.7deg,
+      rgba(255, 215, 0, 0.5) 30.7deg,
+      transparent 34.7deg,
+      transparent 41.55deg,
+      rgba(255, 215, 0, 0.5) 44.55deg,
+      transparent 48.55deg,
+      transparent 55.4deg,
+      rgba(255, 215, 0, 0.5) 58.4deg,
+      transparent 62.4deg,
+      transparent 69.25deg,
+      rgba(255, 215, 0, 0.5) 72.25deg,
+      transparent 76.25deg,
+      transparent 83.1deg,
+      rgba(255, 215, 0, 0.5) 86.1deg,
+      transparent 90.1deg,
+      transparent 96.95deg,
+      rgba(255, 215, 0, 0.5) 99.95deg,
+      transparent 103.95deg,
+      transparent 110.8deg,
+      rgba(255, 215, 0, 0.5) 113.8deg,
+      transparent 117.8deg,
+      transparent 124.65deg,
+      rgba(255, 215, 0, 0.5) 127.65deg,
+      transparent 131.65deg,
+      transparent 138.5deg,
+      rgba(255, 215, 0, 0.5) 141.5deg,
+      transparent 145.5deg,
+      transparent 152.35deg,
+      rgba(255, 215, 0, 0.5) 155.35deg,
+      transparent 159.35deg,
+      transparent 166.2deg,
+      rgba(255, 215, 0, 0.5) 169.2deg,
+      transparent 173.2deg,
+      transparent 180.05deg,
+      rgba(255, 215, 0, 0.5) 183.05deg,
+      transparent 187.05deg,
+      transparent 193.9deg,
+      rgba(255, 215, 0, 0.5) 196.9deg,
+      transparent 200.9deg,
+      transparent 207.75deg,
+      rgba(255, 215, 0, 0.5) 210.75deg,
+      transparent 214.75deg,
+      transparent 221.6deg,
+      rgba(255, 215, 0, 0.5) 224.6deg,
+      transparent 228.6deg,
+      transparent 235.45deg,
+      rgba(255, 215, 0, 0.5) 238.45deg,
+      transparent 242.45deg,
+      transparent 249.3deg,
+      rgba(255, 215, 0, 0.5) 252.3deg,
+      transparent 256.3deg,
+      transparent 263.15deg,
+      rgba(255, 215, 0, 0.5) 266.15deg,
+      transparent 270.15deg,
+      transparent 277deg,
+      rgba(255, 215, 0, 0.5) 280deg,
+      transparent 284deg,
+      transparent 290.85deg,
+      rgba(255, 215, 0, 0.5) 293.85deg,
+      transparent 297.85deg,
+      transparent 304.7deg,
+      rgba(255, 215, 0, 0.5) 307.7deg,
+      transparent 311.7deg,
+      transparent 318.55deg,
+      rgba(255, 215, 0, 0.5) 321.55deg,
+      transparent 325.55deg,
+      transparent 332.4deg,
+      rgba(255, 215, 0, 0.5) 335.4deg,
+      transparent 339.4deg,
+      transparent 346.25deg,
+      rgba(255, 215, 0, 0.5) 349.25deg,
+      transparent 353.25deg,
+      transparent 360deg
+    ),
+    // Layer 2: Inner glow at center
+    radial-gradient(
+      circle,
+      rgba(255, 215, 0, 0.3) 0%,
+      rgba(255, 215, 0, 0.2) 15%,
+      transparent 40%
+    );
+}
+
+.css-sun-small {
+  width: 180px;
+  height: 180px;
+  top: 10%;
+  left: 5%;
+  // Create 26 rays using conic-gradient
+  background:
+    // Layer 1: Outer rays (thicker at edge)
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(255, 215, 0, 0.4) 3deg,
+      transparent 7deg,
+      transparent 13.85deg,
+      rgba(255, 215, 0, 0.4) 16.85deg,
+      transparent 20.85deg,
+      transparent 27.7deg,
+      rgba(255, 215, 0, 0.4) 30.7deg,
+      transparent 34.7deg,
+      transparent 41.55deg,
+      rgba(255, 215, 0, 0.4) 44.55deg,
+      transparent 48.55deg,
+      transparent 55.4deg,
+      rgba(255, 215, 0, 0.4) 58.4deg,
+      transparent 62.4deg,
+      transparent 69.25deg,
+      rgba(255, 215, 0, 0.4) 72.25deg,
+      transparent 76.25deg,
+      transparent 83.1deg,
+      rgba(255, 215, 0, 0.4) 86.1deg,
+      transparent 90.1deg,
+      transparent 96.95deg,
+      rgba(255, 215, 0, 0.4) 99.95deg,
+      transparent 103.95deg,
+      transparent 110.8deg,
+      rgba(255, 215, 0, 0.4) 113.8deg,
+      transparent 117.8deg,
+      transparent 124.65deg,
+      rgba(255, 215, 0, 0.4) 127.65deg,
+      transparent 131.65deg,
+      transparent 138.5deg,
+      rgba(255, 215, 0, 0.4) 141.5deg,
+      transparent 145.5deg,
+      transparent 152.35deg,
+      rgba(255, 215, 0, 0.4) 155.35deg,
+      transparent 159.35deg,
+      transparent 166.2deg,
+      rgba(255, 215, 0, 0.4) 169.2deg,
+      transparent 173.2deg,
+      transparent 180.05deg,
+      rgba(255, 215, 0, 0.4) 183.05deg,
+      transparent 187.05deg,
+      transparent 193.9deg,
+      rgba(255, 215, 0, 0.4) 196.9deg,
+      transparent 200.9deg,
+      transparent 207.75deg,
+      rgba(255, 215, 0, 0.4) 210.75deg,
+      transparent 214.75deg,
+      transparent 221.6deg,
+      rgba(255, 215, 0, 0.4) 224.6deg,
+      transparent 228.6deg,
+      transparent 235.45deg,
+      rgba(255, 215, 0, 0.4) 238.45deg,
+      transparent 242.45deg,
+      transparent 249.3deg,
+      rgba(255, 215, 0, 0.4) 252.3deg,
+      transparent 256.3deg,
+      transparent 263.15deg,
+      rgba(255, 215, 0, 0.4) 266.15deg,
+      transparent 270.15deg,
+      transparent 277deg,
+      rgba(255, 215, 0, 0.4) 280deg,
+      transparent 284deg,
+      transparent 290.85deg,
+      rgba(255, 215, 0, 0.4) 293.85deg,
+      transparent 297.85deg,
+      transparent 304.7deg,
+      rgba(255, 215, 0, 0.4) 307.7deg,
+      transparent 311.7deg,
+      transparent 318.55deg,
+      rgba(255, 215, 0, 0.4) 321.55deg,
+      transparent 325.55deg,
+      transparent 332.4deg,
+      rgba(255, 215, 0, 0.4) 335.4deg,
+      transparent 339.4deg,
+      transparent 346.25deg,
+      rgba(255, 215, 0, 0.4) 349.25deg,
+      transparent 353.25deg,
+      transparent 360deg
+    ),
+    // Layer 2: Inner glow at center
+    radial-gradient(
+      circle,
+      rgba(255, 215, 0, 0.25) 0%,
+      rgba(255, 215, 0, 0.15) 15%,
+      transparent 40%
+    );
+}
+
+// ===========================
+// PLZ CARD ANIMATIONS
+// ===========================
+
+.plz-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-purple) !important;
+  }
+}
+
+// ===========================
+// TOOLTIP STYLES
+// ===========================
+
+.tooltip {
+  position: relative;
+
+  &:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1f2937;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    z-index: 10;
+  }
+}
+
+// ===========================
+// RESPONSIVE ADJUSTMENTS
+// ===========================
+
+@media (max-width: 768px) {
+  .grid-responsive {
+    grid-template-columns: 1fr;
+  }
+
+  .competency-chart {
+    height: 300px !important;
+  }
+}
+
+// ===========================
+// LOADING STATES
+// ===========================
+
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// ===========================
+// COMPETENCY DISTRIBUTION PIE CHART
+// ===========================
+
+.esco-pie-chart {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+// ===========================
+// GRADIENT BACKGROUNDS
+// ===========================
+
+.gradient-purple {
+  background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-brightpurple) 100%);
+}
+
+.gradient-overlay {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+// ===========================
+// CARD STYLES
+// ===========================
+
+.competency-card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+}
+
+// ===========================
+// TREND INDICATORS
+// ===========================
+
+.trend-up {
+  color: var(--color-green);
+}
+
+.trend-down {
+  color: var(--color-red);
+}
+
+.trend-stable {
+  color: var(--color-darkgray);
+}
+
+// ===========================
+// CUSTOM SCROLLBAR
+// ===========================
+
+.custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-purple);
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--color-brightpurple);
+    }
+  }
+}
+
+// ===========================
+// GENDER DRILL-DOWN STYLES
+// ===========================
+
+.gender-item {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(249, 250, 251, 1);
+    transform: translateX(2px);
+
+    svg {
+      color: var(--color-purple);
+    }
+  }
+
+  &:active {
+    transform: translateX(0);
+  }
+}
+
+// ===========================
+// MODAL ANIMATIONS
+// ===========================
+
+.modal-backdrop {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

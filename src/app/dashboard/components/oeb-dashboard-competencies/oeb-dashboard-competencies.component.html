@@ -1,0 +1,122 @@
+<div class="oeb-dashboard-competencies">
+	<!-- Header -->
+	<div class="tw-mb-8">
+		<h2 class="tw-text-2xl tw-font-bold tw-mb-2" style="color: var(--color-purple);">
+			{{ 'Dashboard.Competencies.title' | translate }}
+		</h2>
+		<p class="tw-text-gray-600">
+			{{ 'Dashboard.Competencies.description' | translate }}
+		</p>
+	</div>
+
+	<!-- Summary Stats - 4 Cards with 25% width each -->
+	<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 xl:tw-grid-cols-4 tw-gap-6 tw-mb-8">
+		<!-- Total Competency Hours -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2 tw-relative" style="border-color: var(--color-midgrey);">
+			<!-- Info Icon - Top Right -->
+			<div class="tw-absolute tw-top-2 tw-right-2">
+				<info-icon [width]="300">
+					{{ 'Dashboard.Competencies.totalHoursTooltip' | translate }}
+				</info-icon>
+			</div>
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-2">
+				<div class="tw-p-2 tw-rounded-lg" style="background-color: var(--color-lavender);">
+					<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				</div>
+				<h3 class="tw-text-sm tw-font-medium tw-text-gray-500">
+					{{ 'Dashboard.Competencies.totalHours' | translate }}
+				</h3>
+			</div>
+			<p class="tw-text-3xl tw-font-bold" style="color: var(--color-black);">
+				{{ totalCompetencyHours }}
+				<span class="tw-text-sm tw-font-normal tw-text-gray-500 tw-ml-1">
+					{{ 'General.hours' | translate }}
+				</span>
+			</p>
+		</div>
+
+		<!-- Hours Last Month -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-2">
+				<div class="tw-p-2 tw-rounded-lg" style="background-color: var(--color-lavender);">
+					<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				</div>
+				<h3 class="tw-text-sm tw-font-medium tw-text-gray-500">
+					{{ 'Dashboard.Competencies.hoursLastMonth' | translate }}
+				</h3>
+			</div>
+			<p class="tw-text-3xl tw-font-bold" style="color: var(--color-black);">
+				{{ competencyHoursLastMonth }}
+				<span class="tw-text-sm tw-font-normal tw-text-gray-500 tw-ml-1">
+					{{ 'General.hours' | translate }}
+				</span>
+			</p>
+			<div class="tw-flex tw-items-center tw-text-sm tw-mt-2">
+				<span class="tw-text-green-500">↗</span>
+				<span class="tw-text-gray-600 tw-ml-1">
+					{{ 'Dashboard.Competencies.newHours' | translate }}
+				</span>
+			</div>
+		</div>
+
+		<!-- Durchschnittliche Kompetenzstunden je Kompetenzen -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-2">
+				<div class="tw-p-2 tw-rounded-lg" style="background-color: var(--color-lavender);">
+					<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				</div>
+				<h3 class="tw-text-sm tw-font-medium tw-text-gray-500">
+					{{ 'Dashboard.kpi.hoursPerCompetency' | translate }}
+				</h3>
+			</div>
+			<p class="tw-text-3xl tw-font-bold" style="color: var(--color-black);">
+				{{ averageCompetencyHours }}
+				<span class="tw-text-sm tw-font-normal tw-text-gray-500 tw-ml-1">
+					{{ 'Dashboard.unit.hoursPerCompetency' | translate }}
+				</span>
+			</p>
+			<div class="tw-flex tw-items-center tw-text-sm tw-mt-2">
+				<span class="tw-text-green-500">↗</span>
+				<span class="tw-text-gray-600 tw-ml-1">
+					+12 {{ 'Dashboard.lastMonthChange' | translate }}
+				</span>
+			</div>
+		</div>
+
+		<!-- Angebotsvielfalt-Index -->
+		<div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-6 tw-border-2" style="border-color: var(--color-midgrey);">
+			<div class="tw-flex tw-items-center tw-space-x-3 tw-mb-2">
+				<div class="tw-p-2 tw-rounded-lg" style="background-color: var(--color-lavender);">
+					<div class="tw-w-6 tw-h-6 tw-rounded" style="background-color: var(--color-purple);"></div>
+				</div>
+				<h3 class="tw-text-sm tw-font-medium tw-text-gray-500">
+					{{ 'Dashboard.kpi.diversityIndex' | translate }}
+				</h3>
+			</div>
+			<p class="tw-text-3xl tw-font-bold" style="color: var(--color-black);">
+				{{ diversityIndex }}
+				<span class="tw-text-sm tw-font-normal tw-text-gray-500 tw-ml-1">
+					{{ 'Dashboard.unit.index' | translate }}
+				</span>
+			</p>
+			<div class="tw-flex tw-items-center tw-text-sm tw-mt-2">
+				<span class="tw-text-green-500">↗</span>
+				<span class="tw-text-gray-600 tw-ml-1">
+					+5 {{ 'Dashboard.lastMonthChange' | translate }}
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Competency Tracking Component -->
+	<div class="tw-mb-8">
+		<h3 class="tw-text-xl tw-font-semibold tw-mb-4" style="color: var(--color-purple);">
+			{{ 'Dashboard.Competencies.tracking' | translate }}
+		</h3>
+		<app-competency-tracking
+			[genderCompetencyData]="genderCompetencyData"
+			[competencyBubbleData]="competencyBubbleData"
+			[escoCompetencyData]="escoCompetencyData">
+		</app-competency-tracking>
+	</div>
+</div>

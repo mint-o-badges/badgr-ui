@@ -1,0 +1,31 @@
+// Regional Filter Component Styles
+.regional-filter {
+	min-height: 100vh;
+	background-color: var(--color-lightgray);
+}
+
+// Custom scrollbar for regions list
+.tw-overflow-y-auto {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-purple) var(--color-lightgray);
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--color-lightgray);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-purple);
+		border-radius: 4px;
+	}
+}
+
+// Hover effect for region items
+.tw-cursor-pointer {
+	&:active {
+		background-color: var(--color-lavender);
+	}
+}
