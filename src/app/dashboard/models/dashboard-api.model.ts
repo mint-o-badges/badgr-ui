@@ -198,6 +198,78 @@ export interface ApiInstitutionStatistics {
 // ==========================================
 
 /**
+ * User's region information (derived from zipcode)
+ */
+export interface ApiUserRegion {
+	/** Region code (first digit of zipcode, e.g., "8" for München) */
+	code: string;
+	/** Full region name */
+	name: string;
+	/** German state (Bundesland) */
+	state: string;
+	/** Region type */
+	type: 'kreisfreie-stadt' | 'landkreis';
+}
+
+/**
+ * PLZ district data
+ */
+export interface ApiPlzDistrict {
+	/** District number */
+	nr: number;
+	/** PLZ range code (e.g., "80331-80339") */
+	code: string;
+	/** District name (e.g., "Altstadt/Lehel") */
+	name: string;
+	/** Total badges in district */
+	totalBadges: number;
+	/** Badges by type distribution */
+	badgesByType: {
+		participation: number;
+		competency: number;
+		learningpath: number;
+	};
+	/** Top competencies in district */
+	topCompetencies: Array<{
+		name: string;
+		count: number;
+		percentage: number;
+	}>;
+	/** Number of institutions in district */
+	institutions: number;
+	/** Top institutions in district */
+	topInstitutions: Array<{
+		name: string;
+		badgeCount: number;
+	}>;
+	/** Demographics data */
+	demographics: {
+		genderDistribution: Array<{
+			gender: string;
+			count: number;
+			percentage: number;
+		}>;
+	};
+	/** Trend data */
+	trendData: {
+		monthlyGrowth: number;
+		yearlyGrowth: number;
+	};
+}
+
+/**
+ * PLZ districts response for a region
+ */
+export interface ApiPlzDistrictsResponse {
+	/** Region name */
+	region: string;
+	/** Region code */
+	regionCode: string;
+	/** Array of PLZ districts */
+	districts: ApiPlzDistrict[];
+}
+
+/**
  * Regional badge data from API
  */
 export interface ApiRegionalBadgeData {
