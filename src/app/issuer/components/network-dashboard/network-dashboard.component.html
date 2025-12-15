@@ -13,7 +13,7 @@
 				class="tw-flex tw-gap-4 tw-items-center"
 				[ngClass]="{ 'tw-pb-8 tw-mt-20': activeTab !== 'overview' }"
 			>
-				<div class="tw-bg-white tw-aspect-square tw-flex tw-items-center tw-justify-center">
+				<div class="tw-bg-white tw-aspect-square tw-flex tw-flex-shrink-0 tw-items-center tw-justify-center">
 					<img width="70px" [src]="network().image" alt="Network Logo" />
 				</div>
 				<div class="tw-flex tw-flex-col">
@@ -28,16 +28,37 @@
 						}}</span
 					>
 				</div>
-				@if (activeTab === 'badges' && network().current_user_network_role !== 'staff') {
+				@if (network().current_user_network_role !== 'staff') {
 					<div class="tw-ml-auto">
-						<oeb-button
-							variant="secondary"
-							[text]="'Network.createBadge' | translate"
-							[routerLink]="[`/issuer/issuers/${network().slug}/badges/select/`]"
-						></oeb-button>
+						@switch (activeTab) {
+							@case ('badges') {
+								@if (network().badgeClassCount) {
+									<oeb-button
+										variant="secondary"
+										[text]="'Network.createBadge' | translate"
+										[routerLink]="[`/issuer/issuers/${network().slug}/badges/select`]"
+									>
+									</oeb-button>
+								}
+							}
+							@case ('learningpaths') {
+								@if (network().learningpathCount) {
+									<oeb-button
+										variant="secondary"
+										[text]="'Network.createLp' | translate"
+										[routerLink]="[`/issuer/issuers/${network().slug}/learningpaths/create/`]"
+									>
+									</oeb-button>
+								}
+							}
+						}
 					</div>
 				}
-				@if (activeTab === 'partners' && network().current_user_network_role !== 'staff') {
+				@if (
+					activeTab === 'partners' &&
+					network().current_user_network_role !== 'staff' &&
+					networkInvites().length
+				) {
 					<div class="tw-ml-auto">
 						<oeb-button
 							[text]="'Network.shortInviteInstitutions' | translate"
@@ -94,4 +115,8 @@
 
 <ng-template #badgesTemplate>
 	<network-badges [network]="network()"></network-badges>
+</ng-template>
+
+<ng-template #learningPathsTemplate>
+	<network-learningpaths [network]="network()"> </network-learningpaths>
 </ng-template>

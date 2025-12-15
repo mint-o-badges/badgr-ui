@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, model, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -26,7 +26,7 @@ import { inject, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/cor
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
-import { Subscription } from 'rxjs';
+import { concatMap, debounceTime, distinctUntilChanged, Subject, Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
@@ -39,12 +39,14 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { Network } from '~/issuer/network.model';
 import { BadgeInstanceApiService } from '~/issuer/services/badgeinstance-api.service';
-import { OebTabsComponent } from '~/components/oeb-tabs.component';
+import { OebTabsComponent, Tab } from '~/components/oeb-tabs.component';
 import { ApiBadgeInstance } from '~/issuer/models/badgeinstance-api.model';
 import { ApiQRCode, NetworkQrCodeGroup } from '~/issuer/models/qrcode-api.model';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 import { PublicApiService } from '~/public/services/public-api.service';
 import { SelectNetworkComponent } from '../select-network/select-network.component';
+import { BadgeInstanceV3 } from '~/issuer/models/badgeinstancev3.model';
+import { SuccessDialogComponent } from '~/common/dialogs/oeb-dialogs/success-dialog.component';
 
 interface groupedInstances {
 	has_access: boolean;
@@ -52,6 +54,7 @@ interface groupedInstances {
 	instances: ApiBadgeInstance[];
 	issuer: any;
 }
+
 @Component({
 	selector: 'badgeclass-detail',
 	templateUrl: './badgeclass-detail.component.html',
@@ -118,13 +121,22 @@ export class BadgeClassDetailComponent
 
 	currentTaskStatus: TaskResult | null = null;
 	isTaskActive: boolean = false;
-
+	readonly INPUT_DEBOUNCE_TIME = 400;
 	private taskSubscription: Subscription | null = null;
+	private searchSubscription: Subscription | null = null;
+	private searchSubject: Subject<string> = new Subject();
 
 	TaskStatus = TaskStatus;
 
-	tabs: any = undefined;
+	tabs: Tab[] = undefined;
 	activeTab = 'qrcodes';
+
+	recipients = signal<BadgeInstanceV3[]>([]);
+	currentPageIndex = 0;
+	currentPageSize = 15;
+	totalInstanceCount = 0;
+	isLoadingInstances = false;
+	currentRecipientQuery = '';
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -228,9 +240,6 @@ export class BadgeClassDetailComponent
 		c2: 'C2 Vorreiter*in',
 	};
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
 		const sessionService = inject(SessionService);
 		const router = inject(Router);
@@ -315,7 +324,7 @@ export class BadgeClassDetailComponent
 			{
 				key: 'qrcodes',
 				title: 'QrCode.qrAwards',
-				component: this.qrAwards,
+				component: null, // rendered in the template
 			},
 			{
 				key: 'recipients',
@@ -326,13 +335,47 @@ export class BadgeClassDetailComponent
 	}
 
 	shareOnNetwork() {
-		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+		if (this.badgeClass.sharedOnNetwork) {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					variant: 'failure',
+					text: this.translate.instant('Badge.alreadyShared'),
+				},
+			});
+			return;
+		}
+
+		const cannotShare =
+			!(this.issuer instanceof Issuer) ||
+			!this.issuer.networks ||
+			this.issuer.networks.length === 0 ||
+			this.badgeClass.copyPermissions.includes('none');
+
+		if (cannotShare) {
+			if (this.issuer.is_network) {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Network.addInstitutionToIssue'),
+					},
+				});
+			} else {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Issuer.notNetworkPartnerYet'),
+					},
+				});
+			}
+			return;
+		}
+
+		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.networkSelectionHeader,
 				content: this.networkSelection,
 			},
 		});
-		this.dialogRef = dialogRef;
 	}
 
 	copyBadge() {
@@ -355,7 +398,7 @@ export class BadgeClassDetailComponent
 
 	closeDialog(result = '') {
 		if (this.dialogRef) {
-			if ((result = 'continue')) {
+			if (result === 'continue') {
 				this.dialogRef.close('continue');
 			} else {
 				this.dialogRef.close();
@@ -415,7 +458,6 @@ export class BadgeClassDetailComponent
 			headerButton: {
 				title: 'Badge.award',
 				action: () => this.routeToBadgeAward(badgeClass, this.issuer),
-				disabled: this.issuer.is_network && !this.networkUserIssuers().length,
 			},
 			issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 			qrCodeButton: {
@@ -451,10 +493,7 @@ export class BadgeClassDetailComponent
 					title: 'Badge.shareOnNetwork',
 					action: this.shareOnNetwork.bind(this),
 					icon: 'lucideShare2',
-					disabled:
-						(this.issuer instanceof Issuer
-							? !(this.issuer.networks && this.issuer.networks.length > 0)
-							: true) || badgeClass.copyPermissions.includes('none'),
+					disabled: this.issuer.is_network || badgeClass.copyPermissions.includes('none'),
 				},
 				{
 					title: badgeClass.copyPermissions.includes('others') ? 'General.copy' : 'Badge.copyThisIssuer',
@@ -463,16 +502,9 @@ export class BadgeClassDetailComponent
 					disabled: !this.issuer.canCreateBadge || badgeClass.copyPermissions.includes('none'),
 				},
 				{
-					title: 'Badge.editCopyStatus',
-					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'copypermissions'],
-					icon: 'lucideCopyX',
-					disabled: !this.issuer.canEditBadge || badgeClass.copyPermissions.includes('none'),
-				},
-				{
 					title: 'General.edit',
-					routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-					disabled:
-						badgeClass.recipientCount > 0 || !this.issuer.canEditBadge || this.qrCodeAwards.length > 0,
+					routerLink: this.getEditRoute(badgeClass),
+					disabled: !this.issuer.canEditBadge,
 					icon: 'lucidePencil',
 				},
 				{
@@ -511,40 +543,56 @@ export class BadgeClassDetailComponent
 		}
 	}
 
-	async loadInstances(recipientQuery?: string) {
-		const instances = new BadgeClassInstances(
-			this.badgeInstanceManager,
-			this.issuerSlug,
-			this.badgeSlug,
-			recipientQuery,
-		);
+	async loadInstances(recipientQuery?: string, pageIndex = 0, pageSize = 15) {
+		this.isLoadingInstances = true;
+		this.currentRecipientQuery = recipientQuery || '';
+		this.currentPageIndex = pageIndex;
+		this.currentPageSize = pageSize;
+
+		const offset = pageIndex * pageSize;
+
 		this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug);
-		this.badgeInstancesLoaded = instances.loadedPromise.then(
-			async (retInstances) => {
-				this.crumbs = [
-					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
-					{
-						title: this.issuer.name,
-						routerLink: [`/issuer/${this.issuer.is_network ? 'networks' : 'issuers'}/` + this.issuerSlug],
-					},
-					{
-						title: this.badgeClass.name,
-						routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug],
-					},
-				];
-				this.allBadgeInstances = retInstances;
-				const issuerUrls = retInstances.entities.map((i) => i.issuerUrl);
+
+		this.badgeInstancesLoaded = this.badgeInstanceApiService
+			.listBadgeInstancesV3(this.issuerSlug, this.badgeSlug, recipientQuery, pageSize, offset)
+			.then(async (result) => {
+				const tempSet = new BadgeClassInstances(
+					this.badgeInstanceManager,
+					this.issuerSlug,
+					this.badgeSlug,
+					recipientQuery,
+				);
+
+				const instances = result.results.map((i) => new BadgeInstanceV3(i));
+
+				this.recipients.set(instances);
+				if (this.totalInstanceCount === 0) this.totalInstanceCount = result.count;
+				this.recipientCount = result.count;
+
+				const issuerUrls = tempSet.entities.map((i) => i.issuerUrl);
 				this.awardingIssuers = await this.issuerManager.issuersByUrls(issuerUrls);
-				this.updateResults();
+
 				this.loadConfig(this.badgeClass);
-			},
-			(error) => {
+
+				return tempSet;
+			})
+			.catch((error) => {
 				this.messageService.reportLoadingError(
 					`Could not load recipients ${this.issuerSlug} / ${this.badgeSlug}`,
 				);
-				return error;
-			},
-		);
+				throw error;
+			})
+			.finally(() => {
+				this.isLoadingInstances = false;
+			});
+	}
+
+	onPaginationChange(pagination: { pageIndex: number; pageSize: number }) {
+		this.loadInstances(this.currentRecipientQuery, pagination.pageIndex, pagination.pageSize);
+	}
+
+	onSearchChange(searchQuery: string) {
+		this.searchSubject.next(searchQuery);
 	}
 
 	onQrBadgeAward(event: number) {
@@ -555,6 +603,7 @@ export class BadgeClassDetailComponent
 	ngOnInit() {
 		super.ngOnInit();
 		this.checkForActiveTask();
+		this.debounceSearch();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
 		this.route.queryParams.subscribe((params) => {
 			if (params['tab']) {
@@ -567,6 +616,27 @@ export class BadgeClassDetailComponent
 		if (this.taskSubscription) {
 			this.taskSubscription.unsubscribe();
 		}
+		if (this.searchSubscription) {
+			this.searchSubscription.unsubscribe();
+		}
+	}
+
+	getEditRoute(badgeClass: BadgeClass): any[] {
+		if (badgeClass.recipientCount > 0 || this.qrCodeAwards.length > 0) {
+			return ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit-issued'];
+		} else {
+			return ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'];
+		}
+	}
+
+	private debounceSearch() {
+		this.searchSubscription = this.searchSubject
+			.pipe(
+				distinctUntilChanged(),
+				debounceTime(this.INPUT_DEBOUNCE_TIME),
+				concatMap((searchQuery) => this.loadInstances(searchQuery, 0, this.currentPageSize)),
+			)
+			.subscribe();
 	}
 
 	private checkForActiveTask() {
@@ -580,10 +650,24 @@ export class BadgeClassDetailComponent
 		}
 	}
 
+	private appendPartialResults(newInstances: any[], processedCount) {
+		if (!newInstances || newInstances.length === 0) return;
+
+		const current = this.recipients();
+		const merged = [...new Map([...current, ...newInstances].map((item) => [item.slug, item])).values()];
+
+		this.recipients.set(merged);
+		this.recipientCount = this.totalInstanceCount + processedCount;
+	}
+
 	private subscribeToTaskUpdates() {
 		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
 			(taskResult: TaskResult) => {
 				this.currentTaskStatus = taskResult;
+
+				if (taskResult.status === TaskStatus.PROGRESS) {
+					this.appendPartialResults(taskResult.result.data, taskResult.result.processed);
+				}
 
 				if (taskResult.status === TaskStatus.SUCCESS) {
 					this.handleTaskSuccess(taskResult);
@@ -598,20 +682,36 @@ export class BadgeClassDetailComponent
 		);
 	}
 
+	public openSuccessDialog(recipient = null, text = null) {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+				recipient: recipient,
+				text: text,
+				variant: 'success',
+			},
+		});
+	}
+
 	private handleTaskSuccess(taskResult: TaskResult) {
 		this.isTaskActive = false;
+		this.currentTaskStatus = null;
+		this.totalInstanceCount = 0;
+		this.taskService.stopTaskPolling(this.badgeClass.slug);
 
-		const awardCount = taskResult.result?.data.length;
+		const awardCount = taskResult.result?.data?.length || 0;
+		const errorCount = taskResult.result?.errors?.length || 0;
+
 		if (awardCount) {
-			this.recipientCount += awardCount;
+			this.openSuccessDialog(null, awardCount + ' ' + this.translate.instant('QrCode.badgesAwardedSuccessfully'));
 		}
-		// Refresh datatable
-		this.loadInstances();
+
+		this.loadInstances(this.currentRecipientQuery, this.currentPageIndex, this.currentPageSize);
 	}
 
 	private handleTaskFailure(taskResult: TaskResult) {
 		this.isTaskActive = false;
-
+		this.currentTaskStatus = null;
+		this.totalInstanceCount = 0;
 		const errorMessage = taskResult.result?.error || 'Batch award process failed';
 		this.messageService.reportHandledError(this.translate.instant('Issuer.batchAwardFailed'), errorMessage);
 	}
@@ -630,7 +730,10 @@ export class BadgeClassDetailComponent
 	}
 
 	get isTaskPending(): boolean {
-		return this.currentTaskStatus?.status === TaskStatus.PENDING;
+		return (
+			this.currentTaskStatus?.status === TaskStatus.PENDING ||
+			this.currentTaskStatus?.status === TaskStatus.PROGRESS
+		);
 	}
 
 	get isTaskProcessing(): boolean {
@@ -654,24 +757,24 @@ export class BadgeClassDetailComponent
 		return this.currentTaskStatus?.status === TaskStatus.FAILURE;
 	}
 
-	revokeInstance(instance: BadgeInstance) {
+	revokeInstance(instance: BadgeInstanceV3) {
 		this.confirmDialog
 			.openResolveRejectDialog({
 				dialogTitle: this.translate.instant('General.warning'),
 				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', {
 					badge: this.badgeClass.name,
-					recipient: instance.recipientIdentifier,
+					recipient: instance.recipient_identifier,
 				}),
 				resolveButtonLabel: this.translate.instant('General.revoke'),
 				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 			.then(
 				() => {
-					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
+					instance.revokeBadgeInstance(this.badgeInstanceApiService, 'Manually revoked by Issuer').then(
 						(result) => {
 							this.messageService.reportMinorSuccess(
 								this.translate.instant('Issuer.revokeSuccess', {
-									recipient: instance.recipientIdentifier,
+									recipient: instance.recipient_identifier,
 								}),
 							);
 							this.badgeClass.update();
@@ -682,7 +785,7 @@ export class BadgeClassDetailComponent
 						(error) =>
 							this.messageService.reportAndThrowError(
 								this.translate.instant('Issuer.revokeError', {
-									recipient: instance.recipientIdentifier,
+									recipient: instance.recipient_identifier,
 								}),
 							),
 					);
@@ -692,7 +795,7 @@ export class BadgeClassDetailComponent
 	}
 
 	// To get and download badge certificate in pdf format
-	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
+	downloadCertificate(instance: BadgeInstance | BadgeInstanceV3, badgeIndex: number) {
 		this.downloadStates[instance.slug] = true;
 		this.pdfService
 			.getPdf(instance.slug, 'badges')
@@ -773,23 +876,36 @@ export class BadgeClassDetailComponent
 						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 				});
 			} else if (this.issuer.is_network) {
-				const dialogRef = this._hlmDialogService.open(DialogComponent, {
-					context: {
-						headerTemplate: this.networkIssuerSelectionHeader,
-						content: this.networkIssuerSelection,
-					},
-				});
-				this.dialogRef = dialogRef;
-				this.dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue')
-						this.router.navigate([
-							'/issuer/issuers/',
-							this.selectedNetworkIssuer.slug,
-							'badges',
-							badge.slug,
-							'issue',
-						]);
-				});
+				if (!this.networkUserIssuers().length) {
+					this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							variant: 'failure',
+							text: this.translate.instant('Network.addInstitutionToIssue'),
+						},
+					});
+				} else {
+					const dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							headerTemplate: this.networkIssuerSelectionHeader,
+							content: this.networkIssuerSelection,
+							templateContext: {
+								closeDialog: (result?) => dialogRef.close(result),
+							},
+						},
+					});
+
+					this.dialogRef = dialogRef;
+					this.dialogRef.closed$.subscribe((result) => {
+						if (result === 'continue')
+							this.router.navigate([
+								'/issuer/issuers/',
+								this.selectedNetworkIssuer.slug,
+								'badges',
+								badge.slug,
+								'issue',
+							]);
+					});
+				}
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 			}
@@ -814,23 +930,37 @@ export class BadgeClassDetailComponent
 						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 				});
 			} else if (this.issuer.is_network) {
-				const dialogRef = this._hlmDialogService.open(DialogComponent, {
-					context: {
-						headerTemplate: this.networkIssuerSelectionHeader,
-						content: this.networkIssuerSelection,
-					},
-				});
-				this.dialogRef = dialogRef;
-				this.dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue')
-						this.router.navigate([
-							'/issuer/issuers/',
-							this.selectedNetworkIssuer.slug,
-							'badges',
-							badge.slug,
-							'qr',
-						]);
-				});
+				if (!this.networkUserIssuers().length) {
+					this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							variant: 'failure',
+							text: this.translate.instant('Network.addInstitutionToIssue'),
+						},
+					});
+				} else {
+					const dialogRef = this._hlmDialogService.open(DialogComponent, {
+						context: {
+							headerTemplate: this.networkIssuerSelectionHeader,
+							content: this.networkIssuerSelection,
+							templateContext: {
+								closeDialog: (result?: string) => dialogRef.close(result),
+							},
+						},
+					});
+					this.dialogRef = dialogRef;
+					this.dialogRef.closed$.subscribe((result) => {
+						if (result === 'continue')
+							this.router.navigate(
+								['/issuer/issuers/', this.selectedNetworkIssuer.slug, 'badges', badge.slug, 'qr'],
+								{
+									queryParams: {
+										partnerIssuer: this.selectedNetworkIssuer.slug,
+										isNetworkBadge: true,
+									},
+								},
+							);
+					});
+				}
 			} else {
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 			}
@@ -855,27 +985,6 @@ export class BadgeClassDetailComponent
 		this.instanceResults = this.allBadgeInstances.entities;
 		if (this.recipientCount > this.resultsPerPage) {
 			this.showAssertionCount = true;
-		}
-	}
-
-	private hasNextPage() {
-		return this.allBadgeInstances.lastPaginationResult && this.allBadgeInstances.lastPaginationResult.nextUrl;
-	}
-	private hasPrevPage() {
-		return this.allBadgeInstances.lastPaginationResult && this.allBadgeInstances.lastPaginationResult.prevUrl;
-	}
-
-	private clickNextPage() {
-		if (this.hasNextPage()) {
-			this.showAssertionCount = false;
-			this.assertionsLoaded = this.allBadgeInstances.loadNextPage().then(() => (this.showAssertionCount = true));
-		}
-	}
-
-	private clickPrevPage() {
-		if (this.hasPrevPage()) {
-			this.showAssertionCount = false;
-			this.assertionsLoaded = this.allBadgeInstances.loadPrevPage().then(() => (this.showAssertionCount = true));
 		}
 	}
 }

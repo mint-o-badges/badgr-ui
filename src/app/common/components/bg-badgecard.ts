@@ -75,20 +75,39 @@ import { HlmP } from '@spartan-ng/helm/typography';
 						>
 					}
 					@if (publicUrl) {
-						<a class="tw-font-bold text-clamp title-clamp" hlmP size="sm" [href]="publicUrl">{{
-							badgeTitle
-						}}</a>
+						<a
+							class="tw-font-bold text-clamp title-clamp"
+							hlmP
+							size="sm"
+							[href]="publicUrl"
+							[attr.target]="useBlankHref ? '_blank' : null"
+							>{{ badgeTitle }}</a
+						>
 					}
 
 					<div class="tw-pt-2 tw-flex tw-flex-col tw-flex-wrap">
-						@if (issuerSlug) {
+						@if (issuerSlug && useBlankHref) {
 							<a
 								hlmP
 								size="sm"
 								variant="light"
 								class="badgecard-x-issuer text-clamp issuer-clamp"
 								[title]="issuerTitle"
-								[routerLink]="['../../public/issuers', issuerSlug]"
+								[href]="publicIssuerUrl"
+								[target]="useBlankHref ? '_blank' : null"
+								>{{ issuerTitle }}</a
+							>
+						} @else if (issuerSlug) {
+							<a
+								hlmP
+								size="sm"
+								variant="light"
+								class="badgecard-x-issuer text-clamp issuer-clamp"
+								[title]="issuerTitle"
+								[routerLink]="
+									network ? ['/public/networks', issuerSlug] : ['/public/issuers', issuerSlug]
+								"
+								[target]="useBlankHref ? '_blank' : null"
 								>{{ issuerTitle }}</a
 							>
 						} @else {
@@ -197,11 +216,12 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	],
 })
 export class BgBadgecard {
-	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
-	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+	readonly badgeLoadingImageUrl = 'breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = 'breakdown/static/images/badge-failed.svg';
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
 	@Input() publicUrl: string;
+	@Input() publicIssuerUrl: string;
 	@Input() badgeImage: string;
 	@Input() badgeTitle: string;
 	@Input() badgeDescription: string;
@@ -210,6 +230,7 @@ export class BgBadgecard {
 	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | 'imported' | undefined;
 	@Input() verifyUrl: string;
 	@Input() public = false;
+	@Input() network = false;
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: FormControl;
 	@Input() showCheckbox = false;
@@ -220,6 +241,7 @@ export class BgBadgecard {
 	@Input() tags: string[] = [];
 	@Input() showXIcon = false;
 	@Input() imported: boolean = false;
+	@Input() useBlankHref: boolean = false;
 
 	changeCheckbox(event: boolean) {
 		this.checkboxChange.emit(event);

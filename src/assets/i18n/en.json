@@ -34,6 +34,7 @@
 		"address": "Address",
 		"street": "Street",
 		"postalCode": "Postal Code",
+		"optionalPostalCode": "<span class=\"tw-italic tw-font-normal\">Optional: </span> Postal Code",
 		"description": "Description",
 		"city": "City",
 		"member": "Member",
@@ -83,6 +84,7 @@
 		"place": "place",
 		"forwarded": "forwarded",
 		"revoke": "revoke",
+		"withdraw": "Withdraw",
 		"confirm": "Confirm",
 		"noRequests": "No requests",
 		"oneRequest": "1 request",
@@ -313,6 +315,7 @@
 			"allCategories": "All categories",
 			"schule": "School",
 			"hochschule": "College",
+			"jugendhilfe": "Youth Welfare Organization",
 			"andere": "Others"
 		},
 		"learningPathParticipants": "Participants",
@@ -358,7 +361,7 @@
 		"websiteUrl": "Website-URL",
 		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
 		"universityLabel": "University (universities, universities of applied sciences, ...)",
-		"othersLabel": "Others (libraries, museums, FabLabs, companies, associations, ...)",
+		"othersLabel": "Other educational providers (libraries, makerspaces, museums, associations, companies, etc.)",
 		"imageRequiredError": "Please choose an image.",
 		"csvPreview": "Here you can see a preview of the first",
 		"rowsOfYourFile": "rows of your file.",
@@ -370,6 +373,7 @@
 		"creatingBadge": "Creating Badge",
 		"memberView": "Member view",
 		"partOfNetwork": "Part of the network",
+		"notNetworkPartnerYet": "The institution is not yet part of a network.",
 		"contract26": "By clicking on “Create institution,” the agreement <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/EN-Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>available here</a> pursuant to Article 26(1) GDPR on the joint data protection responsibility of the institution with its partners becomes effective.",
 		"linkedInId": "<span class=\"tw-italic tw-font-normal\">Optional: </span> LinkedIn-ID",
 		"linkedInIdUse1": "For ",
@@ -403,7 +407,8 @@
 		"evidence": "Proof of successful participation",
 		"addNewEvidence": "Add another evidence",
 		"evidenceUrl": "Evidence URL",
-		"evidenceNarrative": "Textual narrative"
+		"evidenceNarrative": "Textual narrative",
+		"youthWelfare": "Independent youth welfare organization"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -434,6 +439,7 @@
 		"networksRegistered": "networks are registered on OEB",
 		"partners": "Network members",
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
+		"addInstitutionToIssue": "The network itself does not award badges. Add institutions to your network to award badges.",
 		"partnerIssuers": "Partners",
 		"notifiedIssuerOwners": "We have notified the owners of the institutions by email.",
 		"visibleAfterConfirmation": "Once they have confirmed the invitation, they will be visible on the partner page.",
@@ -451,6 +457,8 @@
 		"alreadyConfirmed": "Another member of <span class='tw-italic'> {{issuerName}} has already accepted the network invitation from <span class='tw-font-bold'> {{networkName}}</span>.",
 		"view": "View network",
 		"createBadge": "Create network badge",
+		"createLp": "Create network learning path",
+		"noLpsYet": "There are no network learning paths yet.",
 		"awardBadgeIssuer": "Which of your <span class='tw-font-bold'>institutions</span> should the badge be awarded to?",
 		"networkBadges": "Network badges",
 		"noPartnerBadgesYet": "So far, no partner institution has released a badge for the network.",
@@ -459,7 +467,9 @@
 		"noBadgesYet": "The network <span class='tw-font-semibold'>{{network}}</span> has not created any badges yet.",
 		"sharedBy": "Shared by",
 		"sharedOn": "Shared on",
-		"website": "Network website"
+		"website": "Network website",
+		"createLpInfo": "To create a <span class='tw-font-bold'>network learning path</span>, at least two badges must be created in the network or approved for the network by partner institutions.",
+		"pendingInvites": "Unconfirmed invitations"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -513,13 +523,14 @@
 		},
 		"copyBadgeHeadline": "Select copy status",
 		"copyBadgeDescription1": "Within your own institution, badges can always be copied. ",
-		"copyBadgeDescription2": "You can update the copy status for <strong>other</strong> institutions at any time later via the menu on the badge detail page.",
+		"copyBadgeDescription2": "You can update the copy status for <strong>other</strong> institutions at any time later via the menu item 'Edit' on the badge detail page.",
 		"copyLabelOthers": "The badge may be copied by <strong>other</strong> institutions.",
 		"copy": "Copy badge for own institution",
 		"copyBadge": "Copy badge",
 		"copyableFor": "Copyable for",
 		"copyThisIssuer": "Copy (this institution)",
 		"editCopyStatus": "Edit copy status",
+		"editAfterIssuedInfo": "Since the badge has already been awarded, only the following data can be edited: ",
 		"award": "Award Badge",
 		"awardQRCode": "Award Badge using QR Code",
 		"partOfLearningPath": "This Badge is part of the following learning paths:",
@@ -553,7 +564,8 @@
 		"allNetworkMembersGetBadge": "All members of the selected network can award the badge via their institution.",
 		"networkAssertionsGetTracked": "All badge awards are included in the network's data evaluation.",
 		"cantRemoveFromNetwork": "The badge CANNOT be removed from the network.",
-		"shareBadgeOnNetwork": "Share badge on network"
+		"shareBadgeOnNetwork": "Share badge on network",
+		"alreadyShared": "The badge was already shared on a network."
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
@@ -613,7 +625,7 @@
 		"alignEducationalFramework": "Link to educational standards",
 		"frame": "Frame",
 		"expiration": "Validity",
-		"expirationInfo": "Describe how long this badge is generally valid. This information can also be changed when awarding the badge. Badges are marked as expired after their validity period has expired.",
+		"expirationInfo": "Describe how long this badge is generally valid. Badges are marked as expired after their validity period has expired.",
 		"validUntil": "The badge is valid until ",
 		"chooseDuration": "Choose duration",
 		"durationPositive": "Please enter a positive number or 0",
@@ -664,8 +676,12 @@
 		"howLearningWorks": "Also describe <u>how</u> the learning takes place.",
 		"inAddition": "In addition to subject-specific skills, <u>soft skills</u> such as social, communication, or problem-solving skills can often be acquired through teamwork, experimentation or planning.",
 		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>",
+		"successfullyCreated": "Badge successfully created!",
 		"activityEndDateRequired": "End date is required and may not be before the start date",
-		"activityStartDateRequired": "Start date is required"
+		"activityStartDateRequired": "Start date is required",
+		"selectIssuer": "For which of your institutions should the badge be created or edited?",
+		"noIssuersAvailable": "You are not part of an institution and therefore cannot create or edit badges.",
+		"selectBadge": "Select the badge you want to edit or create a new one"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -856,7 +872,8 @@
 		"shareViaLinkedIn": "On LinkedIn:",
 		"shareWithoutLinkedInId": "Info: The institution that awarded you the badge has not provided us with a LinkedIn ID. Therefore, the corresponding logo image cannot be displayed on LinkedIn.",
 		"courseDate": "Course date",
-		"courseDateShort": "Course date"
+		"courseDateShort": "Course date",
+		"venue": "Venue"
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
@@ -874,6 +891,7 @@
 		"delete": "Delete",
 		"issuedBy": "Issued by",
 		"issuedOn": "Issued on",
+		"validUntil": "Valid until",
 		"awardedTo": "Awarded to",
 		"more": "More",
 		"criteria": "Criteria",
@@ -908,7 +926,8 @@
 		"confirmRemove": "Confirm Remove",
 		"sureToRemove": "Are you sure you want to remove {{badgeName}} from your badges?",
 		"downloadMicroDegree": "Download Micro Degree",
-		"pdfDownload": "Download PDF-Certificate"
+		"pdfDownload": "Download PDF-Certificate",
+		"place": "Place"
 	},
 	"BadgeCollection": {
 		"addCollection": "Add collection",
@@ -1016,7 +1035,9 @@
 		"pleaseRenewPassword": "Therefore, we kindly request that you update your password.",
 		"pleaseRenewPasswordInfo": "Takes only a moment and provides greater protection.",
 		"dontPanic": "Don't panic – everything is fine!",
-		"repeatNewPassword": "Repeat password"
+		"repeatNewPassword": "Repeat password",
+		"loggingIn": "Logging in ...",
+		"editProfile": "Edit profile"
 	},
 	"Welcome": {
 		"heading": "Nice to see you!",
@@ -1083,6 +1104,7 @@
 		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
+		"learningpathSingular": "Learning path",
 		"learningpathsPlural": "Learning paths",
 		"learningpathsNav": "Learning Paths A-Z",
 		"catalogHeadline": "All learning paths at a glance",

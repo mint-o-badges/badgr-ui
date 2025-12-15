@@ -1,14 +1,15 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, timer, BehaviorSubject, EMPTY } from 'rxjs';
-import { switchMap, takeWhile, catchError, shareReplay, finalize, tap } from 'rxjs/operators';
+import { switchMap, takeWhile, catchError, shareReplay } from 'rxjs/operators';
 import { BaseHttpApiService } from './services/base-http-api.service';
-import { SessionService } from './services/session.service';
 import { AppConfigService } from './app-config.service';
 import { MessageService } from './services/message.service';
+import { AUTH_PROVIDER, AuthenticationService } from './services/authentication-service';
 
 export enum TaskStatus {
 	PENDING = 'PENDING',
+	PROGRESS = 'PROGRESS',
 	STARTED = 'STARTED',
 	SUCCESS = 'SUCCESS',
 	FAILURE = 'FAILURE',
@@ -34,7 +35,7 @@ export interface BadgeTaskInfo {
 	providedIn: 'root',
 })
 export class TaskPollingManagerService extends BaseHttpApiService {
-	protected loginService: SessionService;
+	protected loginService: AuthenticationService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -49,7 +50,7 @@ export class TaskPollingManagerService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const loginService = inject(SessionService);
+		const loginService = inject(AUTH_PROVIDER);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);

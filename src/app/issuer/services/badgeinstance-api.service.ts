@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
-import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { IssuerSlug } from '../models/issuer-api.model';
 import { BadgeClassSlug } from '../models/badgeclass-api.model';
@@ -8,9 +7,11 @@ import {
 	ApiBadgeInstance,
 	ApiBadgeInstanceForBatchCreation,
 	ApiBadgeInstanceForCreation,
+	BadgeInstanceResultSetV3,
 } from '../models/badgeinstance-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 
 export class PaginationResults {
 	private _links = {};
@@ -51,7 +52,7 @@ export class BadgeInstanceResultSet {
 
 @Injectable({ providedIn: 'root' })
 export class BadgeInstanceApiService extends BaseHttpApiService {
-	protected loginService: SessionService;
+	protected loginService: AuthenticationService;
 	protected http: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -60,7 +61,7 @@ export class BadgeInstanceApiService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const loginService = inject(SessionService);
+		const loginService = inject(AUTH_PROVIDER);
 		const http = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);
@@ -117,6 +118,27 @@ export class BadgeInstanceApiService extends BaseHttpApiService {
 			url += `&recipient=${query}`;
 		}
 		return this.get(url).then(this.handleAssertionResult);
+	}
+
+	listBadgeInstancesV3(
+		issuerSlug?: string,
+		badgeSlug?: string,
+		query?: string,
+		limit = 15,
+		offset = 0,
+		ordering = '-created_at',
+	): Promise<BadgeInstanceResultSetV3> {
+		const params = new URLSearchParams();
+
+		if (issuerSlug) params.append('issuer', issuerSlug);
+		if (badgeSlug) params.append('badgeclass', badgeSlug);
+		if (query) params.append('recipient', query);
+		params.append('limit', limit.toString());
+		params.append('offset', offset.toString());
+		params.append('ordering', ordering);
+
+		const url = `/v3/badgeinstances?${params.toString()}`;
+		return this.get(url).then((r) => r.body as BadgeInstanceResultSetV3);
 	}
 
 	listNetworkBadgeInstances(networkSlug: string, badgeSlug: string, num = 500): Promise<any> {

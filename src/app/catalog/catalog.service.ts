@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '~/common/app-config.service';
+import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authentication-service';
 import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
-import { SessionService } from '~/common/services/session.service';
 import { BadgeClassV3, IBadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 import { INetworkV3, NetworkV3 } from '~/issuer/models/networkv3.model';
 
@@ -13,7 +13,7 @@ const ENDPOINT = 'v3/issuer';
 	providedIn: 'root',
 })
 export class CatalogService extends BaseHttpApiService {
-	protected sessionService: SessionService;
+	protected sessionService: AuthenticationService;
 	protected httpClient: HttpClient;
 	protected configService: AppConfigService;
 	protected messageService: MessageService;
@@ -22,7 +22,7 @@ export class CatalogService extends BaseHttpApiService {
 	constructor(...args: unknown[]);
 
 	constructor() {
-		const sessionService = inject(SessionService);
+		const sessionService = inject(AUTH_PROVIDER);
 		const httpClient = inject(HttpClient);
 		const configService = inject(AppConfigService);
 		const messageService = inject(MessageService);
@@ -170,7 +170,6 @@ export interface PaginatedBadgeClass {
 	count: number;
 	next: string | null;
 	previous: string | null;
-	total_count: number;
 	results: BadgeClassV3[];
 }
 
@@ -178,6 +177,5 @@ export interface PaginatedNetwork {
 	count: number;
 	next: string | null;
 	previous: string | null;
-	total_count: number;
 	results: NetworkV3[];
 }

@@ -37,7 +37,121 @@
 								"src/app/recipient/components/recipient-skill-visualisation/recipient-skill-visualisation.component.scss"
 							],
 							"assets": ["src/favicon.ico", "src/assets/@concentricsky/badgr-style/dist/images/icons.svg"]
-						}
+						},
+						"oeb-earned-badges-overview": {
+							"main": "src/app/recipient/components/recipient-earned-badges-overview/recipient-earned-badges-overview.web-component.ts",
+							"outputPath": "dist/webcomponents/oeb-earned-badges-overview",
+							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
+								"src/styles/oeb/oeb_styles.scss",
+								"src/styles/google-webfonts/nunito.scss",
+								"src/styles/google-webfonts/rubik.scss"
+							],
+							"assets": [
+								"src/favicon.ico",
+								"src/assets/@concentricsky/badgr-style/dist/images/icons.svg",
+								"src/breakdown/static/images/badge-loading.svg",
+								"src/breakdown/static/images/badge-failed.svg",
+								"src/assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg"
+							]
+						},
+						"oeb-competency-overview": {
+							"main": "src/app/recipient/components/recipient-competency-overview/recipient-competency-overview.web-component.ts",
+							"outputPath": "dist/webcomponents/oeb-competency-overview",
+							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
+								"src/styles/oeb/oeb_styles.scss",
+								"src/styles/google-webfonts/nunito.scss",
+								"src/styles/google-webfonts/rubik.scss"
+							],
+							"assets": ["src/favicon.ico", "src/assets/@concentricsky/badgr-style/dist/images/icons.svg"]
+						},
+						"oeb-learningpaths-overview": {
+							"main": "src/app/recipient/components/recipient-learningpaths-overview/recipient-learningpaths-overview.web-component.ts",
+							"outputPath": "dist/webcomponents/oeb-learningpaths-overview",
+							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
+								"src/styles/oeb/oeb_styles.scss",
+								"src/styles/google-webfonts/nunito.scss",
+								"src/styles/google-webfonts/rubik.scss"
+							],
+							"assets": [
+								"src/favicon.ico",
+								"src/assets/@concentricsky/badgr-style/dist/images/icons.svg",
+								"src/breakdown/static/images/badge-loading.svg",
+								"src/breakdown/static/images/badge-failed.svg",
+								"src/assets/oeb/images/learningPath/learningPathIcon.svg",
+								"src/assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg"
+							]
+						},
+						"oeb-backpack": {
+							"main": "src/app/recipient/components/recipient-backpack/recipient-backpack.web-component.ts",
+							"outputPath": "dist/webcomponents/oeb-backpack",
+							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
+								"src/styles/oeb/oeb_styles.scss",
+								"src/styles/google-webfonts/nunito.scss",
+								"src/styles/google-webfonts/rubik.scss",
+								"src/app/recipient/components/recipient-skill-visualisation/recipient-skill-visualisation.component.scss"
+							],
+							"assets": [
+								"src/favicon.ico",
+								"src/assets/@concentricsky/badgr-style/dist/images/icons.svg",
+								"src/breakdown/static/images/badge-loading.svg",
+								"src/breakdown/static/images/badge-failed.svg",
+								"src/assets/oeb/images/learningPath/learningPathIcon.svg",
+								"src/assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg"
+							]
+						},
+						"oeb-badge-creation": {
+							"main": "src/app/issuer/components/badgeclass-edit-form/badgeclass-edit-form.web-component.ts",
+							"outputPath": "dist/webcomponents/oeb-badgeclass-edit-form",
+							"styles": [
+								"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
+								"src/styles/oeb/oeb_styles.scss",
+								"src/styles/google-webfonts/nunito.scss",
+								"src/styles/google-webfonts/rubik.scss",
+								"src/app/issuer/components/badgeclass-edit-form/badgeclass-edit-form.component.css",
+								"src/app/issuer/components/badgeclass-select-type/badgeclass-select-type.component.scss"
+							],
+							"assets": [
+								"src/favicon.ico",
+								"src/assets/oeb/images/badge/icon-ai-skills.svg",
+								"src/assets/oeb/images/badge/loading.svg",
+								"src/assets/oeb/images/badge/icon-ai-betterresults.svg",
+								"src/breakdown/static/images/square.svg",
+								"src/breakdown/static/badgestudio/shapes/participation.svg",
+								"src/breakdown/static/badgestudio/shapes/competency.svg",
+								"src/breakdown/static/badgestudio/shapes/learningpath.svg",
+								"src/breakdown/static/images/badge-loading.svg",
+								"src/breakdown/static/images/badge-failed.svg"
+							]
+						},
+						"production": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.prod.ts"
+								}
+							]
+						},
+						"staging": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.staging.ts"
+								}
+							]
+						},
+						"develop": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.develop.ts"
+								}
+							]
+						},
+						"local": {}
 					}
 				}
 			}

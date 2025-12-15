@@ -7,7 +7,9 @@
 					<bg-breadcrumbs [linkentries]="config.crumbs"> </bg-breadcrumbs>
 				</div>
 				<div class="oeb-section-sm">
-					<div class="tw-flex tw-flex-row tw-justify-between tw-flex-wrap tw-gap-4">
+					<div
+						class="tw-flex tw-flex-row tw-justify-between tw-items-start sm:tw-flex-nowrap tw-flex-wrap tw-gap-4"
+					>
 						<h1
 							hlmH1
 							class="tw-text-purple tw-font-extrabold tw-hyphens-auto tw- break-words oeb-break-words"
@@ -57,7 +59,7 @@
 								></oeb-dropdown>
 								<ng-template #svgTrigger>
 									<svg
-										class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+										class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[62px] md:tw-h-[62px]"
 										fill="var(--color-purple)"
 										icon="icon_more"
 									></svg>
@@ -125,7 +127,7 @@
 													: config.sharedOnNetwork
 														? ('Network.partOfNetwork' | translate)
 														: ('RecBadgeDetail.issuedBy' | translate)
-											}}:
+											}}
 										</dt>
 										<dd class="oeb-break-words tw-font-bold tw-text-oebblack">
 											{{
@@ -310,6 +312,18 @@
 											</dd>
 										</div>
 									}
+
+									@if (config.activity_city) {
+										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-darkgray">
+												{{ 'RecBadgeDetail.place' | translate }}
+											</dt>
+											<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
+												{{ config.activity_city }}
+											</dd>
+										</div>
+									}
+
 									@if (config.createdAt) {
 										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
 											<dt class="tw-text-darkgray">{{ 'Badge.createdOn' | translate }}</dt>
@@ -325,6 +339,16 @@
 											</dt>
 											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
 												<time [date]="config.issuedOn" format="dd.MM.y"></time>
+											</dd>
+										</div>
+									}
+									@if (config.validUntil) {
+										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-sm tw-text-darkgray">
+												{{ 'RecBadgeDetail.validUntil' | translate }}
+											</dt>
+											<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
+												<time [date]="config.validUntil" format="dd.MM.y"></time>
 											</dd>
 										</div>
 									}

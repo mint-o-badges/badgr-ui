@@ -9,6 +9,7 @@ import {
 	UserProfileSocialAccountRef,
 } from './user-profile-api.model';
 import { StandaloneEntitySet } from './managed-entity-set';
+import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 
 /**
  * Logical interface to the current user's profile, providing access to personal information (as the entitiy) and
@@ -35,6 +36,13 @@ export class UserProfile extends ManagedEntity<ApiUserProfile, UserProfileRef> {
 	}
 	set lastName(lastName: string) {
 		this.apiModel.last_name = lastName;
+	}
+
+	get zipCode() {
+		return this.apiModel.zip_code;
+	}
+	set zipCode(zipCode: string) {
+		this.apiModel.zip_code = zipCode;
 	}
 
 	get agreedTermsVersion() {
@@ -95,6 +103,19 @@ export class UserProfile extends ManagedEntity<ApiUserProfile, UserProfileRef> {
 			slug: UserProfile.currentProfileId,
 		};
 	}
+
+	constructor(
+		commonManager: CommonEntityManager,
+		initialEntity: ApiUserProfile = null,
+		onUpdateSubscribed: () => void = undefined,
+	) {
+		super(commonManager, onUpdateSubscribed);
+
+		if (initialEntity) {
+			this.applyApiModel(initialEntity);
+		}
+	}
+
 	agreeToLatestTerms() {
 		this.apiModel.agreed_terms_version = this.apiModel.latest_terms_version;
 		return this.save();

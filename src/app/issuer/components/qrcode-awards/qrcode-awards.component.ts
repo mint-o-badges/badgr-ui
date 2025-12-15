@@ -1,5 +1,16 @@
 import { NgIcon } from '@ng-icons/core';
-import { Component, EventEmitter, Input, Output, SimpleChanges, inject, OnChanges } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	SimpleChanges,
+	inject,
+	OnChanges,
+	input,
+	TemplateRef,
+	model,
+} from '@angular/core';
 import { BrnAccordionContent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,6 +34,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH3 } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
 import { ApiQRCode } from '~/issuer/models/qrcode-api.model';
+import { DialogComponent } from '~/components/dialog.component';
 
 @Component({
 	selector: 'qrcode-awards',
@@ -48,6 +60,11 @@ export class QrCodeAwardsComponent implements OnChanges {
 	private qrCodeApiService = inject(QrCodeApiService);
 	private router = inject(Router);
 	private translate = inject(TranslateService);
+
+	networkUserIssuers = input<Issuer[]>();
+	networkIssuerSelection = input<TemplateRef<any>>();
+	networkIssuerSelectionHeader = input<TemplateRef<any>>();
+	selectedNetworkIssuer = model<Issuer | null>();
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
@@ -136,7 +153,7 @@ export class QrCodeAwardsComponent implements OnChanges {
 	}
 
 	routeToQrAward(badge: BadgeClass, issuer) {
-		if (badge.recipientCount === 0) {
+		if (badge.recipientCount === 0 && issuer instanceof Issuer) {
 			const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
 				context: {
 					variant: 'info',
@@ -151,6 +168,37 @@ export class QrCodeAwardsComponent implements OnChanges {
 				if (result === 'continue')
 					this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 			});
+		} else if (issuer.is_network) {
+			if (!this.networkUserIssuers().length) {
+				const dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						variant: 'failure',
+						text: this.translate.instant('Network.addInstitutionToIssue'),
+					},
+				});
+			} else {
+				const dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						headerTemplate: this.networkIssuerSelectionHeader(),
+						content: this.networkIssuerSelection(),
+						templateContext: {
+							closeDialog: (result?: string) => dialogRef.close(result),
+						},
+					},
+				});
+
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue' && this.selectedNetworkIssuer()) {
+						this.router.navigate([
+							'/issuer/issuers/',
+							this.selectedNetworkIssuer().slug,
+							'badges',
+							badge.slug,
+							'qr',
+						]);
+					}
+				});
+			}
 		} else {
 			this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 		}
@@ -169,5 +217,9 @@ export class QrCodeAwardsComponent implements OnChanges {
 
 	onQrBadgeAward(count: number) {
 		this.qrBadgeAward.emit(count);
+	}
+
+	onRequestCountChanged(award: any, newCount: number) {
+		this.awards = this.awards.map((a) => (a.slug === award.slug ? { ...a, request_count: newCount } : a));
 	}
 }

@@ -1,5 +1,5 @@
 <header class="tw-relative">
-	<div class="tw-flex tw-justify-between tw-gap-6">
+	<div class="tw-flex tw-justify-between tw-gap-6 tw-items-center">
 		<div class="tw-flex oeb-section-sm md:tw-max-w-[70%]">
 			<figure class="tw-relative">
 				<img
@@ -16,7 +16,7 @@
 				</h1>
 				<ng-container *ngIf="!public && isFullIssuer(issuer)">
 					<p
-						class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+						class="tw-text-oebblack tw-mt-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
 					>
 						{{ 'Issuer.yourRole' | translate }}
 						{{ issuer.currentUserStaffMember?.roleInfo.label | translate }}
@@ -25,7 +25,7 @@
 			</hgroup>
 		</div>
 
-		<aside class="tw-w-auto tw-hidden md:tw-grid !tw-content-center tw-absolute tw-right-0 tw-top-0">
+		<aside class="tw-w-auto tw-hidden md:tw-grid !tw-content-center tw-absolute tw-right-0 tw-top-[17.5%]">
 			<p
 				*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
 				class="u-margin-top1x u-width-paragraph"
@@ -59,6 +59,7 @@
 					<oeb-button
 						class="tw-whitespace-nowrap"
 						*ngIf="public"
+						[width]="'full_width'"
 						(click)="routeToUrl(issuer.url)"
 						[text]="'General.website' | translate"
 					>
@@ -67,7 +68,7 @@
 					<!-- Network section -->
 					@if (env.networksEnabled && networks.length) {
 						<section
-							class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-4 tw-flex tw-flex-col tw-justify-center tw-items-center"
+							class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-4 tw-flex tw-flex-col tw-justify-center tw-items-center tw-max-w-80"
 							aria-labelledby="networks-heading"
 						>
 							<h2 id="networks-heading" class="tw-w-full tw-text-lg tw-text-oebblack tw-font-bold">
@@ -136,7 +137,7 @@
 				></oeb-dropdown>
 				<ng-template #svgTrigger>
 					<svg
-						class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+						class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[62px] md:tw-h-[62px]"
 						fill="var(--color-purple)"
 						icon="icon_more"
 					></svg>
@@ -147,7 +148,7 @@
 	</div>
 </header>
 
-<section aria-labelledby="description-heading" class="tw-mt-4 md:tw-pr-[280px]">
+<section aria-labelledby="description-heading" class="tw-mt-4 md:tw-pr-[350px]">
 	<h2 id="description-heading" class="tw-sr-only">Issuer Description</h2>
 	<p class="tw-text-oebblack tw-text-lg oeb-break-words">{{ issuer.description }}</p>
 </section>
@@ -203,7 +204,7 @@
 	</div>
 </div>
 
-<div class="oeb-section-sm md:tw-pr-[280px]">
+<div class="oeb-section-sm md:tw-pr-[350px]">
 	<oeb-tabs
 		[variant]="'lightpurple'"
 		(onTabChanged)="onTabChange($event)"
@@ -362,7 +363,10 @@
 
 				@for (networkGroup of networkGroupsArray; track networkGroup.network.slug) {
 					<div class="tw-mt-6">
-						<div class="tw-px-2 tw-py-3 tw-flex tw-items-center tw-gap-3 tw-border-b-2 tw-border-purple">
+						<div
+							class="tw-px-2 tw-py-3 tw-flex tw-items-center tw-gap-3 tw-border-b-2 tw-border-purple !tw-cursor-pointer"
+							[routerLink]="['/issuer/networks', networkGroup.network.slug]"
+						>
 							<img
 								class="tw-w-12 tw-h-12 tw-object-cover tw-rounded"
 								[src]="networkGroup.network.image"
@@ -380,7 +384,7 @@
 							[recipientTranslation]="'Issuer.recipientsViaThisInstitution'"
 							(directBadgeAward)="routeToBadgeAward($event, issuer)"
 							(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-							(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, $event.focusRequests)"
+							(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
 						></badges-datatable>
 					</div>
 				}
@@ -400,7 +404,8 @@
 				</div>
 				@for (group of networkBadgeInstanceResults; track group) {
 					<div
-						class="tw-px-2 tw-py-2 tw-gap-2 tw-flex tw-items-center tw-font-semibold tw-text-lg tw-leading-[130%] tw-uppercase tw-text-oebblack"
+						class="tw-px-2 tw-py-2 tw-gap-2 tw-flex tw-items-center tw-font-semibold tw-text-lg tw-leading-[130%] tw-uppercase tw-text-oebblack tw-cursor-pointer"
+						[routerLink]="['/issuer/networks', group.networkIssuer.slug]"
 					>
 						<img class="tw-w-12" [src]="group.networkIssuer.image" alt="Network Logo" />
 						<span>{{ group.issuerName }}</span>
@@ -411,9 +416,7 @@
 						[recipientTranslation]="'Issuer.recipientsViaThisInstitution'"
 						(directBadgeAward)="routeToBadgeAward($event, issuer)"
 						(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-						(redirectToBadgeDetail)="
-							routeToBadgeDetail($event.badge, group.networkIssuer, $event.focusRequests)
-						"
+						(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
 					></badges-datatable>
 				}
 			</div>
