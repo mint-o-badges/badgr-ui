@@ -20,3 +20,5 @@ temp/
 .vscode
 
 src/environments/timestamp.ts
+test-results
+e2e/screenshots

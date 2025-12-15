@@ -7,6 +7,7 @@ import {
 	lucideWarehouse,
 	lucideRoute,
 	lucideHexagon,
+	lucideOctagon,
 	lucideUsers,
 	lucideRepeat2,
 	lucideLogOut,
@@ -57,6 +58,9 @@ import {
 	lucideLock,
 	lucideCalendarDays,
 	lucideMedal,
+	lucideBuilding2,
+	lucideTarget,
+	lucideTrendingUp,
 } from '@ng-icons/lucide';
 
 export const IconsProvider = provideIcons({
@@ -67,6 +71,7 @@ export const IconsProvider = provideIcons({
 	lucideWarehouse,
 	lucideRoute,
 	lucideHexagon,
+	lucideOctagon,
 	lucideUsers,
 	lucideRepeat2,
 	lucideLogOut,
@@ -117,4 +122,7 @@ export const IconsProvider = provideIcons({
 	lucideCircleAlert,
 	lucideLock,
 	lucideMedal,
+	lucideBuilding2,
+	lucideTarget,
+	lucideTrendingUp,
 });
