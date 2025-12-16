@@ -54,7 +54,7 @@ import { Subscription } from 'rxjs';
 	styles: [
 		`
 			:host ::ng-deep {
-				brn-collapsible[data-state='open'] button span {
+				brn-collapsible[data-state='open'] > button > span {
 					font-weight: bold !important;
 				}
 			}
@@ -245,6 +245,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	ngOnInit() {
 		super.ngOnInit();
 		this.subscriptions.push(...setupActivityOnlineSync(this.issueForm));
+		if (this.issueForm.controls.evidence_items.length === 0) {
+			this.issueForm.controls.evidence_items.addFromTemplate();
+		}
 	}
 
 	ngOnDestroy() {
@@ -261,6 +264,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		}
 
 		const formState = this.issueForm.value;
+
 		const cleanedEvidence = formState.evidence_items.filter((e) => e.narrative !== '' || e.evidence_url !== '');
 		const cleanedName = striptags(formState.recipientprofile_name);
 

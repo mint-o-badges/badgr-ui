@@ -96,6 +96,9 @@
 		[showEvidence]="false"
 		[showLocation]="true"
 		[showCourseDate]="true"
+		[showEvidence]="true"
+		(addEvidenceEvent)="addEvidence()"
+		(removeEvidenceEvent)="removeEvidence($event)"
 	>
 	</oeb-optional-details>
 

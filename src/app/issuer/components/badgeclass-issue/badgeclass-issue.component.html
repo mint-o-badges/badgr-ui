@@ -98,9 +98,11 @@
 
 				<oeb-optional-details
 					[parentForm]="issueForm"
-					[showEvidence]="false"
+					[showEvidence]="true"
 					[showLocation]="true"
 					[showCourseDate]="true"
+					(addEvidenceEvent)="addEvidence()"
+					(removeEvidenceEvent)="removeEvidence($event)"
 				>
 				</oeb-optional-details>
 
