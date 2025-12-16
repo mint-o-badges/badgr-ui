@@ -187,7 +187,28 @@
 										></dd>
 									</div>
 								}
-								<dl class="tw-pt-2">
+								<hr
+									class="tw-my-4 tw-w-full tw-border-solid tw-border-top-[1px] tw-border-[--color-midgrey]"
+								/>
+								<dl>
+									@if (config.courseUrl) {
+										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<a href="{{ config.courseUrl }}" class="tw-underline tw-text-link">{{
+												'CreateBadge.course' | translate
+											}}</a>
+										</div>
+									}
+									@if (config.duration) {
+										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+											<dt class="tw-text-darkgray">
+												{{ 'RecBadgeDetail.duration' | translate }}
+											</dt>
+											<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
+												{{ +config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
+											</dd>
+										</div>
+									}
+
 									@if (config.activity_start_date) {
 										<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
 											<dt class="tw-text-sm tw-text-darkgray">
@@ -299,16 +320,6 @@
 											</dt>
 											<dd class="tw-text-sm tw-text-oebblack tw-font-medium md:tw-ml-2">
 												{{ 'Badge.categories.' + config.category | translate }}
-											</dd>
-										</div>
-									}
-									@if (config.duration) {
-										<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-											<dt class="tw-text-darkgray">
-												{{ 'RecBadgeDetail.duration' | translate }}
-											</dt>
-											<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
-												{{ +config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
 											</dd>
 										</div>
 									}

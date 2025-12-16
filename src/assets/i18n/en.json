@@ -683,6 +683,7 @@
 		"noIssuersAvailable": "You are not part of an institution and therefore cannot create or edit badges.",
 		"selectBadge": "Select the badge you want to edit or create a new one",
 		"linkToCourse": "Link to Course Offering",
+		"course": "Course Offering",
 		"websiteUrl": "Website URL"
 	},
 	"Signup": {

@@ -681,7 +681,8 @@
 		"selectIssuer": "Für welche deiner Institutionen soll der Badge erstellt bzw. editiert werden?",
 		"noIssuersAvailable": "Du bist nicht Teil einer Institution und kannst daher keine Badges erstellen oder editieren.",
 		"selectBadge": "Wähle den zu bearbeitenden Badge oder erstelle einen Neuen",
-		"linkToCourse": "Link zur Lehrveranstaltung",
+		"linkToCourse": "Link zur Lernveranstaltung",
+		"course": "Lernveranstaltung",
 		"websiteUrl": "Webseiten-URL"
 	},
 	"Signup": {

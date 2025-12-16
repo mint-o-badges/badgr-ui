@@ -74,6 +74,7 @@ export interface PageConfig {
 	validUntil?: Date;
 	activity_start_date?: Date;
 	activity_end_date?: Date;
+	courseUrl?: string;
 	duration?: string;
 	activity_city?: string;
 	category: string;
