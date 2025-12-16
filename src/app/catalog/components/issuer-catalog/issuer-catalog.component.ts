@@ -90,7 +90,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			value: 'hochschule',
 		},
 		{
-			label: 'Issuer.categories.youthWelfare',
+			label: 'Issuer.categories.jugendhilfe',
 			value: 'jugendhilfe',
 		},
 		{
