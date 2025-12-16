@@ -31,14 +31,35 @@ export class OptionalDetailsComponent implements OnInit {
 	@Input() showEvidence: boolean = false;
 	@Input() showLocation: boolean = false;
 	@Input() showCourseDate: boolean = false;
+	@Input() showNarrative: boolean = false;
 	@Input() isOptional: boolean = true;
 
 	@Output() addEvidenceEvent = new EventEmitter<void>();
 	@Output() removeEvidenceEvent = new EventEmitter<number>();
 
+	sharedNarrative: string = '';
+
 	ngOnInit() {
 		if (!this.parentForm) {
 			throw new Error('parentForm is required for OptionalDetailsComponent');
+		}
+
+		const evidence = this.evidenceItems;
+		if (evidence && evidence.length > 0) {
+			const first = evidence.controls[0].controls['narrative'] as TypedFormControl<any>;
+			this.sharedNarrative = first.value ?? '';
+		}
+	}
+
+	onNarrativeChange(event: Event): void {
+		const target = event.target as HTMLTextAreaElement;
+		this.sharedNarrative = target.value;
+
+		if (this.evidenceItems) {
+			this.evidenceItems.controls.forEach((control) => {
+				const narrativeControl = control.controls['narrative'] as TypedFormControl<any>;
+				narrativeControl.setValue(this.sharedNarrative);
+			});
 		}
 	}
 
@@ -48,6 +69,23 @@ export class OptionalDetailsComponent implements OnInit {
 
 	addEvidence(): void {
 		this.addEvidenceEvent.emit();
+
+		setTimeout(() => {
+			if (this.evidenceItems && this.evidenceItems.controls.length > 0) {
+				const lastItem = this.evidenceItems.controls[this.evidenceItems.controls.length - 1];
+				const narrativeControl = lastItem.controls['narrative'] as TypedFormControl<any>;
+				narrativeControl.setValue(this.sharedNarrative);
+			}
+		}, 0);
+	}
+
+	getEvidenceUrlControl(index: number): FormControl {
+		const item = this.evidenceItems?.controls[index];
+		if (item) {
+			const urlControl = item.controls['evidence_url'] as TypedFormControl<any>;
+			return urlControl.rawControl;
+		}
+		return new FormControl('');
 	}
 
 	removeEvidence(index: number): void {
