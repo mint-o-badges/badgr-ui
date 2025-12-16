@@ -43,6 +43,9 @@ import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { RouterLink } from '@angular/router';
 import { Network } from '~/issuer/network.model';
 import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
+import { OebDashboardOverviewComponent } from '~/dashboard/components/oeb-dashboard-overview/oeb-dashboard-overview.component';
+import { OebDashboardLearnersComponent } from '~/dashboard/components/oeb-dashboard-learners/oeb-dashboard-learners.component';
+import { OebDashboardSocialspaceComponent } from '~/dashboard/components/oeb-dashboard-socialspace/oeb-dashboard-socialspace.component';
 @Component({
 	selector: 'network-dashboard',
 	templateUrl: './network-dashboard.component.html',
@@ -62,6 +65,9 @@ import { ApiBadgeClass } from '~/issuer/models/badgeclass-api.model';
 		NetworkLearningPathsComponent,
 		RouterLink,
 		NgClass,
+		OebDashboardOverviewComponent,
+		OebDashboardLearnersComponent,
+		OebDashboardSocialspaceComponent,
 	],
 })
 export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
@@ -95,12 +101,20 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	rightsAndRolesExpanded = false;
 	networkBadges: ApiBadgeClass[] = [];
 
+	/** Base breadcrumbs (without sub-view extensions) */
+	baseCrumbs: LinkEntry[] = [];
+
+	/** Current learner sub-view state for breadcrumb extension */
+	learnerSubView: { state: string; gender?: string; residence?: { city: string } } | null = null;
+
 	private _networkStaffRoleOptions: FormFieldSelectOption[];
 
 	@ViewChild('overviewTemplate', { static: true }) overviewTemplate: ElementRef;
 	@ViewChild('partnerTemplate', { static: true }) partnerTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('learningPathsTemplate', { static: true }) learningPathsTemplate: ElementRef;
+	@ViewChild('socialspaceTemplate', { static: true }) socialspaceTemplate: ElementRef;
+	@ViewChild('learnersTemplate', { static: true }) learnersTemplate: ElementRef;
 
 	@ViewChild('headerTemplate')
 	headerTemplate: TemplateRef<void>;
@@ -112,6 +126,9 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	inviteSuccessContent: TemplateRef<void>;
 
 	@ViewChild('issuerSearchInputModel') issuerSearchInputModel: NgModel;
+
+	/** Reference to the learners component for controlling its view state */
+	@ViewChild('learnersComponentRef') learnersComponentRef: OebDashboardLearnersComponent;
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
@@ -135,7 +152,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 			this.title.setTitle(
 				`Issuer - ${this.network().name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 			);
-			this.crumbs = [
+			this.baseCrumbs = [
 				{ title: this.translate.instant('NavItems.myInstitutions'), routerLink: ['/issuer/issuers'] },
 				{
 					title: this.translate.instant('General.networks'),
@@ -144,6 +161,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 				},
 				{ title: this.network().name, routerLink: ['/issuer/network/' + this.network().slug] },
 			];
+			this.crumbs = [...this.baseCrumbs];
 		});
 	}
 
@@ -177,11 +195,68 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 				title: 'LearningPath.learningpathsPlural',
 				component: this.learningPathsTemplate,
 			},
+			{
+				key: 'socialspace',
+				title: 'Network.Dashboard.socialspace.tabTitle',
+				component: this.socialspaceTemplate,
+			},
+			{
+				key: 'learners',
+				title: 'Dashboard.Tabs.learners',
+				component: this.learnersTemplate,
+			},
 		];
 	}
 
 	onTabChange(tab) {
 		this.activeTab = tab;
+		// Reset breadcrumbs when changing tabs
+		this.learnerSubView = null;
+		this.updateBreadcrumbs();
+	}
+
+	/**
+	 * Handle learner sub-view state changes for breadcrumb updates
+	 */
+	onLearnerViewStateChange(event: { state: string; gender?: string; residence?: { city: string } }) {
+		this.learnerSubView = event;
+		this.updateBreadcrumbs();
+	}
+
+	/**
+	 * Update breadcrumbs based on current state
+	 */
+	private updateBreadcrumbs() {
+		if (!this.baseCrumbs.length) return;
+
+		// Start with base breadcrumbs
+		this.crumbs = [...this.baseCrumbs];
+
+		// Add learner sub-view breadcrumb if active
+		if (this.learnerSubView?.state === 'gender-detail' && this.learnerSubView.gender) {
+			this.crumbs.push({
+				title: `${this.translate.instant('Dashboard.genderDetail.competencyAnalysis')}: ${this.learnerSubView.gender}`,
+			});
+		} else if (this.learnerSubView?.state === 'residence-detail' && this.learnerSubView.residence) {
+			this.crumbs.push({
+				title: `${this.translate.instant('Dashboard.residenceDetail.competencyAnalysis')}: ${this.learnerSubView.residence.city}`,
+			});
+		}
+	}
+
+	/**
+	 * Navigate back from learner sub-view (e.g., gender detail, residence detail) to learners overview
+	 */
+	onBackFromLearnerSubView(): void {
+		if (this.learnersComponentRef) {
+			if (this.learnerSubView?.state === 'gender-detail') {
+				this.learnersComponentRef.onBackFromGenderDetail();
+			} else if (this.learnerSubView?.state === 'residence-detail') {
+				this.learnersComponentRef.onBackFromResidenceDetail();
+			}
+		}
+		this.learnerSubView = null;
+		this.updateBreadcrumbs();
 	}
 
 	issuerSearchInputFocusOut() {

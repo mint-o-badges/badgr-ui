@@ -28,9 +28,28 @@
 						}}</span
 					>
 				</div>
-				@if (network().current_user_network_role !== 'staff') {
+				<!-- Back button for learner sub-views (gender detail or residence detail) -->
+				@if (activeTab === 'learners' && (learnerSubView?.state === 'gender-detail' || learnerSubView?.state === 'residence-detail')) {
+					<div class="tw-ml-auto">
+						<oeb-button
+							variant="secondary"
+							(click)="onBackFromLearnerSubView()"
+							[text]="'General.back' | translate">
+						</oeb-button>
+					</div>
+				}
+				@if (network().current_user_network_role !== 'staff' && !(activeTab === 'learners' && (learnerSubView?.state === 'gender-detail' || learnerSubView?.state === 'residence-detail'))) {
 					<div class="tw-ml-auto">
 						@switch (activeTab) {
+							@case ('overview') {
+								<oeb-button
+									[variant]="partnerIssuers().length ? 'secondary' : 'default'"
+									(click)="openDialog()"
+									[text]="'Network.inviteInstitutions' | translate"
+									[disabled]="network().current_user_network_role !== 'owner'"
+								>
+								</oeb-button>
+							}
 							@case ('badges') {
 								@if (network().badgeClassCount) {
 									<oeb-button
@@ -81,15 +100,7 @@
 			</oeb-tabs>
 		</ng-template>
 		<ng-template #overviewTemplate>
-			<div class="tw-my-12">
-				<oeb-button
-					[variant]="partnerIssuers().length ? 'secondary' : 'default'"
-					(click)="openDialog()"
-					[text]="'Network.inviteInstitutions' | translate"
-					[disabled]="network().current_user_network_role !== 'owner'"
-				>
-				</oeb-button>
-			</div>
+			<app-oeb-dashboard-overview [networkSlug]="network().slug"></app-oeb-dashboard-overview>
 		</ng-template>
 	</div>
 </div>
@@ -119,4 +130,16 @@
 
 <ng-template #learningPathsTemplate>
 	<network-learningpaths [network]="network()"> </network-learningpaths>
+</ng-template>
+
+<ng-template #socialspaceTemplate>
+	<div class="page-padding">
+		<app-oeb-dashboard-socialspace [networkSlug]="network().slug"></app-oeb-dashboard-socialspace>
+	</div>
+</ng-template>
+
+<ng-template #learnersTemplate>
+	<div class="page-padding">
+		<app-oeb-dashboard-learners #learnersComponentRef [networkSlug]="network().slug" (viewStateChange)="onLearnerViewStateChange($event)"></app-oeb-dashboard-learners>
+	</div>
 </ng-template>
