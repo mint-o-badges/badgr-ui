@@ -319,6 +319,7 @@ export class QrCodeDatatableComponent implements OnInit {
 				activity_city: qrCode.activity_city,
 				activity_zip: qrCode.activity_zip,
 				activity_online: qrCode.activity_online,
+				evidence_items: qrCode.evidence_items ?? [],
 			} satisfies BadgeInstanceBatchAssertion);
 		});
 
