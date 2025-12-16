@@ -15,6 +15,7 @@ export interface ApiQRCode {
 	issuer_id?: string;
 	request_count?: number;
 	notifications?: boolean;
+	course_url?: string;
 }
 
 export interface NetworkQrCodeGroup {

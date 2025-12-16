@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, inject, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -25,6 +25,7 @@ import { DateRangeValidator } from '~/common/validators/date-range.validator';
 import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
 import { setupActivityOnlineSync } from '~/common/util/activity-place-sync-helper';
 import { Subscription } from 'rxjs';
+import { UrlValidator } from '~/common/validators/url.validator';
 
 @Component({
 	selector: 'edit-qr-form',
@@ -78,6 +79,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 		return this.route.snapshot.params['qrCodeId'];
 	}
 
+	readonly badgeInstanceCourseUrl = signal<string | null>(null);
+
 	badgeClass: BadgeClass;
 	issuer: Issuer;
 
@@ -109,6 +112,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 		.addControl('expires_at', '', [DateValidator.validDate, this.validDateRange.bind(this)])
 		.addControl('badgeclass_id', '', Validators.required)
 		.addControl('issuer_id', '', Validators.required)
+		.addControl('courseUrl', null, UrlValidator.validUrl)
 		.addControl('notifications', false);
 
 	constructor() {
@@ -147,6 +151,9 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 						.then((badgeClass) => {
 							this.badgeClass = badgeClass;
 
+							this.badgeInstanceCourseUrl.set(this.badgeClass.courseUrl ?? null);
+							this.qrForm.controls.courseUrl.setValue(this.badgeInstanceCourseUrl());
+
 							const category = badgeClass.extension['extensions:CategoryExtension'].Category;
 
 							this.badgeClassManager
@@ -181,6 +188,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 					badgeclass_id: qrCode.badgeclass_id,
 					issuer_id: qrCode.issuer_id,
 					notifications: qrCode.notifications,
+					courseUrl: qrCode.course_url,
 				});
 			});
 		}
@@ -263,6 +271,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 					badgeclass_id: this.badgeSlug,
 					issuer_id: this.issuerSlug,
 					notifications: formState.notifications,
+					course_url: formState.courseUrl,
 				})
 				.then((qrcode) => {
 					this.openSuccessDialog();
@@ -299,6 +308,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 					expires_at: formState.expires_at ? expiresDate.toISOString() : undefined,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 					notifications: formState.notifications,
+					course_url: formState.courseUrl,
 				})
 				.then((qrcode) => {
 					this.openSuccessDialog();
