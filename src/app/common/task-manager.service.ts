@@ -9,6 +9,7 @@ import { AUTH_PROVIDER, AuthenticationService } from './services/authentication-
 
 export enum TaskStatus {
 	PENDING = 'PENDING',
+	PROGRESS = 'PROGRESS',
 	STARTED = 'STARTED',
 	SUCCESS = 'SUCCESS',
 	FAILURE = 'FAILURE',

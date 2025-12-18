@@ -87,3 +87,10 @@ export interface BadgeInstanceBatchAssertion {
 	activity_city?: string;
 	activity_online?: boolean;
 }
+
+export interface BadgeInstanceResultSetV3 {
+	count: number;
+	next: string | null;
+	previous: string | null;
+	results: ApiBadgeInstance[];
+}

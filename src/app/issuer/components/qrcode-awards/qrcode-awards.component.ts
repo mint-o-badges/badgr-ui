@@ -218,4 +218,8 @@ export class QrCodeAwardsComponent implements OnChanges {
 	onQrBadgeAward(count: number) {
 		this.qrBadgeAward.emit(count);
 	}
+
+	onRequestCountChanged(award: any, newCount: number) {
+		this.awards = this.awards.map((a) => (a.slug === award.slug ? { ...a, request_count: newCount } : a));
+	}
 }

@@ -304,14 +304,4 @@ export class BadgeclassIssueBulkAwardConformation
 			this.disableActionButton();
 		}
 	}
-
-	private readonly _hlmDialogService = inject(HlmDialogService);
-	public openSuccessDialog(recipient) {
-		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
-			context: {
-				recipient: recipient,
-				variant: 'success',
-			},
-		});
-	}
 }
