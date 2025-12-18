@@ -489,6 +489,7 @@ export class BadgeClassDetailComponent
 			license: badgeClass.extension['extensions:LicenseExtension'] ? true : false,
 			learningPaths: this.learningPaths,
 			copy_permissions: badgeClass.copyPermissions,
+			expiration: badgeClass.expiration,
 			menuitems: [
 				{
 					title: 'Badge.shareOnNetwork',

@@ -929,7 +929,8 @@
 		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?",
 		"pdfDownload": "PDF-Zertifikat herunterladen",
 		"downloadMicroDegree": "Micro Degree herunterladen",
-		"place": "Ort"
+		"place": "Ort",
+		"expiryAfter": "Gültigkeit ab Vergabe"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",

@@ -123,6 +123,8 @@ export class PublicBadgeClassComponent implements OnInit {
 					networkBadge: badge.isNetworkBadge,
 					networkImage: badge.networkImage,
 					networkName: badge.networkName,
+					courseUrl: badge.badgeClass.courseUrl,
+					expiration: badge.badgeClass.expiration,
 				};
 
 				// wait for user profile, emails, issuer to check if user can copy

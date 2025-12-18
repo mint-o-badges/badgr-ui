@@ -225,7 +225,7 @@ export class BadgeclassIssueBulkAwardConformation
 				activity_zip: formState.activity_zip,
 				activity_city: formState.activity_city,
 				activity_online: formState.activity_online,
-				course_url: formState.course_url,
+				course_url: formState.courseUrl,
 			};
 			assertions.push(assertion);
 		});

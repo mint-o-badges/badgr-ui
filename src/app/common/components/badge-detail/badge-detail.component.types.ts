@@ -101,4 +101,5 @@ export interface PageConfig {
 	copy_permissions?: BadgeClassCopyPermissions[];
 	awardCriteria?: Array<{ name: string; description: string }>;
 	version?: string;
+	expiration?: number;
 }

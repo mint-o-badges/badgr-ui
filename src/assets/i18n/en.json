@@ -930,7 +930,8 @@
 		"sureToRemove": "Are you sure you want to remove {{badgeName}} from your badges?",
 		"downloadMicroDegree": "Download Micro Degree",
 		"pdfDownload": "Download PDF-Certificate",
-		"place": "Place"
+		"place": "Place",
+		"expiryAfter": "Validity from Date of Award"
 	},
 	"BadgeCollection": {
 		"addCollection": "Add collection",

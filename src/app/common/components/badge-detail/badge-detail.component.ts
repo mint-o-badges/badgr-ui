@@ -29,6 +29,7 @@ import {
 	ShareBadgeDialogComponent,
 	ShareBadgeDialogContext,
 } from '~/common/dialogs/oeb-dialogs/share-badge-dialog.component';
+import { TimePeriodPipe } from '../../util/expiration-util';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -55,6 +56,7 @@ import {
 		TranslatePipe,
 		HourPipe,
 		HlmH3,
+		TimePeriodPipe,
 	],
 })
 export class BgBadgeDetail {
