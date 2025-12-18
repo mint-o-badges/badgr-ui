@@ -811,7 +811,7 @@ export class BadgeClassDetailComponent
 	}
 
 	deleteBadge() {
-		if (this.activeRecipientCount === 0) {
+		if (this.recipientCount === 0) {
 			this.confirmDialog
 				.openResolveRejectDialog({
 					dialogTitle: this.translate.instant('General.warning'),
@@ -978,13 +978,6 @@ export class BadgeClassDetailComponent
 		if ((this.isTaskPending || this.isTaskProcessing) && this.batchAwards && !this.hasScrolled) {
 			if (this.batchAwards.nativeElement.offsetTop > 0) this.hasScrolled = true;
 			this.batchAwards.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-		}
-	}
-
-	private updateResults() {
-		this.instanceResults = this.allBadgeInstances.entities;
-		if (this.recipientCount > this.resultsPerPage) {
-			this.showAssertionCount = true;
 		}
 	}
 }
