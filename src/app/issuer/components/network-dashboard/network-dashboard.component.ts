@@ -113,9 +113,6 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 	@ViewChild('issuerSearchInputModel') issuerSearchInputModel: NgModel;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
 		const loginService = inject(SessionService);
 		const router = inject(Router);
@@ -278,10 +275,6 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	get role() {
-		if (this.network().currentUserStaffMember) {
-			return this.network().currentUserStaffMember.roleSlug;
-		} else {
-			return this.network().current_user_network_role;
-		}
+		return this.network()?.current_user_network_role;
 	}
 }
