@@ -5,6 +5,8 @@ import { AUTH_PROVIDER, AuthenticationService } from '~/common/services/authenti
 import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
 import { BadgeClassV3, IBadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
+import { Issuer } from '~/issuer/models/issuer.model';
+import { IIssuerV3, IssuerV3 } from '~/issuer/models/issuerv3.model';
 import { INetworkV3, NetworkV3 } from '~/issuer/models/networkv3.model';
 
 const ENDPOINT = 'v3/issuer';
@@ -114,6 +116,60 @@ export class CatalogService extends BaseHttpApiService {
 		}
 	}
 
+	async getIssuers(
+		offset = 0,
+		limit = 30,
+		nameQuery?: string,
+		category?: string,
+		minBadges?: number,
+		orderBy?: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc' | 'badges_desc',
+	): Promise<PaginatedIssuer | null> {
+		try {
+			let params = new HttpParams({
+				fromObject: { offset, limit },
+			});
+
+			if (nameQuery) params = params.append('name', nameQuery);
+			if (category) params = params.append('category', category);
+			if (minBadges !== undefined) params = params.append('min_badges', minBadges);
+
+			if (orderBy) {
+				switch (orderBy) {
+					case 'name_asc':
+						params = params.append('ordering', 'name');
+						break;
+					case 'name_desc':
+						params = params.append('ordering', '-name');
+						break;
+					case 'date_asc':
+						params = params.append('ordering', 'created_at');
+						break;
+					case 'date_desc':
+						params = params.append('ordering', '-created_at');
+						break;
+					case 'badges_desc':
+						params = params.append('ordering', '-badge_count');
+						break;
+				}
+			}
+
+			const response = await this.get<PaginatedIssuer & { results: IIssuerV3[] }>(
+				`${this.baseUrl}/${ENDPOINT}/issuers/`,
+				params,
+			);
+
+			if (!response.ok) return null;
+
+			return {
+				...response.body,
+				results: response.body.results.map((i) => new IssuerV3(i)),
+			};
+		} catch (e) {
+			console.warn(e);
+			return null;
+		}
+	}
+
 	/**
 	 * Gets a paginated list of networks, optionally filtered by name.
 	 * Offset-based pagination is used, so pagination is achieved by setting the limit and offset
@@ -166,16 +222,13 @@ export class CatalogService extends BaseHttpApiService {
 	}
 }
 
-export interface PaginatedBadgeClass {
+export interface Paginated<T> {
 	count: number;
 	next: string | null;
 	previous: string | null;
-	results: BadgeClassV3[];
+	results: T[];
 }
 
-export interface PaginatedNetwork {
-	count: number;
-	next: string | null;
-	previous: string | null;
-	results: NetworkV3[];
-}
+export type PaginatedBadgeClass = Paginated<BadgeClassV3>;
+export type PaginatedNetwork = Paginated<NetworkV3>;
+export type PaginatedIssuer = Paginated<IssuerV3>;
