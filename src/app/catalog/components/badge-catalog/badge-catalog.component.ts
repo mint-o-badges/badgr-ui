@@ -162,6 +162,25 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		),
 	);
 
+	sortOptions = [
+		{
+			value: 'name_asc',
+			label: 'A-Z',
+		},
+		{
+			value: 'name_desc',
+			label: 'Z-A',
+		},
+		{
+			value: 'date_asc',
+			label: this.translate.instant('General.dateAscending'),
+		},
+		{
+			value: 'date_desc',
+			label: this.translate.instant('General.dateDescending'),
+		},
+	];
+
 	sortControl = new FormControl('');
 	tagsControl = new FormControl();
 	intersectionObserver: IntersectionObserver | undefined;
