@@ -432,7 +432,7 @@
 							<h3 hlmH3 class="tw-font-semibold tw-mb-2">
 								{{ 'CreateBadge.shortDescription' | translate }}
 							</h3>
-							<p hlmP>{{ config.badgeDescription }}</p>
+							<p class="tw-text-oebblack tw-text-lg">{{ config.badgeDescription }}</p>
 						</section>
 
 						<!-- Kompetenzen -->
@@ -451,6 +451,33 @@
 										[studyload]="(competency.studyLoad | hourPipe) + ' h'"
 									></competency-accordion>
 								}
+							</section>
+						}
+
+						<!-- Evidence -->
+						@if (normalizedEvidence.length > 0) {
+							<section class="tw-text-oebblack tw-mb-10">
+								<h3 hlmH3 class="tw-font-semibold tw-text-oebblack">
+									{{ 'RecBadgeDetail.narrative' | translate }}
+								</h3>
+								<ul class="tw-py-2">
+									@for (item of normalizedEvidence; track item) {
+										@if (item.url) {
+											<li class="tw-flex tw-items-center tw-text-lg">
+												<ng-icon hlm size="16px" name="lucideExternalLink" />
+												<a
+													class="tw-text-link tw-ml-2 tw-underline"
+													[href]="item.url"
+													target="_blank"
+													>{{ 'RecBadgeDetail.viewEvidenceUrl' | translate }}</a
+												>
+											</li>
+										}
+									}
+								</ul>
+								<p class="tw-text-oebblack tw-text-lg">
+									{{ normalizedEvidence[0].narrative }}
+								</p>
 							</section>
 						}
 

@@ -89,7 +89,11 @@ export class BadgeclassIssueBulkAwardConformation
 		])
 		.addControl('activity_zip', '')
 		.addControl('activity_city', '')
-		.addControl('activity_online', false);
+		.addControl('activity_online', false)
+		.addArray(
+			'evidence_items',
+			typedFormGroup().addControl('narrative', '').addControl('evidence_url', '', UrlValidator.validUrl),
+		);
 
 	buttonDisabledClass = true;
 	buttonDisabledAttribute = true;
@@ -119,6 +123,9 @@ export class BadgeclassIssueBulkAwardConformation
 	ngOnInit(): void {
 		this.enableActionButton();
 		this.subscriptions.push(...setupActivityOnlineSync(this.optionalDetailsForm));
+		if (this.optionalDetailsForm.controls.evidence_items.length === 0) {
+			this.optionalDetailsForm.controls.evidence_items.addFromTemplate();
+		}
 		this.optionalDetailsForm.controls.courseUrl.setValue(this.badgeClass().courseUrl ?? null);
 		this.badgeInstanceCourseUrl.set(this.optionalDetailsForm.controls.courseUrl.value);
 	}
@@ -128,6 +135,14 @@ export class BadgeclassIssueBulkAwardConformation
 			this.taskSubscription.unsubscribe();
 		}
 		this.subscriptions.forEach((s) => s.unsubscribe());
+	}
+
+	addEvidence() {
+		this.optionalDetailsForm.controls.evidence_items.addFromTemplate();
+	}
+
+	removeEvidence(i: number) {
+		this.optionalDetailsForm.controls.evidence_items.removeAt(i);
 	}
 
 	enableActionButton() {
@@ -225,6 +240,7 @@ export class BadgeclassIssueBulkAwardConformation
 				activity_zip: formState.activity_zip,
 				activity_city: formState.activity_city,
 				activity_online: formState.activity_online,
+				evidence_items: formState.evidence_items,
 				course_url: formState.courseUrl,
 			};
 			assertions.push(assertion);

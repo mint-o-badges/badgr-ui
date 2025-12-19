@@ -1,8 +1,9 @@
-import { PublicApiLearningPath } from '../../../public/models/public-api.model';
+import { OB3EvidenceItem, PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { ApiLearningPath } from '../../model/learningpath-api.model';
 import { LinkEntry } from '../bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCopyPermissions } from '../../../issuer/models/badgeclass-api.model';
 import { Issuer } from '~/issuer/models/issuer.model';
+import { ApiBadgeInstanceEvidenceItem } from '~/issuer/models/badgeinstance-api.model';
 
 type MenuItemBase = {
 	title: string;
@@ -93,6 +94,7 @@ export interface PageConfig {
 	badgeDescription: string;
 	criteria?: Array<string | object>;
 	competencies?: CompetencyType[];
+	evidence_items?: (ApiBadgeInstanceEvidenceItem | OB3EvidenceItem)[];
 	license?: boolean;
 	id?: string;
 	shareButton?: boolean;

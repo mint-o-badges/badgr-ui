@@ -29,9 +29,15 @@ import {
 	ShareBadgeDialogComponent,
 	ShareBadgeDialogContext,
 } from '~/common/dialogs/oeb-dialogs/share-badge-dialog.component';
+import { ApiBadgeInstanceEvidenceItem } from '~/issuer/models/badgeinstance-api.model';
 import { TimePeriodPipe } from '../../util/expiration-util';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { toSignal } from '@angular/core/rxjs-interop';
+
+type NormalizedEvidenceItem = {
+	url?: string;
+	narrative?: string;
+};
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -77,6 +83,15 @@ export class BgBadgeDetail {
 		this.translate.get('Badge.categories.competency').subscribe((str) => {
 			this.competencyBadge = str;
 		});
+	}
+
+	get normalizedEvidence(): NormalizedEvidenceItem[] {
+		if (!this.config.evidence_items) return [];
+
+		return this.config.evidence_items.map((item: any) => ({
+			url: (item as ApiBadgeInstanceEvidenceItem).evidence_url ?? (item as any).id,
+			narrative: item.narrative,
+		}));
 	}
 
 	getLearningPaths(): PublicApiLearningPath[] {

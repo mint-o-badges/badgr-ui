@@ -7,16 +7,18 @@ import { BadgeClassCopyPermissions } from '../../issuer/models/badgeclass-api.mo
 import { BadgeClass } from '../../issuer/models/badgeclass.model';
 import { Issuer } from '../../issuer/models/issuer.model';
 
+export interface OB3EvidenceItem {
+	type: string;
+	id?: string;
+	narrative?: string;
+}
+
 export interface PublicApiBadgeAssertion_OB3 {
 	'@context': Array<string>;
 	type: ['VerifiableCredential', 'OpenBadgeCredential'];
 	id: string;
 	name: string;
-	evidence: Array<{
-		type: string;
-		id?: string;
-		narrative?: string;
-	}>;
+	evidence: OB3EvidenceItem[];
 	issuer: {
 		id: string;
 		type: ['Profile'];

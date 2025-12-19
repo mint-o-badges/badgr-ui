@@ -406,8 +406,10 @@
 		"addOptionalDetails": "Add optional details",
 		"evidence": "Proof of successful participation",
 		"addNewEvidence": "Add another evidence",
-		"evidenceUrl": "Evidence URL",
-		"evidenceNarrative": "Textual narrative",
+		"evidenceUrl": "Evidence URL (link to e.g. materials or photos that prove learning success)",
+		"evidenceNarrative": "Textual narrative (story/background information on badge awarding; max. 600 characters)",
+		"narrative": "Evidence / narrative",
+		"addEvidenceUrl": "Add another URL",
 		"youthWelfare": "Independent youth welfare organization"
 	},
 	"Network": {

@@ -108,6 +108,10 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 		.addControl('activity_zip', '')
 		.addControl('activity_city', '')
 		.addControl('activity_online', false)
+		.addArray(
+			'evidence_items',
+			typedFormGroup().addControl('narrative', '').addControl('evidence_url', '', UrlValidator.validUrl),
+		)
 		.addControl('valid_from', '', DateValidator.validDate)
 		.addControl('expires_at', '', [DateValidator.validDate, this.validDateRange.bind(this)])
 		.addControl('badgeclass_id', '', Validators.required)
@@ -179,6 +183,14 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 					activity_zip: qrCode.activity_zip,
 					activity_city: qrCode.activity_city,
 					activity_online: qrCode.activity_online,
+					evidence_items:
+						qrCode.evidence_items && qrCode.evidence_items.length > 0
+							? qrCode.evidence_items.map((e) => ({
+									narrative: e.narrative ?? '',
+									evidence_url: e.evidence_url ?? '',
+								}))
+							: [],
+
 					valid_from: qrCode.valid_from
 						? EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd')
 						: undefined,
@@ -211,9 +223,21 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 
 	ngOnInit() {
 		this.subscriptions.push(...setupActivityOnlineSync(this.qrForm));
+		if (this.qrForm.controls.evidence_items.length === 0) {
+			this.qrForm.controls.evidence_items.addFromTemplate();
+		}
 	}
+
 	ngOnDestroy() {
 		this.subscriptions.forEach((s) => s.unsubscribe());
+	}
+
+	addEvidence() {
+		this.qrForm.controls.evidence_items.addFromTemplate();
+	}
+
+	removeEvidence(i: number) {
+		this.qrForm.controls.evidence_items.removeAt(i);
 	}
 
 	previousPage() {
@@ -250,6 +274,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 
 		if (this.editing) {
 			const formState = this.qrForm.value;
+			const cleanedEvidence = formState.evidence_items.filter((e) => e.narrative !== '' || e.evidence_url !== '');
+
 			const expiresDate = new Date(formState.expires_at);
 			expiresDate.setHours(23, 59, 59, 999);
 			this.qrCodePromise = this.qrCodeApiService
@@ -266,6 +292,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 					activity_zip: formState.activity_zip,
 					activity_online: formState.activity_online,
 					activity_city: formState.activity_city,
+					evidence_items: cleanedEvidence,
 					expires_at: formState.expires_at ? expiresDate.toISOString() : null,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : null,
 					badgeclass_id: this.badgeSlug,
@@ -287,6 +314,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 				});
 		} else {
 			const formState = this.qrForm.value;
+			const cleanedEvidence = formState.evidence_items.filter((e) => e.narrative !== '' || e.evidence_url !== '');
+
 			const issuer = this.isNetworkBadge && this.partnerIssuerSlug ? this.partnerIssuerSlug : this.issuerSlug;
 			const expiresDate = new Date(formState.expires_at);
 			expiresDate.setHours(23, 59, 59, 999);
@@ -305,6 +334,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent impl
 					activity_zip: formState.activity_zip,
 					activity_online: formState.activity_online,
 					activity_city: formState.activity_city,
+					evidence_items: cleanedEvidence,
 					expires_at: formState.expires_at ? expiresDate.toISOString() : undefined,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 					notifications: formState.notifications,
