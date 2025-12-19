@@ -30,6 +30,8 @@ import {
 	ShareBadgeDialogContext,
 } from '~/common/dialogs/oeb-dialogs/share-badge-dialog.component';
 import { TimePeriodPipe } from '../../util/expiration-util';
+import { AUTH_PROVIDER } from '~/common/services/authentication-service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -60,6 +62,7 @@ import { TimePeriodPipe } from '../../util/expiration-util';
 	],
 })
 export class BgBadgeDetail {
+	private authService = inject(AUTH_PROVIDER);
 	private dialogService = inject(HlmDialogService);
 	private translate = inject(TranslateService);
 	private recipientManager = inject(RecipientBadgeManager);
@@ -67,6 +70,8 @@ export class BgBadgeDetail {
 	@Input() config: PageConfig;
 	@Input() awaitPromises?: Promise<any>[];
 	@Input() badge?: RecipientBadgeInstance | BadgeInstance | ApiImportedBadgeInstance;
+
+	isLoggedIn = toSignal(this.authService.isLoggedIn$);
 
 	constructor() {
 		this.translate.get('Badge.categories.competency').subscribe((str) => {
@@ -99,6 +104,7 @@ export class BgBadgeDetail {
 	}
 
 	checkCompleted(lp: LearningPath | PublicApiLearningPath): boolean {
+		if (!this.isLoggedIn()) return false;
 		if (lp.required_badges_count != lp.badges.length) {
 			const userAssertions = this.recipientManager.recipientBadgeList.entities;
 			const badgeClassIds = lp.badges.map((b) => b.badge.slug);
