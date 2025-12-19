@@ -26,7 +26,6 @@ export interface IIssuerV3 {
 	category?: string;
 	tags?: string[];
 
-	// Location data
 	street?: string;
 	streetnumber?: string;
 	zip?: string;
@@ -37,9 +36,6 @@ export interface IIssuerV3 {
 	lon?: number;
 
 	linkedin_id?: string;
-
-	// Staff info (simplified - only count or minimal info for catalog view)
-	staff_count?: number;
 
 	json: { id: string };
 }
@@ -97,23 +93,4 @@ export class IssuerV3 implements IIssuerV3 {
 	get hasLocation(): boolean {
 		return !!(this.lat && this.lon);
 	}
-
-	get fullAddress(): string | null {
-		const parts = [
-			this.street && this.streetnumber ? `${this.street} ${this.streetnumber}` : null,
-			this.zip && this.city ? `${this.zip} ${this.city}` : null,
-			this.state,
-			this.country,
-		].filter(Boolean);
-
-		return parts.length > 0 ? parts.join(', ') : null;
-	}
-}
-
-export interface PaginatedIssuer {
-	count: number;
-	total_count: number;
-	next: string | null;
-	previous: string | null;
-	results: IssuerV3[];
 }
