@@ -410,7 +410,9 @@
 		"evidenceNarrative": "Textual narrative (story/background information on badge awarding; max. 600 characters)",
 		"narrative": "Evidence / narrative",
 		"addEvidenceUrl": "Add another URL",
-		"youthWelfare": "Independent youth welfare organization"
+		"youthWelfare": "Independent youth welfare organization",
+		"catalogAllLoaded": "All institutions matching your search criteria loaded.",
+		"badgeCount": "Badge Count"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",

@@ -410,7 +410,9 @@
 		"evidenceNarrative": "Textliches Narrativ (Erzählung/Hintergrund-Infos zur Badge-Vergabe; max. 600 Zeichen)",
 		"narrative": "Nachweis / Narrativ",
 		"addEvidenceUrl": "Weitere URL hinzufügen",
-		"youthWelfare": "Freier Träger der Jugendhilfe"
+		"youthWelfare": "Freier Träger der Jugendhilfe",
+		"catalogAllLoaded": "Alle Institutionen, die deinen Suchkriterien entsprechen, wurden geladen.",
+		"badgeCount": "Badge-Anzahl"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
