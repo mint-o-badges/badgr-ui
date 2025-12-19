@@ -406,8 +406,10 @@
 		"addOptionalDetails": "Optionale Details hinzufügen",
 		"evidence": "Nachweis für erfolgreiche Teilnahme",
 		"addNewEvidence": "Weiteren Nachweis hinzufügen",
-		"evidenceUrl": "URL zum Nachweis",
-		"evidenceNarrative": "Textliches Narrativ",
+		"evidenceUrl": "Nachweis-URL (Link zu z.B. Materialien oder Fotos, die den Lernerfolg belegen)",
+		"evidenceNarrative": "Textliches Narrativ (Erzählung/Hintergrund-Infos zur Badge-Vergabe; max. 600 Zeichen)",
+		"narrative": "Nachweis / Narrativ",
+		"addEvidenceUrl": "Weitere URL hinzufügen",
 		"youthWelfare": "Freier Träger der Jugendhilfe",
 		"catalogAllLoaded": "Alle Institutionen, die deinen Suchkriterien entsprechen, wurden geladen.",
 		"badgeCount": "Badge-Anzahl"
@@ -684,7 +686,10 @@
 		"activityStartDateRequired": "Startdatum ist erforderlich",
 		"selectIssuer": "Für welche deiner Institutionen soll der Badge erstellt bzw. editiert werden?",
 		"noIssuersAvailable": "Du bist nicht Teil einer Institution und kannst daher keine Badges erstellen oder editieren.",
-		"selectBadge": "Wähle den zu bearbeitenden Badge oder erstelle einen Neuen"
+		"selectBadge": "Wähle den zu bearbeitenden Badge oder erstelle einen Neuen",
+		"linkToCourse": "Link zur Lernveranstaltung",
+		"course": "Lernveranstaltung",
+		"websiteUrl": "Webseiten-URL"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -913,7 +918,7 @@
 		"viewAlignmentUrl": "Besuche Verknüpfungs-URL",
 		"narrative": "Narrativ",
 		"evidence": "Nachweis",
-		"viewEvidenceUrl": "Besuche Nachweis-URL",
+		"viewEvidenceUrl": "Nachweis-URL",
 		"downloadImage": "Download Badge-Bild",
 		"downloadImage20": "Download Badge-Bild (2.0)",
 		"downloadImage30": "Download Badge-Bild (3.0)",
@@ -930,7 +935,8 @@
 		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?",
 		"pdfDownload": "PDF-Zertifikat herunterladen",
 		"downloadMicroDegree": "Micro Degree herunterladen",
-		"place": "Ort"
+		"place": "Ort",
+		"expiryAfter": "Gültigkeit ab Vergabe"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",

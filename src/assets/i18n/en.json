@@ -406,8 +406,10 @@
 		"addOptionalDetails": "Add optional details",
 		"evidence": "Proof of successful participation",
 		"addNewEvidence": "Add another evidence",
-		"evidenceUrl": "Evidence URL",
-		"evidenceNarrative": "Textual narrative",
+		"evidenceUrl": "Evidence URL (link to e.g. materials or photos that prove learning success)",
+		"evidenceNarrative": "Textual narrative (story/background information on badge awarding; max. 600 characters)",
+		"narrative": "Evidence / narrative",
+		"addEvidenceUrl": "Add another URL",
 		"youthWelfare": "Independent youth welfare organization",
 		"catalogAllLoaded": "All institutions matching your search criteria loaded.",
 		"badgeCount": "Badge Count"
@@ -685,7 +687,10 @@
 		"activityStartDateRequired": "Start date is required",
 		"selectIssuer": "For which of your institutions should the badge be created or edited?",
 		"noIssuersAvailable": "You are not part of an institution and therefore cannot create or edit badges.",
-		"selectBadge": "Select the badge you want to edit or create a new one"
+		"selectBadge": "Select the badge you want to edit or create a new one",
+		"linkToCourse": "Link to Course Offering",
+		"course": "Course Offering",
+		"websiteUrl": "Website URL"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -931,7 +936,8 @@
 		"sureToRemove": "Are you sure you want to remove {{badgeName}} from your badges?",
 		"downloadMicroDegree": "Download Micro Degree",
 		"pdfDownload": "Download PDF-Certificate",
-		"place": "Place"
+		"place": "Place",
+		"expiryAfter": "Validity from Date of Award"
 	},
 	"BadgeCollection": {
 		"addCollection": "Add collection",
