@@ -42,6 +42,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmIcon } from '@spartan-ng/helm/icon';
+import { createInfiniteScrollObserver } from '~/catalog/util/intersection-observer';
 
 @Component({
 	selector: 'app-issuer-catalog',
@@ -71,8 +72,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	route = inject(ActivatedRoute);
 	private title = inject(Title);
 	private translate = inject(TranslateService);
-	private messageService = inject(MessageService);
-	private sessionService = inject(SessionService);
 	private configService = inject(AppConfigService);
 	private profileManager = inject(UserProfileManager);
 	private catalogService = inject(CatalogService);
@@ -242,9 +241,13 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 
 	ngAfterViewInit(): void {
-		this.intersectionObserver = this.setupIntersectionObserver(this.loadMore);
-		const myAPIKey = 'pk.eyJ1IjoidW11dDAwIiwiYSI6ImNrdXpoeDh3ODB5NzMydnFxMzI4eTlma3AifQ.SXH5fK6-sTOhrgWxiT10OQ';
-		const mapStyle = 'mapbox://styles/mapbox/streets-v11';
+		this.intersectionObserver = createInfiniteScrollObserver(this.loadMore, {
+			hasNext: this.hasNext,
+			observeScrolling: this.observeScrolling,
+			onLoadMore: () => {
+				this.currentPage.update((p) => p + 1);
+			},
+		});
 
 		const initialState = { lng: 10.5, lat: 51, zoom: 5 };
 		const style: any = {
@@ -527,18 +530,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		} else {
 			this.mapObject.getSource('issuers').setData(this.issuerGeoJson);
 		}
-	}
-
-	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries.at(0)?.isIntersecting && this.hasNext() && this.observeScrolling()) {
-					this.currentPage.update((p) => p + 1);
-				}
-			},
-			{ rootMargin: '20% 0px' },
-		);
-		return observer;
 	}
 
 	openMap(): void {

@@ -41,6 +41,7 @@ import { HlmInput } from '@spartan-ng/helm/input';
 import { OebHeaderText } from '~/components/oeb-header-text.component';
 import { IssuerApiService } from '~/issuer/services/issuer-api.service';
 import { ApiIssuer } from '~/issuer/models/issuer-api.model';
+import { createInfiniteScrollObserver } from '~/catalog/util/intersection-observer';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -276,7 +277,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 
 	ngAfterViewInit(): void {
-		this.intersectionObserver = this.setupIntersectionObserver(this.loadMore);
+		this.intersectionObserver = createInfiniteScrollObserver(this.loadMore, {
+			hasNext: this.hasNext,
+			observeScrolling: this.observeScrolling,
+			onLoadMore: () => {
+				this.currentPage.update((p) => p + 1);
+			},
+		});
 	}
 
 	ngOnDestroy(): void {
@@ -329,18 +336,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			this.tagsOptions.set(tags);
 			return tags;
 		});
-	}
-
-	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries.at(0)?.isIntersecting && this.hasNext() && this.observeScrolling()) {
-					this.currentPage.update((p) => p + 1);
-				}
-			},
-			{ rootMargin: '20% 0px' },
-		);
-		return observer;
 	}
 
 	private async loadRangeOfBadges(
