@@ -451,7 +451,8 @@
 		"role": {
 			"owner": "Owner",
 			"editor": "Editor",
-			"staff": "Member"
+			"staff": "Member",
+			"creator": "Creator / Owner"
 		},
 		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
 		"partnerSince": "Network Partner since",
@@ -471,7 +472,8 @@
 		"sharedOn": "Shared on",
 		"website": "Network website",
 		"createLpInfo": "To create a <span class='tw-font-bold'>network learning path</span>, at least two badges must be created in the network or approved for the network by partner institutions.",
-		"pendingInvites": "Unconfirmed invitations"
+		"pendingInvites": "Unconfirmed invitations",
+		"edit": "Edit network"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -683,7 +685,10 @@
 		"activityStartDateRequired": "Start date is required",
 		"selectIssuer": "For which of your institutions should the badge be created or edited?",
 		"noIssuersAvailable": "You are not part of an institution and therefore cannot create or edit badges.",
-		"selectBadge": "Select the badge you want to edit or create a new one"
+		"selectBadge": "Select the badge you want to edit or create a new one",
+		"linkToCourse": "Link to Course Offering",
+		"course": "Course Offering",
+		"websiteUrl": "Website URL"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -929,7 +934,8 @@
 		"sureToRemove": "Are you sure you want to remove {{badgeName}} from your badges?",
 		"downloadMicroDegree": "Download Micro Degree",
 		"pdfDownload": "Download PDF-Certificate",
-		"place": "Place"
+		"place": "Place",
+		"expiryAfter": "Validity from Date of Award"
 	},
 	"BadgeCollection": {
 		"addCollection": "Add collection",

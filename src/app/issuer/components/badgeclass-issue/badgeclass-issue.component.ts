@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy, signal } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -100,6 +100,8 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 
+	readonly badgeInstanceCourseUrl = signal<string | null>(null);
+
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
 	get issuerSlug() {
@@ -170,6 +172,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		.addControl('activity_zip', '')
 		.addControl('activity_city', '')
 		.addControl('activity_online', false)
+		.addControl('courseUrl', null, UrlValidator.validUrl)
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',
@@ -209,6 +212,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
 				.then((badgeClass) => {
 					this.badgeClass = badgeClass;
+
+					this.badgeInstanceCourseUrl.set(this.badgeClass.courseUrl ?? null);
+					this.issueForm.controls.courseUrl.setValue(this.badgeInstanceCourseUrl());
 
 					const category = badgeClass.extension['extensions:CategoryExtension'].Category;
 
@@ -314,6 +320,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				activity_zip: formState.activity_zip,
 				activity_city: formState.activity_city,
 				activity_online: formState.activity_online,
+				course_url: formState.courseUrl,
 			})
 			.then(() => this.badgeClass.update())
 			.then(

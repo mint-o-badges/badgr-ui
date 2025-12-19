@@ -69,15 +69,6 @@ export interface PublicApiBadgeAssertion_OB3 {
 	// Custom extensions
 	slug?: string;
 	sourceUrl?: string;
-	isNetworkBadge?: boolean;
-	networkImage?: string;
-	networkName?: string;
-	sharedOnNetwork?: {
-		slug: string;
-		name: string;
-		image: string | null;
-		description: string | null;
-	} | null;
 
 	// When expanded
 	badge?: PublicApiBadgeClass;
@@ -116,15 +107,6 @@ export interface PublicApiBadgeAssertion_OB2 {
 	slug: string;
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
-	isNetworkBadge: boolean;
-	networkImage: string;
-	networkName: string;
-	sharedOnNetwork: {
-		slug: string;
-		name: string;
-		image: string | null;
-		description: string | null;
-	} | null;
 }
 
 export type PublicApiBadgeAssertion = PublicApiBadgeAssertion_OB2 | PublicApiBadgeAssertion_OB3;
@@ -170,12 +152,19 @@ export interface PublicApiBadgeClass {
 	tags: string[];
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
+	courseUrl?: string;
 	badge?: any;
 	copy_permissions?: BadgeClassCopyPermissions[];
 	awardCriteria?: Array<{ name: string; description: string }>;
 	isNetworkBadge: boolean;
 	networkImage: string;
 	networkName: string;
+	sharedOnNetwork?: {
+		slug: string;
+		name: string;
+		image: string | null;
+		description: string | null;
+	} | null;
 }
 export interface PublicApiBadgeClassWithIssuer extends PublicApiBadgeClass {
 	issuer: PublicApiIssuer;

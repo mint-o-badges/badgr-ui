@@ -1,7 +1,6 @@
 import {
 	Component,
 	EventEmitter,
-	Input,
 	Output,
 	inject,
 	OnDestroy,
@@ -10,6 +9,8 @@ import {
 	QueryList,
 	ElementRef,
 	OnInit,
+	input,
+	signal,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,47 +26,27 @@ import {
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgeInstanceBatchAssertion } from '../../models/badgeinstance-api.model';
 import striptags from 'striptags';
-import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
-import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
 import { TaskStatus, TaskResult, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
-import { HlmH1, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { isValidEmail } from '~/common/util/is-valid-email';
-import { OebInputComponent } from '~/components/input.component';
 import { DateValidator } from '~/common/validators/date.validator';
 import { DateRangeValidator } from '~/common/validators/date-range.validator';
-import { OebSeparatorComponent } from '~/components/oeb-separator.component';
-import { OebCollapsibleComponent } from '~/components/oeb-collapsible.component';
-import { NgIcon } from '@ng-icons/core';
 import { OptionalDetailsComponent } from '../optional-details/optional-details.component';
 import { setupActivityOnlineSync } from '~/common/util/activity-place-sync-helper';
 import { UrlValidator } from '~/common/validators/url.validator';
+import { BadgeClass } from '~/issuer/models/badgeclass.model';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-	imports: [
-		HlmH1,
-		HlmP,
-		OebButtonComponent,
-		HlmH3,
-		OebCheckboxComponent,
-		TranslatePipe,
-		NgClass,
-		FormsModule,
-		OebInputComponent,
-		OebSeparatorComponent,
-		OebCollapsibleComponent,
-		NgIcon,
-		OptionalDetailsComponent,
-	],
+	imports: [HlmH1, HlmP, OebButtonComponent, TranslatePipe, NgClass, FormsModule, OptionalDetailsComponent],
 })
 export class BadgeclassIssueBulkAwardConformation
 	extends BaseAuthenticatedRoutableComponent
@@ -82,14 +63,17 @@ export class BadgeclassIssueBulkAwardConformation
 	protected taskService = inject(TaskPollingManagerService);
 	protected translate = inject(TranslateService);
 
-	@Input() transformedImportData: TransformedImportData;
-	@Input() badgeSlug: string;
-	@Input() issuerSlug: string;
+	readonly transformedImportData = input<TransformedImportData>(undefined);
+	readonly badgeSlug = input<string>(undefined);
+	readonly badgeClass = input<BadgeClass>(undefined);
+	readonly issuerSlug = input<string>(undefined);
+	readonly badgeInstanceCourseUrl = signal<string | null>(null);
 	@Output() updateStateEmitter = new EventEmitter<ViewState>();
 
 	@ViewChildren('emailInput') emailInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
 	optionalDetailsForm = typedFormGroup()
+		.addControl('courseUrl', null, UrlValidator.validUrl)
 		.addControl('activity_start_date', '', DateValidator.validDate, (control) => {
 			control.rawControl.valueChanges.subscribe(() => {
 				if (
@@ -142,6 +126,8 @@ export class BadgeclassIssueBulkAwardConformation
 		if (this.optionalDetailsForm.controls.evidence_items.length === 0) {
 			this.optionalDetailsForm.controls.evidence_items.addFromTemplate();
 		}
+		this.optionalDetailsForm.controls.courseUrl.setValue(this.badgeClass().courseUrl ?? null);
+		this.badgeInstanceCourseUrl.set(this.optionalDetailsForm.controls.courseUrl.value);
 	}
 
 	ngOnDestroy() {
@@ -170,14 +156,16 @@ export class BadgeclassIssueBulkAwardConformation
 	}
 
 	get hasInvalidEmails(): boolean {
-		if (!this.transformedImportData?.validRowsTransformed) return false;
+		const transformedImportData = this.transformedImportData();
+		if (!transformedImportData?.validRowsTransformed) return false;
 
-		return Array.from(this.transformedImportData.validRowsTransformed).some((row) => row.emailInvalid);
+		return Array.from(transformedImportData.validRowsTransformed).some((row) => row.emailInvalid);
 	}
 
 	get invalidEmailCount(): number {
-		if (!this.transformedImportData?.validRowsTransformed) return 0;
-		return Array.from(this.transformedImportData.validRowsTransformed).filter((row) => row.emailInvalid).length;
+		const transformedImportData = this.transformedImportData();
+		if (!transformedImportData?.validRowsTransformed) return 0;
+		return Array.from(transformedImportData.validRowsTransformed).filter((row) => row.emailInvalid).length;
 	}
 
 	startEditing(row: BulkIssueData) {
@@ -231,7 +219,7 @@ export class BadgeclassIssueBulkAwardConformation
 				? new Date(formState.activity_end_date).toISOString()
 				: null;
 
-		this.transformedImportData.validRowsTransformed.forEach((row) => {
+		this.transformedImportData().validRowsTransformed.forEach((row) => {
 			let assertion: BadgeInstanceBatchAssertion;
 
 			const extensions = row.name
@@ -253,14 +241,15 @@ export class BadgeclassIssueBulkAwardConformation
 				activity_city: formState.activity_city,
 				activity_online: formState.activity_online,
 				evidence_items: formState.evidence_items,
+				course_url: formState.courseUrl,
 			};
 			assertions.push(assertion);
 		});
 
 		this.badgeInstanceApiService
-			.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
-				issuer: this.issuerSlug,
-				badge_class: this.badgeSlug,
+			.createBadgeInstanceBatchedAsync(this.issuerSlug(), this.badgeSlug(), {
+				issuer: this.issuerSlug(),
+				badge_class: this.badgeSlug(),
 				create_notification: true,
 				assertions,
 			})
@@ -268,7 +257,7 @@ export class BadgeclassIssueBulkAwardConformation
 				const taskId = response.body.task_id;
 				this.startTaskPolling(taskId);
 
-				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug], {
+				this.router.navigate(['/issuer/issuers', this.issuerSlug(), 'badges', this.badgeSlug()], {
 					queryParams: { tab: 'recipients' },
 				});
 			})
@@ -287,19 +276,21 @@ export class BadgeclassIssueBulkAwardConformation
 			this.taskSubscription.unsubscribe();
 		}
 
-		this.taskSubscription = this.taskService.startTaskPolling(taskId, this.issuerSlug, this.badgeSlug).subscribe(
-			(taskResult: TaskResult) => {
-				this.currentTaskStatus = taskResult;
+		this.taskSubscription = this.taskService
+			.startTaskPolling(taskId, this.issuerSlug(), this.badgeSlug())
+			.subscribe(
+				(taskResult: TaskResult) => {
+					this.currentTaskStatus = taskResult;
 
-				if (taskResult.status === TaskStatus.FAILURE) {
-					this.handleTaskFailure(taskResult);
-				}
-			},
-			(error) => {
-				console.error('Error polling batch award task status:', error);
-				this.handleTaskError(error);
-			},
-		);
+					if (taskResult.status === TaskStatus.FAILURE) {
+						this.handleTaskFailure(taskResult);
+					}
+				},
+				(error) => {
+					console.error('Error polling batch award task status:', error);
+					this.handleTaskError(error);
+				},
+			);
 	}
 
 	private handleTaskFailure(taskResult: TaskResult) {
@@ -316,19 +307,9 @@ export class BadgeclassIssueBulkAwardConformation
 	}
 
 	removeValidRowsTransformed(row) {
-		this.transformedImportData.validRowsTransformed.delete(row);
-		if (!this.transformedImportData.validRowsTransformed.size) {
+		this.transformedImportData().validRowsTransformed.delete(row);
+		if (!this.transformedImportData().validRowsTransformed.size) {
 			this.disableActionButton();
 		}
-	}
-
-	private readonly _hlmDialogService = inject(HlmDialogService);
-	public openSuccessDialog(recipient) {
-		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
-			context: {
-				recipient: recipient,
-				variant: 'success',
-			},
-		});
 	}
 }

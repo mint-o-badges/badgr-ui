@@ -268,6 +268,7 @@ export class PublicBadgeAssertionComponent {
 					evidence_items: this.normalizeEvidence(assertion, assertionVersion),
 					competencies: assertion.badge['extensions:CompetencyExtension'],
 					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
+					courseUrl: assertion.badge.courseUrl,
 					duration: assertion.badge['extensions:StudyLoadExtension'].StudyLoad,
 					learningPaths: lps,
 					version: assertionVersion,
@@ -281,10 +282,10 @@ export class PublicBadgeAssertionComponent {
 						isOB3Assertion(assertion) && assertion.credentialSubject.activityEndDate
 							? new Date(assertion.credentialSubject.activityEndDate)
 							: null,
-					networkBadge: assertion.isNetworkBadge,
-					networkImage: assertion.networkImage,
-					networkName: assertion.networkName,
-					sharedOnNetwork: assertion.sharedOnNetwork,
+					networkBadge: assertion.badge.isNetworkBadge,
+					networkImage: assertion.badge.networkImage,
+					networkName: assertion.badge.networkName,
+					sharedOnNetwork: assertion.badge.sharedOnNetwork,
 					awardingIssuers: this.awardingIssuers,
 				};
 				if (assertion['extensions:recipientProfile'] && assertion['extensions:recipientProfile'].name) {

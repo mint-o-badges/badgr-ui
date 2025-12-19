@@ -183,6 +183,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					networkImage: this.badge.networkImage,
 					networkName: this.badge.networkName,
 					sharedOnNetwork: this.badge.sharedOnNetwork,
+					courseUrl: this.badge.courseUrl,
 				};
 			})
 			.finally(() => {

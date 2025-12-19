@@ -1,5 +1,16 @@
 import { NgIcon } from '@ng-icons/core';
-import { Component, signal, inject, TemplateRef, viewChild, computed, input, output, OnInit } from '@angular/core';
+import {
+	Component,
+	signal,
+	inject,
+	TemplateRef,
+	viewChild,
+	computed,
+	input,
+	output,
+	OnInit,
+	OnDestroy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HlmIcon } from './spartan/ui-icon-helm/src';
 import { HlmMenuModule } from './spartan/ui-menu-helm/src';
@@ -78,98 +89,104 @@ export type RequestedBadge = {
 					<span>{{ 'Badge.willBeAwardedSoon' | translate }}</span>
 				</div>
 			</div>
-		} @else {
-			<div class="tw-overflow-x-auto">
-				<table hlmTable oeb-table-secondary>
-					<thead hlmTHead>
-						@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
-							<tr hlmTr>
-								@for (headerCell of headerRow.headers; track headerCell.id) {
-									@if (!headerCell.isPlaceholder) {
-										<th hlmTh>
-											<div
-												class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
-												(click)="
-													headerCell.column.getCanSort()
-														? headerCell.column.toggleSorting()
-														: undefined
-												"
-												[attr.data-sortable]="headerCell.column.getCanSort()"
-											>
-												<div>
-													<ng-container
-														*flexRender="
-															headerCell.column.columnDef.header;
-															props: headerCell.getContext();
-															let header
-														"
-													>
-														<div [innerHTML]="header"></div>
-													</ng-container>
-												</div>
-
-												@if (headerCell.column.getIsSorted()) {
-													@let order =
-														headerCell.column.getNextSortingOrder() === 'asc'
-															? 'desc'
-															: 'asc';
-													@if (order === 'asc') {
-														<ng-icon hlm size="base" name="lucideChevronUp" />
-													} @else {
-														<ng-icon hlm size="base" name="lucideChevronDown" />
-													}
-												} @else if (headerCell.column.getCanSort()) {
-													<ng-icon hlm size="base" name="lucideChevronsUpDown" />
-												}
-											</div>
-										</th>
-									}
-								}
-							</tr>
-						}
-					</thead>
-					<tbody hlmTBody>
-						@for (row of badgeTable.getRowModel().rows; track row.id) {
-							<tr hlmTr>
-								@for (cell of row.getVisibleCells(); track cell.id) {
-									<td hlmTd class="tw-align-middle">
-										<ng-container
-											*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
-										>
-											<div [innerHTML]="cell"></div>
-										</ng-container>
-									</td>
-								}
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-
-			<ng-template #translateHeaderIDCellTemplate let-context>
-				{{ context.header.id | translate }}
-			</ng-template>
-			<ng-template #headerCheckbox let-context>
-				<oeb-checkbox
-					[checked]="context.table.getIsAllRowsSelected()"
-					(ngModelChange)="context.table.toggleAllRowsSelected()"
-				/>
-			</ng-template>
-			<ng-template #rowCheckbox let-context>
-				<oeb-checkbox
-					[checked]="context.row.getIsSelected()"
-					(ngModelChange)="context.row.getToggleSelectedHandler()($event)"
-				/>
-			</ng-template>
-			<ng-template #deleteButton let-context>
-				<button
-					(click)="this.openDeleteDialog(context.row.original)"
-					class="tw-h-10 tw-w-10 hover:tw-opacity-60 tw-inline-flex tw-items-center tw-justify-center"
-				>
-					<ng-icon hlm size="base" name="lucideTrash2" />
-				</button>
-			</ng-template>
 		}
+		<div class="tw-overflow-x-auto">
+			<table hlmTable oeb-table-secondary>
+				<thead hlmTHead>
+					@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
+						<tr hlmTr>
+							@for (headerCell of headerRow.headers; track headerCell.id) {
+								@if (!headerCell.isPlaceholder) {
+									<th hlmTh>
+										<div
+											class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
+											(click)="
+												headerCell.column.getCanSort()
+													? headerCell.column.toggleSorting()
+													: undefined
+											"
+											[attr.data-sortable]="headerCell.column.getCanSort()"
+										>
+											<div>
+												<ng-container
+													*flexRender="
+														headerCell.column.columnDef.header;
+														props: headerCell.getContext();
+														let header
+													"
+												>
+													<div [innerHTML]="header"></div>
+												</ng-container>
+											</div>
+
+											@if (headerCell.column.getIsSorted()) {
+												@let order =
+													headerCell.column.getNextSortingOrder() === 'asc' ? 'desc' : 'asc';
+												@if (order === 'asc') {
+													<ng-icon hlm size="base" name="lucideChevronUp" />
+												} @else {
+													<ng-icon hlm size="base" name="lucideChevronDown" />
+												}
+											} @else if (headerCell.column.getCanSort()) {
+												<ng-icon hlm size="base" name="lucideChevronsUpDown" />
+											}
+										</div>
+									</th>
+								}
+							}
+						</tr>
+					}
+				</thead>
+				<tbody hlmTBody>
+					@for (row of badgeTable.getRowModel().rows; track row.id) {
+						<tr hlmTr>
+							@for (cell of row.getVisibleCells(); track cell.id) {
+								<td hlmTd class="tw-align-middle">
+									<ng-container
+										*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+									>
+										<div [innerHTML]="cell"></div>
+									</ng-container>
+								</td>
+							}
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+
+		<ng-template #translateHeaderIDCellTemplate let-context>
+			{{ context.header.id | translate }}
+		</ng-template>
+		<ng-template #nameAndMailCell let-context>
+			@if (context.row.original.firstName || context.row.original.lastName) {
+				<strong> {{ context.row.original.firstName }} {{ context.row.original.lastName }} </strong>
+			} @else {
+				<strong>&mdash;</strong>
+			}
+			<br />
+			{{ context.row.original.email }}
+		</ng-template>
+		<ng-template #headerCheckbox let-context>
+			<oeb-checkbox
+				[checked]="context.table.getIsAllRowsSelected()"
+				(ngModelChange)="context.table.toggleAllRowsSelected()"
+			/>
+		</ng-template>
+		<ng-template #rowCheckbox let-context>
+			<oeb-checkbox
+				[checked]="context.row.getIsSelected()"
+				(ngModelChange)="context.row.getToggleSelectedHandler()($event)"
+			/>
+		</ng-template>
+		<ng-template #deleteButton let-context>
+			<button
+				(click)="this.openDeleteDialog(context.row.original)"
+				class="tw-h-10 tw-w-10 hover:tw-opacity-60 tw-inline-flex tw-items-center tw-justify-center"
+			>
+				<ng-icon hlm size="base" name="lucideTrash2" />
+			</button>
+		</ng-template>
 
 		<oeb-button
 			size="sm"
@@ -183,25 +200,34 @@ export type RequestedBadge = {
 		</oeb-button>
 	`,
 })
-export class QrCodeDatatableComponent implements OnInit {
+export class QrCodeDatatableComponent implements OnInit, OnDestroy {
 	private badgeRequestApiService = inject(BadgeRequestApiService);
 	private badgeInstanceApiService = inject(BadgeInstanceApiService);
 	private taskService = inject(TaskPollingManagerService);
 	private messageService = inject(MessageService);
 	private translate = inject(TranslateService);
+	private progressSubscription!: Subscription;
+	private processedAwardedEmails = new Set<string>();
+	private processedRequests: RequestedBadge[] = [];
 
 	qrCode = input.required<ApiQRCode>();
 	badgeSlug = input.required<string>();
 	issuerSlug = input.required<string>();
 	qrBadgeAward = output<number>();
+	requestCountChanged = output<number>();
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	nameAndMailCell = viewChild.required<TemplateRef<any>>('nameAndMailCell');
 	headerCheckbox = viewChild.required<TemplateRef<any>>('headerCheckbox');
 	rowCheckbox = viewChild.required<TemplateRef<any>>('rowCheckbox');
 	deleteButton = viewChild.required<TemplateRef<any>>('deleteButton');
 
 	rowSelectionCount = computed(() => Object.keys(this.rowSelection()).length);
-	isTaskPending = computed(() => this.currentTaskStatus()?.status === TaskStatus.PENDING);
+	isTaskPending = computed(
+		() =>
+			this.currentTaskStatus()?.status === TaskStatus.PENDING ||
+			this.currentTaskStatus()?.status === TaskStatus.PROGRESS,
+	);
 	isTaskProcessing = computed(
 		() =>
 			this.currentTaskStatus()?.status === TaskStatus.STARTED ||
@@ -213,6 +239,7 @@ export class QrCodeDatatableComponent implements OnInit {
 		columns: this.badgeTableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
+		getRowId: (row) => row.email,
 		state: {
 			sorting: this.tableSorting(),
 			rowSelection: this.rowSelection(),
@@ -248,7 +275,7 @@ export class QrCodeDatatableComponent implements OnInit {
 		{
 			accessorKey: 'email',
 			header: 'ID',
-			cell: (info) => info.row.original.email,
+			cell: (info) => this.nameAndMailCell(),
 		},
 		{
 			id: 'Badge.requestedOn',
@@ -264,9 +291,6 @@ export class QrCodeDatatableComponent implements OnInit {
 	];
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {}
 
 	ngOnInit(): void {
@@ -274,6 +298,51 @@ export class QrCodeDatatableComponent implements OnInit {
 			this.requestedBadges.set(
 				response.body.requested_badges.map((badge: ApiRequestedBadge) => this.transformRequestedBadge(badge)),
 			);
+		});
+
+		this.progressSubscription = this.taskService
+			.getTaskUpdatesForBadge(this.badgeSlug())
+			.subscribe((taskResult) => {
+				if (taskResult.status === TaskStatus.PROGRESS) {
+					this.handleTaskProgress(taskResult);
+				}
+			});
+	}
+
+	ngOnDestroy() {
+		if (this.progressSubscription) {
+			this.progressSubscription.unsubscribe();
+		}
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
+		}
+		this.processedAwardedEmails.clear();
+		this.processedRequests = [];
+	}
+
+	private handleTaskProgress(taskResult: TaskResult) {
+		const successful = taskResult.result?.data ?? [];
+		if (!successful.length) return;
+
+		const allAwardedEmails = successful.map((s: any) => s.recipient_identifier);
+		const newlyAwardedEmails = allAwardedEmails.filter((email: string) => !this.processedAwardedEmails.has(email));
+
+		if (newlyAwardedEmails.length === 0) return;
+
+		newlyAwardedEmails.forEach((email: string) => this.processedAwardedEmails.add(email));
+
+		const newlyAwardedSet = new Set(newlyAwardedEmails);
+
+		this.requestedBadges.update((current) => {
+			const updated = current.filter((b) => !newlyAwardedSet.has(b.email));
+			this.requestCountChanged.emit(updated.length);
+			return updated;
+		});
+
+		this.rowSelection.update((current) => {
+			const updated = { ...current };
+			newlyAwardedEmails.forEach((email) => delete updated[email]);
+			return updated;
 		});
 	}
 
@@ -295,8 +364,11 @@ export class QrCodeDatatableComponent implements OnInit {
 		const qrCode = this.qrCode();
 		const recipientProfileContextUrl =
 			'https://api.openbadges.education/static/extensions/recipientProfile/context.json';
-		Object.keys(this.rowSelection()).forEach((idx) => {
-			const b = this.requestedBadges().at(Number(idx));
+
+		const selectedEmails = Object.keys(this.rowSelection());
+		const selectedRequests = this.requestedBadges().filter((b) => selectedEmails.includes(b.email));
+		this.processedRequests = selectedRequests;
+		selectedRequests.forEach((b) => {
 			const activityStartDate = qrCode.activity_start_date
 				? new Date(qrCode.activity_start_date).toISOString()
 				: null;
@@ -320,6 +392,7 @@ export class QrCodeDatatableComponent implements OnInit {
 				activity_zip: qrCode.activity_zip,
 				activity_online: qrCode.activity_online,
 				evidence_items: qrCode.evidence_items ?? [],
+				course_url: qrCode.course_url,
 			} satisfies BadgeInstanceBatchAssertion);
 		});
 
@@ -339,7 +412,7 @@ export class QrCodeDatatableComponent implements OnInit {
 			this.startTaskPolling(taskId);
 		} catch (e) {
 			this.messageService.setMessage(
-				'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.',
+				'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, oh alles geklappt hat.',
 				'error',
 			);
 		}
@@ -371,26 +444,26 @@ export class QrCodeDatatableComponent implements OnInit {
 	}
 
 	private handleTaskSuccess() {
-		if (this.rowSelectionCount() === 1) {
-			const email = Object.keys(this.rowSelection()).map((idx) => {
-				const id = Number(idx);
-				return this.requestedBadges().at(id).email;
-			});
-			this.openSuccessDialog(email);
+		const awardedCount = this.processedRequests.length;
+
+		if (awardedCount === 1) {
+			this.openSuccessDialog([this.processedRequests[0].email]);
 		} else {
 			this.openSuccessDialog(
 				null,
-				this.rowSelectionCount() + ' ' + this.translate.instant('QrCode.badgesAwardedSuccessfully'),
+				awardedCount + ' ' + this.translate.instant('QrCode.badgesAwardedSuccessfully'),
 			);
 		}
 
-		const ids = Object.keys(this.rowSelection()).map((idx) => {
-			const id = Number(idx);
-			return this.requestedBadges().at(id).entity_id;
-		});
+		const ids = this.processedRequests.map((b) => b.entity_id);
+
 		this.badgeRequestApiService.deleteRequests(this.issuerSlug(), this.badgeSlug(), ids).then((res) => {
 			this.qrBadgeAward.emit(this.rowSelectionCount());
 			this.requestedBadges.update((current) => current.filter((r) => !ids.includes(r.entity_id)));
+			this.requestCountChanged.emit(this.requestedBadges().length);
+			this.rowSelection.set({});
+			this.processedAwardedEmails.clear();
+			this.processedRequests = [];
 		});
 	}
 

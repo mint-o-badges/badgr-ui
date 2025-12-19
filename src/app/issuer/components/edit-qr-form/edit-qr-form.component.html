@@ -62,8 +62,11 @@
 						[showCourseDate]="true"
 						(addEvidenceEvent)="addEvidence()"
 						(removeEvidenceEvent)="removeEvidence($event)"
-					>
-					</oeb-optional-details>
+						[showCourseUrl]="true"
+						[courseUrlDefaultOpen]="
+							badgeInstanceCourseUrl() !== null && badgeInstanceCourseUrl().length > 0
+						"
+					/>
 				</div>
 
 				<!-- Notifications Section -->
