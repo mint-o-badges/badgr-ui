@@ -42,6 +42,7 @@ export interface ApiRecipientBadgeInstance {
 		id: string;
 	};
 	shareUrl?: string;
+	courseUrl?: string;
 	extensions?: object;
 	pending?: boolean;
 	imported?: boolean;

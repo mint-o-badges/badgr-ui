@@ -470,6 +470,7 @@ export class BadgeClassDetailComponent
 			slug: this.badgeSlug,
 			createdAt: badgeClass.createdAt,
 			updatedAt: badgeClass.updatedAt,
+			courseUrl: badgeClass.courseUrl,
 			duration: badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
 			category: badgeClass.extension['extensions:CategoryExtension']?.Category,
 			tags: badgeClass.tags,
@@ -488,6 +489,7 @@ export class BadgeClassDetailComponent
 			license: badgeClass.extension['extensions:LicenseExtension'] ? true : false,
 			learningPaths: this.learningPaths,
 			copy_permissions: badgeClass.copyPermissions,
+			expiration: badgeClass.expiration,
 			menuitems: [
 				{
 					title: 'Badge.shareOnNetwork',

@@ -29,6 +29,7 @@ import {
 	ShareBadgeDialogComponent,
 	ShareBadgeDialogContext,
 } from '~/common/dialogs/oeb-dialogs/share-badge-dialog.component';
+import { TimePeriodPipe } from '../../util/expiration-util';
 import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -57,6 +58,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 		TranslatePipe,
 		HourPipe,
 		HlmH3,
+		TimePeriodPipe,
 	],
 })
 export class BgBadgeDetail {
