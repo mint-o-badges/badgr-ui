@@ -408,7 +408,9 @@
 		"addNewEvidence": "Add another evidence",
 		"evidenceUrl": "Evidence URL",
 		"evidenceNarrative": "Textual narrative",
-		"youthWelfare": "Independent youth welfare organization"
+		"youthWelfare": "Independent youth welfare organization",
+		"catalogAllLoaded": "All institutions matching your search criteria loaded.",
+		"badgeCount": "Badge Count"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",

@@ -408,7 +408,9 @@
 		"addNewEvidence": "Weiteren Nachweis hinzufügen",
 		"evidenceUrl": "URL zum Nachweis",
 		"evidenceNarrative": "Textliches Narrativ",
-		"youthWelfare": "Freier Träger der Jugendhilfe"
+		"youthWelfare": "Freier Träger der Jugendhilfe",
+		"catalogAllLoaded": "Alle Institutionen, die deinen Suchkriterien entsprechen, wurden geladen.",
+		"badgeCount": "Badge-Anzahl"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
