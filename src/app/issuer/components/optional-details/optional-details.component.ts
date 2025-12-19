@@ -70,13 +70,11 @@ export class OptionalDetailsComponent implements OnInit {
 	addEvidence(): void {
 		this.addEvidenceEvent.emit();
 
-		setTimeout(() => {
-			if (this.evidenceItems && this.evidenceItems.controls.length > 0) {
-				const lastItem = this.evidenceItems.controls[this.evidenceItems.controls.length - 1];
-				const narrativeControl = lastItem.controls['narrative'] as TypedFormControl<any>;
-				narrativeControl.setValue(this.sharedNarrative);
-			}
-		}, 0);
+		if (this.evidenceItems && this.evidenceItems.controls.length > 0) {
+			const lastItem = this.evidenceItems.controls[this.evidenceItems.controls.length - 1];
+			const narrativeControl = lastItem.controls['narrative'] as TypedFormControl<any>;
+			narrativeControl.setValue(this.sharedNarrative);
+		}
 	}
 
 	getEvidenceUrlControl(index: number): FormControl {
