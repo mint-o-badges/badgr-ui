@@ -97,9 +97,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	intersectionObserver?: IntersectionObserver;
 
-	// ---------------------------------------------------------------------------
-	// Signals (catalog state)
-	// ---------------------------------------------------------------------------
 	issuers = signal<IssuerV3[]>([]);
 	totalCount = signal<number>(0);
 	hasNext = signal<boolean>(true);
@@ -119,20 +116,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	sortOption = signal<'badges_desc' | 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc'>('badges_desc');
 	sortOption$ = toObservable(this.sortOption);
 
-	// ---------------------------------------------------------------------------
-	// Controls
-	// ---------------------------------------------------------------------------
 	categoryControl = new FormControl('');
 	sortControl = new FormControl('badges_desc');
 
-	// ---------------------------------------------------------------------------
-	// Page readiness (for bgAwaitPromises)
-	// ---------------------------------------------------------------------------
 	pageReadyPromise: Promise<unknown> = firstValueFrom(toObservable(this.issuers).pipe(skip(1)));
 
-	// ---------------------------------------------------------------------------
-	// Subscriptions
-	// ---------------------------------------------------------------------------
 	pageSubscriptions: Subscription[] = [];
 
 	categoryOptions = [
