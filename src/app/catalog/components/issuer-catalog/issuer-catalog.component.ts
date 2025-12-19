@@ -293,6 +293,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	ngOnDestroy(): void {
 		this.pageSubscriptions.forEach((s) => s.unsubscribe());
+		this.intersectionObserver?.disconnect();
 	}
 
 	private async loadRangeOfIssuers(

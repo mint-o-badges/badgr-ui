@@ -166,10 +166,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 
 	ngOnDestroy() {
 		this.pageSubscriptions.forEach((sub) => sub.unsubscribe());
-
-		if (this.intersectionObserver) {
-			this.intersectionObserver.disconnect();
-		}
+		this.intersectionObserver?.disconnect();
 	}
 
 	get networksPluralWord(): string {

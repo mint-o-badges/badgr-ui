@@ -288,6 +288,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	ngOnDestroy(): void {
 		for (const s of this.pageSubscriptions) s.unsubscribe();
+		this.intersectionObserver?.disconnect();
 	}
 
 	openLegend() {
