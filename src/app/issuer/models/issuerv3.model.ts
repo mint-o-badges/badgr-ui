@@ -19,8 +19,8 @@ export interface IIssuerV3 {
 	owner_accepted_tos: boolean;
 	intended_use_verified: boolean;
 
-	badge_class_count: number;
-	learning_path_count: number;
+	badgeClassCount: number;
+	learningPathCount: number;
 	recipient_count?: number;
 
 	category?: string;
@@ -57,8 +57,8 @@ export class IssuerV3 implements IIssuerV3 {
 	verified: boolean;
 	owner_accepted_tos: boolean;
 	intended_use_verified: boolean;
-	badge_class_count: number;
-	learning_path_count: number;
+	badgeClassCount: number;
+	learningPathCount: number;
 	recipient_count?: number;
 	category?: string;
 	tags?: string[];
