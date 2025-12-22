@@ -58,6 +58,25 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	protected recipientBadgeApiService = inject(RecipientBadgeApiService);
 	private translate = inject(TranslateService);
 
+	sortOptions = [
+		{
+			value: 'name_asc',
+			label: 'A-Z',
+		},
+		{
+			value: 'name_desc',
+			label: 'Z-A',
+		},
+		{
+			value: 'date_asc',
+			label: this.translate.instant('General.dateAscending'),
+		},
+		{
+			value: 'date_desc',
+			label: this.translate.instant('General.dateDescending'),
+		},
+	];
+
 	learningPathsLoaded: Promise<unknown>;
 	issuersLoaded: Promise<unknown>;
 	userBadgesLoaded: Promise<unknown>;

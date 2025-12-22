@@ -123,7 +123,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 				const category = badgeClass.extension['extensions:CategoryExtension'].Category;
 
 				this.badgeClassManager
-					.createBadgeImage(this.issuerSlug, badgeClass.slug, category, true)
+					.createBadgeImage(this.issuerSlug, badgeClass.slug, category, badgeClass.imageFrame)
 					.then((img) => {
 						this.previewB64Img = img.image_url;
 					});

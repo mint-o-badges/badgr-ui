@@ -13,7 +13,6 @@ import {
 	OnChanges,
 	inject,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import {
 	AbstractControl,
 	Validators,
@@ -65,9 +64,9 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 import { Network } from '~/issuer/network.model';
-import { AUTH_PROVIDER } from '~/common/services/authentication-service';
 import { PositiveIntegerOrNullValidator } from '~/common/validators/positive-integer-or-null.validator';
 import { getDurationOptions, expirationToDays, ExpirationUnit } from '~/common/util/expiration-util';
+import { CatalogService } from '~/catalog/catalog.service';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -114,6 +113,7 @@ export class BadgeClassEditFormComponent
 	protected aiSkillsService = inject(AiSkillsService);
 	private translate = inject(TranslateService);
 	private navService = inject(NavigationService);
+	protected catalogService = inject(CatalogService);
 
 	baseUrl: string;
 	badgeCategory: string;
@@ -395,6 +395,7 @@ export class BadgeClassEditFormComponent
 				.addControl('target_framework', '')
 				.addControl('target_code', ''),
 		)
+		.addControl('courseUrl', null, UrlValidator.validUrl)
 		.addControl('expiration', null, [(control) => PositiveIntegerOrNullValidator.valid(control, this.translate)])
 		.addControl('expiration_unit', 'days', Validators.required)
 		.addArray('criteria', this.criteriaForm)
@@ -494,15 +495,8 @@ export class BadgeClassEditFormComponent
 	next: string;
 	previous: string;
 
-	/** Inserted by Angular inject() migration for backwards compatibility */
-	constructor(...args: unknown[]);
-
 	constructor() {
-		const sessionService = inject(AUTH_PROVIDER);
-		const router = inject(Router);
-		const route = inject(ActivatedRoute);
-
-		super(router, route, sessionService);
+		super();
 		const translate = this.translate;
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
@@ -592,6 +586,7 @@ export class BadgeClassEditFormComponent
 				target_framework: alignment.target_framework,
 				target_code: alignment.target_code,
 			})),
+			courseUrl: badgeClass.courseUrl,
 			expiration: badgeClass.expiration,
 			expiration_unit: 'days', // api always returns expiration in days
 			criteria: badgeClass.apiModel.criteria,
@@ -909,14 +904,9 @@ export class BadgeClassEditFormComponent
 	fetchTags() {
 		this.existingTags = [];
 		this.existingTagsLoading = true;
-
-		this.badgeClassManager.allBadges$.subscribe({
-			// Use arrow function to preserve "this" context
-			next: (entities: BadgeClass[]) => {
-				let tags: string[] = entities.flatMap((entity) => entity.tags);
-				let unique = [...new Set(tags)];
-				unique.sort();
-				this.existingTags = unique.map((tag, index) => ({
+		this.catalogService.getBadgeTags().then(
+			(tags) => {
+				this.existingTags = tags.map((tag, index) => ({
 					id: index,
 					name: tag,
 				}));
@@ -931,11 +921,11 @@ export class BadgeClassEditFormComponent
 				// that after the first `next` call, the loading is done
 				this.existingTagsLoading = false;
 			},
-			error: (err) => {
+			(err) => {
 				console.error("Couldn't fetch labels: " + err);
 				this.existingTagsLoading = false;
 			},
-		});
+		);
 	}
 
 	addTag() {
@@ -1381,6 +1371,7 @@ export class BadgeClassEditFormComponent
 				this.existingBadgeClass.imageFrame = imageFrame;
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);
+				this.existingBadgeClass.courseUrl = formState.courseUrl;
 				this.existingBadgeClass.criteria = formState.criteria;
 				this.existingBadgeClass.expiration = expirationDays;
 				this.existingBadgeClass.criteria_text = '';
@@ -1439,6 +1430,7 @@ export class BadgeClassEditFormComponent
 					alignment: this.alignmentsEnabled ? formState.alignments : [],
 					expiration: expirationDays,
 					criteria: formState.criteria,
+					course_url: formState.courseUrl,
 					extensions: {
 						'extensions:StudyLoadExtension': {
 							'@context': studyLoadExtensionContextUrl,

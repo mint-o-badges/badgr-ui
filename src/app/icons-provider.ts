@@ -48,6 +48,7 @@ import {
 	lucideHeart,
 	lucideHand,
 	lucideBookOpen,
+	lucideExternalLink,
 	lucideEye,
 	lucideEyeOff,
 	lucideNetwork,
@@ -56,6 +57,7 @@ import {
 	lucideCircleAlert,
 	lucideLock,
 	lucideCalendarDays,
+	lucideMedal,
 } from '@ng-icons/lucide';
 
 export const IconsProvider = provideIcons({
@@ -108,6 +110,7 @@ export const IconsProvider = provideIcons({
 	lucideHeart,
 	lucideHand,
 	lucideBookOpen,
+	lucideExternalLink,
 	lucideEye,
 	lucideEyeOff,
 	lucideNetwork,
@@ -115,4 +118,5 @@ export const IconsProvider = provideIcons({
 	lucideArrowLeft,
 	lucideCircleAlert,
 	lucideLock,
+	lucideMedal,
 });

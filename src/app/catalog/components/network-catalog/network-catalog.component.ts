@@ -30,6 +30,7 @@ import { OebHeaderText } from '~/components/oeb-header-text.component';
 import { NetworkV3 } from '~/issuer/models/networkv3.model';
 import { LoadingDotsComponent } from '~/common/components/loading-dots.component';
 import { OebButtonComponent } from '~/components/oeb-button.component';
+import { createInfiniteScrollObserver } from '~/catalog/util/intersection-observer';
 
 @Component({
 	selector: 'app-network-catalog',
@@ -102,18 +103,6 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 		}
 	}
 
-	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries.at(0)?.isIntersecting && this.hasNext() && this.observeScrolling()) {
-					this.currentPage.update((p) => p + 1);
-				}
-			},
-			{ rootMargin: '20% 0px' },
-		);
-		return observer;
-	}
-
 	ngOnInit() {
 		this.loggedIn = this.sessionService.isLoggedIn;
 
@@ -138,7 +127,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 					concatMap((i) => this.loadRangeOfNetworks(i.page, i.searchQuery, i.sortOption)),
 				)
 				.subscribe((paginatedNetworks) => {
-					this.totalNetworkCount.set(paginatedNetworks.total_count);
+					this.totalNetworkCount.set(paginatedNetworks.count);
 					if (!paginatedNetworks) {
 						this.observeScrolling.set(true);
 						return;
@@ -166,17 +155,18 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	}
 
 	ngAfterViewInit() {
-		if (this.loadMore) {
-			this.intersectionObserver = this.setupIntersectionObserver(this.loadMore);
-		}
+		this.intersectionObserver = createInfiniteScrollObserver(this.loadMore, {
+			hasNext: this.hasNext,
+			observeScrolling: this.observeScrolling,
+			onLoadMore: () => {
+				this.currentPage.update((p) => p + 1);
+			},
+		});
 	}
 
 	ngOnDestroy() {
 		this.pageSubscriptions.forEach((sub) => sub.unsubscribe());
-
-		if (this.intersectionObserver) {
-			this.intersectionObserver.disconnect();
-		}
+		this.intersectionObserver?.disconnect();
 	}
 
 	get networksPluralWord(): string {

@@ -12,7 +12,15 @@ if (!env) {
 const component = process.argv[3];
 
 // map of components to build
-const components = ['oeb-version', 'oeb-skill-visualisation', 'oeb-badge-creation'];
+const components = [
+	'oeb-version',
+	'oeb-skill-visualisation',
+	'oeb-badge-creation',
+	'oeb-earned-badges-overview',
+	'oeb-competency-overview',
+	'oeb-learningpaths-overview',
+	'oeb-backpack',
+];
 
 if (component && !components.includes(component)) {
 	console.error(`No component named  ${component}`);
